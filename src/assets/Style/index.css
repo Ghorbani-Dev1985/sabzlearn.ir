@@ -49,7 +49,7 @@
     @apply list-none
   }
   body {
-    @apply dark:bg-zinc-800 text-slate-900 bg-slate-900 font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-mainColor dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
+    @apply text-slate-900 bg-gray-100 dark:bg-mainGray h-full font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-primary dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
   }
 }
 

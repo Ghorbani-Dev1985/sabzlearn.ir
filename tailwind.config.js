@@ -23,48 +23,9 @@ module.exports = {
           'registerFormBg' : 'url("../../assets/Images/registerFormBg.png")',
       },
       colors: {
-        brown: {
-          100: "#ECE0D1",
-          300: "#DBC1AC",
-          600: "#967259",
-          900: "#634832",
-        },
         primary: '#2ED573',
-        secondary: '#4E81FB'
-      },
-      animation: {
-        'moveBounce': 'moveBounce 5s linear infinite',
-        'fullRotate' : 'fullRotate 40s linear infinite',
-        'moveBgLine' : 'moveBgLine 2s linear infinite',
-         'fullRotateY' : 'fullRotateY 4s linear infinite',
-         'rectangle' : 'rectangle 15s linear infinite',
-      },
-      keyframes: {
-        moveBounce: {
-          '0%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(20px)' },
-           '100%' : {transform: 'translateY(0px)'}
-        },
-        fullRotate: {
-          'from' : {transform : 'rotate(0deg)'},
-          'to' : {transform : 'rotate(360deg)'}
-        },
-        moveBgLine: {
-          'from' : {transform : 'translateX(0)'},
-           'to' : {transform : 'translateX(80px)'},
-        },
-        fullRotateY: {
-          '0%' : {transform : 'rotateY(0deg)'},
-          '100%' : {transform : 'rotateY(360deg)'}
-        },
-        rectangle: {
-          '0%' : {  transform: 'translate(0px, 0px) rotate(0deg)'},
-          '20%' : {  transform: 'translate(73px, -1px) rotate(36deg)'},
-          '40%' : {  transform: 'translate(141px, 72px) rotate(72deg)'},
-          '60%' : {  transform: 'translate(83px, 122px) rotate(160deg)'},
-          '80%' : {  transform: 'translate(-40px, 72px) rotate(144deg)'},
-          '100%' : {  transform: 'translate(0px, 0px) rotate(0deg)'}
-        }
+        secondary: '#4E81FB',
+        mainGray: '#1C1C28'
       },
       boxShadow: {
         normal: "0px 1px 10px 0px rgba(0, 0, 0, 0.05)",
@@ -211,9 +172,6 @@ module.exports = {
       'lg': '1024px',
       'xl': '1280px',
     }
-  },
-  daisyui: {
-    themes: ["light"],
   },
   plugins: [
     function ({ addVariant }) {
