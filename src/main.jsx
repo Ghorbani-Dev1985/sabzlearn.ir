@@ -8,10 +8,10 @@ import { StyledEngineProvider, ThemeProvider, createTheme } from "@mui/material/
 const CustomTheme = createTheme({
   palette: {
     primary: {
-      main: '#FF5733'
+      main: '#2ED573'
     },
     secondary: {
-      main: '#ff785b'
+      main: '#4E81FB'
     },
   },
   direction: 'rtl',

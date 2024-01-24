@@ -29,8 +29,8 @@ module.exports = {
           600: "#967259",
           900: "#634832",
         },
-        mainColor: '#FF5733',
-        secondColor: '#ff785b'
+        primary: '#2ED573',
+        secondary: '#4E81FB'
       },
       animation: {
         'moveBounce': 'moveBounce 5s linear infinite',
