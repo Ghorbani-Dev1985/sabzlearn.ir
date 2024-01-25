@@ -1,7 +1,8 @@
 import { useState } from "react";
 import useDarkSide from "../../Hooks/useDarkSide";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { LightMode , DarkModeIcon} from "@mui/icons-material";
+import { LightMode} from "@mui/icons-material";
+import Moon from '../../assets/Images/svgs/moon.svg'
 
 const DarkMode = () => {
   const [colorTheme, setTheme] = useDarkSide();
@@ -15,21 +16,9 @@ const DarkMode = () => {
   };
   return (
     <>
-        {/* <DarkModeSwitch
-          moonColor="#fdba74"
-          sunColor=""
-          className="text-orange-300 w-5 h-5 md:w-7 md:h-7 hidden md:block"
-          checked={darkSide}
-          onChange={toggleDarkMode}
-        />
-      <div className="flex md:hidden items-center gap-x-2">
-        <input type="checkbox" className="hidden" checked={darkSide}
-          onChange={toggleDarkMode} id="toggleDarkMode" hidden />
-          <label htmlFor="toggleDarkMode">
-            
-          {colorTheme === "light" ? <div className="inline-flex items-center gap-x-2.5"><LightMode className="size-5"/><span>تم روشن</span></div> : <div className="inline-flex items-center gap-x-2.5"><DarkMode className="size-5"/><span>تم تیره</span></div>}
-          </label>
-      </div> */}
+       <div onClick={toggleDarkMode} className="hidden lg:flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-transparent text-slate-500 dark:text-gray-600 dark:border dark:border-gray-700 cursor-pointer hover:bg-gray-200 dark:hover:border-gray-600 transition-colors">
+       {colorTheme === "light" ? <LightMode className="size-7"/> : <img src={Moon} alt="ghorbani-dev.ir" className="size-8" />}
+       </div>
     </>
   );
 };
