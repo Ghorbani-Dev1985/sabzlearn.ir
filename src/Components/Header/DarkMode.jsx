@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useDarkSide from "../../Hooks/useDarkSide";
-import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { LightMode} from "@mui/icons-material";
 import Moon from '../../assets/Images/svgs/moon.svg'
 

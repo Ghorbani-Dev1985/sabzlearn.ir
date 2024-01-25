@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Search } from '@mui/icons-material'
 import { Box, Fade, Modal ,Backdrop} from '@mui/material'
-import { useOpenClose } from '../../Contexts/openCloseContext'
+
 
 function SearchBox() {
-  const {openClose , setOpenClose} = useOpenClose()
-  console.log(openClose)
+  const [openSearchBox , setOpenSearchBox] = useState(false)
   return (
     <>
        {/* Search Box in XL */}
@@ -20,15 +19,15 @@ function SearchBox() {
         </form>
        </div>
        {/* Search Box in LG */}
-       <div className='xl:hidden'>
-        <div onClick={() => setOpenClose((perv) => !perv)} className='flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-transparent dark:border dark:border-gray-700 dark:hover:border-gray-600 transition-colors cursor-pointer'>
+       <div className='hidden lg:block xl:hidden'>
+        <div onClick={() => setOpenSearchBox((perv) => !perv)} className='flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-transparent dark:border dark:border-gray-700 dark:hover:border-gray-600 transition-colors cursor-pointer'>
           <Search className='text-slate-500 dark:text-gray-500'/>
         </div>
         <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={openClose}
-        onClose={() => setOpenClose((prev) => !prev)}
+        open={openSearchBox}
+        onClose={() => setOpenSearchBox((prev) => !prev)}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         sx = {{
