@@ -27,8 +27,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link>آموزش HTML</Link>
-                    <Link>آموزش CSS</Link>
+                    <Link className='submenu__link'>آموزش HTML</Link>
+                    <Link className='submenu__link'>آموزش CSS</Link>
                   </div>
               </div>
             </li>
@@ -38,8 +38,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link>نقشه راه ورود به دنیای هک و امنیت </Link>
-                    <Link>شبکه با گرایش امنیت </Link>
+                    <Link className='submenu__link'>نقشه راه ورود به دنیای هک و امنیت </Link>
+                    <Link className='submenu__link'>شبکه با گرایش امنیت </Link>
                   </div>
               </div>
             </li>
@@ -49,8 +49,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link>دوره آموزش پایتون </Link>
-                    <Link>پروژه های کاربردی با پایتون </Link>
+                    <Link className='submenu__link'>دوره آموزش پایتون </Link>
+                    <Link className='submenu__link'>پروژه های کاربردی با پایتون </Link>
                   </div>
               </div>
             </li>
@@ -60,8 +60,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link>ربات تلگرام با PHP </Link>
-                    <Link>پروژه های کاربردی با PHP </Link>
+                    <Link className='submenu__link'>ربات تلگرام با PHP </Link>
+                    <Link className='submenu__link'>پروژه های کاربردی با PHP </Link>
                   </div>
               </div>
             </li>
@@ -71,8 +71,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link>الگوریتم و ساختمان داده‌ </Link>
-                    <Link>آموزش websocket</Link>
+                    <Link className='submenu__link'>الگوریتم و ساختمان داده‌ </Link>
+                    <Link className='submenu__link'>آموزش websocket</Link>
                   </div>
               </div>
             </li>
@@ -82,8 +82,8 @@ function Header() {
               </Link>
               <div className='invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10'>
                   <div className='flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base'>
-                    <Link> اچ‌ تی ام ال</Link>
-                    <Link> بوت استرپ</Link>
+                    <Link className='submenu__link'> اچ‌ تی ام ال</Link>
+                    <Link className='submenu__link'> بوت استرپ</Link>
                   </div>
               </div>
             </li>

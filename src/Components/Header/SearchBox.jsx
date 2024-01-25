@@ -12,7 +12,7 @@ function SearchBox() {
        <div className="relative group hidden lg:block">
         <form className='hidden xl:block'>
         <label className='relative h-14 block transition-all'>
-        <input type='text' className='rounded-full dark:focus:text-white outline-none text-slate-500 dark:text-gray-600 placeholder:text-slate-500 dark:placeholder-gray-600 w-48 focus:w-64 h-full border border-transparent hover:border-gray-200 dark:border-gray-700 focus:text-zinc-700 dark:focus:border-gray-600 bg-gray-100 dark:bg-gray text-base placeholder:text-lg pl-14 pr-5 block transition-all' placeholder='جستجو'/>
+        <input type='text' className='rounded-full dark:focus:text-white outline-none text-slate-500 dark:text-gray-600 placeholder:text-slate-500 dark:placeholder-gray-600 w-48 focus:w-64 h-full border border-transparent hover:border-gray-200 dark:border-gray-700 focus:text-zinc-700 dark:focus:border-gray-600 bg-gray-100 dark:bg-gray-main text-base placeholder:text-lg pl-14 pr-5 block transition-all' placeholder='جستجو'/>
           <button className="absolute left-5 top-0 bottom-0 w-7 h-7 my-auto text-slate-500 dark:text-gray-600">
             <Search className='text-slate-500 dark:text-gray-500'/>
           </button>

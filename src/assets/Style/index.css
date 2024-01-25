@@ -52,20 +52,23 @@
 }
 
 @layer components {
-  .CircleBubble {
-    @apply hidden md:flex justify-center items-center rounded-full border;
+  .submenu__link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(63 63 70 / 1);
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
   }
-  .CircleBubbleParent{
-	@apply absolute bottom-0 left-0 right-0 mx-auto translate-y-2/4;
+  .submenu__link:hover {
+    color: rgb(46 213 115 / 1);
   }
-  .CircleBubble__lg {
-    @apply w-[12.6875rem] h-[12.6875rem] border-white/25;
+  :is(.dark .submenu__link) {
+    color: rgb(255 255 255 / 1);
   }
-  .CircleBubble__md {
-    @apply w-[9.0625rem] h-[9.0625rem] border-white/50;
-  }
-  .CircleBubble__sm {
-    @apply w-[5.9375rem] h-[5.9375rem] border-white/80;
+  
+  :is(.dark .submenu__link:hover) {
+    color: rgb(46 213 115 / 1);
   }
   .swiper-button{
     @apply w-9 h-9 md:w-10 md:h-10 bg-white dark:bg-zinc-700 text-zinc-700 dark:text-white rounded-full hover:bg-gray-300 dark:hover:bg-white dark:hover:text-zinc-700 cursor-pointer shadow-normal transition-colors;
@@ -74,25 +77,7 @@
     direction: ltr;
     text-align: left;
   }
-  .Services::after, .Services::before{
-    content: "";
-    display: block;
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    background-color: #D1D5DB;
-  }
-  html.dark .Services::after, html.dark .Services::before{
-    background-color: rgba(255,255,255,0.1);
-  }
-  .Services::after{
-    width: 1px;
-    height: calc(100% + 1.25rem);
-  }
-  .Services::before{
-   width: calc(100% - 2rem);
-   height: 1px;
-  }
+
 }
 
 @layer utilities {
@@ -105,24 +90,7 @@
   .flex-between{
     @apply flex justify-between items-center
   }
-  .MoreFeaturesBG{
-   background: #F9FAFC url("../Images/bg-point.png") no-repeat fixed right -600px center/auto;
-  }
+
   
 }
 
-.css-1c99szj-MuiRating-icon{
-  @apply text-gray-300 dark:text-gray-400
-}
-.css-iljtu2-MuiRating-root {
-  direction: ltr;
-}
-
-.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
-  right: 0;
-  left: -13px !important;
-  margin: 0 auto;
-}
-.css-heg063-MuiTabs-flexContainer{
-  @apply overflow-x-scroll lg:overflow-x-auto;
-}
