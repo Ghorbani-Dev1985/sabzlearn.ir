@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/Images/Logo/logo.webp'
 import DarkMode from './DarkMode'
-import { ExpandMore } from '@mui/icons-material'
+import { ExpandMore, Search } from '@mui/icons-material'
+import SearchBox from './SearchBox'
 
 function Header() {
   return (
@@ -87,6 +88,7 @@ function Header() {
             </li>
           </ul>
       </nav>
+     <SearchBox />
       <DarkMode />
     </header>
   )
