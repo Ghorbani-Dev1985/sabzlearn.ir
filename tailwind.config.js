@@ -26,6 +26,7 @@ module.exports = {
       },
       boxShadow: {
         normal: "0px 1px 10px 0px rgba(0, 0, 0, 0.05)",
+        light: '0 1px 60px rgba(0,0,0, 0.05)',
         6: "0px 0px 6px 0px rgba(0, 0, 0, 0.30)",
         ring: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
         green: '0 40px 40px 0 rgba(0, 128, 0, 0.4)',

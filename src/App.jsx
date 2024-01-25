@@ -12,6 +12,11 @@ function App() {
     <>
      <Toaster />
     <Header />
+     <main className='overflow-hidden max-w-[1920px] mx-auto'>
+        <section className='container'>
+
+        </section>
+     </main>
     </>
   )
 }
