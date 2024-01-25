@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useDarkSide from "../../Hooks/useDarkSide";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
+import { LightMode , DarkModeIcon} from "@mui/icons-material";
 
 const DarkMode = () => {
   const [colorTheme, setTheme] = useDarkSide();
@@ -15,7 +15,7 @@ const DarkMode = () => {
   };
   return (
     <>
-        <DarkModeSwitch
+        {/* <DarkModeSwitch
           moonColor="#fdba74"
           sunColor=""
           className="text-orange-300 w-5 h-5 md:w-7 md:h-7 hidden md:block"
@@ -27,9 +27,9 @@ const DarkMode = () => {
           onChange={toggleDarkMode} id="toggleDarkMode" hidden />
           <label htmlFor="toggleDarkMode">
             
-          {colorTheme === "light" ? <div className="inline-flex items-center gap-x-2.5"><HiOutlineSun className=" w-5 h-5"/><span>تم روشن</span></div> : <div className="inline-flex items-center gap-x-2.5"><HiOutlineMoon className=" w-5 h-5"/><span>تم تیره</span></div>}
+          {colorTheme === "light" ? <div className="inline-flex items-center gap-x-2.5"><LightMode className="size-5"/><span>تم روشن</span></div> : <div className="inline-flex items-center gap-x-2.5"><DarkMode className="size-5"/><span>تم تیره</span></div>}
           </label>
-      </div>
+      </div> */}
     </>
   );
 };

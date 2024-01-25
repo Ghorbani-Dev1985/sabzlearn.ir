@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/Images/Logo/logo.webp'
+import DarkMode from './DarkMode'
 
 function Header() {
   return (
@@ -16,6 +17,7 @@ function Header() {
                 </Link>
           </div>
       </nav>
+      <DarkMode />
     </header>
   )
 }
