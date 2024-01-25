@@ -47,7 +47,7 @@
     @apply list-none
   }
   body {
-    @apply text-zinc-700 bg-gray-100 dark:bg-mainGray h-full font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-primary dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
+    @apply text-zinc-700 bg-gray-100 dark:bg-gray-main h-full font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-primary dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
   }
 }
 

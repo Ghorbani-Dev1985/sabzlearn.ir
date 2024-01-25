@@ -4,10 +4,11 @@ import Logo from '../../assets/Images/Logo/logo.webp'
 import DarkMode from './DarkMode'
 import { ExpandMore, Search } from '@mui/icons-material'
 import SearchBox from './SearchBox'
+import LoginRegister from './LoginRegister'
 
 function Header() {
   return (
-    <header className='flex items-center justify-between bg-white dark:bg-mainGray px-9 md:px-16 lg:px-4 2xl:px-12 h-22 md:h-32 dark:border-b dark:border-b-gray-700 mx-auto max-w-[1920px]'>
+    <header className='flex items-center justify-between bg-white dark:bg-gray-main px-9 md:px-16 lg:px-4 2xl:px-12 h-22 md:h-32 dark:border-b dark:border-b-gray-700 mx-auto max-w-[1920px]'>
       {/* Mobile nav icon */}
       <div className='lg:hidden flex items-center justify-center'></div>
       {/* Menu & Logo */}
@@ -88,8 +89,12 @@ function Header() {
             </li>
           </ul>
       </nav>
+      {/* Left Section */}
+      <div className='flex-center gap-x-5 h-14'>
      <SearchBox />
       <DarkMode />
+      <LoginRegister />
+      </div>
     </header>
   )
 }

@@ -22,7 +22,12 @@ module.exports = {
       colors: {
         primary: '#2ED573',
         secondary: '#4E81FB',
-        mainGray: '#1C1C28'
+        secondaryLight: 'rgba(78,129,251, 0.4)',
+        gray : {
+            main: '#1C1C28',
+            600: '#777C94',
+          700: '#32334D'
+        },
       },
       boxShadow: {
         normal: "0px 1px 10px 0px rgba(0, 0, 0, 0.05)",
