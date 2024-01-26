@@ -25,9 +25,12 @@ module.exports = {
         secondaryLight: 'rgba(78,129,251, 0.4)',
         gray : {
             main: '#1C1C28',
+            500: '#94A3B8',
             600: '#777C94',
-          700: '#32334D'
+          700: '#32334D',
+          800:'#28293D'
         },
+        mainSlate: '#4A4B6D'
       },
       boxShadow: {
         normal: "0px 1px 10px 0px rgba(0, 0, 0, 0.05)",
