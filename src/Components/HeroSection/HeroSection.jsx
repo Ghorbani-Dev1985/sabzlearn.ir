@@ -8,7 +8,6 @@ import Typewriter from "typewriter-effect";
 
 function HeroSection() {
   const { colorTheme } = usePublicDarkMode();
-  console.log(colorTheme);
   return (
     <>
       {/* Hero Section Component */}
@@ -87,7 +86,7 @@ function HeroSection() {
           )}
         </div>
       </section>
-      <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-primary opacity-20 blur-2xl rounded-full -z-10 absolute top-6 -left-[320px] lg:-left-[400px]"></div>
+      <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-primary opacity-20 blur-2xl rounded-full -z-10 absolute top-6 -left-[320px] lg:-left-[400px]"></div>
      
     </>
   );
