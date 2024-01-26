@@ -11,6 +11,7 @@ function HeroSection() {
   console.log(colorTheme);
   return (
     <>
+      {/* Hero Section Component */}
       <section className="flex-center gap-y-10 flex-wrap lg:flex-nowrap lg:flex-between text-center lg:text-right">
         <div className="w-full sm:w-auto order-2 lg:order-1">
           {/* Notification */}
@@ -87,7 +88,7 @@ function HeroSection() {
         </div>
       </section>
       <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-primary opacity-20 blur-2xl rounded-full -z-10 absolute top-6 -left-[320px] lg:-left-[400px]"></div>
-      <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -bottom-2/3"></div>
+     
     </>
   );
 }
