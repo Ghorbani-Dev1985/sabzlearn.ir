@@ -30,9 +30,7 @@ function HeroSection() {
           <h2 className="font-MorabbaBold text-5xl block h-48 lg:text-6xl text-zinc-700 dark:text-white leading-[80px] lg:leading-[96px]">
             <Typewriter
               options={{
-                strings: [
-                  `ما به هر قیمتی  <br className="hidden sm:inline" /> دوره تولید نمی کنیم!`,
-                ],
+                strings: `ما به هر قیمتی  <br className="hidden sm:inline" /> دوره تولید نمی کنیم!`,
                 autoStart: true,
                 loop: true,
               }}
