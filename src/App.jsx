@@ -15,9 +15,11 @@ function App() {
      <MainProvider>
     <Header />
      <main className='overflow-hidden max-w-[1920px] mx-auto'>
-        <section className='container'>
-
-        </section>
+      <section className='pt-10 lg:pt-25 relative'>
+        <div className='container'>
+            {router}
+        </div>
+      </section>
      </main>
      </MainProvider>
     </>

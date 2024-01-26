@@ -42,7 +42,9 @@
   * {
     @apply p-0 m-0 box-border;
   }
-
+  a{
+    @apply !no-underline cursor-pointer
+  }
   li{
     @apply list-none
   }
@@ -80,6 +82,31 @@
     direction: ltr;
     text-align: left;
   }
+  .button-md {
+    height: 2.5rem;
+    -moz-column-gap: 0.5rem;
+    column-gap: 0.5rem;
+    padding-left: 18px;
+    padding-right: 18px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.button-lg {
+  height: 3.5rem;
+    -moz-column-gap: 0.5rem;
+    column-gap: 0.5rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.button-primary{
+  @apply bg-primary text-wrap
+}
+.button-secondary{
+  background-color: #0EA5E9;
+  color: #fff;
+}
 
 }
 

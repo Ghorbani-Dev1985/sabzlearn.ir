@@ -1,10 +1,11 @@
 import React from 'react'
+import HeroSection from './HeroSection/HeroSection'
 
 function Index() {
   return (
-    <div>
-      
-    </div>
+    <>
+     <HeroSection /> 
+    </>
   )
 }
 

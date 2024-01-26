@@ -15,17 +15,10 @@ import Logo from "../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../assets/Images/svgs/logoTypeDark.svg";
 import MobileDarkMode from "./MobileDarkMode";
-import useDarkSide from "../../Hooks/useDarkSide";
+import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
 
 function MobileNav() {
-  const [colorTheme, setTheme] = useDarkSide();
-  const [darkSide, setDarkSide] = useState(
-    colorTheme === "light" ? true : false
-  );
-  const toggleDarkMode = (checked) => {
-    setTheme(colorTheme);
-    setDarkSide(checked);
-  };
+  const {  colorTheme } = usePublicDarkMode();
   console.log(colorTheme)
   const [openMobileNav, setMobileNav] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -282,7 +275,7 @@ function MobileNav() {
               </AccordionDetails>
             </Accordion>
             <Divider className="dark:border-mainSlate" />
-            <MobileDarkMode darkSide={darkSide} setDarkSide={setDarkSide} toggleDarkMode={toggleDarkMode}/>
+            <MobileDarkMode />
           </Box>
         </Drawer>
       </RtlProvider>
