@@ -8,10 +8,11 @@ import { StyledEngineProvider, ThemeProvider, createTheme } from "@mui/material/
 const CustomTheme = createTheme({
   palette: {
     primary: {
-      main: '#2ED573'
+      main: '#2ED573',
+
     },
     secondary: {
-      main: '#4E81FB'
+      main: '#4E81FB',
     },
   },
   direction: 'rtl',
@@ -23,6 +24,7 @@ const CustomTheme = createTheme({
     letterSpacing: 'normal',
     fontSize : 16,
     htmlFontSize: 16,
+    color: '#3f3f46'
   },
   shape: {
     borderRadius: 8,

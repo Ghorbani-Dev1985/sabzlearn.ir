@@ -43,7 +43,7 @@
     @apply p-0 m-0 box-border;
   }
   a{
-    @apply !no-underline cursor-pointer
+    @apply no-underline cursor-pointer
   }
   li{
     @apply list-none
