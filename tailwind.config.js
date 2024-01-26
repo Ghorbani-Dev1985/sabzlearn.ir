@@ -15,6 +15,7 @@ module.exports = {
       backgroundImage: {
           'sm' : 'url("../../assets/Images/headerBgMobile.webp")',
           'xl' : 'url("../../assets/Images/headerBgDesktop.webp")',
+          'conic-gradient' : 'conic-gradient(from 90deg , var(--tw-gradient-stops))',
           'products' : 'url("../../assets/Images/product-bg.png")',
           'UserCTAbg' : 'url("../../assets/Images/cta-bg.jpg")',
           'registerFormBg' : 'url("../../assets/Images/registerFormBg.png")',
