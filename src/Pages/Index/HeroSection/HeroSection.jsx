@@ -1,9 +1,17 @@
 import { InfoOutlined } from '@mui/icons-material'
 import { Link } from '@mui/material'
 import React from 'react'
+import { usePublicDarkMode } from '../../../Contexts/DarkModeContext';
+import BoyLight from '../../../assets/Images/svgs/boy-light.svg'
+import BoyDark from '../../../assets/Images/svgs/boy-dark.svg'
+
+
 
 function HeroSection() {
+  const {colorTheme} = usePublicDarkMode();
+  console.log(colorTheme)
   return (
+    <>
     <section className='flex-center gap-y-10 flex-wrap lg:flex-nowrap lg:flex-between text-center lg:text-right'>
         <div className='w-full sm:w-auto order-2 lg:order-1'>
        {/* Notification */}
@@ -34,12 +42,17 @@ function HeroSection() {
                   ما کی هستیم؟
                 </Link>
             </div>
+        </div>
             {/* Image Section */}
             <div className='order-1 lg:order-2'>
-
+              {
+                colorTheme === "dark" ? <img src={BoyLight} alt="ghorbani-dev.ir" className='w-full sm:w-[400px] lg:w-[460px] xl:w-[550px]' /> : <img src={BoyDark} alt="ghorbani-dev.ir"className='w-full sm:w-[400px] lg:w-[460px] xl:w-[550px]' />
+              }
             </div>
-        </div>
     </section>
+    <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-primary opacity-20 blur-2xl rounded-full -z-10 absolute top-6 -left-[320px] lg:-left-[400px]"></div>
+    <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -bottom-2/3"></div>
+              </>
   )
 }
 

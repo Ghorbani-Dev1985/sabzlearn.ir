@@ -19,7 +19,6 @@ import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
 
 function MobileNav() {
   const {  colorTheme } = usePublicDarkMode();
-  console.log(colorTheme)
   const [openMobileNav, setMobileNav] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const handleChangeAccordion = (panel) => (event, isExpanded) => {
@@ -35,7 +34,6 @@ function MobileNav() {
 
     setMobileNav((prev) => !prev);
   };
-  console.log(localStorage.getItem("theme"));
   return (
     <>
       <button onClick={toggleDrawer}>
