@@ -3,6 +3,7 @@ import HeroSection from "../../Components/HeroSection/HeroSection";
 import LastCourses from "../../Components/LastCourses/LastCourses";
 import RoadMap from "../../Components/RoadMap/RoadMap";
 import WhatHelp from "../../Components/WhatHelp/WhatHelp";
+import NewCourses from "../../Components/NewCourses/NewCourses";
 
 function Index() {
   return (
@@ -11,6 +12,7 @@ function Index() {
       <LastCourses />
       <RoadMap />
       <WhatHelp />
+      <NewCourses />
     </>
   );
 }

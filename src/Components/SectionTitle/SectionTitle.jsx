@@ -2,7 +2,7 @@ import { KeyboardBackspace } from '@mui/icons-material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function SectionTitle({squareColor, title , subTitle , isLink ,to , linkText}) {
+function SectionTitle({children , squareColor, title , subTitle , isLink ,to , linkText}) {
   return (
     // Section Title 
     <div className='flex-between flex-wrap flex-col mb-10 sm:flex-row gap-4'>
@@ -20,6 +20,7 @@ function SectionTitle({squareColor, title , subTitle , isLink ,to , linkText}) {
             <KeyboardBackspace className='!size-5'/>
          </Link>
       }
+      {children}
     </div>
   )
 }

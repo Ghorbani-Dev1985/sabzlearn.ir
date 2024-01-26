@@ -10,7 +10,7 @@ import SoftSkill from '../../assets/Images/svgs/softSkillIcon.svg'
 function RoadMap() {
   return (
     // Roadmap Component
-    <section className='mt-25'>
+    <section className='mt-25 relative'>
        <SectionTitle squareColor="bg-fuchsia-500" title="نقشه راه ها" subTitle="نقشه های راه برای شروع اصولی یادگیری" isLink={false} /> 
        {/* Roadmap */}
        <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
@@ -19,6 +19,7 @@ function RoadMap() {
           <SingleRoadMap to="" boxBgColor="from-[#9C33F7] to-[#2B9FFF]" icon={Python} title="پایتون" countNumber={6} />
           <SingleRoadMap to="" boxBgColor="from-[#FF3571] to-[#870075]" icon={SoftSkill} title=" مهارت‌های نرم" countNumber={6} />
        </div>
+       <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-fuchsia-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-50"></div>
     </section>
   )
 }
