@@ -1,12 +1,12 @@
-import React from 'react'
-import HeroSection from './HeroSection/HeroSection'
+import React from "react";
+import HeroSection from "../../Components/HeroSection/HeroSection";
 
 function Index() {
   return (
     <>
-     <HeroSection /> 
+      <HeroSection />
     </>
-  )
+  );
 }
 
-export default Index
+export default Index;

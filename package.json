@@ -29,7 +29,8 @@
     "styled-components": "^6.1.8",
     "stylis-plugin-rtl": "^2.1.1",
     "sweetalert2": "^11.10.4",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
