@@ -1,5 +1,5 @@
 import Index from "./Pages/Index/Index";
-import CourseInfo from "./Pages/CourseInfo/CourseInfo";
+import Course from "./Pages/Course/Course";
 import Category from "./Pages/Category/Category";
 import ArticleInfo from "./Pages/ArticleInfo/ArticleInfo";
 
@@ -7,7 +7,7 @@ import ArticleInfo from "./Pages/ArticleInfo/ArticleInfo";
 
 let routes = [
     {path: '/' , element: <Index />},
-    {path: '/courseInfo/:courseName' , element: <CourseInfo />},
+    {path: '/course/:courseName' , element: <Course />},
     {path: '/category/:categoryName' , element: <Category />},
     {path: '/articleInfo/:articleName' , element: <ArticleInfo />},
 ]

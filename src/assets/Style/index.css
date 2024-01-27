@@ -152,6 +152,44 @@
 .toggle__input:checked ~ .toggle__select::after {
   right: 26px;
 }
+.breadcrumb__item {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-right: 2.5rem;
+  padding-left: 1.25rem;
+  font-family: 'Dana';
+}
+.breadcrumb__item::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  height: 67%;
+  width: 5px;
+  background-color: rgb(243 244 246);
+  bottom: -2px;
+  transform: rotate(-35deg);
+  transform-origin: bottom;
+}
+.breadcrumb__item::after {
+  content: '';
+  position: absolute;
+  left: 0px;
+  height: 67%;
+  width: 5px;
+  background-color: rgb(243 244 246);
+  top: -2px;
+  transform: rotate(35deg);
+  transform-origin: top;
+}
+.breadcrumb__item:first-child {
+  padding-right: 2rem;
+}
+.breadcrumb__item:last-child {
+  font-family: 'Dana DemiBold';
+}
 }
 
 @layer utilities {

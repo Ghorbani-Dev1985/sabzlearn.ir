@@ -45,6 +45,7 @@ module.exports = {
         yellow: '0 40px 40px 0 rgba(224, 149, 32, 0.4)',
         countBox: '0 10px 55px 5px rgba(137, 173, 255, 0.35)',
         round: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+        breadcrumb: '0 0 #0000 , 0 0 #0000',
       },
       borderRadius: {
         "4xl": "2rem",
