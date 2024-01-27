@@ -26,14 +26,14 @@ function ArticleCard({
       <div className="flex flex-col gap-y-8 flex-grow px-5">
         <div className="relative pt-1.5">
           {/* Title & Description */}
-          <h4 className="font-DanaMd max-h-12 line-clamp-2 text-zinc-700 dark:text-white mb-2.5">
+          <h4 className="font-DanaMd h-12 max-h-12 line-clamp-2 text-base text-zinc-700 dark:text-white mb-2.5">
             <Link className={to}>{title}</Link>
           </h4>
-          <p className="font-Dana text-sm h-20 line-clamp-4 text-slate-500 dark:text-slate-400">
+          <p className="font-Dana text-sm h-24 line-clamp-4 text-slate-500 dark:text-slate-400">
             {description}
           </p>
           {/* Footer */}
-          <div className="mt-auto space-y-4">
+          <div className="mt-3 space-y-4">
             {/* Author & Date */}
             <div className="flex gap-2.5 flex-wrap text-slate-500 dark:text-slate-400 text-xs">
               <div className="flex items-center gap-x-1 hover:text-primary transition-colors cursor-pointer">
@@ -53,10 +53,10 @@ function ArticleCard({
                 </svg>
                 <Link to={authorLink}>{authorName}</Link>
               </div>
-            </div>
             <div className="flex items-center gap-x-1">
-              <CalendarToday />
+              <CalendarToday className="size-4"/>
               <span>{date}</span>
+            </div>
             </div>
           </div>
           {/* More Link */}

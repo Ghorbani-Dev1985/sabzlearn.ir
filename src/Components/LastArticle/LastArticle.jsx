@@ -1,114 +1,48 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
-import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
-import Slider from '../../common/Slider/Slider'
-import { SwiperSlide } from 'swiper/react'
-import CourseCard from '../CourseCard/CourseCard'
+import ArticleCard from '../ArticleCard/ArticleCard'
 
-const newCourses = [
-  {
-      id: 1,
-      src: './src/assets/Images/Courses/Course-thumbnail-Dashboard2-1-768x432.webp',
-      isOffer : true,
-      offerPercent : 60,
-      category :  [{
-              id: 1,
-              categoryTitle: 'فرانت اند',
-              categoryLink : ''
-      }],
-      title: 'پیاده سازی داشبورد های حرفه ای با CSS و JS',
-      description: 'این دوره فرصتی فوق‌العاده برای ارتقاء مهارت‌های فرانت اند شماست. با یادگیری از جدیدترین تکنیک‌ها، انیمیشن‌ها ، ابزارهای پیشرفته',
-      teacherName: 'مهرشاد براتی',
-      time: '07:08',
-      studentCount : 282,
-      offerPrice: 620000,
-      price: 248000
-  },
-  {
-      id: 2,
-      src: './src/assets/Images/Courses/ezgif.com-jpg-to-webp-converted-33-1-768x432.webp',
-      isOffer : true,
-      offerPercent : 60,
-      category : [{
-          id: 1,
-          categoryTitle: ' ارتقای مهارت ها',
-          categoryLink : ''
-  }],
-      title: 'Clean Code برای برنامه نویسان JS',
-      description: ' فرق بین یه برنامه‌نویس تازه‌کار و حرفه‌ای نوع دیدگاه و طرز کدنویسیشونه. برنامه‌نویس حرفه‌ای کدی رو می‌نویسه که تست‌پذیر باشه ',
-      teacherName: ' محمدامین سعیدی راد',
-      time: '02:18',
-      studentCount : 232,
-      offerPrice: 1100000,
-      price: 440000
-  },
-  {
-      id: 3,
-      src: './src/assets/Images/Courses/ezgif.com-jpg-to-webp-converted-22-1-768x432.webp',
-      isOffer : true,
-      offerPercent : 60,
-      category : [{
-          id: 1,
-          categoryTitle: ' بک اند ',
-          categoryLink : ''
-  }],
-      title: 'آموزش حرفه ای NodeJS بدون پیش نیاز',
-      description: ' الان و امروز کمتر کسی هست که از بازار کار داغ نود جی اس با خبر نباشه و یکی از ',
-      teacherName: ' محمدامین سعیدی راد',
-      time: '61:45',
-      studentCount : 432,
-      offerPrice: 4350000,
-      price: 1740000
-  },
-  {
-      id: 4,
-      src: './src/assets/Images/Courses/IMAGE-1402-09-30-20_33_36-1-768x432.webp',
-      isOffer : true,
-      offerPercent : 60,
-      category : [{
-          id: 1,
-          categoryTitle: ' بک اند ',
-          categoryLink : ''
-  },
-  {
-      id: 2,
-      categoryTitle: ' پی اچ پی ',
-      categoryLink : ''
-}
-],
-      title: ' دوره پروژه محور لایووایر (Livewire Master)',
-      description: ' دوره لایووایر مستر (Livewire Master) یک دوره‌ی تمام عیار برای فول‌استک فریمورکِ لایووایر است که هدف آن آموزش قدم به ',
-      teacherName: '  آرمین هوشمند ',
-      time: '00:21',
-      studentCount : 24,
-      offerPrice: 699000,
-      price: 279600
-  },
-  {
-    id: 5,
-    src: './src/assets/Images/Courses/IMAGE-1402-09-30-20_33_36-1-768x432.webp',
-    isOffer : true,
-    offerPercent : 60,
-    category : [{
-        id: 1,
-        categoryTitle: ' بک اند ',
-        categoryLink : ''
+const LastArticles = [
+{
+  id: 1,
+  to: "",
+  src: "./src/assets/Images/ArticlesImg/what-is-backend-1-768x512.webp",
+  title: "بک اند چیست؟",
+  description: "بک اند چیست؟ این سوالی است که ممکن است به ذهن اکثر افراد بیاید؛ بک اند یک شغل در زمینه برنامه نویسی است که در این مقاله قصد داریم پس",
+  authorLink: "",
+  authorName: "ارمیا مزرعه",
+  date: "1402/11/05"
 },
 {
-    id: 2,
-    categoryTitle: ' پی اچ پی ',
-    categoryLink : ''
-}
-],
-    title: ' دوره پروژه محور لایووایر (Livewire Master)',
-    description: ' دوره لایووایر مستر (Livewire Master) یک دوره‌ی تمام عیار برای فول‌استک فریمورکِ لایووایر است که هدف آن آموزش قدم به ',
-    teacherName: '  آرمین هوشمند ',
-    time: '00:21',
-    studentCount : 24,
-    offerPrice: 699000,
-    price: 279600
-}
-
+  id: 2,
+  to: "",
+  src: "./src/assets/Images/ArticlesImg/The-difference-between-TypeScript-and-JavaScript-1-768x512.webp",
+  title: " تفاوت تایپ اسکریپت و جاوا اسکریپت",
+  description: "طبق مطالعات انجام شده، تایپ اسکریپت دومین زبان محبوب در میان توسعه‌دهندگان است و جاوا اسکریپت در رقابتی پیاپی با این زبان برنامه‌نویسی در رتبه سوم قرار دارد. این محبوبیت",
+  authorLink: "",
+  authorName: " کامل بهرامی",
+  date: "1402/11/04"
+},
+{
+  id: 3,
+  to: "",
+  src: "./src/assets/Images/ArticlesImg/games-made-with-python-1-768x512.webp",
+  title: " بازی های ساخته شده با پایتون",
+  description: "ساخت بازی با پایتون یکی دیگر از مباحثی است که این روزها سروصدای زیادی کرده؛ در واقع بازی های ساخته شده با پایتون آنقدر هم که فکر می‌کنید انگشت شمار",
+  authorLink: "",
+  authorName: " ارمیا مزرعه ",
+  date: "1402/11/04"
+},
+{
+  id: 4,
+  to: "",
+  src: "./src/assets/Images/ArticlesImg/api-in-javascript-1-768x512.webp",
+  title: " آموزش کار با API در جاوا اسکریپت",
+  description: "توانایی برقراری تماس‌های API در جاوا اسکریپت مهارتی اساسی برای توسعه‌دهندگان وب در دنیای برنامه نویسی است که به آن‌ها اجازه می‌دهد داده‌ها را از منابع خارجی بازیابی کرده و",
+  authorLink: "",
+  authorName: " کامل بهرامی ",
+  date: "1402/11/02"
+},
 ]
 
 function LastArticle() {
@@ -117,20 +51,19 @@ function LastArticle() {
     <section className='mt-25 relative'>
        <SectionTitle squareColor="bg-pink-500 dark:bg-rose-500" title=" جدیدترین دوره ها" subTitle=" یادگیری و رشد توسعه فردی " isLink={true} to="" linkText="مشاهده همه مقالات"/>      
        {/* LastArticle */}
-       <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
+     <div className='grid grid-rows-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
          {
-         
-         newCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+      
+         LastArticles.map(({id, src , title , description , authorLink , authorName , date}) => {
            return(
              <React.Fragment key={id}>
-                          <SwiperSlide>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
-                          </SwiperSlide>
+                          
+                        <ArticleCard src={src} title={title} description={description} authorLink={authorLink} authorName={authorName} date={date} />
                     </React.Fragment>
                 )
               })
         }
-       </Slider>
+</div>
 <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-pink-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-0"></div> 
     </section>
   )
