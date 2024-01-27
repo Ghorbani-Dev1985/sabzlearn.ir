@@ -16,6 +16,8 @@ module.exports = {
           'sm' : 'url("../../assets/Images/headerBgMobile.webp")',
           'xl' : 'url("../../assets/Images/headerBgDesktop.webp")',
           'conic-gradient' : 'conic-gradient(from 90deg , var(--tw-gradient-stops))',
+          'beforeArticle' : 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 90%)',
+          'afterArticle' : 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
           'products' : 'url("../../assets/Images/product-bg.png")',
           'UserCTAbg' : 'url("../../assets/Images/cta-bg.jpg")',
           'registerFormBg' : 'url("../../assets/Images/registerFormBg.png")',
