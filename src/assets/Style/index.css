@@ -107,7 +107,39 @@
   background-color: #0EA5E9;
   color: #fff;
 }
-
+.toggle__select {
+  position: relative;
+  display: block;
+  height: 1.5rem;
+  width: 46px;
+  border-radius: 9999px;
+  background-color: rgb(229 231 235);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.toggle__select::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0.25rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 9999px;
+  background-color: rgb(255 255 255);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.toggle__input:checked ~ .toggle__select {
+  background-color: rgb(14 165 233 );
+}
+.toggle__input:checked ~ .toggle__select::after {
+  right: 26px;
+}
 }
 
 @layer utilities {

@@ -49,6 +49,9 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      height : {
+         '17' : '4.25rem'
+      },
       fontFamily: {
         Dana: "Dana",
         DanaMd: "Dana Medium",

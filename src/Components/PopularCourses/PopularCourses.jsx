@@ -21,7 +21,7 @@ const popularCourses = [
       time: '07:08',
       studentCount : 282,
       offerPrice: 620000,
-      price: 248000
+      price: 0
   },
   {
       id: 2,
@@ -39,7 +39,7 @@ const popularCourses = [
       time: '02:18',
       studentCount : 232,
       offerPrice: 1100000,
-      price: 440000
+      price: 0
   },
   {
       id: 3,
@@ -57,7 +57,7 @@ const popularCourses = [
       time: '61:45',
       studentCount : 432,
       offerPrice: 4350000,
-      price: 1740000
+      price: 0
   },
   {
       id: 4,
