@@ -19,6 +19,7 @@ function Index() {
       <LastArticle />
       <InstagramPage />
       <PresellCourses />
+      <PresellCourses />
     </>
   );
 }

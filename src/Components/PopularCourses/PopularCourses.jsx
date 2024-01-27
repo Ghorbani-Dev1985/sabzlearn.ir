@@ -1,16 +1,15 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
-import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
 
-const presellCourses = [
+const popularCourses = [
   {
       id: 1,
       src: './src/assets/Images/Courses/Course-thumbnail-Dashboard2-1-768x432.webp',
-      isOffer : false,
-      offerPercent : "",
+      isOffer : true,
+      offerPercent : 100,
       category :  [{
               id: 1,
               categoryTitle: 'فرانت اند',
@@ -27,8 +26,8 @@ const presellCourses = [
   {
       id: 2,
       src: './src/assets/Images/Courses/ezgif.com-jpg-to-webp-converted-33-1-768x432.webp',
-      isOffer : false,
-      offerPercent : "",
+      isOffer : true,
+      offerPercent : 100,
       category : [{
           id: 1,
           categoryTitle: ' ارتقای مهارت ها',
@@ -45,8 +44,8 @@ const presellCourses = [
   {
       id: 3,
       src: './src/assets/Images/Courses/ezgif.com-jpg-to-webp-converted-22-1-768x432.webp',
-      isOffer : false,
-      offerPercent : "",
+      isOffer : true,
+      offerPercent : 100,
       category : [{
           id: 1,
           categoryTitle: ' بک اند ',
@@ -63,8 +62,8 @@ const presellCourses = [
   {
       id: 4,
       src: './src/assets/Images/Courses/IMAGE-1402-09-30-20_33_36-1-768x432.webp',
-      isOffer : false,
-      offerPercent : "",
+      isOffer : true,
+      offerPercent : 100,
       category : [{
           id: 1,
           categoryTitle: ' بک اند ',
@@ -82,12 +81,12 @@ const presellCourses = [
       time: '00:21',
       studentCount : 24,
       offerPrice: 699000,
-      price: 279600
+      price: 0
   },
   {
     id: 5,
     src: './src/assets/Images/Courses/IMAGE-1402-09-30-20_33_36-1-768x432.webp',
-    isOffer : false,
+    isOffer : true,
     offerPercent : 60,
     category : [{
         id: 1,
@@ -106,7 +105,7 @@ const presellCourses = [
     time: '00:21',
     studentCount : 24,
     offerPrice: 699000,
-    price: 279600
+    price: 0
 }
 
 ]
@@ -115,13 +114,13 @@ function PresellCourses() {
   return (
     // PresellCourses Component
     <section className='mt-25'>
-       <SectionTitle squareColor="bg-primary" title=" در حال پیش فروش " subTitle=" دوره هایی که قراره برگزار بشن " isLink={false} />
+       <SectionTitle squareColor="bg-primary" title=" محبوب ترین دوره ها" subTitle=" پرمخاطب ترین و بهترین دوره های سبزلرن " isLink={true} to="" linkText="مشاهده همه دوره ها" />
        {/* PresellCourses */}
     
        <Slider>
          {
          
-         presellCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+         popularCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
            return(
              <React.Fragment key={id}>
                           <SwiperSlide>

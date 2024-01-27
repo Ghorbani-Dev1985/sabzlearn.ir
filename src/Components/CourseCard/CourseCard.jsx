@@ -127,7 +127,12 @@ function CourseCard({
               {offerPrice && offerPrice.toLocaleString()}
             </span>
             <span className="flex-center gap-1 font-DanaMd text-xl text-primary space-x-1.5">
-              {price && price.toLocaleString()}
+              {
+              price > 0 ?
+              price && price.toLocaleString() :
+              <span class="font-Dana text-xl text-primary space-x-1.5">
+              رایگان! </span>
+              }
               <img src={TomanGreen} alt="ghorbani-dev.ir" className="size-4" />
             </span>
           </div>
