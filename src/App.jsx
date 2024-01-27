@@ -15,7 +15,7 @@ function App() {
      <Toaster />
      <MainProvider>
     <Header />
-     <main className='overflow-hidden min-h-screen max-w-[1920px] mx-auto'>
+     <main className='min-h-screen max-w-[1920px] mx-auto'>
       <section className='pt-10 lg:pt-25'>
         <div className='container'>
             {router}

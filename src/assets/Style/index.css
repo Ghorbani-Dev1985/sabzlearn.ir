@@ -107,6 +107,18 @@
   background-color: #0EA5E9;
   color: #fff;
 }
+.button-sort{
+  display: inline-block;
+  border-radius: 0.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: rgb(100 116 139);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .toggle__select {
   position: relative;
   display: block;
