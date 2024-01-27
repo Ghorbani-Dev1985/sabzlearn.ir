@@ -19,7 +19,7 @@ function RoadMap() {
           <SingleRoadMap to="" boxBgColor="from-[#9C33F7] to-[#2B9FFF]" icon={Python} title="پایتون" countNumber={6} />
           <SingleRoadMap to="" boxBgColor="from-[#FF3571] to-[#870075]" icon={SoftSkill} title=" مهارت‌های نرم" countNumber={6} />
        </div>
-       <div class="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-fuchsia-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-50"></div>
+       <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-fuchsia-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-50"></div>
     </section>
   )
 }

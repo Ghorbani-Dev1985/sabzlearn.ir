@@ -18,7 +18,7 @@ module.exports = {
           'conic-gradient' : 'conic-gradient(from 90deg , var(--tw-gradient-stops))',
           'beforeArticle' : 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 90%)',
           'afterArticle' : 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
-          'products' : 'url("../../assets/Images/product-bg.png")',
+          'instagramPage' : 'url("../../assets/Images/section-pattern/section-pattern.png") , linear-gradient(to right, #502ED6, #CD2F6A, #FFE354)',
           'UserCTAbg' : 'url("../../assets/Images/cta-bg.jpg")',
           'registerFormBg' : 'url("../../assets/Images/registerFormBg.png")',
       },
