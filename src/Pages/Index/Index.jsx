@@ -6,6 +6,7 @@ import WhatHelp from "../../Components/WhatHelp/WhatHelp";
 import NewCourses from "../../Components/NewCourses/NewCourses";
 import LastArticle from "../../Components/LastArticle/LastArticle";
 import InstagramPage from "../../Components/InstagramPage/InstagramPage";
+import PresellCourses from "../../Components/PresellCourses/PresellCourses";
 
 function Index() {
   return (
@@ -17,6 +18,7 @@ function Index() {
       <NewCourses />
       <LastArticle />
       <InstagramPage />
+      <PresellCourses />
     </>
   );
 }
