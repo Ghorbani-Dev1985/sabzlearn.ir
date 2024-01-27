@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Breadcrumb() {
   return (
-    <div className='w-full h-[50px] flex items-center overflow-x-auto overflow-y-hidden rounded-2xl leading-7 bg-white text-zinc-700 text-xl shadow-breadcrumb'>
+    <div className='w-full h-[50px] flex items-center overflow-x-auto overflow-y-hidden rounded-2xl leading-7 bg-white dark:bg-gray-800 text-zinc-700 dark:text-white text-xl shadow-breadcrumb'>
       <div className='breadcrumb__item'>
         <Link to="/" className='whitespace-nowrap'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

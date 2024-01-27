@@ -100,8 +100,18 @@
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
+.button-xl {
+  height: 62px;
+  -moz-column-gap: 0.625rem;
+  column-gap: 0.625rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-family: 'Dana DemiBold';
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
 .button-primary{
-  @apply bg-primary text-wrap
+  @apply bg-primary text-wrap text-white hover:bg-green-500 transition-colors
 }
 .button-secondary{
   background-color: #0EA5E9;
@@ -146,6 +156,7 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+
 .toggle__input:checked ~ .toggle__select {
   background-color: rgb(14 165 233 );
 }
@@ -173,6 +184,9 @@
   transform: rotate(-35deg);
   transform-origin: bottom;
 }
+:is(.dark .breadcrumb__item::before){
+  @apply bg-gray-main
+}
 .breadcrumb__item::after {
   content: '';
   position: absolute;
@@ -183,6 +197,9 @@
   top: -2px;
   transform: rotate(35deg);
   transform-origin: top;
+}
+:is(.dark .breadcrumb__item::after){
+  @apply bg-gray-main
 }
 .breadcrumb__item:first-child {
   padding-right: 2rem;
