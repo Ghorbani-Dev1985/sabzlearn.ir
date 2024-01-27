@@ -4,6 +4,7 @@ import routes from './Routes'
 import { useRoutes } from 'react-router-dom'
 import Header from './Components/Header/Header'
 import MainProvider from './common/MainProvider/MainProvider'
+import Footer from './Components/Footer/Footer'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         </div>
       </section>
      </main>
+     <Footer />
      </MainProvider>
     </>
   )

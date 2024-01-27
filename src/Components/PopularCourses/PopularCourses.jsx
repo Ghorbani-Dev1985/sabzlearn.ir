@@ -76,7 +76,7 @@ const popularCourses = [
 }
 ],
       title: ' دوره پروژه محور لایووایر (Livewire Master)',
-      description: ' دوره لایووایر مستر (Livewire Master) یک دوره‌ی تمام عیار برای فول‌استک فریمورکِ لایووایر است که هدف آن آموزش قدم به ',
+  
       teacherName: '  آرمین هوشمند ',
       time: '00:21',
       studentCount : 24,
@@ -100,7 +100,7 @@ const popularCourses = [
 }
 ],
     title: ' دوره پروژه محور لایووایر (Livewire Master)',
-    description: ' دوره لایووایر مستر (Livewire Master) یک دوره‌ی تمام عیار برای فول‌استک فریمورکِ لایووایر است که هدف آن آموزش قدم به ',
+
     teacherName: '  آرمین هوشمند ',
     time: '00:21',
     studentCount : 24,
@@ -124,7 +124,7 @@ function PresellCourses() {
            return(
              <React.Fragment key={id}>
                           <SwiperSlide>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
+                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
                           </SwiperSlide>
                     </React.Fragment>
                 )
