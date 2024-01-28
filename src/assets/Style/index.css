@@ -134,6 +134,9 @@
   background-color: #0EA5E9;
   color: #fff;
 }
+.button-gray{
+  @apply bg-gray-200 text-zinc-700 dark:bg-gray-700 dark:text-white
+}
 .button-sort{
   display: inline-block;
   border-radius: 0.5rem;
@@ -224,6 +227,8 @@
 .breadcrumb__item:last-child {
   font-family: 'Dana DemiBold';
 }
+
+
 :is(.dark .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded){
   @apply bg-[#4A4B6D] !rounded-tr-2xl !rounded-tl-2xl !rounded-br-none !rounded-bl-none
 }
@@ -250,3 +255,12 @@
   
 }
 
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded{
+  background-color: #e5e7eb;
+  border-bottom-right-radius: 0;
+  -webkit-border-radius: ;
+  -moz-border-radius: ;
+  -ms-border-radius: ;
+  -o-border-radius: ;
+  border-bottom-left-radius: 0;
+}
