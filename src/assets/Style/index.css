@@ -51,6 +51,23 @@
   body {
     @apply text-zinc-700 bg-gray-100 dark:bg-gray-main h-full font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-primary dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
   }
+  progress::-webkit-progress-bar {
+    border-radius: 9999px;
+    background-color: rgb(243 244 246);
+  }
+  
+  :is(.dark progress)::-webkit-progress-bar {
+    background-color: rgb(28 28 40);
+  }
+  
+  progress::-webkit-progress-value {
+    border-radius: 9999px;
+    background-color: rgb(14 165 233);
+  }
+  
+  :is(.dark progress)::-webkit-progress-value {
+    background-color: rgb(78 129 251);
+  }
 }
 
 @layer components {
@@ -207,6 +224,16 @@
 .breadcrumb__item:last-child {
   font-family: 'Dana DemiBold';
 }
+:is(.dark .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded){
+  @apply bg-[#4A4B6D] !rounded-tr-2xl !rounded-tl-2xl !rounded-br-none !rounded-bl-none
+}
+:is(.dark .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded:hover){
+  @apply !rounded-tr-2xl !rounded-tl-2xl !rounded-br-none !rounded-bl-none bg-[#4A4B6D]
+}
+:is(.dark .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root:not(.Mui-disabled)){
+  @apply rounded-2xl
+}
+
 }
 
 @layer utilities {
