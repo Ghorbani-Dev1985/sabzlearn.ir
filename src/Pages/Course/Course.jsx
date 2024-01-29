@@ -9,6 +9,7 @@ import {
   Star,
   ExpandMore,
   PlayCircleFilledWhiteOutlined,
+  Reply,
 } from "@mui/icons-material";
 import TomanDark from "../../assets/Images/svgs/toman-black.svg";
 import TomanLight from "../../assets/Images/svgs/toman-white.svg";
@@ -22,22 +23,28 @@ import Prerequisite from "../../assets/Images/svgs/prerequisite.svg";
 import ViewType from "../../assets/Images/svgs/viewType.svg";
 import Users from "../../assets/Images/svgs/users.svg";
 import User from "../../assets/Images/Users/597980f98a372b658b24996aa34ff1d5.png";
-import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+} from "@mui/material";
 import NewCommentForm from "../../Components/NewCommentForm/NewCommentForm";
 import toast from "react-hot-toast";
+import UsersIcon from "../../assets/Images/CommentFormUser/none.png";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
-  const [showMoreDesc, setShowMoreDesc] = useState(false)
-  const [showNewCommentForm , setShowNewCommentForm] = useState(false)
+  const [showMoreDesc, setShowMoreDesc] = useState(false);
+  const [showNewCommentForm, setShowNewCommentForm] = useState(false);
   const NewCommentHandler = () => {
-    let isLogin = true
-    if(isLogin){
-      setShowNewCommentForm((prev) => !prev)
-    }else{
-      toast.error("لطفا ابتدا در سایت وارد شوید")
+    let isLogin = false;
+    if (isLogin) {
+      setShowNewCommentForm((prev) => !prev);
+    } else {
+      toast.error("لطفا ابتدا در سایت وارد شوید");
     }
-  }
+  };
   return (
     <>
       {/* Breadcrumb */}
@@ -307,81 +314,221 @@ function Course() {
               )}
             </button>
           </div>
-        {/* Episode List */}
-         <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
-          <div className="flex-between flex-wrap mb-5">
+          {/* Episode List */}
+          <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
+            <div className="flex-between flex-wrap mb-5">
               <div className="flex item-center gap-x-3.5">
                 <span className="block w-2.5 h-10 bg-sky-500 dark:bg-secondary rounded-sm"></span>
-                <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">سرفصل های دوره</h3>
+                <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">
+                  سرفصل های دوره
+                </h3>
               </div>
               <div className="text-zinc-700 dark:text-white">07:08</div>
+            </div>
+            <Accordion className="w-full !rounded-2xl bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
+              <AccordionSummary
+                expandIcon={<ExpandMore className="dark:text-white" />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+                className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
+              >
+                معرفی دوره و پیش نیاز ها
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
+                  <Link
+                    to=""
+                    className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
+                  >
+                    <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                      1
+                    </span>
+                    <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                      معرفی دوره
+                    </h4>
+                  </Link>
+                  <Box className="w-full flex-between">
+                    <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
+                      جلسه رایگان
+                    </span>
+                    <Box className="flex items-center gap-x-1.5 md:gap-x-2">
+                      <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
+                        3:22
+                      </span>
+                      <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                    </Box>
+                  </Box>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion className="w-full !rounded-2xl my-5 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
+              <AccordionSummary
+                expandIcon={<ExpandMore className="dark:text-white" />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+                className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
+              >
+                طراحی html,css داشبورد
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
+                  <Link
+                    to=""
+                    className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
+                  >
+                    <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                      1
+                    </span>
+                    <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                      معرفی دوره
+                    </h4>
+                  </Link>
+                  <Box className="w-full flex-between">
+                    <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
+                      {" "}
+                      نقدی
+                    </span>
+                    <Box className="flex items-center gap-x-1.5 md:gap-x-2">
+                      <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
+                        3:22
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+                        />
+                      </svg>
+                    </Box>
+                  </Box>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+          {/* Comment */}
+          <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
+            {/* Head & Sent Btn */}
+            <div className="flex-between flex-wrap mb-5">
+              <div className="flex items-center gap-x-3.5">
+                <span className="block w-2.5 h-10 bg-pink-500 dark:bg-rose-500 rounded-sm"></span>
+                <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">
+                  نظرات
+                </h3>
               </div>
-              <Accordion className="w-full !rounded-2xl bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
-              <AccordionSummary
-          expandIcon={<ExpandMore className="dark:text-white"/>}
-          aria-controls="panel1-content"
-          id="panel1-header"
-          className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
-        >
-         معرفی دوره و پیش نیاز ها
-        </AccordionSummary>
-        <AccordionDetails>
-        <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-         <Link to="" className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]">
-          <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">1</span>
-          <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">معرفی دوره</h4>
-         </Link>
-         <Box className="w-full flex-between">
-          <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">جلسه رایگان</span>
-          <Box className="flex items-center gap-x-1.5 md:gap-x-2">
-                <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">3:22</span>
-                <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors"/>
-          </Box>
-         </Box>
-        </Box>
-        </AccordionDetails>
-              </Accordion>
-              <Accordion className="w-full !rounded-2xl my-5 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
-              <AccordionSummary
-          expandIcon={<ExpandMore className="dark:text-white"/>}
-          aria-controls="panel1-content"
-          id="panel1-header"
-          className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
-        >
-        طراحی html,css داشبورد
-        </AccordionSummary>
-        <AccordionDetails>
-        <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-         <Link to="" className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]">
-          <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">1</span>
-          <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">معرفی دوره</h4>
-         </Link>
-         <Box className="w-full flex-between">
-          <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors"> نقدی</span>
-          <Box className="flex items-center gap-x-1.5 md:gap-x-2">
-                <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">3:22</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-</svg>
-
-          </Box>
-         </Box>
-        </Box>
-        </AccordionDetails>
-              </Accordion>
-         </div>
-         {/* Comment */}
-         <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
-                {/* Head & Sent Btn */}
-                <div className="flex-between flex-wrap mb-5">
-                    <div className="flex items-center gap-x-3.5">
-                  <span className="block w-2.5 h-10 bg-pink-500 dark:bg-rose-500 rounded-sm"></span>
-                  <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">نظرات</h3>
+              <button
+                onClick={NewCommentHandler}
+                className="button-md button-primary rounded-xl"
+              >
+                ایجاد نظر جدید
+              </button>
+            </div>
+            <NewCommentForm showNewCommentForm={showNewCommentForm} />
+            {/* Comment Items */}
+            <div className="space-y-3.5 sm:space-y-5 ">
+              <div className="p-3.5 md:p-5 bg-gray-100 dark:bg-gray-700 rounded-2xl">
+                <div className="flex gap-x-5 items-start">
+                  {/* User Icon */}
+                  <div className="space-y-3.5 sm:space-y-5 ">
+                    <img
+                      src={UsersIcon}
+                      className="block size-10 md:size-16 object-cover rounded-full"
+                      alt="ghorbani-dev.ir"
+                    />
+                    <div className="flex-center w-14 h-5 rounded-sm text-xs leading-4 bg-primary text-white dark:bg-primary/10 dark:text-primary">
+                      دانشجو
                     </div>
-                <button onClick={NewCommentHandler} className="button-md button-primary rounded-xl">ایجاد نظر جدید</button>
+                  </div>
+                  <div className="w-full">
+                    <div className="flex-between">
+                      <div className="flex items-center gap-x-2">
+                        <img
+                          src={UsersIcon}
+                          className="block md:hidden w-10 h-10 object-cover rounded-full shrink-0"
+                          alt="ghorbani-dev.ir"
+                        />
+                        <div className="shrink-0">
+                          <span className="text-zinc-700 dark:text-white font-DanaMd text-base md:text-xl">
+                            Username
+                          </span>
+                          <div className="flex items-center gap-x-1.5 mt-1">
+                            <div className="flex-center md:hidden w-14 h-5 rounded-sm text-xs leading-4 bg-primary text-white dark:bg-primary/10 dark:text-primary">
+                              دانشجو
+                            </div>
+                            <span className="font-Dana text-slate-500 dark:text-white text-xs">
+                              1402/11/07
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="w-16 h-10 text-slate-500 dark:text-gray-500"
+                      >
+                        <Reply className="w-16 h-10" />
+                      </button>
+                    </div>
+                    <div className="text-zinc-700 dark:text-white font-Dana leading-7 mt-3.5">
+                      سلام خسته نباشید استاد ، <br />
+                      میخواستم بدونم اصول سالید S.O.L.I.D هم داخل این دوره میاد
+                      ؟
+                    </div>
+                    <div className="mt-7 space-y-3.5 md:space-y-5">
+                      <div className="mt-7 p-3.5 md:p-5 bg-gray-200 dark:bg-mainSlate rounded-2xl">
+                        <div className="flex gap-x-5 items-start">
+                          <div className="hidden md:flex flex-col gap-y-2">
+                            <img
+                              src={UsersIcon}
+                              className="block w-10 h-10 md:size-16 object-cover rounded-full"
+                              alt="ghorbani-dev.ir"
+                            />
+                            <div className="flex-center w-14 h-5 rounded-sm text-xs leading-4 bg-sky-500 text-white dark:bg-secondary/10 dark:text-secondary">
+                              مدرس
+                            </div>
+                          </div>
+                          <div className="w-full">
+                            <div className="flex-between">
+                              <div className="flex items-center gap-x-2">
+                                <img
+                                  src={UsersIcon}
+                                  className="block md:hidden size-10 object-cover rounded-full shrink-0"
+                                  alt="ghorbani-dev.ir"
+                                />
+                                <div className="shrink-0">
+                                  <span className="text-zinc-700 dark:text-white font-DanaMd text-base md:text-xl">
+                                    محمد امین سعیدی راد
+                                  </span>
+                                  <div className="flex items-center gap-x-1.5 mt-1">
+                                    <div className="flex-center md:hidden w-14 h-5 rounded-sm text-xs leading-4 bg-sky-500 text-white dark:bg-secondary/10 dark:text-secondary">
+                                      مدرس
+                                    </div>
+                                    <span className="font-Dana text-slate-500 dark:text-white text-xs">
+                                      1402/11/08
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-zinc-700 dark:text-white font-Dana leading-7 mt-3.5">
+                              سلام عزیز.
+                              <br />
+                              سعی می‌کنم داشته باشیم 👌❤️
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <NewCommentForm showNewCommentForm={showNewCommentForm}/>
-         </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>
