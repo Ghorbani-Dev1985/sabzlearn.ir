@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
   ExpandMore,
   PlayCircleFilledWhiteOutlined,
   Reply,
+  ContentCopyOutlined,
 } from "@mui/icons-material";
 import TomanDark from "../../assets/Images/svgs/toman-black.svg";
 import TomanLight from "../../assets/Images/svgs/toman-white.svg";
@@ -37,6 +38,7 @@ function Course() {
   const { colorTheme } = usePublicDarkMode();
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
+  const CourseShortLink = useRef(null)
   const NewCommentHandler = () => {
     let isLogin = false;
     if (isLogin) {
@@ -45,6 +47,15 @@ function Course() {
       toast.error("لطفا ابتدا در سایت وارد شوید");
     }
   };
+  const CopyInClipboardHandler = (event) => {
+    let CourseShortLinkText = CourseShortLink.current.innerText
+    if(CourseShortLinkText){
+      navigator.clipboard.writeText(CourseShortLinkText)
+      toast.success('لینک کپی شد')
+    }else{
+      toast.error('کپی انجام نشد')
+    }
+  }
   return (
     <>
       {/* Breadcrumb */}
@@ -530,6 +541,79 @@ function Course() {
             </div>
           </div>
         </div>
+        {/* Aside */}
+        <aside className="w-80 xl:w-96 shrink-0 sticky top-36 space-y-5">
+                {/* Students & Rating & Progress */}
+              <div className="hidden lg:block bg-white dark:bg-gray-800 p-5 shadow-light dark:shadow-none rounded-2xl">
+                <div className="flex gap-5">
+                    <div className="flex-between flex-grow bg-gray-100 dark:bg-gray-700 py-4 px-5 rounded-2xl">
+                    <img src={Users} alt="ghorbani-dev.ir" className="size-8" />
+                <div className="flex-center flex-col">
+                  <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
+                    284
+                  </span>
+                  <p className="text-slate-500 dark:text-gray-500 text-sm">
+                    دانشجو
+                  </p>
+                </div>
+                    </div>
+                    <div className="flex-between flex-grow bg-gray-100 dark:bg-gray-700 py-4 px-5 rounded-2xl">
+                <Star className="size-8 text-amber-400 dark:text-yellow-400" />
+                <div className="flex-center flex-col">
+                  <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
+                    5.0
+                  </span>
+                  <p className="text-slate-500 dark:text-gray-500 text-sm">
+                    رضایت
+                  </p>
+                </div>
+              </div>
+                </div>
+                <div className="mt-5">
+              <div className="flex-between mb-3 text-zinc-700 dark:text-white text-xl">
+                <span>درصد تکمیل دوره</span>
+                <span>20%</span>
+              </div>
+              <progress
+                value="20"
+                max="100"
+                className="w-full h-[0.625rem] align-baseline"
+              ></progress>
+            </div>
+              </div>
+               {/* Teacher Section In Mobile */}
+          <div className="hidden lg:block bg-white dark:bg-gray-800 px-5 py-6 shadow-light dark:shadow-none rounded-2xl text-center">
+              <img
+                src={User}
+                className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
+                alt="ghorbani-dev.ir"
+              />
+                <h4 className="text-zinc-700 dark:text-white text-2xl mb-1">
+                  مهرشاد براتی
+                </h4>
+                <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
+                  برنامه نویس و توسعه دهنده فول استک وب
+                </p>
+            <Link
+              to="#"
+              className="flex-center my-3 gap-x-1.5 text-slate-500 dark:text-gray-500 text-sm"
+            >
+               مدرس دوره
+              <Logout className="size-5" />
+            </Link>
+            <p className="text-zinc-700 dark:text-white font-danaLight mt-2.5">
+            اولین کدم رو 14 سالگی زدم، حدود 9 سال پیش که با زبان ویژوال بیسیک بود و بعد حدودا 2 سال تو فیلد برنامه نویسی موبایل با زبان جاوا کار کردم و در نهایت با عشقی به اسم جاوا اسکریپت آشنا شدم و حدودا یه 7 سالی هست جاوا اسکریپت کد می‌زنم و به صورت Mern Stack فعالیت می‌کنم.
+            </p>
+          </div>
+          {/* Short Link */}
+          <div className="hidden lg:block bg-white dark:bg-gray-800 px-5 py-6 shadow-light dark:shadow-none rounded-2xl">
+              <span className="flex items-center gap-x-2.5 text-zinc-700 mb-2 -mr-5 dark:text-white font-DanaBold text-2xl"></span>
+              <div onClick={CopyInClipboardHandler} className="flex-between cursor-pointer gap-x-2.5 px-4 h-[65px] text-slate-500 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 hover:bg-emerald-100 dark:hover:bg-gray-800 border border-dashed border-gray-600/30 rounded-xl transition-colors">
+                <ContentCopyOutlined className="size-6"/>
+                <span ref={CourseShortLink} className="text-xl truncate dir-ltr">https://sabzlearn.ir/?p=2862</span>           
+              </div>
+          </div>
+        </aside>
       </section>
     </>
   );
