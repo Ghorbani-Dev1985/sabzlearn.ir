@@ -3,8 +3,6 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 import {
   GppGoodOutlined,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
   Logout,
   Star,
   ExpandMore,
@@ -32,6 +30,7 @@ import {
 import NewCommentForm from "../../Components/NewCommentForm/NewCommentForm";
 import toast from "react-hot-toast";
 import CommentItem from "../../Components/CommentItem/CommentItem";
+import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -215,13 +214,8 @@ function Course() {
                 توضیحات
               </h3>
             </div>
-            <div className="relative overflow-hidden">
-              <div
-                className={`${
-                  showMoreDesc ? "max-h-full" : "max-h-[800px]"
-                } wp-content  text-zinc-700 dark:text-white font-danaLight text-lg lg:text-xl leading-7 lg:leading-9`}
-              >
-                <p>
+             <ShowHtmlTemplate showMoreDesc={showMoreDesc} setShowMoreDesc={setShowMoreDesc}>
+             <p>
                   دوره پیاده سازی داشبوردهای حرفه ای همون چیزی هست که ادمین و
                   مدیر یک وب سایت برای مشاهده، تحلیل و پایش اطلاعات مربوط به وب
                   سایت و کاربران به شکل حرفه ای تر به اون نیاز دارن.
@@ -297,32 +291,7 @@ function Course() {
                   در موضوع یک دوره اتفاق بیفته، ویدیوی ضبط شده جدیدی به عنوان
                   آپدیت برای اون ارائه بشه.
                 </p>
-              </div>
-              <div
-                className={`${
-                  showMoreDesc && "hidden"
-                } absolute bottom-0 right-0 left-0 h-[190px] bg-gradient-to-t from-white dark:from-gray-800`}
-              ></div>
-            </div>
-            <button
-              onClick={() => setShowMoreDesc((prev) => !prev)}
-              type="button"
-              className="flex-center button-lg button-primary mx-auto mt-2 rounded-full"
-            >
-              {showMoreDesc ? (
-                <>
-                  <span>
-                    مشاهده کمتر <KeyboardArrowUp />
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span>
-                    مشاهده بیشتر <KeyboardArrowDown />
-                  </span>
-                </>
-              )}
-            </button>
+             </ShowHtmlTemplate>
           </div>
           {/* Episode List */}
           <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
