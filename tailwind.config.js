@@ -24,7 +24,7 @@ module.exports = {
       },
       colors: {
         primary: '#2ED573',
-        secondary: '#4E81FB',
+        secondary: '123',
         secondaryLight: 'rgba(78,129,251, 0.4)',
         gray : {
             main: '#1C1C28',
