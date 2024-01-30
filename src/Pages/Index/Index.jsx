@@ -4,7 +4,7 @@ import LastCourses from "../../Components/LastCourses/LastCourses";
 import RoadMap from "../../Components/RoadMap/RoadMap";
 import WhatHelp from "../../Components/WhatHelp/WhatHelp";
 import NewCourses from "../../Components/NewCourses/NewCourses";
-import LastArticle from "../../Components/LastArticle/LastArticle";
+import LastBlogs from "../../Components/LastBlogs/LastBlogs";
 import InstagramPage from "../../Components/InstagramPage/InstagramPage";
 import PresellCourses from "../../Components/PresellCourses/PresellCourses";
 import PopularCourses from "../../Components/PopularCourses/PopularCourses";
@@ -18,7 +18,7 @@ function Index() {
       <RoadMap />
       <WhatHelp />
       <NewCourses />
-      <LastArticle />
+      <LastBlogs />
       <InstagramPage />
       <PresellCourses />
       <PopularCourses />

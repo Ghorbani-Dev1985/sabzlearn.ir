@@ -3,7 +3,7 @@ import { ArrowCircleLeft,  CalendarToday} from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ArticleCard({
+function BlogCard({
   to,
   src,
   title,
@@ -75,4 +75,4 @@ function ArticleCard({
   );
 }
 
-export default ArticleCard;
+export default BlogCard;
