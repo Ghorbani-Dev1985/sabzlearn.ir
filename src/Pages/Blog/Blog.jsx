@@ -11,7 +11,6 @@ import ShortLink from "../../Components/ShortLink/ShortLink";
 import { Link } from "react-router-dom";
 import BlogCategory from "../../Components/BlogCategory/BlogCategory";
 
-
 const newBlogs = [
   {
     id: 1,
@@ -37,7 +36,7 @@ const newBlogs = [
     id: 5,
     to: "",
     title: " بک اند چیست؟",
-  }
+  },
 ];
 
 function Blog() {
@@ -60,7 +59,7 @@ function Blog() {
         linkThreeTitle="ساخت تایمر با جاوا اسکریپت"
       />
       {/* Main */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-3.5 sm:gap-5 mt-7">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-[3.25rem] mt-7">
         {/* Content */}
         <section className="col-span-1 lg:col-span-2 space-y-5">
           <div className="p-5 dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl">
@@ -155,33 +154,37 @@ function Blog() {
               </p>
             </ShowHtmlTemplate>
           </div>
-           {/* Comment */}
-         <Comment showNewCommentForm={showNewCommentForm} NewCommentHandler={NewCommentHandler} />
+          {/* Comment */}
+          <Comment
+            showNewCommentForm={showNewCommentForm}
+            NewCommentHandler={NewCommentHandler}
+          />
         </section>
         {/* Sidebar */}
-        <aside className="hidden lg:block col-span-1 w-[300px] xl:w-96  space-y-5">
-           {/* Short Link */}
-           <ShortLink bgColor="bg-yellow-400" link="https://sabzlearn.ir/?p=3237" />
-           {/* New Blogs */}
-           <div className="hidden lg:block dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl py-6 px-6 xl:px-10">
-           <span className="flex items-center gap-x-2.5 mb-5 -mr-6 xl:-mr-10 text-zinc-700 dark:text-white font-danaDemiBold text-2xl">
-                        <span className="block w-7 h-2 bg-pink-500 dark:bg-rose-500 rounded-l-sm -mr-px"></span>
-                        جدیدترین نوشته ها
-                    </span>
-                    <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
-                        {
-                          newBlogs.map(({id , to , title}) => {
-                            return(
-                              <React.Fragment key={id}>
-                              <Link to={to}>{title}</Link>
-                              </React.Fragment>
-                            )
-                          })
-                        }
-                    </div>
-           </div>
-           {/* Category */}
-           <BlogCategory />
+        <aside className="sticky top-36 hidden lg:block col-span-1 w-[300px] xl:w-96 space-y-5">
+          {/* Short Link */}
+          <ShortLink
+            bgColor="bg-yellow-400"
+            link="https://sabzlearn.ir/?p=3237"
+          />
+          {/* New Blogs */}
+          <div className="hidden lg:block dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl py-6 px-6 xl:px-10">
+            <span className="flex items-center gap-x-2.5 mb-5 -mr-6 xl:-mr-10 text-zinc-700 dark:text-white font-danaDemiBold text-2xl">
+              <span className="block w-7 h-2 bg-pink-500 dark:bg-rose-500 rounded-l-sm -mr-px"></span>
+              جدیدترین نوشته ها
+            </span>
+            <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
+              {newBlogs.map(({ id, to, title }) => {
+                return (
+                  <React.Fragment key={id}>
+                    <Link to={to}>{title}</Link>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </div>
+          {/* Category */}
+          <BlogCategory />
         </aside>
       </section>
     </>
