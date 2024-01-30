@@ -51,6 +51,45 @@
   body {
     @apply text-zinc-700 bg-gray-100 dark:bg-gray-main h-full font-Dana text-lg overflow-x-hidden scroll-smooth scrollbar scrollbar-thumb-primary dark:scrollbar-thumb-gray-700 scrollbar-track-gray-100 dark:scrollbar-track-gray-400;
   }
+  input {
+    height: 3rem;
+    width: 100%;
+    border-radius: 0.75rem;
+    border-width: 1px;
+    border-color: transparent;
+    background-color: rgb(243 244 246);
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-family: 'Dana';
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgb(63 63 70);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+:is(.dark input) {
+  background-color: rgb(50 51 77);
+  color: rgb(255 255 255);
+}
+input + svg {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 1rem;
+  width: 1rem;
+  color: rgb(100 116 139 );
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+:is(.dark input + svg) {
+  color: rgb(148 163 184);
+}
+@me
   progress::-webkit-progress-bar {
     border-radius: 9999px;
     background-color: rgb(243 244 246);
