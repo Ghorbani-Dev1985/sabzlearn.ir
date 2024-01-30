@@ -8,7 +8,37 @@ import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate
 import Comment from "../../Components/Comment/Comment";
 import toast from "react-hot-toast";
 import ShortLink from "../../Components/ShortLink/ShortLink";
+import { Link } from "react-router-dom";
+import BlogCategory from "../../Components/BlogCategory/BlogCategory";
 
+
+const newBlogs = [
+  {
+    id: 1,
+    to: "",
+    title: "جاواآموزش Class در جاوا اسکریپت",
+  },
+  {
+    id: 2,
+    to: "",
+    title: "پروژه ساخت پسورد رندوم در پایتون ",
+  },
+  {
+    id: 3,
+    to: "",
+    title: "  تفاوت تایپ اسکریپت و جاوا اسکریپت",
+  },
+  {
+    id: 4,
+    to: "",
+    title: " بازی های ساخته شده با پایتون",
+  },
+  {
+    id: 5,
+    to: "",
+    title: " بک اند چیست؟",
+  }
+];
 
 function Blog() {
   const [showMoreDesc, setShowMoreDesc] = useState(false);
@@ -132,6 +162,26 @@ function Blog() {
         <aside className="hidden lg:block col-span-1 w-[300px] xl:w-96  space-y-5">
            {/* Short Link */}
            <ShortLink bgColor="bg-yellow-400" link="https://sabzlearn.ir/?p=3237" />
+           {/* New Blogs */}
+           <div className="hidden lg:block dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl py-6 px-6 xl:px-10">
+           <span className="flex items-center gap-x-2.5 mb-5 -mr-6 xl:-mr-10 text-zinc-700 dark:text-white font-danaDemiBold text-2xl">
+                        <span className="block w-7 h-2 bg-pink-500 dark:bg-rose-500 rounded-l-sm -mr-px"></span>
+                        جدیدترین نوشته ها
+                    </span>
+                    <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
+                        {
+                          newBlogs.map(({id , to , title}) => {
+                            return(
+                              <React.Fragment key={id}>
+                              <Link to={to}>{title}</Link>
+                              </React.Fragment>
+                            )
+                          })
+                        }
+                    </div>
+           </div>
+           {/* Category */}
+           <BlogCategory />
         </aside>
       </section>
     </>
