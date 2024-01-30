@@ -124,7 +124,7 @@ function PresellCourses() {
          presellCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
            return(
              <React.Fragment key={id}>
-                          <SwiperSlide>
+                          <SwiperSlide className='rounded-2xl'>
                         <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
                           </SwiperSlide>
                     </React.Fragment>

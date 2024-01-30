@@ -146,8 +146,8 @@ const title = useTitle('دوره ها')
                     return(
                         <React.Fragment key={id}>
                             <div className='flex-between'>
-                <label className='relative flex items-center select-none gap-x-3'>
-                    <input type='checkbox' className='absolute w-0 h-0 opacity-0'/>
+                <label className='relative flex items-center select-none gap-x-3 cursor-pointer'>
+                    <input type='checkbox' className='checkbox__input absolute w-0 h-0 opacity-0'/>
                     <span className='checkbox__marker'></span>
                     <span className="text-zinc-700 dark:text-white select-none">{title}</span>
                 </label>

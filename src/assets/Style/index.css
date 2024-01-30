@@ -254,6 +254,12 @@
 :is(.dark .checkbox__marker) {
   background-color: rgb(28 28 40 );
 }
+.checkbox__input:checked ~ .checkbox__marker {
+  background-color: rgb(14 165 233);
+}
+:is(.dark .checkbox__input:checked ~ .checkbox__marker) {
+  background-color: rgb(78 129 251);
+}
 }
 
 @layer utilities {
