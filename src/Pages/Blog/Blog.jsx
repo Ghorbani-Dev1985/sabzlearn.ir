@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import {
   CalendarMonthOutlined,
@@ -7,12 +7,12 @@ import {
 import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate";
 import Comment from "../../Components/Comment/Comment";
 import toast from "react-hot-toast";
+import ShortLink from "../../Components/ShortLink/ShortLink";
 
 
 function Blog() {
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
-  const CourseShortLink = useRef(null)
   const NewCommentHandler = () => {
     let isLogin = false;
     if (isLogin) {
@@ -21,15 +21,6 @@ function Blog() {
       toast.error("لطفا ابتدا در سایت وارد شوید");
     }
   };
-  const CopyInClipboardHandler = (event) => {
-    let CourseShortLinkText = CourseShortLink.current.innerText
-    if(CourseShortLinkText){
-      navigator.clipboard.writeText(CourseShortLinkText)
-      toast.success('لینک کپی شد')
-    }else{
-      toast.error('کپی انجام نشد')
-    }
-  }
   return (
     <>
       {/* Breadcrumb */}
@@ -139,7 +130,8 @@ function Blog() {
         </section>
         {/* Sidebar */}
         <aside className="hidden lg:block col-span-1 w-[300px] xl:w-96  space-y-5">
-
+           {/* Short Link */}
+           <ShortLink bgColor="bg-yellow-400" link="https://sabzlearn.ir/?p=3237" />
         </aside>
       </section>
     </>
