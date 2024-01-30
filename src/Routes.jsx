@@ -3,11 +3,13 @@ import Course from "./Pages/Course/Course";
 import Category from "./Pages/Category/Category";
 import Blog from "./Pages/Blog/Blog";
 import Blogs from "./Pages/Blogs/Blogs";
+import Courses from "./Pages/Courses/Courses";
 
 
 
 let routes = [
     {path: '/' , element: <Index />},
+    {path: '/courses' , element: <Courses />},
     {path: '/course/:courseName' , element: <Course />},
     {path: '/category/:categoryName' , element: <Category />},
     {path: 'blogs' , element: <Blogs />},
