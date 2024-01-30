@@ -2,6 +2,8 @@ import { Search } from '@mui/icons-material'
 import React from 'react'
 import CourseCard from '../../Components/CourseCard/CourseCard'
 import TopSort from '../../Components/TopSort/TopSort'
+import useTitle from '../../Hooks/useTitle'
+import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 
 const categoryCourses = [
   {
@@ -86,13 +88,11 @@ const categoryCourses = [
 
 
 function Category() {
+  const title = useTitle("فرانت اند - سبزلرن")
   return (
     <>
   {/* Category Title */}
-  <h2 className='flex items-center gap-x-3 sm:gap-x-5 w-min mx-auto mt-15 dark:text-white font-MorabbaBold text-4xl sm:text-6xl whitespace-nowrap'>
-  <span className='block w-7 sm:w-10 h-2.5 bg-rose-500 shrink-0 rounded-sm'></span>
-    فرانت اند
-</h2>
+   <TopPageTitle title="فرانت اند" bgColor="bg-rose-500" /> 
 {/* Main Section */}
 <section className='grid items-start grid-rows-1 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 mt-9 sm:mt-25'>
      {/* Sidebar */}
