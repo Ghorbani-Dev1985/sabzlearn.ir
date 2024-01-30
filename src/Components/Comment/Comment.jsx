@@ -1,10 +1,30 @@
 import React from 'react'
 import UsersIcon from "../../assets/Images/CommentFormUser/none.png";
 import { Reply } from '@mui/icons-material';
+import NewCommentForm from '../NewCommentForm/NewCommentForm';
 
 
-function CommentItem() {
+function Comment({showNewCommentForm , NewCommentHandler}) {
   return (
+    <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
+    {/* Head & Sent Btn */}
+    <div className="flex-between flex-wrap mb-5">
+      <div className="flex items-center gap-x-3.5">
+        <span className="block w-2.5 h-10 bg-pink-500 dark:bg-rose-500 rounded-sm"></span>
+        <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">
+          نظرات
+        </h3>
+      </div>
+      <button
+        onClick={NewCommentHandler}
+        className="button-md button-primary rounded-xl"
+      >
+        ایجاد نظر جدید
+      </button>
+    </div>
+    <NewCommentForm showNewCommentForm={showNewCommentForm} />
+    {/* Comment Items */}
+    
     <div className="space-y-3.5 sm:space-y-5 ">
     <div className="p-3.5 md:p-5 bg-gray-100 dark:bg-gray-700 rounded-2xl">
       <div className="flex gap-x-5 items-start">
@@ -102,7 +122,8 @@ function CommentItem() {
       </div>
     </div>
   </div>
+  </div>
   )
 }
 
-export default CommentItem
+export default Comment

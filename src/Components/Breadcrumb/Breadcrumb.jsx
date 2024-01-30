@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Breadcrumb() {
+function Breadcrumb({linkOneTo , linkOneTitle , linkTwoTo , linkTwoTitle , linkThreeTo , linkThreeTitle}) {
   return (
     <div className='w-full h-[50px] flex items-center overflow-x-auto overflow-y-hidden rounded-2xl leading-7 bg-white dark:bg-gray-800 text-zinc-700 dark:text-white text-xl shadow-breadcrumb'>
       <div className='breadcrumb__item'>
@@ -12,13 +12,15 @@ function Breadcrumb() {
         </Link>
       </div>
       <div className='breadcrumb__item'>
-        <Link to="#" className='whitespace-nowrap'>    دوره ها   </Link>
+        <Link to={linkOneTo} className='whitespace-nowrap'>  {linkOneTitle}  </Link>
       </div>
-      <div className='breadcrumb__item'>
-        <Link to="#" className='whitespace-nowrap'>  ارتقای مهارت   </Link>
+      {
+        linkTwoTitle &&  <div className='breadcrumb__item'>
+        <Link to={linkTwoTo} className='whitespace-nowrap'>  {linkTwoTitle}  </Link>
       </div>
+      }
       <div className='breadcrumb__item before:hidden after:hidden'>
-        <Link to="#" className='whitespace-nowrap'>	توسعه کتابخانه با جاوااسکریپت	 </Link>
+        <Link to={linkThreeTo} className='whitespace-nowrap'>	{linkThreeTitle} </Link>
       </div>
     </div>
   )

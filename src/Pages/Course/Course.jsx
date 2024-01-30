@@ -27,10 +27,9 @@ import {
   AccordionSummary,
   Box,
 } from "@mui/material";
-import NewCommentForm from "../../Components/NewCommentForm/NewCommentForm";
 import toast from "react-hot-toast";
-import CommentItem from "../../Components/CommentItem/CommentItem";
 import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate";
+import Comment from "../../Components/Comment/Comment";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -57,7 +56,7 @@ function Course() {
   return (
     <>
       {/* Breadcrumb */}
-      <Breadcrumb />
+      <Breadcrumb linkOneTitle="دوره ها " linkTwoTitle="ارتقای مهارت " linkThreeTitle="توسعه کتابخانه با جاوااسکریپت" />
       {/* Head */}
       <section className="flex-between flex-col-reverse lg:flex-row xl:items-stretch gap-x-5 xl:gap-x-10 bg-white dark:bg-gray-800 sm:bg-transparent sm:dark:bg-transparent p-3.5 sm:p-0 mt-5 mb-4 sm:my-10 rounded-2xl">
         {/* Info */}
@@ -392,26 +391,7 @@ function Course() {
             </Accordion>
           </div>
           {/* Comment */}
-          <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
-            {/* Head & Sent Btn */}
-            <div className="flex-between flex-wrap mb-5">
-              <div className="flex items-center gap-x-3.5">
-                <span className="block w-2.5 h-10 bg-pink-500 dark:bg-rose-500 rounded-sm"></span>
-                <h3 className="text-zinc-700 dark:text-white font-MorabbaBold text-2xl md:text-3xl">
-                  نظرات
-                </h3>
-              </div>
-              <button
-                onClick={NewCommentHandler}
-                className="button-md button-primary rounded-xl"
-              >
-                ایجاد نظر جدید
-              </button>
-            </div>
-            <NewCommentForm showNewCommentForm={showNewCommentForm} />
-            {/* Comment Items */}
-            <CommentItem />
-          </div>
+         <Comment showNewCommentForm={showNewCommentForm} NewCommentHandler={NewCommentHandler} />
         </div>
         {/* Aside */}
         <aside className="w-80 xl:w-96 shrink-0 sticky top-36 space-y-5">
@@ -479,7 +459,9 @@ function Course() {
           </div>
           {/* Short Link */}
           <div className="hidden lg:block bg-white dark:bg-gray-800 px-5 py-6 shadow-light dark:shadow-none rounded-2xl">
-              <span className="flex items-center gap-x-2.5 text-zinc-700 mb-2 -mr-5 dark:text-white font-DanaBold text-2xl"></span>
+              <span className="flex items-center gap-x-2.5 text-zinc-700 mb-2 -mr-5 dark:text-white font-DanaBold text-2xl">
+              <span className="block w-7 h-2 bg-sky-500 dark:bg-secondary rounded-l-sm"></span>
+                لینک کوتاه:</span>
               <div onClick={CopyInClipboardHandler} className="flex-between cursor-pointer gap-x-2.5 px-4 h-[65px] text-slate-500 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 hover:bg-emerald-100 dark:hover:bg-gray-800 border border-dashed border-gray-600/30 rounded-xl transition-colors">
                 <ContentCopyOutlined className="size-6"/>
                 <span ref={CourseShortLink} className="text-xl truncate dir-ltr">https://sabzlearn.ir/?p=2862</span>           
