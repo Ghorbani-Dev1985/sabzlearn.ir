@@ -11,7 +11,7 @@ function Register() {
     <>
       <LoginRegisterTemplate subLink={ <p className="mt-4 sm:mt-6 font-danaLight sm:text-lg text-center text-slate-500 dark:text-gray-500">
              <span>با عضویت در سایت، تمامی  </span> 
-              <Link to="" className="text-primary hover:text-green-500 transition-colors"> قوانین و شرایط </Link>
+              <Link to="/termsConditions" className="text-primary hover:text-green-500 transition-colors"> قوانین و شرایط </Link>
                  <span>استفاده از خدمت سبزلرن را پذیرفته اید. </span>
             </p>}>
 

@@ -8,6 +8,7 @@ import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import Layout from "./Layout/Layout";
 import LayoutWithoutHeaderFooter from './Layout/LayoutWithoutHeaderFooter'
+import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 
 
 let routes = [
@@ -45,6 +46,12 @@ let routes = [
         {
             path: '/blog/:blogName',
             element: <Blog />
+        }
+    ]},
+    {element: <Layout /> , children: [
+        {
+            path: '/termsConditions',
+            element: <TermsConditions />
         }
     ]},
     {element: <LayoutWithoutHeaderFooter /> , children : [

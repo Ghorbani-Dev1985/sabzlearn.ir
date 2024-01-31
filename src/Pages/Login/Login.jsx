@@ -43,7 +43,7 @@ function Login() {
         </button>
       </form>
       <div className="flex items-center mt-5 text-sm text-slate-500 dark:text-slate-400 tracking-tight">
-        <Link to="">حریم خصوصی</Link>{" "}
+        <Link to="/termsConditions">حریم خصوصی</Link>
       </div>
           </LoginRegisterTemplate>
     </>
