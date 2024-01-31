@@ -5,7 +5,7 @@ import { Person, Visibility } from "@mui/icons-material";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
-import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
+import { RequiredValidator , MinValidator , MaxValidator } from '../../Validators/Rules'
 import useForm from "../../Hooks/useForm";
 
 
