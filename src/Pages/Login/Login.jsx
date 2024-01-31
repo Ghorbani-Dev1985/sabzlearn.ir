@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useTitle from "../../Hooks/useTitle";
 import { Person, Visibility } from "@mui/icons-material";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
+import Input from "../../common/Form/Input";
 
 function Login() {
   const title = useTitle("ورود به حساب");
@@ -29,28 +30,10 @@ function Login() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
-          <div className="relative">
-            <input
-              type="text"
-              className="outline-none pl-9 sm:pl-12"
-              placeholder=" نام کاربری یا آدرس ایمیل"
-              value=""
-              />
-            <Person className="left-3 sm:left-4" />
-          </div>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="outline-none pl-9 sm:pl-12"
-              placeholder="کلمه عبور"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              />
-            <Visibility
+          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" value="" onChange="" icon={<Person className="left-3 sm:left-4" />}/>
+          <Input element="input" type={showPassword ? "text" : "password"} placeholder="کلمه عبور" value={password} onChange={(event) => setPassword(event.target.value)} icon={<Visibility
               onClick={() => setShowPassword((prev) => !prev)}
-              className="left-3 sm:left-4 cursor-pointer"
-              />
-          </div>
+              className="left-3 sm:left-4 cursor-pointer" />}/>
         </div>
         <button
           type="submit"

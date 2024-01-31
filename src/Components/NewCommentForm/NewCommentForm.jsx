@@ -1,5 +1,6 @@
 import React from 'react'
 import UserImg from '../../assets/Images/CommentFormUser/none.png'
+import Input from '../../common/Form/Input'
 
 
 function NewCommentForm({showNewCommentForm}) {
@@ -13,7 +14,7 @@ function NewCommentForm({showNewCommentForm}) {
         <span className='text-slate-500 dark:text-gray-500 text-sm'>ثبت نظر جدید</span>
        </div>
     </div>
-    <textarea rows="6" placeholder="نظر خود را بنویسید ..."className="block w-full p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-gray-200 dark:focus:border-slate rounded-2xl placeholder:font-danaLight transition-colors"></textarea>
+     <Input element="textarea" textareaRow="6" textareaPlaceholder="نظر خود را بنویسید ..." />
     <div className='flex gap-x-2 justify-end mt-2.5'>
      <button className='button-md button-gray rounded-xl'>لغو</button>
      <button className='button-md button-secondary rounded-xl'>ثبت</button>

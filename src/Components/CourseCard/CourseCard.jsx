@@ -31,7 +31,6 @@ function CourseCard({
             src={src}
             className="block w-full h-full object-cover rounded-2xl"
             alt="ghorbani-dev.ir"
-           
           />
         </Link>
         {/* Offer Tag */}
