@@ -31,6 +31,7 @@ import toast from "react-hot-toast";
 import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate";
 import Comment from "../../Components/Comment/Comment";
 import ShortLink from "../../Components/ShortLink/ShortLink";
+import Button from "../../common/Form/Button";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -44,7 +45,9 @@ function Course() {
       toast.error("لطفا ابتدا در سایت وارد شوید");
     }
   };
-
+  const CourseAddToCartHandler = () => {
+    
+  }
   return (
     <>
       {/* Breadcrumb */}
@@ -66,10 +69,7 @@ function Course() {
           {/* Btn & Price */}
           <div className="mt-5 pt-5 sm:pt-0 xl:mt-0 border-t sm:border-t-0 border-t-gray-100 dark:border-t-gray-700">
             <div className="flex flex-col-reverse sm:flex-row justify-between mt-6 sm:mt-3.5 items-center">
-              <button className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary">
-                <GppGoodOutlined />
-                شرکت در دوره
-              </button>
+              <Button btnType="submit"  className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary" disabled={false} onClick={CourseAddToCartHandler}>  <GppGoodOutlined />   شرکت در دوره </Button>
               <div className="text-center sm:text-right mb-5 sm:mb-0">
                 <div className="flex-center sm:justify-end mb-1">
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
@@ -383,7 +383,7 @@ function Course() {
             </Accordion>
           </div>
           {/* Comment */}
-         <Comment showNewCommentForm={showNewCommentForm} NewCommentHandler={NewCommentHandler} />
+         <Comment showNewCommentForm={showNewCommentForm} setShowNewCommentForm={setShowNewCommentForm} NewCommentHandler={NewCommentHandler} />
         </div>
         {/* Aside */}
         <aside className="w-80 xl:w-96 shrink-0 sticky top-36 space-y-5">

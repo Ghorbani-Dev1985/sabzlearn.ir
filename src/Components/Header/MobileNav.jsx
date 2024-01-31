@@ -16,6 +16,7 @@ import LogoTypeLight from "../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../assets/Images/svgs/logoTypeDark.svg";
 import MobileDarkMode from "./MobileDarkMode";
 import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
+import Button from "../../common/Form/Button";
 
 function MobileNav() {
   const {  colorTheme } = usePublicDarkMode();
@@ -34,10 +35,14 @@ function MobileNav() {
 
     setMobileNav((prev) => !prev);
   };
+  const SearchHandler = () => {
+
+  }
   return (
     <>
-      <button onClick={toggleDrawer}>
-        <svg
+
+      <Button btnType="button"  disabled={false} onClick={toggleDrawer}>  
+      <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -50,8 +55,7 @@ function MobileNav() {
             strokeLinejoin="round"
             d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
           />
-        </svg>
-      </button>
+        </svg> </Button>
       <RtlProvider>
         <Drawer anchor="left" className="block lg:hidden" open={openMobileNav} onClose={toggleDrawer}>
           <Box className="w-64 pb-16 px-7 text-slate-400">
@@ -83,12 +87,7 @@ function MobileNav() {
                   className="rounded-xl bg-gray-100 dark:focus:text-white text-slate-500 placeholder:text-slate-500 dark:text-gray-500 dark:placeholder-gray-500 w-full h-full dark:border dark:border-gray-700 dark:focus:border-gray-600 dark:bg-gray-800 text-base pl-12 pr-5 block transition-all"
                   placeholder="جستجو"
                 />
-                <button
-                  type="submit"
-                  className="absolute left-4 top-0 bottom-0 w-6 h-6 my-auto text-slate-500/50 dark:text-gray-500"
-                >
-                  <Search />
-                </button>
+                <Button btnType="submit"  className="w-16 h-10 text-slate-500 dark:text-gray-500" disabled={false} onClick={SearchHandler}> <Search /> </Button>
               </label>
             </form>
             <Accordion

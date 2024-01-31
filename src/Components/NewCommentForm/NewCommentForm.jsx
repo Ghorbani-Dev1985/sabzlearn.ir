@@ -3,7 +3,13 @@ import UserImg from '../../assets/Images/CommentFormUser/none.png'
 import Input from '../../common/Form/Input'
 
 
-function NewCommentForm({showNewCommentForm}) {
+function NewCommentForm({showNewCommentForm , setShowNewCommentForm}) {
+  const SubmitCommentHandler = () => {
+
+  }
+  const ssds = () => {
+    
+  }
   return (
     <>
     {
@@ -16,8 +22,9 @@ function NewCommentForm({showNewCommentForm}) {
     </div>
      <Input element="textarea" textareaRow="6" textareaPlaceholder="نظر خود را بنویسید ..." />
     <div className='flex gap-x-2 justify-end mt-2.5'>
-     <button className='button-md button-gray rounded-xl'>لغو</button>
-     <button className='button-md button-secondary rounded-xl'>ثبت</button>
+    <Button btnType="submit"  className="button-md button-gray rounded-xl disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={ssds}>  لغو </Button>
+    
+    <Button btnType="submit"  className="button-md button-secondary rounded-xl disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={SubmitCommentHandler}>  ثبت </Button>
     </div></>
     }
     

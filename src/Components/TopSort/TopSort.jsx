@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { Close, DoneOutlined } from "@mui/icons-material";
 import { Backdrop, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import Button from "../../common/Form/Button";
 
 function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
   const [showMobileFilter , setShowMobileFilter] = useState(false)
   const [showMobileSort , setShowMobileSort] = useState(false)
+  const SortHandler = () => {
+
+  }
+  const FilterHandler = () => {
+
+  }
   return (
     <>
       {/* Sort In Mobile */}
@@ -85,12 +92,11 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
             <span>مرتب سازی</span>
           </span>
           <div className="flex items-center flex-wrap">
-            <button className="button-sort font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white">
-              {BtnOne}
-            </button>
-            <button className="button-sort"> {BtnTwo}</button>
-            <button className="button-sort"> {BtnThree}</button>
-            <button className="button-sort"> {BtnFour}</button>
+            
+            <Button btnType="button"  className="button-sort font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white" disabled={false} onClick={SortHandler}> {BtnOne}</Button>
+            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnTwo}</Button>
+            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnThree}</Button>
+            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnFour}</Button>
             {children}
           </div>
         </div>
@@ -150,7 +156,7 @@ const MobileFilter = ({showMobileFilter , setShowMobileFilter}) => {
           </div>
       </div>
       <div className="filter__footer">
-        <button className="filter__submit-btn">اعمال فیلتر ها</button>
+        <Button btnType="submit"  className="filter__submit-btn" disabled={false} onClick={FilterHandler}>  اعمال فیلتر ها </Button>
       </div>
     </div>
   );
@@ -168,7 +174,7 @@ const MobileSort = ({showMobileSort , setShowMobileSort}) => {
       >
        <div className="bottom-sheet bottom-sheet--open">
        <div className="bottom-sheet__header">
-         <button className="bottom-sheet__close-btn"> <Close className="size-6" /></button>
+         <button onClick={() => setShowMobileSort((prev) => !prev)} className="bottom-sheet__close-btn"> <Close className="size-6" /></button>
          <span className="bottom-sheet__name">مرتب سازی بر اساس</span>
        </div>
        <div className="bottom-sheet__body">

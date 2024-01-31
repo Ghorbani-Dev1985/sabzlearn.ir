@@ -2,9 +2,10 @@ import React from 'react'
 import UsersIcon from "../../assets/Images/CommentFormUser/none.png";
 import { Reply } from '@mui/icons-material';
 import NewCommentForm from '../NewCommentForm/NewCommentForm';
+import Button from '../../common/Form/Button';
 
 
-function Comment({showNewCommentForm , NewCommentHandler}) {
+function Comment({showNewCommentForm , setShowNewCommentForm , NewCommentHandler}) {
   return (
     <div className="bg-white dark:bg-gray-800 px-3.5 md:px-5 pt-5 md:pt-7 pb-3.5 md:pb-6 shadow-light dark:shadow-none rounded-2xl mt-4 sm:mt-5">
     {/* Head & Sent Btn */}
@@ -15,14 +16,9 @@ function Comment({showNewCommentForm , NewCommentHandler}) {
           نظرات
         </h3>
       </div>
-      <button
-        onClick={NewCommentHandler}
-        className="button-md button-primary rounded-xl"
-      >
-        ایجاد نظر جدید
-      </button>
+      <Button btnType="submit"  className="button-md button-primary rounded-xl disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={NewCommentHandler}>ایجاد نظر جدید</Button>
     </div>
-    <NewCommentForm showNewCommentForm={showNewCommentForm} />
+    <NewCommentForm showNewCommentForm={showNewCommentForm} setShowNewCommentForm={setShowNewCommentForm}/>
     {/* Comment Items */}
     
     <div className="space-y-3.5 sm:space-y-5 ">
@@ -61,12 +57,7 @@ function Comment({showNewCommentForm , NewCommentHandler}) {
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              className="w-16 h-10 text-slate-500 dark:text-gray-500"
-            >
-              <Reply className="w-16 h-10" />
-            </button>
+            <Button btnType="button"  className="w-16 h-10 text-slate-500 dark:text-gray-500" disabled={false} onClick={NewCommentHandler}> <Reply className="w-16 h-10" /> </Button>
           </div>
           <div className="text-zinc-700 dark:text-white font-Dana leading-7 mt-3.5">
             سلام خسته نباشید استاد ، <br />
