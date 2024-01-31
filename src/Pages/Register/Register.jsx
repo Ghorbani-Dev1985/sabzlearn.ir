@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Input from "../../common/Form/Input";
+import Button from "../../common/Form/Button";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const registerNewUserHandler = () => {
+
+  }
   return (
     <>
       <LoginRegisterTemplate subLink={ <p className="mt-4 sm:mt-6 font-danaLight sm:text-lg text-center text-slate-500 dark:text-gray-500">
@@ -43,12 +47,7 @@ function Register() {
               className="left-3 sm:left-4 cursor-pointer"
             />}/>
         </div>
-        <button
-          type="submit"
-          className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full"
-        >
-          ادامه
-        </button>
+        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={registerNewUserHandler}>ادامه</Button>
       </form>
               </LoginRegisterTemplate>
     </>

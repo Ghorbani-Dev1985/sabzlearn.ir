@@ -4,11 +4,16 @@ import useTitle from "../../Hooks/useTitle";
 import { Person, Visibility } from "@mui/icons-material";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Input from "../../common/Form/Input";
+import Button from "../../common/Form/Button";
 
 function Login() {
   const title = useTitle("ورود به حساب");
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  
+  const userLoginHandler = () => {
+
+  }
   return (
     <>
     <LoginRegisterTemplate>
@@ -35,12 +40,7 @@ function Login() {
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer" />}/>
         </div>
-        <button
-          type="submit"
-          className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full"
-        >
-          تایید
-        </button>
+        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={userLoginHandler}>تایید</Button>
       </form>
       <div className="flex items-center mt-5 text-sm text-slate-500 dark:text-slate-400 tracking-tight">
         <Link to="/termsConditions">حریم خصوصی</Link>
