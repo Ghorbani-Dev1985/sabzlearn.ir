@@ -30,7 +30,7 @@ function Login() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
-          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" value="" onChange="" icon={<Person className="left-3 sm:left-4" />}/>
+          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" icon={<Person className="left-3 sm:left-4" />}/>
           <Input element="input" type={showPassword ? "text" : "password"} placeholder="کلمه عبور" value={password} onChange={(event) => setPassword(event.target.value)} icon={<Visibility
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer" />}/>
