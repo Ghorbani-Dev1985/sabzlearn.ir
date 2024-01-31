@@ -107,6 +107,89 @@ input + svg {
   :is(.dark progress)::-webkit-progress-value {
     background-color: rgb(78 129 251);
   }
+  .filter {
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    z-index: 50;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: rgb(255 255 255);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+:is(.dark .filter) {
+  background-color: rgb(40 41 61);
+}
+.filter__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(243 244 246);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.25rem;
+}
+:is(.dark .filter__header) {
+  background-color: rgb(50 51 77);
+}
+.filter__head-title {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 0.75rem;
+  column-gap: 0.75rem;
+}
+.filter__clean-btn {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 0.375rem;
+  column-gap: 0.375rem;
+  border-radius: 0.75rem;
+  background-color: rgb(236 72 153 / 0.1);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(236 72 153);
+}
+:is(.dark .filter__clean-btn) {
+  background-color: rgb(239 68 68 / 0.1);
+  color: rgb(239 68 68);
+}
+.filter__footer {
+  margin-top: 1.5rem;
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.filter__submit-btn {
+  display: block;
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border-radius: 0.75rem;
+  background-color: rgb(46 213 115);
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  text-align: center;
+  font-family: 'Dana DemiBold';
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: rgb(255 255 255);
+}
 }
 
 @layer components {
