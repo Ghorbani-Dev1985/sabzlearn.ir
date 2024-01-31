@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import Validator from '../../Validators/Validators'
 
 const inputReducer = (state , action) => {
@@ -16,12 +16,17 @@ const inputReducer = (state , action) => {
     }
 }
 
-function Input({children, element , textareaRow , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations}) {
-
+function Input({children, element , textareaRow , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations , id , onInputHandler}) {
+   
     const [mainInput , dispatch] = useReducer(inputReducer , {
         value: '',
         inValid: true
     })
+
+    const {value , isValid} = mainInput;
+    useEffect(() => {
+        onInputHandler(id , value , isValid)
+    }, [value])
 
     const OnChangeHandler = (event) => {
         console.log(event.target.value)

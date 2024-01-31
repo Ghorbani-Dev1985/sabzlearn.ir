@@ -6,10 +6,23 @@ import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginR
 import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
+import useForm from "../../Hooks/useForm";
 
 
 function Login() {
   const title = useTitle("ورود به حساب");
+  const [formState , onInputHandler] = useForm({
+    UserName: {
+      value: '',
+      isValid: false
+    },
+    Password: {
+      value: '',
+      isValid: false
+    },
+  } , false)
+
+  console.log(formState)
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   
@@ -37,14 +50,14 @@ function Login() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
-          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" icon={<Person className="left-3 sm:left-4" />} 
-           validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]}
+          <Input id='UserName' element="input" placeholder="نام کاربری یا آدرس ایمیل" icon={<Person className="left-3 sm:left-4" />} 
+           validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]} onInputHandler={onInputHandler}
           />
-          <Input element="input" type={showPassword ? "text" : "password"} placeholder="کلمه عبور" value={password} onChange={(event) => setPassword(event.target.value)} icon={<Visibility
+          <Input id='Password' element="input" type={showPassword ? "text" : "password"} placeholder="کلمه عبور" value={password} onChange={(event) => setPassword(event.target.value)} icon={<Visibility
               onClick={() => setShowPassword((prev) => !prev)}
-              className="left-3 sm:left-4 cursor-pointer" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(25)]}/>
+              className="left-3 sm:left-4 cursor-pointer" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(25)]} onInputHandler={onInputHandler}/>
         </div>
-        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={userLoginHandler}>تایید</Button>
+        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={!formState.isFormValid} onClick={userLoginHandler}>تایید</Button>
       </form>
       <div className="flex items-center mt-5 text-sm text-slate-500 dark:text-slate-400 tracking-tight">
         <Link to="/termsConditions">حریم خصوصی</Link>
