@@ -190,6 +190,85 @@ input + svg {
   line-height: 1.75rem;
   color: rgb(255 255 255);
 }
+.bottom-sheet {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 50;
+  --tw-translate-y: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.bottom-sheet--open {
+  --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.bottom-sheet__header {
+  display: flex;
+  -moz-column-gap: 0.75rem;
+  column-gap: 0.75rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: rgb(243 244 246);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.25rem;
+}
+:is(.dark .bottom-sheet__header) {
+  background-color: rgb(50 51 77 );
+}
+.bottom-sheet__close-btn {
+  display: flex;
+  align-items: center;
+  color: rgb(148 163 184);
+}
+.bottom-sheet__name {
+  font-family: 'Dana DemiBold';
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: rgb(63 63 70 );
+}
+:is(.dark .bottom-sheet__name) {
+  color: rgb(255 255 255);
+}
+.bottom-sheet__body {
+  background-color: rgb(255 255 255);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+:is(.dark .bottom-sheet__body) {
+    background-color: rgb(40 41 61);
+}
+.bottom-sheet__item {
+  display: flex;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(100 116 139);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.bottom-sheet__item--selected {
+  font-family: 'Dana Medium';
+  color: rgb(63 63 70 );
+}
+:is(.dark .bottom-sheet__item) {
+  color: rgb(148 163 184);
+}
+:is(.dark .bottom-sheet__item--selected) {
+  color: rgb(255 255 255 );
+}
 }
 
 @layer components {

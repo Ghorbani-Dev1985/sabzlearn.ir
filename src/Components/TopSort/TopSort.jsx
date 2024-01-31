@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Close } from "@mui/icons-material";
-import { Divider } from "@mui/material";
+import { Close, DoneOutlined } from "@mui/icons-material";
+import { Backdrop, Divider } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
   const [showMobileFilter , setShowMobileFilter] = useState(false)
+  const [showMobileSort , setShowMobileSort] = useState(false)
   return (
     <>
       {/* Sort In Mobile */}
-      <div onClick={() => setShowMobileFilter((prev) => !prev)} className="flex sm:hidden items-center gap-3.5 mb-7">
-        <div className="flex items-center justify-center gap-x-2 w-1/2 py-2 px-4 text-sm text-zinc-700 dark:text-white bg-white dark:bg-gray-800 rounded-xl select-none">
+      <div className="flex sm:hidden items-center gap-3.5 mb-7">
+        <div onClick={() => setShowMobileFilter((prev) => !prev)} className="flex items-center justify-center gap-x-2 w-1/2 py-2 px-4 text-sm text-zinc-700 dark:text-white bg-white dark:bg-gray-800 rounded-xl select-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -26,10 +28,10 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
           <span>فیلتر</span>
         </div>
         {
-          showMobileFilter &&  <MobileFilter />
+          showMobileFilter &&  <MobileFilter showMobileFilter={showMobileFilter} setShowMobileFilter={setShowMobileFilter}/>
         }
        
-        <div className="flex-center gap-x-2 w-1/2 py-2 px-4 text-sm text-zinc-700 dark:text-white bg-white dark:bg-gray-800 rounded-xl select-none">
+        <div onClick={() => setShowMobileSort((prev) => !prev)} className="flex-center gap-x-2 w-1/2 py-2 px-4 text-sm text-zinc-700 dark:text-white bg-white dark:bg-gray-800 rounded-xl select-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -51,6 +53,10 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
           <span>همه دوره‌ ها</span>
         </div>
       </div>
+      {
+        showMobileSort && <MobileSort showMobileSort={showMobileSort} setShowMobileSort={setShowMobileSort}/>
+      }
+        
       {/* Sort In Desktop */}
       <div className="hidden sm:flex items-center px-7 mb-5 h-17 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl">
         <div className="flex-center lg:justify-start gap-4 text-sm">
@@ -93,15 +99,14 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
   );
 }
 
-export default TopSort;
 
-const MobileFilter = () => {
+const MobileFilter = ({showMobileFilter , setShowMobileFilter}) => {
   return (
     <div className="filter">
       <div className="filter__header">
         <div className="filter__head-title">
           <button onClick={() => setShowMobileFilter((prev) => !prev)} className="flex-center text-gray-500">
-            <Close className="size-6" />{" "}
+            <Close className="size-6" />
           </button>
           <span className="font-Dana text-lg text-zinc-700 dark:text-white">
             فیلتر
@@ -152,3 +157,33 @@ const MobileFilter = () => {
 };
 
 export { MobileFilter };
+
+
+const MobileSort = ({showMobileSort , setShowMobileSort}) => {
+  return (
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={showMobileSort}
+        onClick={() => setShowMobileSort((prev) => !prev)}
+      >
+       <div className="bottom-sheet bottom-sheet--open">
+       <div className="bottom-sheet__header">
+         <button className="bottom-sheet__close-btn"> <Close className="size-6" /></button>
+         <span className="bottom-sheet__name">مرتب سازی بر اساس</span>
+       </div>
+       <div className="bottom-sheet__body">
+      <Link className="bottom-sheet__item bottom-sheet__item--selected"><span>همه دوره ها</span> <DoneOutlined className="size-5" /> </Link>
+      <Link className="bottom-sheet__item"><span>  ارزان ترین</span> <DoneOutlined className="hidden size-5"/> </Link>
+      <Link className="bottom-sheet__item"><span>  گران ترین</span> <DoneOutlined className="hidden size-5"/> </Link>
+      <Link className="bottom-sheet__item"><span>  پرمخاطب ها</span> <DoneOutlined className="hidden size-5"/> </Link>
+       </div>
+       </div>
+      </Backdrop>
+  
+  )
+}
+
+export {MobileSort};
+
+
+export default TopSort;
