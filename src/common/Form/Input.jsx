@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react'
+import Validator from '../../Validators/Validators'
 
 const inputReducer = (state , action) => {
     switch(action.type){
@@ -6,7 +7,7 @@ const inputReducer = (state , action) => {
             return {
                 ...state,
                 value: action.value,
-                isValid: action.isValid
+                isValid: Validator(action.value , action.validations)
             }
         }
         default: {
@@ -15,7 +16,7 @@ const inputReducer = (state , action) => {
     }
 }
 
-function Input({children, element , textareaRow , textareaPlaceholder , type = 'text' , placeholder  ,  icon }) {
+function Input({children, element , textareaRow , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations}) {
 
     const [mainInput , dispatch] = useReducer(inputReducer , {
         value: '',
@@ -27,6 +28,7 @@ function Input({children, element , textareaRow , textareaPlaceholder , type = '
         dispatch({
             type: 'CHANGE',
             value : event.target.value,
+            validations,
             isValid: true
         })
     }

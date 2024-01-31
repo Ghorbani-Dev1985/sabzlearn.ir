@@ -5,6 +5,8 @@ import { Person, Visibility } from "@mui/icons-material";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
+import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
+
 
 function Login() {
   const title = useTitle("ورود به حساب");
@@ -35,10 +37,12 @@ function Login() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
-          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" icon={<Person className="left-3 sm:left-4" />}/>
+          <Input element="input" placeholder="نام کاربری یا آدرس ایمیل" icon={<Person className="left-3 sm:left-4" />} 
+           validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]}
+          />
           <Input element="input" type={showPassword ? "text" : "password"} placeholder="کلمه عبور" value={password} onChange={(event) => setPassword(event.target.value)} icon={<Visibility
               onClick={() => setShowPassword((prev) => !prev)}
-              className="left-3 sm:left-4 cursor-pointer" />}/>
+              className="left-3 sm:left-4 cursor-pointer" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(25)]}/>
         </div>
         <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={false} onClick={userLoginHandler}>تایید</Button>
       </form>
