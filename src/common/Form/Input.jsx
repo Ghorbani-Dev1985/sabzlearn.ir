@@ -29,7 +29,6 @@ function Input({children, element , textareaRow , textareaPlaceholder , type = '
     }, [value])
 
     const OnChangeHandler = (event) => {
-        console.log(event.target.value)
         dispatch({
             type: 'CHANGE',
             value : event.target.value,

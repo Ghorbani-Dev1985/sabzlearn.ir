@@ -7,13 +7,23 @@ import Button from "../../common/Form/Button";
 import useTitle from "../../Hooks/useTitle";
 import useForm from "../../Hooks/useForm";
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
+import toast from "react-hot-toast";
+import useInsert from "../../Hooks/useInsert";
 
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const title = useTitle(" ثبت نام");
   const [formState , onInputHandler] = useForm({
+    FullName: {
+      value: '',
+      isValid: false
+    },
     UserName: {
+      value: '',
+      isValid: false
+    },
+    Email: {
       value: '',
       isValid: false
     },
@@ -21,10 +31,31 @@ function Register() {
       value: '',
       isValid: false
     },
+    ConfirmPassword: {
+      value: '',
+      isValid: false
+    }
   } , false)
   const [password, setPassword] = useState("");
-  const registerNewUserHandler = () => {
-
+  const registerNewUserHandler = (event) => {
+        event.preventDefault()
+        const newUserInfos = JSON.stringify({
+          name: formState.inputs.FullName.value,
+          username: formState.inputs.UserName.value,
+          email: formState.inputs.Email.value,
+          password: formState.inputs.Password.value,
+          confirmPassword: formState.inputs.ConfirmPassword.value
+        })
+        if(formState.inputs.Password.value === formState.inputs.ConfirmPassword.value){
+          const insert = useInsert('auth/register' , newUserInfos , true , true)
+          formState.inputs.FullName.value = ''
+          formState.inputs.UserName.value = ''
+          formState.inputs.Email.value = ''
+          formState.inputs.Password.value = ''
+          formState.inputs.ConfirmPassword.value = ''
+        }else{
+          toast.error("کلمه عبور با تکرار کلمه عبور همخوانی ندارد")
+        }
   }
   return (
     <>
@@ -51,13 +82,14 @@ function Register() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
+        <Input id="FullName" element="input" placeholder=" نام و نام خانوادگی" value="" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(6) , MaxValidator(30)]} onInputHandler={onInputHandler}/>
           <Input id="UserName" element="input" placeholder=" نام کاربری" value="" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]} onInputHandler={onInputHandler}/>
-          <Input element="input" placeholder=" آدرس ایمیل  " value="" icon={ <Email className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
-          <Input element="input" type={showPassword ? "text" : "password"} placeholder=" آدرس ایمیل  " value={password} onChange={(event) => setPassword(event.target.value)} icon={  <Visibility
+          <Input id="Email" element="input" placeholder=" آدرس ایمیل  " value="" icon={ <Email className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
+          <Input id="Password" element="input" type={showPassword ? "text" : "password"} placeholder=" کلمه عبور   " value={password} onChange={(event) => setPassword(event.target.value)} icon={  <Visibility
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer"
             />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) ]} onInputHandler={onInputHandler}/>
-          <Input element="input" type={showPassword ? "text" : "password"} placeholder=" تکرار کلمه عبور   " value={password} onChange={(event) => setPassword(event.target.value)} icon={  <Visibility
+          <Input id="ConfirmPassword" element="input" type={showPassword ? "text" : "password"} placeholder=" تکرار کلمه عبور   " icon={  <Visibility
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer"
             />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30)]} onInputHandler={onInputHandler}/>
