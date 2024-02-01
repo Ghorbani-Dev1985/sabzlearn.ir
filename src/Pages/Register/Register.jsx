@@ -1,6 +1,6 @@
 import { Email, Person, Visibility } from "@mui/icons-material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
@@ -18,6 +18,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const title = useTitle(" ثبت نام");
   const { LoginHandler} = useAuth()
+  const Navigate = useNavigate()
   const [formState , onInputHandler] = useForm({
     FullName: {
       value: '',
@@ -61,6 +62,7 @@ function Register() {
             console.log(response)
             LoginHandler(response.data.user , response.data.accessToken)
             toast.success("ثبت نام با موفقیت انجام گردید")
+            Navigate('/')
           })
           .catch(error => {
               console.log(error)

@@ -1,22 +1,56 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import useFetch from "../Hooks/useFetch";
+import axios from "axios";
+import { BaseURL } from "../Utils/Utils";
+import { useCallback } from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext({
+  isLoggedIn: false,
+  token: null,
+  userInfos: null,
+  LoginHandler: () => {},
+  LogoutHandler: () => {}
+});
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState(null)
   const [userInfos, setUserInfos] = useState(null)
-  const LoginHandler = (userInfos, token) => {
+
+  const LoginHandler = useCallback((userInfos, token) => {
     setToken(token)
     setIsLoggedIn(true)
     setUserInfos(userInfos)
     localStorage.setItem('user' , JSON.stringify({token}))
-  }
-  const LogoutHandler = () => {
+  }, [])
+
+  const LogoutHandler = useCallback(() => {
     setToken(null)
     setUserInfos({})
     localStorage.removeItem('user')
-  }
+  } , [])
+
+  useEffect(() => {
+     const localStorageData = JSON.parse(localStorage.getItem('user'))
+     if(localStorageData){
+      axios.get(`${BaseURL}auth/me` , {
+        headers : {
+          'Authorization' : `Bearer ${localStorageData.token}`
+        }
+      })
+      .then(response => {
+        setIsLoggedIn(true)
+        setUserInfos(response.data)
+        console.log(userInfos)
+      })
+      .catch(error => {
+          console.log(error)
+          toast.error("  خطا در اتصال به سرور ");
+      })
+     }
+     console.log(localStorageData)
+  }, [LoginHandler])
+  
   return (
     <AuthContext.Provider
       value={{ isLoggedIn, token , userInfos , LoginHandler , LogoutHandler}}
