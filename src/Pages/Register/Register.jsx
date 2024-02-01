@@ -9,11 +9,15 @@ import useForm from "../../Hooks/useForm";
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
 import toast from "react-hot-toast";
 import useInsert from "../../Hooks/useInsert";
+import { useAuth } from "../../Contexts/AuthContext";
+import axios from "axios";
+import { BaseURL } from "../../Utils/Utils";
 
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const title = useTitle(" ثبت نام");
+  const { LoginHandler} = useAuth()
   const [formState , onInputHandler] = useForm({
     FullName: {
       value: '',
@@ -38,7 +42,8 @@ function Register() {
   } , false)
   const [password, setPassword] = useState("");
   const registerNewUserHandler = (event) => {
-        event.preventDefault()
+    event.preventDefault()
+    
         const newUserInfos = JSON.stringify({
           name: formState.inputs.FullName.value,
           username: formState.inputs.UserName.value,
@@ -47,7 +52,20 @@ function Register() {
           confirmPassword: formState.inputs.ConfirmPassword.value
         })
         if(formState.inputs.Password.value === formState.inputs.ConfirmPassword.value){
-          const insert = useInsert('auth/register' , newUserInfos , true , true)
+          axios.post(`${BaseURL}auth/register` , newUserInfos , {
+            headers : {
+              'Content-Type' : 'application/json'
+            }
+          })
+          .then(response => {
+            console.log(response)
+            LoginHandler(response.data.user , response.data.accessToken)
+            toast.success("ثبت نام با موفقیت انجام گردید")
+          })
+          .catch(error => {
+              console.log(error)
+              toast.error("  خطا در اتصال به سرور ");
+          })
           
         }else{
           toast.error("کلمه عبور با تکرار کلمه عبور همخوانی ندارد")

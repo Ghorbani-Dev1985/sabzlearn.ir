@@ -4,7 +4,7 @@ import { BaseURL } from '../Utils/Utils';
 import toast from 'react-hot-toast';
 
 
-function useInsert(url , newItemInfos , headers , register) {
+function useInsert(url , newItemInfos , headers ) {
     axios.post(`${BaseURL}${url}` , newItemInfos , headers ? {
       headers : {
         'Content-Type' : 'application/json'
@@ -12,7 +12,6 @@ function useInsert(url , newItemInfos , headers , register) {
     } : "")
     .then(response => {
       console.log(response)
-      register ? toast.success("ثبت نام با موفقیت انجام گردید") :
       toast.success("ثبت اطلاعات با موفقیت انجام گردید")
     })
     .catch(error => {
