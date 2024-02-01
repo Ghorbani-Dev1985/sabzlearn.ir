@@ -7,7 +7,7 @@ import { FolderOpenOutlined, HomeOutlined, LogoutOutlined, PermIdentityOutlined,
 
 
 function LoginRegister() {
-  const {isLoggedIn } = useAuth()
+  const {isLoggedIn , userInfos} = useAuth()
   const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
   return (
     <div className='relative text-base xl:text-lg text-white md:h-14 md:w-[155px] xl:w-[180px]'>
@@ -16,7 +16,7 @@ function LoginRegister() {
             <div onClick={() => setShowUserProfileMenu((prev) => !prev)}>
               <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-12 md:size-14 rounded-full inline-block cursor-pointer'/>
             </div>
-            {showUserProfileMenu && <UserProfile showUserProfileMenu={showUserProfileMenu} setShowUserProfileMenu={setShowUserProfileMenu}/>}
+            {showUserProfileMenu && <UserProfile showUserProfileMenu={showUserProfileMenu} setShowUserProfileMenu={setShowUserProfileMenu} userInfos={userInfos}/>}
         </div> : <><Link to="/login" className='absolute right-0 w-25 xl:w-28 hidden md:flex items-center hover:text-white justify-start h-full bg-sky-500/50 hover:bg-sky-400 dark:bg-secondaryLight dark:hover:bg-secondary/60 rounded-full pr-5 transition-colors'>ورود</Link>
       <Link to="/register" className='absolute left-0 w-25 xl:w-28 hidden md:flex items-center hover:text-white justify-center h-full bg-sky-500 hover:bg-sky-600 dark:bg-secondary dark:hover:bg-[#3F6CD8] rounded-full z-10 transition-colors'>عضویت</Link>
       {/* Show in SM */}
@@ -34,8 +34,8 @@ function LoginRegister() {
 export default LoginRegister
 
 
-const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu}) =>{
-  const {userInfos } = useAuth()
+const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos}) =>{
+  console.log(userInfos)
   const dashboardLinks = [
     {
     id: 1,
@@ -79,7 +79,7 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu}) =>{
               <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-14 rounded-full inline-block'/>
               </Link>
               <div className='mr-2.5 flex flex-col gap-y-1 overflow-hidden'>
-              <span className="text-lg text-zinc-700 dark:text-white inline-block truncate"> {userInfos.username}</span>
+              <span className="text-lg text-zinc-700 dark:text-white inline-block truncate"> {userInfos.name}</span>
               <span className="text-sm text-sky-500 dark:text-secondary inline-block font-danaMedium">موجودی: 0 تومان</span>
               </div>
           </div>
@@ -101,6 +101,7 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu}) =>{
                 <Link to="" className='flex-between text-zinc-700 dark:text-white px-2.5 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-mainSlate transition-colors'>
                 <span className='flex items-center gap-x-3'>
                      <LogoutOutlined className='size-5'/>
+                     خروج
                 </span>
                 </Link>
            </div>

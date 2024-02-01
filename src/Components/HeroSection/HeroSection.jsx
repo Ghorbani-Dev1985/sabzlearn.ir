@@ -16,7 +16,7 @@ function HeroSection() {
           {/* Notification */}
           <Link
             to=""
-            className="inline-flex items-center gap-x-1.5 sm:gap-x-2 w-full xs:w-auto xs:max-w-[350px] sm:max-w-[450px] text-base lg:text-lg h-9 sm:min-h-[50px] px-2 sm:px-4 py-2.5 mt-6 bg-white dark:bg-gray-800 rounded-full border border-transparent hover:border-primary transition-all"
+            className="inline-flex items-center gap-x-1.5 sm:gap-x-2 w-full xs:w-auto xs:max-w-[350px] sm:max-w-[450px] no-underline text-base lg:text-lg h-9 sm:min-h-[50px] px-2 sm:px-4 py-2.5 mt-6 bg-white dark:bg-gray-800 rounded-full border border-transparent hover:border-primary transition-all"
           >
             <span className="flex items-center gap-x-1.5 shrink-0 text-primary select-none">
               <InfoOutlined />
@@ -27,7 +27,7 @@ function HeroSection() {
             </span>
           </Link>
           {/* Hero Text Section */}
-          <h2 className="font-MorabbaBold text-5xl block h-48 lg:text-6xl text-zinc-700 dark:text-white leading-[80px] lg:leading-[96px]">
+          <h2 className="font-MorabbaBold text-5xl block mb-16 mb:mb-0 h-48 lg:text-6xl text-zinc-700 dark:text-white leading-[80px] lg:leading-[96px]">
             <Typewriter
               options={{
                 strings: `ما به هر قیمتی  <br className="hidden sm:inline" /> دوره تولید نمی کنیم!`,

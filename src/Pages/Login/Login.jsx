@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useTitle from "../../Hooks/useTitle";
 import { Person, Visibility } from "@mui/icons-material";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
@@ -7,10 +7,16 @@ import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
 import { RequiredValidator , MinValidator , MaxValidator } from '../../Validators/Rules'
 import useForm from "../../Hooks/useForm";
+import axios from "axios";
+import { BaseURL } from "../../Utils/Utils";
+import toast from "react-hot-toast";
+import { useAuth } from "../../Contexts/AuthContext";
 
 
 function Login() {
   const title = useTitle("ورود به حساب");
+  const { LoginHandler} = useAuth()
+  const Navigate = useNavigate()
   const [formState , onInputHandler] = useForm({
     UserName: {
       value: '',
@@ -21,13 +27,34 @@ function Login() {
       isValid: false
     },
   } , false)
-
-  console.log(formState)
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   
-  const userLoginHandler = () => {
-
+  const userLoginHandler = (event) => {
+      event.preventDefault()
+      const userDate = JSON.stringify({
+          identifier: formState.inputs.UserName.value,
+          password: formState.inputs.Password.value
+      })
+      axios.post(`${BaseURL}auth/login` , userDate , {
+        headers : {
+          'Content-Type' : 'application/json'
+        }
+      })
+      .then(response => {
+        console.log(response)
+        if(response.status !== 200){
+          toast.error(" با چنین مشخصات کاربری وجود ندارد");
+        }else{
+          LoginHandler(response.data.user , response.data.accessToken)
+          toast.success(" ورود با موفقیت انجام گردید")
+          Navigate('/')
+        }
+      })
+      .catch(error => {
+          console.log(error)
+          toast.error("خطا در ارتباط با سرور");
+      })
   }
   return (
     <>
