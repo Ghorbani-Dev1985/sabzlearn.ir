@@ -48,11 +48,7 @@ function Register() {
         })
         if(formState.inputs.Password.value === formState.inputs.ConfirmPassword.value){
           const insert = useInsert('auth/register' , newUserInfos , true , true)
-          formState.inputs.FullName.value = ''
-          formState.inputs.UserName.value = ''
-          formState.inputs.Email.value = ''
-          formState.inputs.Password.value = ''
-          formState.inputs.ConfirmPassword.value = ''
+          
         }else{
           toast.error("کلمه عبور با تکرار کلمه عبور همخوانی ندارد")
         }
