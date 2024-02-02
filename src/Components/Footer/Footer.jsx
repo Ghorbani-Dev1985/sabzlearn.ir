@@ -1,50 +1,31 @@
 import { Instagram, Telegram } from '@mui/icons-material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import useFetch from '../../Hooks/useFetch'
 
 const quickAccessLinks = [
     {
         id: 1,
-        to: "/termsConditions",
-        linkText : "قوانین و مقررات"
+        href: "/termsConditions",
+        title : "قوانین و مقررات"
     },
     {
         id: 2,
-        to: "/userAccount/tickets",
-        linkText : " ارسال تیکت"
+        href: "/userAccount/tickets",
+        title : " ارسال تیکت"
     },
     {
         id: 3,
-        to: "/courses",
-        linkText : " همه دوره ها"
+        href: "/courses",
+        title : " همه دوره ها"
     },
 ]
 
-const usefulLinks = [
-    {
-        id: 1,
-        to: "/course/java-script-zero-to-hero",
-        linkText : " آموزش جاوااسکریپت"
-    },
-    {
-        id: 2,
-        to: "/course/python",
-        linkText : "  آموزش پایتون"
-    },
-    {
-        id: 3,
-        to: "/course/html-tutorial",
-        linkText : " آموزش HTML "
-    },
-    {
-        id: 4,
-        to: "/course/css-tutorial",
-        linkText : " آموزش CSS "
-    }
-]
 
 
 function Footer() {
+    const { datas: usefulLinks } = useFetch("menus/topbar", "");
+    const ShuffledLinks = [...usefulLinks].sort(() => 0.5 - Math.random())
   return (
     <footer className='pt-8 lg:pt-16 mt-24 bg-white dark:bg-transparent dark:border-t border-t-gray-700 font-danaLight text-slate-500 dark:text-slate-400 text-base xl:text-lg'>
         <div className='container'>
@@ -57,7 +38,7 @@ function Footer() {
           </div>
           {/*  Footer Links */}
            <FooterLinks title="دسترسی سریع" linkList={quickAccessLinks}/>
-           <FooterLinks title=" لینک های مفید" linkList={usefulLinks}/>
+           <FooterLinks title=" لینک های مفید" linkList={ShuffledLinks.slice(0 , 5)}/>
            {/* Social Media */}
            <div className='flex flex-col gap-y-5 flex-grow'>
             <h4 className='font-DanaMd text-2xl text-zinc-700 dark:text-white'>شبکه های اجتماعی</h4>
@@ -94,10 +75,10 @@ const FooterLinks = ({title , linkList}) => {
      <div className='flex flex-col gap-y-5 flex-grow'>
          <h4 className='font-DanaMd text-2xl text-zinc-700 dark:text-white'>{title}</h4>
          <div className='flex flex-col items-start gap-y-3'>
-           { linkList.map(({id , to , linkText}) => {
+           { linkList.map(({id , href , title}) => {
               return(
                 <React.Fragment key={id}>
-                <Link to={to}>{linkText}</Link>
+                <Link to={href}>{title}</Link>
                 </React.Fragment>
               )
             })
