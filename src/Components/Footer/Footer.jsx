@@ -75,9 +75,9 @@ const FooterLinks = ({title , linkList}) => {
      <div className='flex flex-col gap-y-5 flex-grow'>
          <h4 className='font-DanaMd text-2xl text-zinc-700 dark:text-white'>{title}</h4>
          <div className='flex flex-col items-start gap-y-3'>
-           { linkList.map(({id , href , title}) => {
+           { linkList.map(({_id , href , title}) => {
               return(
-                <React.Fragment key={id}>
+                <React.Fragment key={_id}>
                 <Link to={href}>{title}</Link>
                 </React.Fragment>
               )
