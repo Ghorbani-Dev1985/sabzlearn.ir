@@ -1,5 +1,6 @@
 const courseModel = require("../../models/course");
 const sessionModel = require("../../models/session");
+const commentModel = require("../../models/comment");
 const courseUserModel = require("../../models/course-user");
 
 exports.create = async (req, res) => {
@@ -13,6 +14,7 @@ exports.create = async (req, res) => {
     shortName,
     creator: req.user._id,
     categoryID,
+    isComplete: 0,
     cover: "images/courses/js.jpeg",
   });
 
@@ -31,23 +33,32 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   const course = await courseModel
-    .findOne({ shortName: req.params.id })
+    .findOne({ shortName: req.params.shortName })
     .populate("categoryID", "-password")
     .populate("creator", "-password")
     .lean();
 
-  const sessions = await sessionModel
-    .find({ course: req.body.courseID })
-    .lean();
+  const sessions = await sessionModel.find({ course: course._id }).lean();
+  const comments = await commentModel.find({ course: course._id }).lean();
 
-  // const isUserRegisteredToThisCourse = !!(await courseUserModel.findOne({
-  //   user: req.user._id,
-  //   course: req.body.courseID
-  // }));
-  // console.log(isUserRegisteredToThisCourse);
-  res.json({ ...course, sessions });
+  const courseStudentsCount = await courseUserModel
+    .find({
+      course: course._id,
+    })
+    .count();
 
-  // return res.json({ ...course, sessions, isUserRegisteredToThisCourse });
+  const isUserRegisteredToThisCourse = !!(await courseUserModel.findOne({
+    user: req.user._id,
+    course: course._id,
+  }));
+
+  return res.json({
+    ...course,
+    courseStudentsCount,
+    sessions,
+    comments,
+    isUserRegisteredToThisCourse,
+  });
 };
 
 exports.createSession = async (req, res) => {

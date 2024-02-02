@@ -71,7 +71,7 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos})
     onClick={() => setShowUserProfileMenu((prev) => !prev)}
     >
   </Backdrop>
-  <div className='absolute z-50 left-0 top-full pt-4 transition-all '>
+  <div className='absolute z-50 left-25 top-full pt-4 transition-all '>
      <div className='w-[278px] bg-white dark:bg-gray-700 py-5 px-6 rounded-2xl'>
         {/* Header */}
           <div className='flex items-center border-b border-b-gray-200 dark:border-b-mainSlate pb-5 mb-2'>
@@ -87,12 +87,14 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos})
           {
             dashboardLinks.map(({id, to , icon , linkText}) => {
               return(
+                <React.Fragment key={id}>
                 <Link to={to} className='flex-between text-zinc-700 dark:text-white px-2.5 h-[46px] rounded-xl hover:bg-gray-100 dark:hover:bg-slate transition-colors'>
                    <span className='flex items-center gap-x-3'>
                     {icon}
                     {linkText}
                     </span>
                 </Link>
+                </React.Fragment>
               )
             })
           }

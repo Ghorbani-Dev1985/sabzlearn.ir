@@ -26,9 +26,6 @@ function NewCommentForm({showNewCommentForm , setShowNewCommentForm}) {
   const SubmitCommentHandler = () => {
 
   }
-  const ssds = () => {
-    
-  }
   const RecaptchaChangeHandler = () => {
     setIsGoogleRecaptchaVerify(true)
    }

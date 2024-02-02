@@ -3,6 +3,7 @@ import useFetch from "../Hooks/useFetch";
 import axios from "axios";
 import { BaseURL } from "../Utils/Utils";
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext({
   isLoggedIn: false,

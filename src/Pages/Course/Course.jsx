@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -32,8 +32,10 @@ import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate
 import Comment from "../../Components/Comment/Comment";
 import ShortLink from "../../Components/ShortLink/ShortLink";
 import Button from "../../common/Form/Button";
-import useFetch from "../../Hooks/useFetch";
 import { useAuth } from "../../Contexts/AuthContext";
+import usePost from "../../Hooks/usePost";
+import { BaseURL } from "../../Utils/Utils";
+import axios from "axios";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -41,8 +43,11 @@ function Course() {
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
   const {courseName} = useParams()
-  const { datas: courseInfo } = useFetch(`courses/${courseName}`, true);
-  console.log(courseInfo)
+
+  const [comments , setComments] = useState([])
+  const [sessions , setSessions] = useState([])
+  const [courseDetails , setCourseDetails] = useState({})
+
   const NewCommentHandler = () => {
     if (isLoggedIn) {
       setShowNewCommentForm((prev) => !prev);
@@ -53,8 +58,30 @@ function Course() {
   const CourseAddToCartHandler = () => {
     
   }
+  const courseID = JSON.stringify({
+    courseID : '6345cfc7586b68648f7f2430'
+  })
+    useEffect(() => {
+       axios.post(`${BaseURL}courses/${courseName}` ,courseID , {
+       headers : {
+         'Content-Type' : 'application/json',
+         Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+       }
+     })
+     .then(courseInfo => {
+      setComments(courseInfo.comments)
+      setSessions(courseInfo.sessions)
+      setCourseDetails(courseInfo.data)
+    })
+    .catch(error => {
+      console.log(error)
+      toast.error("  خطا در اتصال به سرور ");
+    })
+  } , []);
+  console.log(courseDetails)
   return (
     <>
+      
       {/* Breadcrumb */}
       <Breadcrumb linkOneTitle="دوره ها " linkTwoTitle="ارتقای مهارت " linkThreeTitle="توسعه کتابخانه با جاوااسکریپت" />
       {/* Head */}
@@ -63,18 +90,19 @@ function Course() {
         <div className="flex flex-col justify-between w-full">
           <div>
             <h1 className="font-MorabbaBold text-2xl/[42px] sm:text-3xl/[48px] lg:text-[32px]/[48px] text-zinc-700 dark:text-white lg:line-clamp-2">
-              توسعه کتابخانه با جاوااسکریپت
+              {courseDetails.name}
             </h1>
             <p className="font-Dana text-xl/8 line-clamp-4 lg:line-clamp-2 xl:line-clamp-3 mt-3.5 xl:mt-5 text-zinc-700 dark:text-white">
-              توسعه کتابخانه، نمونه کاری قوی برای رزومه شما است و این دوره
-              آموزشی یادگیری چنین مهارتی رو با نکات کاربردی و کد نویسی و همچنین
-              ساخت مستندات جامع و پروژه عملی فراهم میکند
+              {courseDetails.description}
             </p>
           </div>
           {/* Btn & Price */}
           <div className="mt-5 pt-5 sm:pt-0 xl:mt-0 border-t sm:border-t-0 border-t-gray-100 dark:border-t-gray-700">
             <div className="flex flex-col-reverse sm:flex-row justify-between mt-6 sm:mt-3.5 items-center">
-              <Button btnType="submit"  className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary" disabled={false} onClick={CourseAddToCartHandler}>  <GppGoodOutlined />   شرکت در دوره </Button>
+              {
+                courseDetails.isUserRegisteredToThisCourse ? <Button btnType="submit"  className="w-full flex-center sm:w-auto button-xl rounded-lg button-secondary" disabled={false} onClick={CourseAddToCartHandler}>  <PlayCircleFilledWhiteOutlined />    مشاهده دوره </Button> : <Button btnType="submit"  className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary" disabled={false} onClick={CourseAddToCartHandler}>  <GppGoodOutlined />   شرکت در دوره </Button>
+              }
+              
               <div className="text-center sm:text-right mb-5 sm:mb-0">
                 <div className="flex-center sm:justify-end mb-1">
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
