@@ -25,6 +25,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   Box,
 } from "@mui/material";
 import toast from "react-hot-toast";
@@ -69,8 +70,8 @@ function Course() {
        }
      })
      .then(courseInfo => {
-      setComments(courseInfo.comments)
-      setSessions(courseInfo.sessions)
+      setComments(courseInfo.data.comments)
+      setSessions(courseInfo.data.sessions)
       setCourseDetails(courseInfo.data)
     })
     .catch(error => {
@@ -174,7 +175,7 @@ function Course() {
                 <img src={Users} alt="ghorbani-dev.ir" className="size-8" />
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
-                    284
+                    {courseDetails.courseStudentsCount}
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
                     دانشجو
@@ -215,7 +216,7 @@ function Course() {
               />
               <div>
                 <h4 className="text-zinc-700 dark:text-white text-2xl mb-1 font-DanaBold">
-                  مهرشاد براتی
+                  {courseDetails.creator}
                 </h4>
                 <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
                   برنامه نویس و توسعه دهنده فول استک وب
@@ -328,95 +329,57 @@ function Course() {
               </div>
               <div className="text-zinc-700 dark:text-white">07:08</div>
             </div>
-            <Accordion className="w-full !rounded-2xl bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
-              <AccordionSummary
-                expandIcon={<ExpandMore className="dark:text-white" />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
-              >
-                معرفی دوره و پیش نیاز ها
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-                  <Link
-                    to=""
-                    className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
-                  >
-                    <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
-                      1
-                    </span>
-                    <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
-                      معرفی دوره
-                    </h4>
-                  </Link>
-                  <Box className="w-full flex-between">
-                    <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
-                      جلسه رایگان
-                    </span>
-                    <Box className="flex items-center gap-x-1.5 md:gap-x-2">
-                      <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
-                        3:22
-                      </span>
-                      <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
-                    </Box>
-                  </Box>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion className="w-full !rounded-2xl my-5 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
-              <AccordionSummary
-                expandIcon={<ExpandMore className="dark:text-white" />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
-              >
-                طراحی html,css داشبورد
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-                  <Link
-                    to=""
-                    className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
-                  >
-                    <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
-                      1
-                    </span>
-                    <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
-                      معرفی دوره
-                    </h4>
-                  </Link>
-                  <Box className="w-full flex-between">
-                    <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
-                      {" "}
-                      نقدی
-                    </span>
-                    <Box className="flex items-center gap-x-1.5 md:gap-x-2">
-                      <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
-                        3:22
-                      </span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                        />
-                      </svg>
-                    </Box>
-                  </Box>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
+            {
+              sessions.length > 0 ?
+               
+                sessions.map(({_id , title } , index) => {
+                  return (
+                   <React.Fragment key={_id}>
+                    <Accordion className="w-full !rounded-2xl my-4 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
+                    <AccordionSummary
+                      expandIcon={<ExpandMore className="dark:text-white" />}
+                      aria-controls="panel1-content"
+                      id="panel1-header"
+                      className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
+                    >
+                    {title}
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
+                        <Link
+                          to=""
+                          className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
+                        >
+                          <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                            {index + 1}
+                          </span>
+                          <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                           {title}
+                          </h4>
+                        </Link>
+                        <Box className="w-full flex-between">
+                          <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
+                            جلسه رایگان
+                          </span>
+                          <Box className="flex items-center gap-x-1.5 md:gap-x-2">
+                            <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
+                              3:22
+                            </span>
+                            <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                          </Box>
+                        </Box>
+                      </Box>
+                    </AccordionDetails>
+                  </Accordion>
+                  </React.Fragment>
+                  )
+                })
+               
+              :  <Alert severity="info">تاکنون جلسه ای ثبت نگردیده است</Alert>
+            }
           </div>
           {/* Comment */}
-         <Comment showNewCommentForm={showNewCommentForm} setShowNewCommentForm={setShowNewCommentForm} NewCommentHandler={NewCommentHandler} />
+         <Comment showNewCommentForm={showNewCommentForm} setShowNewCommentForm={setShowNewCommentForm} NewCommentHandler={NewCommentHandler} comments={comments} />
         </div>
         {/* Aside */}
         <aside className="w-80 xl:w-96 shrink-0 sticky top-36 space-y-5">
@@ -427,7 +390,7 @@ function Course() {
                     <img src={Users} alt="ghorbani-dev.ir" className="size-8" />
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
-                    284
+                  {courseDetails.courseStudentsCount}
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
                     دانشجو
@@ -466,7 +429,7 @@ function Course() {
                 alt="ghorbani-dev.ir"
               />
                 <h4 className="text-zinc-700 dark:text-white text-2xl mb-1">
-                  مهرشاد براتی
+                  {courseDetails.creator}
                 </h4>
                 <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
                   برنامه نویس و توسعه دهنده فول استک وب
