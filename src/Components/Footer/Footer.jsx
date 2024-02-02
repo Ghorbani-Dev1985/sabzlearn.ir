@@ -5,17 +5,17 @@ import useFetch from '../../Hooks/useFetch'
 
 const quickAccessLinks = [
     {
-        id: 1,
+        _id: 1,
         href: "/termsConditions",
         title : "قوانین و مقررات"
     },
     {
-        id: 2,
+        _id: 2,
         href: "/userAccount/tickets",
         title : " ارسال تیکت"
     },
     {
-        id: 3,
+        _id: 3,
         href: "/courses",
         title : " همه دوره ها"
     },

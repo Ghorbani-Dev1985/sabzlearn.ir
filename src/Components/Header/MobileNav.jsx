@@ -8,7 +8,7 @@ import {
   List,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CloseOutlined, ExpandMore, Search } from "@mui/icons-material";
 import RtlProvider from "../../common/RtlProvider/RtlProvider";
 import Logo from "../../assets/Images/Logo/logo.webp";
@@ -99,12 +99,10 @@ function MobileNav({ menus }) {
                   disabled={false}
                   onClick={SearchHandler}
                 >
-                  {" "}
-                  <Search className="size-6" />{" "}
+                  <Search className="size-6" />
                 </Button>
               </label>
             </form>
-
             {/* Menus Items */}
             {menus.map(({ _id, href, title, submenus }) => {
               return (

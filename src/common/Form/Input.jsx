@@ -37,7 +37,7 @@ function Input({children, element , textareaRow , textareaPlaceholder , type = '
         })
     }
 
-    const elementType = element === 'textarea' ? <textarea rows={textareaRow} placeholder={textareaPlaceholder} value={mainInput.value} onChange={OnChangeHandler} className={`${mainInput.isValid ? "border border-primary" : "border border-rose-500"} block w-full p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-gray-200 dark:focus:border-slate rounded-2xl placeholder:font-danaLight transition-colors`}></textarea> :
+    const elementType = element === 'textarea' ? <textarea rows={textareaRow} placeholder={textareaPlaceholder} value={mainInput.value} onChange={OnChangeHandler} className={`${mainInput.isValid ? "border border-primary" : "border border-rose-500"} mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors`}></textarea> :
     <div className="relative">
           <input
               type={type}

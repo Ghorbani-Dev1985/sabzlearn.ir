@@ -26,7 +26,7 @@ let routes = [
     ]},
     {element: <Layout /> , children: [
         {
-            path: '/course/:courseName',
+            path: '/course-info/:courseName',
             element: <Course />
         }
     ]},

@@ -8,7 +8,6 @@ import { FolderOpenOutlined, HomeOutlined, LogoutOutlined, PermIdentityOutlined,
 
 function LoginRegister() {
   const {isLoggedIn , userInfos} = useAuth()
-  console.log(userInfos)
   const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
   return (
     <div className='relative text-base xl:text-lg text-white md:h-14 md:w-[155px] xl:w-[180px]'>

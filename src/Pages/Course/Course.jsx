@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   GppGoodOutlined,
   Logout,
@@ -32,14 +32,19 @@ import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate
 import Comment from "../../Components/Comment/Comment";
 import ShortLink from "../../Components/ShortLink/ShortLink";
 import Button from "../../common/Form/Button";
+import useFetch from "../../Hooks/useFetch";
+import { useAuth } from "../../Contexts/AuthContext";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
+  const {isLoggedIn , userInfos} = useAuth()
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
+  const {courseName} = useParams()
+  const { datas: courseInfo } = useFetch(`courses/${courseName}`, true);
+  console.log(courseInfo)
   const NewCommentHandler = () => {
-    let isLogin = false;
-    if (isLogin) {
+    if (isLoggedIn) {
       setShowNewCommentForm((prev) => !prev);
     } else {
       toast.error("لطفا ابتدا در سایت وارد شوید");
