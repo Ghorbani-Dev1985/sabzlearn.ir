@@ -8,17 +8,17 @@ import useTitle from "../../Hooks/useTitle";
 import useForm from "../../Hooks/useForm";
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
 import toast from "react-hot-toast";
-import useInsert from "../../Hooks/useInsert";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { BaseURL } from "../../Utils/Utils";
-
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const title = useTitle(" ثبت نام");
   const { LoginHandler} = useAuth()
   const Navigate = useNavigate()
+  const [isGoogleRecaptchaVerify , setIsGoogleRecaptchaVerify] = useState(false)
   const [formState , onInputHandler] = useForm({
     FullName: {
       value: '',
@@ -73,6 +73,9 @@ function Register() {
           toast.error("کلمه عبور با تکرار کلمه عبور همخوانی ندارد")
         }
   }
+  const RecaptchaChangeHandler = () => {
+    setIsGoogleRecaptchaVerify(true)
+   }
   return (
     <>
       <LoginRegisterTemplate subLink={ <p className="mt-4 sm:mt-6 font-danaLight sm:text-lg text-center text-slate-500 dark:text-gray-500">
@@ -109,8 +112,9 @@ function Register() {
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer"
             />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30)]} onInputHandler={onInputHandler}/>
+             <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" onChange={RecaptchaChangeHandler} />
         </div>
-        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={!formState.isFormValid} onClick={registerNewUserHandler}>ادامه</Button>
+        <Button btnType="submit"  className="button-md h-12 sm:button-lg rounded-xl button-primary mt-2.5 sm:mt-4 w-full disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text" disabled={(!formState.isFormValid || !isGoogleRecaptchaVerify)} onClick={registerNewUserHandler}>ادامه</Button>
       </form>
               </LoginRegisterTemplate>
     </>
