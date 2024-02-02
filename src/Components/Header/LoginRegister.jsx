@@ -8,11 +8,12 @@ import { FolderOpenOutlined, HomeOutlined, LogoutOutlined, PermIdentityOutlined,
 
 function LoginRegister() {
   const {isLoggedIn , userInfos} = useAuth()
+  console.log(userInfos)
   const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
   return (
     <div className='relative text-base xl:text-lg text-white md:h-14 md:w-[155px] xl:w-[180px]'>
       {
-        isLoggedIn ? <div className='relative z-20'>
+        isLoggedIn ? <div className='relative z-20 shrink-0'>
             <div onClick={() => setShowUserProfileMenu((prev) => !prev)}>
               <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-12 md:size-14 rounded-full inline-block cursor-pointer'/>
             </div>
@@ -35,7 +36,7 @@ export default LoginRegister
 
 
 const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos}) =>{
-  console.log(userInfos)
+  console.log(userInfos.name)
   const dashboardLinks = [
     {
     id: 1,

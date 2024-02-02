@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(true)
     setUserInfos(userInfos)
     localStorage.setItem('user' , JSON.stringify({token}))
-  }, [])
+  }, [token])
 
   const LogoutHandler = useCallback(() => {
     setToken(null)
@@ -48,7 +48,6 @@ export const AuthProvider = ({ children }) => {
           toast.error("  خطا در اتصال به سرور ");
       })
      }
-     console.log(localStorageData)
   }, [LoginHandler])
   
   return (

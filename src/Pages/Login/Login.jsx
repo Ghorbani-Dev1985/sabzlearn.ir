@@ -15,7 +15,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 
 function Login() {
   const title = useTitle("ورود به حساب");
-  const { LoginHandler} = useAuth()
+  const { LoginHandler , userInfos} = useAuth()
   const Navigate = useNavigate()
   const [formState , onInputHandler] = useForm({
     UserName: {
@@ -41,20 +41,29 @@ function Login() {
           'Content-Type' : 'application/json'
         }
       })
-      .then(response => {
-        console.log(response)
-        if(response.status !== 200){
-          toast.error(" با چنین مشخصات کاربری وجود ندارد");
-        }else{
-          LoginHandler(response.data.user , response.data.accessToken)
-          toast.success(" ورود با موفقیت انجام گردید")
+      .then((response) => {
+        if(response.status === 200){
+          LoginHandler(userInfos , response.data.accessToken)
           Navigate('/')
+          toast.success(" ورود با موفقیت انجام گردید")
         }
       })
-      .catch(error => {
-          console.log(error)
-          toast.error("خطا در ارتباط با سرور");
-      })
+      .catch(err => {
+        console.log('err =>' , err)
+       toast.error('چنین اطلاعاتی موجود نمی باشد ')
+        })
+        
+        // else{
+        //   console.log(response.data)
+        //  
+        //   
+        //  // Navigate('/')
+        // }
+      
+      // .catch(error => {
+      //     console.log(error)
+      //     toast.error("خطا در ارتباط با سرور");
+      // })
   }
   return (
     <>
