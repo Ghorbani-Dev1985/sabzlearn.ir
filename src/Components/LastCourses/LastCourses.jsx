@@ -1,6 +1,7 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
 import CourseCard from '../CourseCard/CourseCard'
+import { useCourses } from '../../Contexts/CoursesContext'
 
 const lastCourses = [
     {
@@ -84,6 +85,8 @@ const lastCourses = [
 ]
 
 function LastCourses() {
+ const {courses} = useCourses()
+ console.log(courses)
   return (
     <section className='relative mt-22 sm:mt-40'>
          <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -top-80"></div>
@@ -92,10 +95,10 @@ function LastCourses() {
      {/* Last Course List */}
      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
         {
-            lastCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+            courses.splice(0 , 9).map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
-                    <React.Fragment key={id}>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
+                    <React.Fragment key={_id}>
+                        <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
                     </React.Fragment>
                 )
             })

@@ -15,7 +15,7 @@ function SectionTitle({children , squareColor, title , subTitle , isLink ,to , l
       </div>
       {
          isLink && 
-         <Link to={to} className='flex items-center self-end sm:self-auto gap-x-0.5 rounded-xl px-2.5 py-2 text-sky-500 hover:bg-sky-500/10 dark:text-secondary dark:hover:bg-secondary/10 transition-colors'>
+         <Link to={to} className='flex items-center self-end sm:self-auto gap-x-0.5 rounded-xl px-2.5 py-2 text-sky-500 hover:text-sky-500 hover:bg-sky-500/10 dark:text-secondary dark:hover:bg-secondary/10 transition-colors'>
             <span className='font-DanaMd'>{linkText}</span>
             <KeyboardBackspace className='!size-5'/>
          </Link>

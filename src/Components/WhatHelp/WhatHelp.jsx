@@ -11,7 +11,7 @@ function WhatHelp() {
        {/* WhatHelp */}
        <div className='grid grid-rows-2 md:grid-cols-2 gap-5 cursor-default'>
        
-       <SingleWhatHelp boxStyle="from-sky-500/30 to-sky-500 dark:from-secondary rotate-45" title="دوره های اختصاصی" description="با پشتیبانی و کیفیت بالا ارائه میده. چون خوش نام بودن نام برند و منافع مشتری و حفظ شان دیگر همکارانش براش مهمه" />
+       <SingleWhatHelp boxStyle="from-sky-500/30 to-sky-500 rotate-45" title="دوره های اختصاصی" description="با پشتیبانی و کیفیت بالا ارائه میده. چون خوش نام بودن نام برند و منافع مشتری و حفظ شان دیگر همکارانش براش مهمه" />
        <SingleWhatHelp boxStyle="from-primary/30 to-primary rotate-[255deg]" title="اجازه تدریس" description="به هر مدرسی رو نمیده و فقط فقط با مدرسای سینیور و مید لول وارد همکاری میشه چون کیفیت براش مهمه" />
        <SingleWhatHelp boxStyle="from-amber-400/30 to-amber-400 from-yellow-500/30 to-yellow-500 -rotate-[255deg]" title=" دوره پولی یا رایگان " description="براش مهم نیست. به مدرسینش بهترین مزایا و دستمزد رو میده تا نهایت کیفیت رو در پشتیبانی و اپدیت دوره ارائه بده" />
        <SingleWhatHelp boxStyle="from-pink-500/30 to-pink-500 dark:from-rose-500/30 dark:to-rose-500 -rotate-45" title="اولویت بندی به ترتیب منافع" description="در سبزلرن اولویت اول با مدرس هست چون اون قراره دل بسوزونه. اولویت دوم با کاربره چون باید کمکش کرد و درنهایت اولویت آخر با سبزلرنه" />

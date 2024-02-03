@@ -107,7 +107,7 @@ function Comment({
                       <div className="text-zinc-700 dark:text-white font-Dana leading-7 mt-3.5">
                         {body}
                       </div>
-                      {answer > 0 && (
+                      {answerContent && (
                         <div className="mt-7 space-y-3.5 md:space-y-5">
                           <div className="mt-7 p-3.5 md:p-5 bg-gray-200 dark:bg-mainSlate rounded-2xl">
                             <div className="flex gap-x-5 items-start">
@@ -118,13 +118,13 @@ function Comment({
                                     className="block md:hidden size-10 object-cover rounded-full shrink-0"
                                     alt="ghorbani-dev.ir"
                                   />
-                                ) : (
-                                  <img
+                                ) : ( <img
                                     src={UsersIcon}
                                     className="block md:hidden size-10 object-cover rounded-full shrink-0"
                                     alt="ghorbani-dev.ir"
                                   />
-                                )}
+                                  )}
+                                 
                                 {answerContent.creator.role === "ADMIN" ? (
                                   <div className="flex-center w-14 h-5 rounded-sm text-xs leading-4 bg-sky-500 text-white dark:bg-secondary/10 dark:text-secondary">
                                     مدرس
