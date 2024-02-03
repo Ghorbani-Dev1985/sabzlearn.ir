@@ -8,6 +8,7 @@ import {
   ExpandMore,
   PlayCircleFilledWhiteOutlined,
   ContentCopyOutlined,
+  LockOutlined,
 } from "@mui/icons-material";
 import TomanDark from "../../assets/Images/svgs/toman-black.svg";
 import TomanLight from "../../assets/Images/svgs/toman-white.svg";
@@ -34,9 +35,9 @@ import Comment from "../../Components/Comment/Comment";
 import ShortLink from "../../Components/ShortLink/ShortLink";
 import Button from "../../common/Form/Button";
 import { useAuth } from "../../Contexts/AuthContext";
-import usePost from "../../Hooks/usePost";
-import { BaseURL } from "../../Utils/Utils";
+import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import axios from "axios";
+import FreePrice from "../../common/FreePrice/FreePrice";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -47,6 +48,8 @@ function Course() {
 
   const [comments , setComments] = useState([])
   const [sessions , setSessions] = useState([])
+  const [creator , setCreator] = useState([])
+  const [totalTime , setTotalTime] = useState('')
   const [courseDetails , setCourseDetails] = useState({})
 
   const NewCommentHandler = () => {
@@ -59,25 +62,21 @@ function Course() {
   const CourseAddToCartHandler = () => {
     
   }
-  const courseID = JSON.stringify({
-    courseID : '6345cfc7586b68648f7f2430'
-  })
+
     useEffect(() => {
-       axios.post(`${BaseURL}courses/${courseName}` ,courseID , {
+       axios(`${BaseURL}courses/${courseName}` , {
+       method: 'POST',
        headers : {
-         'Content-Type' : 'application/json',
-         Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+         'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
        }
      })
      .then(courseInfo => {
       setComments(courseInfo.data.comments)
+      setCreator(courseInfo.data.creator)
       setSessions(courseInfo.data.sessions)
       setCourseDetails(courseInfo.data)
     })
-    .catch(error => {
-      console.log(error)
-      toast.error("  خطا در اتصال به سرور ");
-    })
+
   } , []);
   console.log(courseDetails)
   return (
@@ -107,8 +106,8 @@ function Course() {
               <div className="text-center sm:text-right mb-5 sm:mb-0">
                 <div className="flex-center sm:justify-end mb-1">
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
-                    1,000,000
-                    {colorTheme === "light" ? (
+                    {
+                      courseDetails.price > 0 ? <> {courseDetails.price} {colorTheme === "light" ? (
                       <img
                         src={TomanLight}
                         alt="ghorbani-dev.ir"
@@ -120,7 +119,9 @@ function Course() {
                         alt="ghorbani-dev.ir"
                         className="size-6"
                       />
-                    )}
+                    )}</> : <FreePrice />
+                    }
+                    
                   </div>
                 </div>
               </div>
@@ -140,7 +141,7 @@ function Course() {
             <DetailBoxInfo
               icon={StatusIcon}
               title="وضعیت دوره"
-              subTitle="پیش فروش"
+              subTitle={courseDetails.isComplete ? "تکمیل شده" : "در حال ضبط"}
             />
             <DetailBoxInfo
               icon={CourseTime}
@@ -150,12 +151,12 @@ function Course() {
             <DetailBoxInfo
               icon={LastUpdate}
               title=" آخرین به روز رسانی   "
-              subTitle="1402/02/10"
+              subTitle={ChangeGregorianDateToPersian(courseDetails.createdAt)}
             />
             <DetailBoxInfo
               icon={SupportWay}
               title=" روش پشتیبانی"
-              subTitle="آنلاین"
+              subTitle={courseDetails.support}
             />
             <DetailBoxInfo
               icon={Prerequisite}
@@ -216,7 +217,7 @@ function Course() {
               />
               <div>
                 <h4 className="text-zinc-700 dark:text-white text-2xl mb-1 font-DanaBold">
-                  {courseDetails.creator}
+                  {creator.name}
                 </h4>
                 <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
                   برنامه نویس و توسعه دهنده فول استک وب
@@ -240,82 +241,7 @@ function Course() {
               </h3>
             </div>
              <ShowHtmlTemplate showMoreDesc={showMoreDesc} setShowMoreDesc={setShowMoreDesc}>
-             <p>
-                  دوره پیاده سازی داشبوردهای حرفه ای همون چیزی هست که ادمین و
-                  مدیر یک وب سایت برای مشاهده، تحلیل و پایش اطلاعات مربوط به وب
-                  سایت و کاربران به شکل حرفه ای تر به اون نیاز دارن.
-                </p>
-                <p>
-                  همونطور که میدونید اتاق فرمان یک وب سایت، همون محیط ادمین یا
-                  داشبورد مدیریتی هست که اطلاعات مربوط به محتوا، قالب، کاربران،
-                  محصولات و … در اختیار شما هم هست تا علاوه بر مشاهده اطلاعات
-                  مهم، در صورت لزوم تغییرات و به روزرسانی هایی هم در بخش های
-                  مختلف انجام بدید. تصور کنید که روزی بخواید آمار فروش وب سایت
-                  رو ببینید و بر اساس دیتای اون، برای کمپین های بازاریابی آینده
-                  استراتژی تعریف کنید. وقتی آمار فروش رو باز می کنید، می بینید
-                  هزاران رکورد از عدد و رقم در اختیار شماست که تو چند صفحه تقسیم
-                  شده و شما نمیتونید با یک نگاه چیزی اون همه دیتا متوجه بشید. نه
-                  گرافیکی، نه نموداری و نه هیچ چیز دیگه!
-                </p>
-                <p>
-                  وقتی حرف این حجم از دیتای مهم باشه، طبیعتا هرچقدر نمایش و
-                  مدیریت اونها برای مدیر، راحت تر، سریع تر و جذاب تر باشه،
-                  بازدهی و لذت بیشتری هم به همراه خواهد داشت. پس اینکه چه نوع
-                  دیتایی در کدام بخش پنل ادمین و به چه شکلی نمایش داده بشن که
-                  مدیریت و مانیتورینگ اونها راحت باشه مسئله خیلی مهمی هست و یک
-                  برنامه نویس حرفه ای باید بتونه این محیط رو با بالاترین
-                  استانداردها طراحی کنه. موضوعی که هدف اصلی این دوره هست!
-                </p>
-                <p>
-                  اگر بتونید برای پروژه هاتون داشبوردهای حرفه ای طراحی کنید که
-                  نمای زیباتری داشته باشن و هم امکانات خوبی در اختیار ادمین قرار
-                  بدن، قطعا اون کارفرما یا مدیر وب سایت رو بیشتر خوشحال میکنید
-                  تا اینکه چندساعت در مورد تکنولوژی های به کار رفته در پروژه و …
-                  توضیح بدید و اون هم با نگاه هایی از جنس ” ها ؟!” عکس العمل
-                  نشون بده! بیاید ببینیم تو این دوره دقیقا چه خبره ؟! این دوره
-                  چه فرقی با بقیه دوره ها داره؟ سبزلرن با سیاست خاصی که در
-                  انتخاب استاد، تدوین محتوای آموزشی، قیمت گذاری دوره ها و
-                  پشتیبانی موثر در نظر گرفته، میتونه این تضمین رو به شما بده که
-                  در طول دوره آموزش، هیچ کمبودی در هیچ زمینه ای احساس نکنید.
-                  بیاید چند مورد از ویژگی های مهم دوره آموزش پیاده سازی
-                  داشبوردهای حرفه ای سبزلرن رو باهم بررسی کنیم. پروژه محور بودن
-                </p>
-                <p>
-                  در این دوره سبزلرن استاد براتی علاوه بر تدریس مفاهیم، به صورت
-                  کاملا عملی و پروژه محور یک داشبورد حرفه ای با ظاهر و امکانات
-                  شگفت انگیز رو توسعه میده تا تمام نکات ریز و درشت این مهارت رو
-                  یاد بگیرید. جالبه بدونید پروژه نهایی دوره دقیقا طبق اصول جاری
-                  در شرکت های واقعی توسعه داده شده تا بتونید با چالش های واقعی
-                  بازار کار هم آشنا شده و بعد از گذروندن دوره با آمادگی بالا
-                  وارد بازار کار تخصص خودتون بشید. تمرکز زیاد روی درآمدزایی از
-                  طراحی داشبورد شاید براتون جالب باشه که با یادگیری مهارت پیاده
-                  سازی داشبوردهای حرفه ای، میتونید پروژه بگیرید و درآمد جداگانه
-                  کسب کنید. رمز و راز این موضوع رو در استاد با شما به اشتراک
-                  خواهد گذاشت. یونیک بودن دوره یکی از دغدغه های اساسی دانشجوها،
-                  انتخاب بهترین گزینه از بین کلی دوره مشابه هست. اما در مورد
-                  دوره پیاده سازی داشبوردهای حرفه ای سبزلرن، خیالتون باشه چون
-                  هیچ دوره ای تا این اندازه جامع و تخصصی در این زمینه وجود نداره
-                  که بخواید مقایسه کنید J پشتیبانی رایگان و مادام العمر این دوره
-                  مثل بقیه دوره های سبزلرن پشتیبانی رایگان و مادام العمر داره.
-                  یعنی شما حتی بعد از استخدام می تونید سوالات و ابهاماتی که
-                  دارین رو توسط پشتیبانی دوره برطرف کنین. برای اطمینان از این
-                  موضوع حتما یه سر به کامنت های دوره های مختلف بزنید. منتورشیپ
-                  بودن دوره پشتیبانی دوره در گروه تلگرامی انجام میشه و علاوه بر
-                  مدرس، چند نفر کمک پشتیبان مسلط هم جهت پاسخگویی و رفع مشکلات
-                  شما حضور دارن. بنابراین برای دریافت راهنمایی و جواب سوالات،
-                  درگیر تیکت و انتظار نمیشید و در سریع ترین زمان ممکن کارتون راه
-                  میفته! خلاصه اینکه صدها برنامه نویس فوق حرفه ای که در دانشگاه
-                  سبزلرن پرورش پیدا کردن الان تو شرکت های بزرگ مشغول هستن و
-                  نتیجه انتخاب درست منبع آموزشی و تمرینات منظم خودشون رو گرفتن.
-                  پس قطعا شما هم میتونید ردپای اونهارو دنبال کنید و به آرزوتون
-                  برسید. آپدیت رایگان اگر نگاهی به سایر دوره ها بندازید، می
-                  بینید که حتی با وجود گذشت چندماه یا چندسال از اتمام یک دوره،
-                  آپدیت های رایگان اون در پنل دانشجوها قرار گرفته و به این ترتیب
-                  برای آشنایی با آخرین تحولات اون تخصص، نیازی به گذروندن دوره
-                  جدید پیدا نکردن. در واقع سعی بر این هست هر تغییرات عمده ای که
-                  در موضوع یک دوره اتفاق بیفته، ویدیوی ضبط شده جدیدی به عنوان
-                  آپدیت برای اون ارائه بشه.
-                </p>
+             {courseDetails.description}
              </ShowHtmlTemplate>
           </div>
           {/* Episode List */}
@@ -332,7 +258,7 @@ function Course() {
             {
               sessions.length > 0 ?
                
-                sessions.map(({_id , title } , index) => {
+                sessions.map(({_id ,time , free , title } , index) => {
                   return (
                    <React.Fragment key={_id}>
                     <Accordion className="w-full !rounded-2xl my-4 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
@@ -346,8 +272,18 @@ function Course() {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-                        <Link
-                          to=""
+                           {
+                            !free && courseDetails.isUserRegisteredToThisCourse ? <Link
+                            to=""
+                            className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
+                          >
+                            <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                              {index + 1}
+                            </span>
+                            <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                             {title}
+                            </h4>
+                          </Link> : <p
                           className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
                         >
                           <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
@@ -356,16 +292,21 @@ function Course() {
                           <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
                            {title}
                           </h4>
-                        </Link>
+                        </p>
+                           }
                         <Box className="w-full flex-between">
                           <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
-                            جلسه رایگان
+                           {free ? 'نقدی':' جلسه رایگان'}
                           </span>
                           <Box className="flex items-center gap-x-1.5 md:gap-x-2">
                             <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
-                              3:22
+                              {time}
                             </span>
-                            <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                            {
+                              free ? <LockOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors"/> :
+                              <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                            }
+                            
                           </Box>
                         </Box>
                       </Box>
@@ -429,7 +370,7 @@ function Course() {
                 alt="ghorbani-dev.ir"
               />
                 <h4 className="text-zinc-700 dark:text-white text-2xl mb-1">
-                  {courseDetails.creator}
+                  {creator.name}
                 </h4>
                 <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
                   برنامه نویس و توسعه دهنده فول استک وب
