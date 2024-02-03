@@ -10,7 +10,8 @@ const MeliCodeTest = (value) => {
 }
 
 const PhoneNumberTest = (value) => {
-
+  const phonePattern = /^(?:(?:(?:\\+?|00)(98))|(0))?((?:90|91|92|93|99)[0-9]{8})$/g
+  return phonePattern.test(value)
 }
 
 export default {EmailTest , MeliCodeTest , PhoneNumberTest}

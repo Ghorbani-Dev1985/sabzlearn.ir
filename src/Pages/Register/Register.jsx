@@ -1,4 +1,4 @@
-import { Email, Person, Visibility } from "@mui/icons-material";
+import { Email, Person, PhoneIphone, Visibility } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
@@ -6,7 +6,7 @@ import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
 import useTitle from "../../Hooks/useTitle";
 import useForm from "../../Hooks/useForm";
-import { RequiredValidator , MinValidator , MaxValidator , EmailValidator} from '../../Validators/Rules'
+import { RequiredValidator , MinValidator , MaxValidator , EmailValidator , PhoneValidator} from '../../Validators/Rules'
 import toast from "react-hot-toast";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
@@ -25,6 +25,10 @@ function Register() {
       isValid: false
     },
     UserName: {
+      value: '',
+      isValid: false
+    },
+    MobilNumber: {
       value: '',
       isValid: false
     },
@@ -48,6 +52,7 @@ function Register() {
         const newUserInfos = JSON.stringify({
           name: formState.inputs.FullName.value,
           username: formState.inputs.UserName.value,
+          phone: formState.inputs.MobilNumber.value,
           email: formState.inputs.Email.value,
           password: formState.inputs.Password.value,
           confirmPassword: formState.inputs.ConfirmPassword.value
@@ -101,9 +106,10 @@ function Register() {
       {/* Inputs */}
       <form>
         <div className="space-y-2.5 sm:space-y-3.5">
-        <Input id="FullName" element="input" placeholder=" نام و نام خانوادگی" value="" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(6) , MaxValidator(30)]} onInputHandler={onInputHandler}/>
-          <Input id="UserName" element="input" placeholder=" نام کاربری" value="" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]} onInputHandler={onInputHandler}/>
-          <Input id="Email" element="input" placeholder=" آدرس ایمیل  " value="" icon={ <Email className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
+        <Input id="FullName" element="input" placeholder=" نام و نام خانوادگی" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(6) , MaxValidator(30)]} onInputHandler={onInputHandler}/>
+          <Input id="UserName" element="input" placeholder=" نام کاربری" icon={<Person className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(20)]} onInputHandler={onInputHandler}/>
+          <Input id="MobilNumber" element="input" type="number" placeholder="  تلفن تماس  " icon={ <PhoneIphone className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(10) , MaxValidator(10) , PhoneValidator()]} onInputHandler={onInputHandler}/>
+          <Input id="Email" element="input" placeholder=" آدرس ایمیل  " icon={ <Email className="left-3 sm:left-4" />} validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
           <Input id="Password" element="input" type={showPassword ? "text" : "password"} placeholder=" کلمه عبور   " value={password} onChange={(event) => setPassword(event.target.value)} icon={  <Visibility
               onClick={() => setShowPassword((prev) => !prev)}
               className="left-3 sm:left-4 cursor-pointer"
