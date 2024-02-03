@@ -151,7 +151,7 @@ function Course() {
             <DetailBoxInfo
               icon={LastUpdate}
               title=" آخرین به روز رسانی   "
-              subTitle={ChangeGregorianDateToPersian(courseDetails.createdAt)}
+              subTitle=""
             />
             <DetailBoxInfo
               icon={SupportWay}
