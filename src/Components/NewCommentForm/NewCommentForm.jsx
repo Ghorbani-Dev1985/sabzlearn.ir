@@ -9,10 +9,14 @@ import {
   MinValidator,
   MaxValidator,
 } from "../../Validators/Rules";
+import { useParams } from 'react-router-dom';
+import useInsert from '../../Hooks/useInsert';
 
 
 function NewCommentForm({showNewCommentForm , setShowNewCommentForm}) {
   const [isGoogleRecaptchaVerify , setIsGoogleRecaptchaVerify] = useState(false)
+  const {courseName} = useParams()
+  console.log(courseName)
   const [formState, onInputHandler] = useForm(
     {
       NewComment: {
@@ -24,7 +28,14 @@ function NewCommentForm({showNewCommentForm , setShowNewCommentForm}) {
     false
   );
   const SubmitCommentHandler = () => {
-
+  const newCommentINfo = JSON.stringify({
+    body: formState.inputs.NewComment.value,
+    courseShortName: courseName,
+    score: 5
+  })
+   const addNewComment = useInsert('comments', newCommentINfo , true , true)
+   setShowNewCommentForm(false)
+   NewComment.value = ''
   }
   const RecaptchaChangeHandler = () => {
     setIsGoogleRecaptchaVerify(true)
@@ -39,7 +50,7 @@ function NewCommentForm({showNewCommentForm , setShowNewCommentForm}) {
         <span className='text-slate-500 dark:text-gray-500 text-sm'>ثبت نظر جدید</span>
        </div>
     </div>
-     <Input id="NewComment" element="textarea" textareaRow="6" textareaPlaceholder="نظر خود را بنویسید ..." onInputHandler={onInputHandler} validations={[
+     <Input ref={el => NewComment = el} id="NewComment" element="textarea" textareaRow="6" textareaPlaceholder="نظر خود را بنویسید ..." onInputHandler={onInputHandler} validations={[
                 RequiredValidator(),
                 MinValidator(20),
                 MaxValidator(1000),

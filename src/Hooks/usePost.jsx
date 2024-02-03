@@ -10,12 +10,9 @@ function usePost(url , userToken) {
   const [datas , setDatas] = useState([])
   const {showRealtimeDatas} = useShowRealtimeDatas()
   const {isShowLoading , setIsShowLoading} = useShowLoading()
-  const courseID = JSON.stringify({
-    courseID : '6345cfc7586b68648f7f2430'
-  })
     useEffect(() => {
       setIsShowLoading(true)
-       axios.post(`${BaseURL}${url}` ,courseID , userToken && {
+       axios.post(`${BaseURL}${url}` , userToken && {
        headers : {
          'Content-Type' : 'application/json',
          Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
