@@ -9,6 +9,7 @@ import Register from "./Pages/Register/Register";
 import Layout from "./Layout/Layout";
 import LayoutWithoutHeaderFooter from './Layout/LayoutWithoutHeaderFooter'
 import TermsConditions from "./Pages/TermsConditions/TermsConditions";
+import NotFound from "./Pages/404/404";
 
 
 let routes = [
@@ -64,6 +65,12 @@ let routes = [
         { 
             path: '/register',
             element: <Register />
+        }
+    ]},
+    {element: <LayoutWithoutHeaderFooter /> , children : [
+        { 
+            path: '/*',
+            element: <NotFound />
         }
     ]},
 ]

@@ -11,7 +11,6 @@ export const CoursesContextProvider = ({ children }) => {
       setCourses(response.data);
     });
   }, []);
-  console.log(courses)
   return (
     <CoursesContext.Provider value={{ courses }}>
       {children}

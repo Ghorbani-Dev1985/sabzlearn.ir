@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
       .then(response => {
         setIsLoggedIn(true)
         setUserInfos(response.data)
-        console.log(userInfos)
       })
       .catch(error => {
           console.log(error)

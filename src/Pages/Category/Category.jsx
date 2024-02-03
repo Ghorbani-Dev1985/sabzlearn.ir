@@ -1,10 +1,14 @@
-import { Search } from '@mui/icons-material'
-import React from 'react'
+import { Search, VerticalAlignCenterOutlined } from '@mui/icons-material'
+import React, { useEffect } from 'react'
 import CourseCard from '../../Components/CourseCard/CourseCard'
 import TopSort from '../../Components/TopSort/TopSort'
 import useTitle from '../../Hooks/useTitle'
 import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 import SearchFilter from '../../Components/SearchFilter/SearchFilter'
+import useFetch from '../../Hooks/useFetch'
+import { useParams } from 'react-router-dom'
+import { BaseURL } from '../../Utils/Utils'
+import axios from 'axios'
 
 const categoryCourses = [
   {
@@ -89,7 +93,21 @@ const categoryCourses = [
 
 
 function Category() {
-  const title = useTitle("فرانت اند - سبزلرن")
+ const {categoryName} = useParams()
+//  const {datas : category} = useFetch(`courses/category/${categoryName}` , false)
+//   console.log(category)
+//   const title = useTitle("فرانت اند - سبزلرن")
+useEffect(() => {
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+    const courseID = { courseID: '635f05d6fd9e8fcba0d2c909'}
+     fetch(`http://localhost:5000/v1/courses/category/${categoryName}` , null , null )
+    .then(res => res.json())
+   .then(categoryInfo => {
+    console.log(categoryInfo)
+   // document.title = courseInfo.data.name
+  })
+
+} , []);
   return (
     <>
   {/* Category Title */}

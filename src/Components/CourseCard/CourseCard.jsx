@@ -8,7 +8,6 @@ import r from '../../../Backend/public/courses/covers/fareelancer.png'
 function CourseCard(
   {id, shortName , cover , name , description , creator , price}) {
   const [isImgLoaded , setIsImgLoaded] = useState(true)
-  console.log(cover)
   return (
     
       isImgLoaded ? <div className="flex flex-col overflow-hidden bg-white dark:bg-gray-800 shadow-light dark:shadow-none dark:border dark:border-gray-700 rounded-2xl">
