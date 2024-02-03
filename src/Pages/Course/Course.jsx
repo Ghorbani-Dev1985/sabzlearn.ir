@@ -64,10 +64,11 @@ function Course() {
   }
 
     useEffect(() => {
+      const localStorageData = JSON.parse(localStorage.getItem('user'))
        axios(`${BaseURL}courses/${courseName}` , {
        method: 'POST',
        headers : {
-         'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+         'Authorization' : `Bearer ${localStorageData === null ? null : localStorageData.token}`
        }
      })
      .then(courseInfo => {
@@ -151,7 +152,7 @@ function Course() {
             <DetailBoxInfo
               icon={LastUpdate}
               title=" آخرین به روز رسانی   "
-              subTitle=""
+              subTitle={courseDetails.createdAt && ChangeGregorianDateToPersian(courseDetails.createdAt)}
             />
             <DetailBoxInfo
               icon={SupportWay}
