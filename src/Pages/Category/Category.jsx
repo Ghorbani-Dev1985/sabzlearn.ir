@@ -97,7 +97,7 @@ const categoryCourses = [
 function Category() {
  const {categoryName} = useParams()
  const [courseByCategory , setCourseByCategory] = useState([])
- const [showCourses , setShowCourses] = useState([])
+ const [showItems , setShowItems] = useState([])
 useEffect(() => {
      axios(`${BaseURL}courses/category/${categoryName}`)
    .then(categoryInfo => {
@@ -123,7 +123,7 @@ useEffect(() => {
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
             courseByCategory.length > 0 ?  
-            showCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
+            showItems.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
                     <React.Fragment key={_id}>
                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
@@ -134,7 +134,7 @@ useEffect(() => {
         }
         {
             courseByCategory.length > 0 ?  <div className='flex-center col-span-3 my-8'>
-            <Pagination items={courseByCategory} itemsCount={3} pathname={`/category/${categoryName}`} setShowCourses={setShowCourses}/>
+            <Pagination items={courseByCategory} itemsCount={3} pathname={`/category/${categoryName}`} setShowItems={setShowItems}/>
              </div> : null
         }
        

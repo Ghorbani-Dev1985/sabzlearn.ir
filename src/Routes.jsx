@@ -39,7 +39,7 @@ let routes = [
     ]},
     {element: <Layout /> , children: [
         {
-            path: '/blogs',
+            path: '/blogs/:page',
             element: <Blogs />
         }
     ]},

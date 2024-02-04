@@ -134,7 +134,7 @@ const courses = [
 function Courses() {
 const title = useTitle('دوره ها')
 const {courses} = useCourses()
-const [showCourses , setShowCourses] = useState([])
+const [showItems , setShowItems] = useState([])
  console.log(courses)
   return (
     <>
@@ -171,7 +171,7 @@ const [showCourses , setShowCourses] = useState([])
               {/* List */}
               <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
               {
-            showCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
+            showItems.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
                     <React.Fragment key={_id}>
                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
@@ -180,7 +180,7 @@ const [showCourses , setShowCourses] = useState([])
             })
         }
              <div className='flex-center col-span-3 my-8'>
-            <Pagination items={courses} itemsCount={3} pathname="/courses" setShowCourses={setShowCourses}/>
+            <Pagination items={courses} itemsCount={3} pathname="/courses" setShowItems={setShowItems}/>
              </div>
               </div>
            </div>

@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-function Pagination({items , itemsCount , pathname , setShowCourses}) {
+function Pagination({items , itemsCount , pathname , setShowItems}) {
     const {page} = useParams()
     const [pagesCount , setPagesCount] = useState(null)
     const [pathIndex , setPathIndex] = useState(null)
@@ -10,7 +10,7 @@ function Pagination({items , itemsCount , pathname , setShowCourses}) {
         let endIndex = itemsCount * page
         let startIndex = endIndex - itemsCount
         let paginatedItems = items.slice(startIndex , endIndex)
-        setShowCourses(paginatedItems)
+        setShowItems(paginatedItems)
         let pagesNumber = Math.ceil(items.length / itemsCount)
         setPagesCount(pagesNumber)
     }, [page , items])

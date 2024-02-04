@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useTitle from "../../Hooks/useTitle";
 import TopPageTitle from "../../Components/TopPageTitle/TopPageTitle";
 import { ArrowLeft, KeyboardArrowDown } from "@mui/icons-material";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import TopSort from "../../Components/TopSort/TopSort";
 import BlogCard from "../../Components/BlogCard/BlogCard";
 import BlogCategory from "../../Components/BlogCategory/BlogCategory";
+import { useBlogs } from "../../Contexts/BlogsContext";
+import Pagination from "../../Components/Pagination/Pagination";
 
 
 
@@ -58,6 +60,8 @@ const blogs = [
 
 function Blogs() {
   const title = useTitle(" وبلاگ - سبزلرن");
+  const {blogs} = useBlogs()
+  const [showItems , setShowItems] = useState([])
   return (
     <>
       {/* Title */}
@@ -80,32 +84,27 @@ function Blogs() {
           />
           {/* Card */}
           <div className="grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-            {blogs.map(
-              ({
-                id,
-                src,
-                title,
-                description,
-                authorLink,
-                authorName,
-                date,
-              }) => {
+            {showItems.map(
+              ({ _id, shortName, cover, title, body, creator, createdAt }) => {
                 return (
-                  <React.Fragment key={id}>
+                  <React.Fragment key={_id}>
                     <BlogCard
-                      src={src}
+                      shortName={shortName}
+                      cover={cover}
                       title={title}
-                      description={description}
-                      authorLink={authorLink}
-                      authorName={authorName}
-                      date={date}
+                      body={body}
+                      creatorName={creator.name}
+                      createdAt={createdAt}
                     />
                   </React.Fragment>
                 );
               }
             )}
+             <div className='flex-center col-span-3 my-8'>
+            <Pagination items={blogs} itemsCount={3} pathname="/blogs" setShowItems={setShowItems}/>
+             </div>
           </div>
-          {
+          {/* {
             blogs.length > 6 ? <div className="show-more flex justify-center items-center w-52 h-14 mt-10 mx-auto bg-gray-200 dark:bg-gray-700 text-zinc-700 dark:text-white text-xl rounded-full cursor-pointer transition-colors">
             <div className="show-more__content space-x-2">
                 مشاهده بیشتر
@@ -118,7 +117,7 @@ function Blogs() {
         </div> : <div className="text-zinc-700 dark:text-white font-danaLight mt-7 leading-7 text-center">
                         تمام مطالب نمایش داده شده است.
                     </div>
-          }
+          } */}
         </section>
       </section>
     </>

@@ -61,7 +61,7 @@ function LastBlogs() {
         title=" آخرین مقالات"
         subTitle=" مقالات بروز برنامه نویسی"
         isLink={true}
-        to=""
+        to="/blogs/1"
         linkText="مشاهده همه مقالات"
       />
       {/* LastBlogs */}

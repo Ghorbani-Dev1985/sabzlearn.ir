@@ -14,7 +14,6 @@ import BlogCategory from "../../Components/BlogCategory/BlogCategory";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
-import { useBlogs } from "../../Contexts/BlogsContext";
 
 const newBlogs = [
   {
@@ -47,7 +46,7 @@ const newBlogs = [
 function Blog() {
   const {isLoggedIn } = useAuth()
   const {blogName} = useParams()
-  const {blogs} = useBlogs()
+
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
   const [blogDetails , setBlogDetails] = useState([])
@@ -74,7 +73,7 @@ function Blog() {
   })
 
 } , []);
-console.log(blogs)
+
   return (
     <>
       {/* Breadcrumb */}
