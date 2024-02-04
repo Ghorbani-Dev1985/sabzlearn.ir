@@ -4,6 +4,10 @@ import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
+import { useAuth } from '../../Contexts/AuthContext'
+
+
+
 
 const newCourses = [
   {
@@ -111,7 +115,8 @@ const newCourses = [
 
 ]
 
-function NewCourses() {
+function NewCourses({courses}) {
+  console.log(courses)
   return (
     // NewCourses Component
     <section className='mt-25'>
@@ -127,20 +132,20 @@ function NewCourses() {
         </SectionTitle> 
        {/* NewCourses */}
     
-       <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
+       {/* <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
          {
          
-         newCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+         courses.map(({_id, shortName , cover , name , description , creator , price}) => {
            return(
-             <React.Fragment key={id}>
+             <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
+                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
                           </SwiperSlide>
                     </React.Fragment>
                 )
               })
         }
-       </Slider>
+       </Slider> */}
 
     </section>
   )

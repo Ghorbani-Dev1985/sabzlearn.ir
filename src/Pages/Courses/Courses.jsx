@@ -135,7 +135,6 @@ function Courses() {
 const title = useTitle('دوره ها')
 const {courses} = useCourses()
 const [showItems , setShowItems] = useState([])
- console.log(courses)
   return (
     <>
         <TopPageTitle title=" دوره ها" bgColor="bg-violet-500" /> 

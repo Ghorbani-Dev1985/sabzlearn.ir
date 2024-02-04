@@ -4,6 +4,7 @@ import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
+import { useCourses } from '../../Contexts/CoursesContext'
 
 const presellCourses = [
   {
@@ -112,6 +113,8 @@ const presellCourses = [
 ]
 
 function PresellCourses() {
+  const {courses} = useCourses()
+  console.log(courses)
   return (
     // PresellCourses Component
     <section className='mt-25'>

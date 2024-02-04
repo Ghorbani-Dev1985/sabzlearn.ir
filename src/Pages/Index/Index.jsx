@@ -8,20 +8,23 @@ import LastBlogs from "../../Components/LastBlogs/LastBlogs";
 import InstagramPage from "../../Components/InstagramPage/InstagramPage";
 import PresellCourses from "../../Components/PresellCourses/PresellCourses";
 import PopularCourses from "../../Components/PopularCourses/PopularCourses";
+import { useCourses } from "../../Contexts/CoursesContext";
 
 
 function Index() {
+  const {courses} = useCourses()
+  console.log(courses)
   return (
     <>
       <HeroSection />
       <LastCourses />
       <RoadMap />
       <WhatHelp />
-      <NewCourses />
-      <LastBlogs />
+       <NewCourses courses={courses}/>
+    {/*  <LastBlogs />
       <InstagramPage />
       <PresellCourses />
-      <PopularCourses />
+      <PopularCourses /> */}
     </>
   );
 }
