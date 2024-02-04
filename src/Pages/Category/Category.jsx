@@ -122,7 +122,7 @@ useEffect(() => {
           {/* Course List */}
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
-            showCourses.length > 0 ?  
+            courseByCategory.length > 0 ?  
             showCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
                     <React.Fragment key={_id}>
@@ -132,9 +132,12 @@ useEffect(() => {
             })
         : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای برای این دسته بندی ثبت نگردیده است</Alert></div>
         }
-        <div className='flex-center col-span-3 my-8'>
+        {
+            courseByCategory.length > 0 ?  <div className='flex-center col-span-3 my-8'>
             <Pagination items={courseByCategory} itemsCount={3} pathname={`/category/${categoryName}`} setShowCourses={setShowCourses}/>
-             </div>
+             </div> : null
+        }
+       
      </div>
      </section>
 </section>
