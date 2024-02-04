@@ -180,7 +180,7 @@ const [showCourses , setShowCourses] = useState([])
             })
         }
              <div className='flex-center col-span-3 my-8'>
-            <Pagination items={courses} itemsCount={1} pathname="/courses" setShowCourses={setShowCourses}/>
+            <Pagination items={courses} itemsCount={3} pathname="/courses" setShowCourses={setShowCourses}/>
              </div>
               </div>
            </div>

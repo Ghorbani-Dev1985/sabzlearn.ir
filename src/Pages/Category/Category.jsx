@@ -103,11 +103,12 @@ useEffect(() => {
   })
 
 } , [categoryName])
-
+ console.log(courseByCategory.length)
   return (
     <>
   {/* Category Title */}
-   <TopPageTitle title="فرانت اند" bgColor="bg-rose-500" /> 
+   <TopPageTitle title='تعداد دوره' countCourse={courseByCategory.length} bgColor="bg-rose-500" /> 
+
 {/* Main Section */}
 <section className='grid items-start grid-rows-1 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 mt-9 sm:mt-25'>
      {/* Sidebar */}
