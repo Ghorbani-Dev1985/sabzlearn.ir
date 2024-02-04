@@ -34,7 +34,7 @@ function Header() {
             menus.map(({_id , href , title , submenus})=> {
               return(
                 <li key={_id} className="group">
-            <Link to={href} className="flex items-center gap-x-1 h-full text-zinc-700 dark:text-white group-hover:text-primary dark:hover:text-primary transition-colors">
+            <Link to={`${href}/1`} className="flex items-center gap-x-1 h-full text-zinc-700 dark:text-white group-hover:text-primary dark:hover:text-primary transition-colors">
                 {title}
                 {submenus.length > 0 && <ExpandMore className="size-5" />}  
                 </Link>

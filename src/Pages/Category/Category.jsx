@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { BaseURL } from '../../Utils/Utils'
 import axios from 'axios'
 import { Alert } from '@mui/material'
+import Pagination from '../../Components/Pagination/Pagination'
 
 const categoryCourses = [
   {
@@ -96,6 +97,7 @@ const categoryCourses = [
 function Category() {
  const {categoryName} = useParams()
  const [courseByCategory , setCourseByCategory] = useState([])
+ const [showCourses , setShowCourses] = useState([])
 useEffect(() => {
      axios(`${BaseURL}courses/category/${categoryName}`)
    .then(categoryInfo => {
@@ -103,7 +105,7 @@ useEffect(() => {
   })
 
 } , [categoryName])
- console.log(courseByCategory.length)
+
   return (
     <>
   {/* Category Title */}
@@ -120,8 +122,8 @@ useEffect(() => {
           {/* Course List */}
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
-            courseByCategory.length > 0 ?  
-            courseByCategory.map(({_id, shortName , cover , name , description , creator , price}) => {
+            showCourses.length > 0 ?  
+            showCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
                     <React.Fragment key={_id}>
                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
@@ -130,7 +132,9 @@ useEffect(() => {
             })
         : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای برای این دسته بندی ثبت نگردیده است</Alert></div>
         }
-       
+        <div className='flex-center col-span-3 my-8'>
+            <Pagination items={courseByCategory} itemsCount={3} pathname={`/category/${categoryName}`} setShowCourses={setShowCourses}/>
+             </div>
      </div>
      </section>
 </section>

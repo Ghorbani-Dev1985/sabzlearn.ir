@@ -128,7 +128,7 @@ function MobileNav({ menus }) {
                             : "text-slate-500 dark:text-slate-400"
                         }`}
                       >
-                        <Link to={href}>{title}</Link>
+                        <Link to={`${href}/1`}>{title}</Link>
                       </Typography>
                     </AccordionSummary>
                     {submenus.length > 0 && (

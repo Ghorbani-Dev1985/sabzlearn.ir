@@ -33,7 +33,7 @@ let routes = [
     ]},
     {element: <Layout /> , children: [
         {
-            path: '/category/:categoryName',
+            path: '/category/:categoryName/:page',
             element: <Category />
         }
     ]},

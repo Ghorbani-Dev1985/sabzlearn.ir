@@ -91,7 +91,7 @@ function LastCourses() {
     <section className='relative mt-22 sm:mt-40'>
          <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -top-80"></div>
         {/* Last Courses Component */}
-     <SectionTitle squareColor="bg-amber-400 dark:bg-yellow-400" title="آخرین دوره ها" subTitle="سکوی پرتاپ شما به سمت موفقیت" isLink={true} to="/courses" linkText="مشاهده همه دوره ها" /> 
+     <SectionTitle squareColor="bg-amber-400 dark:bg-yellow-400" title="آخرین دوره ها" subTitle="سکوی پرتاپ شما به سمت موفقیت" isLink={true} to="/courses/1" linkText="مشاهده همه دوره ها" /> 
      {/* Last Course List */}
      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
         {
