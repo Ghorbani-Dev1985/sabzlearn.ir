@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
+const { articleValidator } = require("../validators/v1/article");
 
-const schema = new mongoose.Schema(
+const articleSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
@@ -21,7 +23,9 @@ const schema = new mongoose.Schema(
     shortName: {
       type: String,
       required: true,
+      unique: true,
     },
+
     categoryID: {
       type: mongoose.Types.ObjectId,
       ref: "Category",
@@ -39,6 +43,11 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Article", schema);
+//* add yup validation method to mongoose statics
+articleSchema.statics.validation = function (body) {
+  return articleValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Article", articleSchema);
 
 module.exports = model;

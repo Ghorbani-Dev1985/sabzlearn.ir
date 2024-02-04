@@ -1,37 +1,66 @@
 const categoryModel = require("../../models/category");
 
-exports.create = async (req, res) => {
-  const { title, name } = req.body;
+exports.create = async (req, res, next) => {
+  try {
+    const { title, name } = req.body;
 
-  const newCategory = await categoryModel.create({ title, name });
+    await categoryModel.validation(req.body).catch((err) => {
+      err.statusCode = 400;
+      throw err;
+    });
 
-  return res.status(201).json(newCategory);
-};
+    const newCategory = await categoryModel.create({ title, name });
 
-exports.getAll = async (req, res) => {
-  const allCategories = await categoryModel.find();
-  res.json(allCategories);
-};
-
-exports.remove = async (req, res) => {
-  const deletedCategory = await categoryModel.findOneAndRemove({
-    _id: req.params.id,
-  });
-  if (!deletedCategory) {
-    return res.status(404).json({ message: "Category Not Found!" });
+    return res.status(201).json(newCategory);
+  } catch (error) {
+    next(error);
   }
-  return res.json(deletedCategory);
 };
 
-exports.update = async (req, res) => {
-  const updatedCategory = await categoryModel.findOneAndUpdate(
-    { _id: req.params.id },
-    {
-      title: req.body.title,
+exports.getAll = async (req, res, next) => {
+  try {
+    const allCategories = await categoryModel.find();
+    if (allCategories.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "There are no categories available" });
     }
-  );
-  if (!updatedCategory) {
-    return res.status(404).json({ message: "Category Not Found!" });
+    res.json(allCategories);
+  } catch (error) {
+    next(error);
   }
-  return res.json(updatedCategory);
+};
+
+exports.remove = async (req, res, next) => {
+  try {
+    const deletedCategory = await categoryModel.findOneAndRemove({
+      _id: req.params.id,
+    });
+    if (!deletedCategory) {
+      return res.status(404).json({ message: "Category Not Found!" });
+    }
+    return res.json(deletedCategory);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    await categoryModel.validation(req.body).catch((err) => {
+      err.statusCode = 400;
+      throw err;
+    });
+    const updatedCategory = await categoryModel.findOneAndUpdate(
+      { _id: req.params.id },
+      { name: req.body.name, title: req.body.title },
+      { new: true }
+    );
+    if (!updatedCategory) {
+      return res.status(404).json({ message: "Category Not Found!" });
+    }
+    return res.json(updatedCategory);
+  } catch (error) {
+    next(error);
+  }
 };

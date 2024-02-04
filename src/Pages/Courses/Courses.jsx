@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useTitle from '../../Hooks/useTitle'
 import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 import SearchFilter from '../../Components/SearchFilter/SearchFilter'
 import TopSort from '../../Components/TopSort/TopSort'
 import CourseCard from '../../Components/CourseCard/CourseCard'
+import { useCourses } from '../../Contexts/CoursesContext'
+import Pagination from '../../Components/Pagination/Pagination'
 
 const courseCount = [
     {
@@ -131,6 +133,9 @@ const courses = [
 
 function Courses() {
 const title = useTitle('دوره ها')
+const {courses} = useCourses()
+const [showCourses , setShowCourses] = useState([])
+ console.log(courses)
   return (
     <>
         <TopPageTitle title=" دوره ها" bgColor="bg-violet-500" /> 
@@ -166,14 +171,17 @@ const title = useTitle('دوره ها')
               {/* List */}
               <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
               {
-            courses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+            showCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
-                    <React.Fragment key={id}>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
+                    <React.Fragment key={_id}>
+                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
                     </React.Fragment>
                 )
             })
         }
+             <div className='flex-center col-span-3 my-8'>
+            <Pagination items={courses} itemsCount={1} pathname="/courses" setShowCourses={setShowCourses}/>
+             </div>
               </div>
            </div>
        </section>

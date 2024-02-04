@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const {
+  createCommentValidator,
+  answerCommentValidator,
+  commentIdValidator,
+} = require("../validators/v1/comment");
 
-const schema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
   {
     body: {
       type: String,
@@ -34,6 +39,17 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Comment", schema);
+//* add yup validation method to mongoose statics
+commentSchema.statics.createValidation = function (body) {
+  return createCommentValidator.validate(body, { abortEarly: false });
+};
+commentSchema.statics.answerValidation = function (body) {
+  return answerCommentValidator.validate(body, { abortEarly: false });
+};
+commentSchema.statics.commentIdValidation = function (body) {
+  return commentIdValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Comment", commentSchema);
 
 module.exports = model;

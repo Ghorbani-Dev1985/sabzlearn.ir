@@ -1,5 +1,5 @@
 import { Search, VerticalAlignCenterOutlined } from '@mui/icons-material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CourseCard from '../../Components/CourseCard/CourseCard'
 import TopSort from '../../Components/TopSort/TopSort'
 import useTitle from '../../Hooks/useTitle'
@@ -9,6 +9,7 @@ import useFetch from '../../Hooks/useFetch'
 import { useParams } from 'react-router-dom'
 import { BaseURL } from '../../Utils/Utils'
 import axios from 'axios'
+import { Alert } from '@mui/material'
 
 const categoryCourses = [
   {
@@ -94,20 +95,15 @@ const categoryCourses = [
 
 function Category() {
  const {categoryName} = useParams()
-//  const {datas : category} = useFetch(`courses/category/${categoryName}` , false)
-//   console.log(category)
-//   const title = useTitle("فرانت اند - سبزلرن")
+ const [courseByCategory , setCourseByCategory] = useState([])
 useEffect(() => {
-    const localStorageData = JSON.parse(localStorage.getItem('user'))
-    const courseID = { courseID: '635f05d6fd9e8fcba0d2c909'}
-     fetch(`http://localhost:5000/v1/courses/category/${categoryName}` , null , null )
-    .then(res => res.json())
+     axios(`${BaseURL}courses/category/${categoryName}`)
    .then(categoryInfo => {
-    console.log(categoryInfo)
-   // document.title = courseInfo.data.name
+    setCourseByCategory(categoryInfo.data)
   })
 
-} , []);
+} , [categoryName])
+
   return (
     <>
   {/* Category Title */}
@@ -123,14 +119,17 @@ useEffect(() => {
           {/* Course List */}
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
-            categoryCourses.map(({id, src , isOffer , offerPercent , category , title , description , teacherName , time , studentCount , offerPrice , price}) => {
+            courseByCategory.length > 0 ?  
+            courseByCategory.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
-                    <React.Fragment key={id}>
-                        <CourseCard src={src} isOffer={isOffer} offerPercent={offerPercent} category={category} title={title} description={description} teacherName={teacherName} time={time} studentCount={studentCount} offerPrice={offerPrice} price={price}/>
+                    <React.Fragment key={_id}>
+                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
                     </React.Fragment>
                 )
             })
+        : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای برای این دسته بندی ثبت نگردیده است</Alert></div>
         }
+       
      </div>
      </section>
 </section>

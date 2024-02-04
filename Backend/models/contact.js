@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const {
+  createContactValidator,
+  answerValidator,
+  removeValidator,
+} = require("../validators/v1/contact");
 
-const schema = new mongoose.Schema(
+const contactSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -26,6 +31,17 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Contact", schema);
+//* add yup validation method to mongoose statics
+contactSchema.statics.createValidation = function (body) {
+  return createContactValidator.validate(body, { abortEarly: false });
+};
+contactSchema.statics.answerValidation = function (body) {
+  return answerValidator.validate(body, { abortEarly: false });
+};
+contactSchema.statics.removeValidation = function (body) {
+  return removeValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Contact", contactSchema);
 
 module.exports = model;

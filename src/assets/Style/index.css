@@ -486,3 +486,10 @@ input + svg {
   -o-border-radius: ;
   border-bottom-left-radius: 0;
 }
+
+:is(.dark .css-o0qdv9-MuiButtonBase-root-MuiPaginationItem-root ,.dark .css-llj3c1-MuiPaginationItem-root){
+  color: #fff;
+}
+:is(.dark .css-o0qdv9-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected){
+  background-color: rgb(40 41 61);
+}

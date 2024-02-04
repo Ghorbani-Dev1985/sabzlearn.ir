@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const categoryValidator = require("../validators/v1/category");
 
-const schema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -14,6 +15,12 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Category", schema);
+
+//* add yup validation method to mongoose statics
+categorySchema.statics.validation = function (body) {
+  return categoryValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Category", categorySchema);
 
 module.exports = model;

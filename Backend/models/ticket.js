@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
+const {
+  getAnswerValidator,
+  createTicketValidator,
+  departmentsSubsValidator,
+  setAnswerValidator,
+} = require("../validators/v1/ticket");
 
-const schema = new mongoose.Schema(
+const ticketSchema = new mongoose.Schema(
   {
     departmentID: {
       type: mongoose.Types.ObjectId,
@@ -36,13 +42,13 @@ const schema = new mongoose.Schema(
     parent: {
       type: mongoose.Types.ObjectId,
       required: false,
-      ref: 'Ticket'
+      ref: "Ticket",
     },
     course: {
       type: mongoose.Types.ObjectId,
       required: false,
-      ref: 'Course',
-      default: '634e6b0e1d5142b91afa9bb3'
+      ref: "Course",
+      default: "634e6b0e1d5142b91afa9bb3",
     },
     isAnswer: {
       type: Number,
@@ -52,6 +58,20 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Ticket", schema);
+//* add yup validation method to mongoose statics
+ticketSchema.statics.createValidation = function (body) {
+  return createTicketValidator.validate(body, { abortEarly: false });
+};
+ticketSchema.statics.getAnswerValidation = function (body) {
+  return getAnswerValidator.validate(body, { abortEarly: false });
+};
+ticketSchema.statics.setAnswerValidation = function (body) {
+  return setAnswerValidator.validate(body, { abortEarly: false });
+};
+ticketSchema.statics.departmentsSubsValidation = function (body) {
+  return departmentsSubsValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Ticket", ticketSchema);
 
 module.exports = model;

@@ -21,13 +21,16 @@ router
 
 router
   .route("/:id")
-  .delete(isAuthenticated, isAdminMiddleware, userController.removeUser);
+  .delete(isAuthenticated, isAdminMiddleware, userController.removeUser)
+  .put(isAuthenticated, isAdminMiddleware, userController.editUser);
 
 router
   .route("/ban/:id")
   .put(isAuthenticated, isAdminMiddleware, userController.banUser);
 
 router.route("/courses").get(isAuthenticated, userController.getUserCourses);
-router.route("/role").put(isAuthenticated, isAdminMiddleware, userController.changeUserRole);
+router
+  .route("/role")
+  .put(isAuthenticated, isAdminMiddleware, userController.changeUserRole);
 
 module.exports = router;

@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
+const {
+  getOneOffValidator,
+  createOffValidator,
+  removeOffValidator,
+  setDiscountOnAllValidator,
+} = require("../validators/v1/off");
 
-const schema = new mongoose.Schema(
+const offSchema = new mongoose.Schema(
   {
     code: {
       type: String,
@@ -32,6 +38,20 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Off", schema);
+//* add yup validation method to mongoose statics
+offSchema.statics.getOneValidation = function (body) {
+  return getOneOffValidator.validate(body, { abortEarly: false });
+};
+offSchema.statics.createValidation = function (body) {
+  return createOffValidator.validate(body, { abortEarly: false });
+};
+offSchema.statics.removeValidation = function (body) {
+  return removeOffValidator.validate(body, { abortEarly: false });
+};
+offSchema.statics.setAllValidation = function (body) {
+  return setDiscountOnAllValidator.validate(body, { abortEarly: false });
+};
+
+const model = mongoose.model("Off", offSchema);
 
 module.exports = model;
