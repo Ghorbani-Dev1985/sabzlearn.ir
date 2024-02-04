@@ -1,6 +1,7 @@
 import React from "react";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import BlogCard from "../BlogCard/BlogCard";
+import { useBlogs } from "../../Contexts/BlogsContext";
 
 const LastArticles = [
   {
@@ -50,30 +51,32 @@ const LastArticles = [
 ];
 
 function LastBlogs() {
+  const {blogs} = useBlogs()
+  console.log(blogs)
   return (
     // LastBlogs Component
     <section className="mt-25 relative">
       <SectionTitle
         squareColor="bg-pink-500 dark:bg-rose-500"
-        title=" جدیدترین دوره ها"
-        subTitle=" یادگیری و رشد توسعه فردی "
+        title=" آخرین مقالات"
+        subTitle=" مقالات بروز برنامه نویسی"
         isLink={true}
         to=""
         linkText="مشاهده همه مقالات"
       />
       {/* LastBlogs */}
       <div className="grid grid-rows-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {LastArticles.map(
-          ({ id, src, title, description, authorLink, authorName, date }) => {
+        {blogs.slice(0,4).map(
+          ({ _id, shortName, cover, title, body, creator, createdAt }) => {
             return (
-              <React.Fragment key={id}>
+              <React.Fragment key={_id}>
                 <BlogCard
-                  src={src}
+                  shortName={shortName}
+                  cover={cover}
                   title={title}
-                  description={description}
-                  authorLink={authorLink}
-                  authorName={authorName}
-                  date={date}
+                  body={body}
+                  creatorName={creator.name}
+                  createdAt={createdAt}
                 />
               </React.Fragment>
             );

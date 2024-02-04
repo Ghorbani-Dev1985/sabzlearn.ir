@@ -26,7 +26,7 @@ function Pagination({items , itemsCount , pathname , setShowCourses}) {
     {
         Array(pagesCount).fill(0).map((item , index) => {
             return(
-            <li>
+            <li key={index}>
             <Link to={`${pathname}/${index + 1}`} className={`${+page === index + 1 ? 'z-10 flex-center px-3 h-8 leading-tight text-sky-600 border border-sky-300 bg-sky-50 hover:bg-sky-100 hover:text-sky-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white' : 'flex-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}`}>{index + 1}</Link>
           </li>
             )
