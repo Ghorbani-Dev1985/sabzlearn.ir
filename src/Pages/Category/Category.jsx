@@ -177,7 +177,7 @@ useEffect(() => {
          {/* Sort */}
           <TopSort BtnOne=" همه دوره ها" BtnTwo="جدیدترین" BtnThree=" ارزان ترین" BtnFour="گران ترین" BtnFive="پرمخاطب‌ها" status={status} setStatus={setStatus}/>
           {/* Course List */}
-          <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
+          <div className='grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-3 gap-5'>
         {
             filteredCourses.length > 0 ?  
             showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {

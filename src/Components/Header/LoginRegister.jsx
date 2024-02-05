@@ -36,7 +36,6 @@ export default LoginRegister
 
 const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos}) =>{
   const {LogoutHandler} = useAuth()
-  console.log(userInfos.name)
   const dashboardLinks = [
     {
     id: 1,
@@ -89,7 +88,7 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos})
             dashboardLinks.map(({id, to , icon , linkText}) => {
               return(
                 <React.Fragment key={id}>
-                <Link to={to} className='flex-between text-zinc-700 dark:text-white px-2.5 h-[46px] rounded-xl hover:bg-gray-100 dark:hover:bg-slate transition-colors'>
+                <Link to={to} className='flex-between text-zinc-700 dark:text-white px-2.5 h-[46px] rounded-xl hover:bg-gray-100 dark:hover:bg-mainSlate transition-colors'>
                    <span className='flex items-center gap-x-3'>
                     {icon}
                     {linkText}

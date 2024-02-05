@@ -7,7 +7,7 @@ function SearchFilter({children , setStatus , searchValue  , SearchChangeHandler
     
   }
    return (
-    <aside className='sticky top-36 space-y-5'>
+    <aside className='lg:sticky lg:top-36 space-y-5'>
     {/* Search Box */}
     <form className='space-y-5'>
      <div className='h-17 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl'>
@@ -18,7 +18,7 @@ function SearchFilter({children , setStatus , searchValue  , SearchChangeHandler
      </div>
      {children}
      {/* Toggle Box */}
-     <div className='hidden sm:grid grid-cols-2 lg:grid-cols-1 gap-5'>
+     <div className='hidden lg:grid grid-cols-2 lg:grid-cols-1 gap-5'>
         {/* Free Course */}
          <div className='px-7 h-17 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl'>
             <div className='flex-between h-full'>

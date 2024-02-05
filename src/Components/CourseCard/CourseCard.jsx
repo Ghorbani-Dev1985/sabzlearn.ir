@@ -10,7 +10,7 @@ function CourseCard(
   const [isImgLoaded , setIsImgLoaded] = useState(true)
   return (
     
-      isImgLoaded ? <div className="flex flex-col overflow-hidden bg-white dark:bg-gray-800 shadow-light dark:shadow-none dark:border dark:border-gray-700 rounded-2xl">
+      isImgLoaded ? <div className="flex flex-col overflow-hidden bg-white dark:bg-gray-800 shadow-light dark:shadow-none dark:xl:border dark:border-gray-700 rounded-2xl">
       {/* Course Img */}
       <div className="relative h-42">
         <Link to={`course/${shortName}`} className="w-full h-full block">
