@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import LastCourses from "../../Components/LastCourses/LastCourses";
 import RoadMap from "../../Components/RoadMap/RoadMap";
@@ -8,10 +8,12 @@ import LastBlogs from "../../Components/LastBlogs/LastBlogs";
 import InstagramPage from "../../Components/InstagramPage/InstagramPage";
 import PresellCourses from "../../Components/PresellCourses/PresellCourses";
 import PopularCourses from "../../Components/PopularCourses/PopularCourses";
-import { useCourses } from "../../Contexts/CoursesContext";
+import axios from "axios";
+import { BaseURL } from "../../Utils/Utils";
 
 
 function Index() {
+ 
   return (
     <>
       <HeroSection />
@@ -19,10 +21,10 @@ function Index() {
       <RoadMap />
       <WhatHelp />
        <NewCourses />
-    {/*  <LastBlogs />
+      <LastBlogs />
       <InstagramPage />
       <PresellCourses />
-      <PopularCourses /> */}
+      <PopularCourses />
     </>
   );
 }

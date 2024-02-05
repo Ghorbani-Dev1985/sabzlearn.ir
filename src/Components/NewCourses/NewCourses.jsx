@@ -4,8 +4,6 @@ import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
-import { useAuth } from '../../Contexts/AuthContext'
-import { useCourses } from '../../Contexts/CoursesContext'
 import { BaseURL } from '../../Utils/Utils'
 import axios from 'axios'
 
@@ -118,13 +116,12 @@ const newCourses = [
 ]
 
 function NewCourses() {
-  const [newCourses, setNewCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
   useEffect(() => {
     axios.get(`${BaseURL}courses`).then((response) => {
-      setNewCourses(response.data);
+      setCourses(response.data);
     });
   }, []);
-  console.log(newCourses)
   return (
     // NewCourses Component
     <section className='mt-25'>
@@ -143,7 +140,7 @@ function NewCourses() {
        <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
          {
          
-         newCourses.slice(0 , 6).map(({_id, shortName , cover , name , description , creator , price}) => {
+         courses.slice(0 , 6).map(({_id, shortName , cover , name , description , creator , price}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>

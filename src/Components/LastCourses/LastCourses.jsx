@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
 import CourseCard from '../CourseCard/CourseCard'
-import { useCourses } from '../../Contexts/CoursesContext'
+import axios from 'axios';
+import { BaseURL } from '../../Utils/Utils';
 
 const lastCourses = [
     {
@@ -85,7 +86,12 @@ const lastCourses = [
 ]
 
 function LastCourses() {
- const {courses} = useCourses()
+    const [courses, setCourses] = useState([]);
+    useEffect(() => {
+      axios.get(`${BaseURL}courses`).then((response) => {
+        setCourses(response.data);
+      });
+    }, []);
   return (
     <section className='relative mt-22 sm:mt-40'>
          <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -top-80"></div>

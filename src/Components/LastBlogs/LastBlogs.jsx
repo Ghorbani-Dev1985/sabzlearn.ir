@@ -52,7 +52,6 @@ const LastArticles = [
 
 function LastBlogs() {
   const {blogs} = useBlogs()
-  console.log(blogs)
   return (
     // LastBlogs Component
     <section className="mt-25 relative">
