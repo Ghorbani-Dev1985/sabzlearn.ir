@@ -24,11 +24,11 @@ function PopularCourses() {
        <Slider>
          {
          
-         popularCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
+         popularCourses.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
-                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
+                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                           </SwiperSlide>
                     </React.Fragment>
                 )

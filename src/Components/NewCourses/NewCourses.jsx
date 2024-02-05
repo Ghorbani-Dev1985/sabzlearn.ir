@@ -140,11 +140,11 @@ function NewCourses() {
        <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
          {
          
-         courses.slice(0 , 6).map(({_id, shortName , cover , name , description , creator , price}) => {
+         courses.slice(0 , 6).map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
-                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
+                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                           </SwiperSlide>
                     </React.Fragment>
                 )

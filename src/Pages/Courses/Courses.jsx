@@ -170,10 +170,10 @@ const [showItems , setShowItems] = useState([])
               {/* List */}
               <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
               {
-            showItems.map(({_id, shortName , cover , name , description , creator , price}) => {
+            showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
-                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
+                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                     </React.Fragment>
                 )
             })

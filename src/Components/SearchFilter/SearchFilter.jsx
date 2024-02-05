@@ -44,7 +44,7 @@ function SearchFilter({children , setStatus}) {
           <div className='flex-between h-full'>
             <span className='text-sm text-zinc-700 dark:text-white select-none'>در حال پیش فروش</span>
             <label className='relative cursor-pointer select-none'>
-                  <input type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
+                  <input onChange={() => setStatus('presell')} type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
                   <span className='toggle__select'></span>
               </label>
           </div>

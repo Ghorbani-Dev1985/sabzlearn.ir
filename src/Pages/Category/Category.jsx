@@ -108,6 +108,7 @@ useEffect(() => {
   })
 
 } , [categoryName])
+console.log(courseByCategory)
 useEffect(() => {
    switch(status){
     case 'free' : {
@@ -120,8 +121,30 @@ useEffect(() => {
         setFilteredCourses(moneyCourses)
         break;
     }
+    case 'presell' : {
+        const presellCourses = courseByCategory.filter(courses => courses.isComplete === 0)
+        setFilteredCourses(presellCourses)
+        break;
+    }
     case 'first' : {
         const reverseCourses = courseByCategory.slice().reverse()
+        setFilteredCourses(reverseCourses)
+        break;
+    }
+    case 'cheap' : {
+        let originalArray = [...courseByCategory]
+        const cheapCourses = originalArray.sort((a, b) => (a.price > b.price ? 1 : -1))
+        setFilteredCourses(cheapCourses)
+        break;
+    }
+    case 'expensive' : {
+        let originalArray = [...courseByCategory]
+        const cheapCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
+        setFilteredCourses(cheapCourses)
+        break;
+    }
+    case 'popular' : {
+        const reverseCourses = courseByCategory.filter(courses => courses.courseAverageScore === 5)
         setFilteredCourses(reverseCourses)
         break;
     }
@@ -148,14 +171,14 @@ useEffect(() => {
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
             filteredCourses.length > 0 ?  
-            showItems.map(({_id, shortName , cover , name , description , creator , price}) => {
+            showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
-                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price}/>
+                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                     </React.Fragment>
                 )
             })
-        : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای برای این دسته بندی ثبت نگردیده است</Alert></div>
+        : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای با چنین مشخصات یافت نگردیده است</Alert></div>
         }
         {
             filteredCourses.length > 0 ?  <div className='flex-center col-span-3 my-8'>

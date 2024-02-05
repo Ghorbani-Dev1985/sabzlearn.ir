@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import r from '../../../Backend/public/courses/covers/fareelancer.png'
 
 function CourseCard(
-  {id, shortName , cover , name , description , creator , price}) {
+  {id, shortName , cover , name , description , creator , price , courseAverageScore}) {
   const [isImgLoaded , setIsImgLoaded] = useState(true)
   return (
     
@@ -99,7 +99,7 @@ function CourseCard(
           </div>
           {/* Rate */}
           <div className="flex items-center gap-x-1 text-amber-400 text-xs">
-            <span className="leading-[1px]">5.0</span>
+            <span className="leading-[1px]">{courseAverageScore}.0</span>
             <Star className="!size-4" />
           </div>
         </div>
