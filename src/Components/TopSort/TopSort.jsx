@@ -7,12 +7,6 @@ import Button from "../../common/Form/Button";
 function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour , BtnFive , status ,  setStatus}) {
   const [showMobileFilter , setShowMobileFilter] = useState(false)
   const [showMobileSort , setShowMobileSort] = useState(false)
-  const SortHandler = () => {
-
-  }
-  const FilterHandler = () => {
-
-  }
   return (
     <>
       {/* Sort In Mobile */}

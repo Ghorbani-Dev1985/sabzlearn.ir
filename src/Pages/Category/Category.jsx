@@ -100,6 +100,15 @@ function Category() {
  const [showItems , setShowItems] = useState([])
  const [status , setStatus] = useState('all')
  const [filteredCourses , setFilteredCourses] = useState([])
+ const [searchValue , setSearchValue] = useState('')
+ const SearchChangeHandler = (event) => {
+    setSearchValue(event.target.value)
+    if(searchValue.length >= 1){
+    const filterBySearch = courseByCategory.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
+    setFilteredCourses(filterBySearch)
+    }
+    console.log(searchValue.length)
+ }
 useEffect(() => {
      axios(`${BaseURL}courses/category/${categoryName}`)
    .then(categoryInfo => {
@@ -108,7 +117,6 @@ useEffect(() => {
   })
 
 } , [categoryName])
-console.log(courseByCategory)
 useEffect(() => {
    switch(status){
     case 'free' : {
@@ -154,6 +162,7 @@ useEffect(() => {
     }
    }
 } , [status])
+ 
   return (
     <>
   {/* Category Title */}
@@ -162,7 +171,7 @@ useEffect(() => {
 {/* Main Section */}
 <section className='grid items-start grid-rows-1 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 mt-9 sm:mt-25'>
      {/* Sidebar */}
-     <SearchFilter setStatus={setStatus}/>
+     <SearchFilter setStatus={setStatus} searchValue={searchValue} setSearchValue={setSearchValue} SearchChangeHandler={SearchChangeHandler} />
      {/* Main Content */}
      <section className='col-span-1 lg:col-span-2 xl:col-span-3 order-1 lg:order-2'>
          {/* Sort */}
