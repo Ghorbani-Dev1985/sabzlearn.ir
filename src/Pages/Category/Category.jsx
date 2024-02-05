@@ -107,7 +107,6 @@ function Category() {
     const filterBySearch = courseByCategory.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
     setFilteredCourses(filterBySearch)
     }
-    console.log(searchValue.length)
  }
 useEffect(() => {
      axios(`${BaseURL}courses/category/${categoryName}`)

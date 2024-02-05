@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useTitle from '../../Hooks/useTitle'
 import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 import SearchFilter from '../../Components/SearchFilter/SearchFilter'
@@ -6,6 +6,7 @@ import TopSort from '../../Components/TopSort/TopSort'
 import CourseCard from '../../Components/CourseCard/CourseCard'
 import { useCourses } from '../../Contexts/CoursesContext'
 import Pagination from '../../Components/Pagination/Pagination'
+import { Alert } from '@mui/material'
 
 const courseCount = [
     {
@@ -131,17 +132,73 @@ const courses = [
     }
 ]
 
+
 function Courses() {
 const title = useTitle('دوره ها')
 const {courses} = useCourses()
 const [showItems , setShowItems] = useState([])
+const [status , setStatus] = useState('all')
+const [filteredCourses , setFilteredCourses] = useState([])
+const [searchValue , setSearchValue] = useState('')
+const SearchChangeHandler = (event) => {
+   setSearchValue(event.target.value)
+   if(searchValue.length >= 1){
+   const filterBySearch = courses.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
+   setFilteredCourses(filterBySearch)
+   }
+}
+useEffect(() => {
+    switch(status){
+     case 'free' : {
+         const freeCourses = courses.filter(courses => courses.price === 0)
+         setFilteredCourses(freeCourses)
+         break;
+     }
+     case 'money' : {
+         const moneyCourses = courses.filter(courses => courses.price !== 0)
+         setFilteredCourses(moneyCourses)
+         break;
+     }
+     case 'presell' : {
+         const presellCourses = courses.filter(courses => courses.isComplete === 0)
+         setFilteredCourses(presellCourses)
+         break;
+     }
+     case 'first' : {
+         const reverseCourses = courses.slice().reverse()
+         setFilteredCourses(reverseCourses)
+         break;
+     }
+     case 'cheap' : {
+         let originalArray = [...courses]
+         const cheapCourses = originalArray.sort((a, b) => (a.price > b.price ? 1 : -1))
+         setFilteredCourses(cheapCourses)
+         break;
+     }
+     case 'expensive' : {
+         let originalArray = [...courses]
+         const cheapCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
+         setFilteredCourses(cheapCourses)
+         break;
+     }
+     case 'popular' : {
+         const reverseCourses = courses.filter(courses => courses.courseAverageScore === 5)
+         setFilteredCourses(reverseCourses)
+         break;
+     }
+     default : {
+      setFilteredCourses(courses)
+      break;
+     }
+    }
+ } , [status])
   return (
     <>
         <TopPageTitle title=" دوره ها" bgColor="bg-violet-500" /> 
        {/* Main */}
        <section className='grid items-start grid-rows-1 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 mt-9 sm:mt-25'>
            {/* Aside */}
-           <SearchFilter>
+           {/* <SearchFilter>
             <div className='hidden sm:block px-7 py-6 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl'>
             <span className="inline-block mb-5 text-zinc-700 dark:text-white font-DanaBold text-lg">دسته بندی دوره ها</span>
             <div className='space-y-3.5'>
@@ -163,24 +220,28 @@ const [showItems , setShowItems] = useState([])
                }
             </div>
             </div>
-           </SearchFilter>
+           </SearchFilter> */}
+           <SearchFilter setStatus={setStatus} searchValue={searchValue} setSearchValue={setSearchValue} SearchChangeHandler={SearchChangeHandler} />
            {/* Content */}
            <div className='col-span-1 lg:col-span-2 xl:col-span-3 order-1 lg:order-2'>
-              <TopSort BtnOne=" همه دوره ها" BtnTwo="ارزان ترین" BtnThree=" گران ترین" BtnFour="پرمخاطب‌ها"/>
+           <TopSort BtnOne=" همه دوره ها" BtnTwo="جدیدترین" BtnThree=" ارزان ترین" BtnFour="گران ترین" BtnFive="پرمخاطب‌ها" status={status} setStatus={setStatus}/>
               {/* List */}
               <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
               {
-            showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
+                filteredCourses.length > 0 ? showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                     </React.Fragment>
                 )
-            })
-        }
-             <div className='flex-center col-span-3 my-8'>
-            <Pagination items={courses} itemsCount={3} pathname="/courses" setShowItems={setShowItems}/>
+            }):  <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای با چنین مشخصات یافت نگردیده است</Alert></div>
+              }
+          {/* Pagination */}
+          {
+            filteredCourses.length > 0 &&<div className='flex-center col-span-3 my-8'>
+            <Pagination items={filteredCourses} itemsCount={3} pathname="/courses" setShowItems={setShowItems}/>
              </div>
+          }
               </div>
            </div>
        </section>
