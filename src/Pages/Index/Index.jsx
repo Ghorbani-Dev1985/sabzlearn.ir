@@ -12,15 +12,13 @@ import { useCourses } from "../../Contexts/CoursesContext";
 
 
 function Index() {
-  const {courses} = useCourses()
-  console.log(courses)
   return (
     <>
       <HeroSection />
       <LastCourses />
       <RoadMap />
       <WhatHelp />
-       <NewCourses courses={courses}/>
+       <NewCourses />
     {/*  <LastBlogs />
       <InstagramPage />
       <PresellCourses />

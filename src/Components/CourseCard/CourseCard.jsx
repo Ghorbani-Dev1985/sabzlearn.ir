@@ -16,7 +16,7 @@ function CourseCard(
         <Link to={`course/${shortName}`} className="w-full h-full block">
           <img
             src={`../../../Backend/public/courses/covers/${cover}`}
-            className="block w-full h-full object-cover rounded-2xl"
+            className="block w-full h-full max-h-[149px] object-cover rounded-2xl"
             alt="ghorbani-dev.ir"
           />
         </Link>
@@ -64,7 +64,7 @@ function CourseCard(
         </h4>
         {/* Description */}
         {
-          description &&    <p className="font-Dana text-sm h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
+          description &&    <p className="font-Dana text-sm h-10 min-h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
           {description}
         </p>
         }

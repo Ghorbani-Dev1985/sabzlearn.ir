@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@mui/icons-material'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
 import { useAuth } from '../../Contexts/AuthContext'
-
+import { useCourses } from '../../Contexts/CoursesContext'
+import { BaseURL } from '../../Utils/Utils'
+import axios from 'axios'
 
 
 
@@ -115,8 +117,14 @@ const newCourses = [
 
 ]
 
-function NewCourses({courses}) {
-  console.log(courses)
+function NewCourses() {
+  const [newCourses, setNewCourses] = useState([]);
+  useEffect(() => {
+    axios.get(`${BaseURL}courses`).then((response) => {
+      setNewCourses(response.data);
+    });
+  }, []);
+  console.log(newCourses)
   return (
     // NewCourses Component
     <section className='mt-25'>
@@ -132,10 +140,10 @@ function NewCourses({courses}) {
         </SectionTitle> 
        {/* NewCourses */}
     
-       {/* <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
+       <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
          {
          
-         courses.map(({_id, shortName , cover , name , description , creator , price}) => {
+         newCourses.slice(0 , 6).map(({_id, shortName , cover , name , description , creator , price}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
@@ -145,7 +153,7 @@ function NewCourses({courses}) {
                 )
               })
         }
-       </Slider> */}
+       </Slider>
 
     </section>
   )
