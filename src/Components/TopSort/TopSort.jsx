@@ -4,7 +4,7 @@ import { Backdrop, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import Button from "../../common/Form/Button";
 
-function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
+function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour , BtnFive , status ,  setStatus}) {
   const [showMobileFilter , setShowMobileFilter] = useState(false)
   const [showMobileSort , setShowMobileSort] = useState(false)
   const SortHandler = () => {
@@ -34,9 +34,9 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
           </svg>
           <span>فیلتر</span>
         </div>
-        {
+        {/* {
           showMobileFilter &&  <MobileFilter showMobileFilter={showMobileFilter} setShowMobileFilter={setShowMobileFilter}/>
-        }
+        } */}
        
         <div onClick={() => setShowMobileSort((prev) => !prev)} className="flex-center gap-x-2 w-1/2 py-2 px-4 text-sm text-zinc-700 dark:text-white bg-white dark:bg-gray-800 rounded-xl select-none">
           <svg
@@ -61,7 +61,7 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
         </div>
       </div>
       {
-        showMobileSort && <MobileSort showMobileSort={showMobileSort} setShowMobileSort={setShowMobileSort}/>
+        showMobileSort && <MobileSort showMobileSort={showMobileSort} setShowMobileSort={setShowMobileSort} setStatus={setStatus}/>
       }
         
       {/* Sort In Desktop */}
@@ -93,10 +93,11 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
           </span>
           <div className="flex items-center flex-wrap">
             
-            <Button btnType="button"  className="button-sort font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white" disabled={false} onClick={SortHandler}> {BtnOne}</Button>
-            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnTwo}</Button>
-            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnThree}</Button>
-            <Button btnType="button"  className="button-sort" disabled={false} onClick={SortHandler}> {BtnFour}</Button>
+            <Button onClick={() => setStatus('all')} btnType="button"  className={`button-sort ${status === 'all' && 'font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white'} `} disabled={false} > {BtnOne}</Button>
+            <Button onClick={() => setStatus('first')} btnType="button"  className={`button-sort ${status === 'first' && 'font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white'} `} disabled={false} > {BtnTwo}</Button>
+            <Button onClick={() => setStatus('cheap')} btnType="button"  className={`button-sort ${status === 'cheap' && 'font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white'} `} disabled={false} > {BtnThree}</Button>
+            <Button onClick={() => setStatus('expensive')} btnType="button"  className={`button-sort ${status === 'expensive' && 'font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white'} `} disabled={false} > {BtnFour}</Button>
+            <Button onClick={() => setStatus('popular')} btnType="button"  className={`button-sort ${status === 'popular' && 'font-DanaMd bg-gray-100 dark:bg-mainSlate text-zinc-700 dark:text-white'} `} disabled={false} > {BtnFive}</Button>
             {children}
           </div>
         </div>
@@ -106,7 +107,8 @@ function TopSort({ children, BtnOne, BtnTwo, BtnThree, BtnFour }) {
 }
 
 
-const MobileFilter = ({showMobileFilter , setShowMobileFilter}) => {
+const MobileFilter = ({showMobileFilter , setShowMobileFilter , setStatus}) => {
+  console.log(setStatus)
   return (
     <div className="filter">
       <div className="filter__header">
@@ -141,7 +143,7 @@ const MobileFilter = ({showMobileFilter , setShowMobileFilter}) => {
             <div className='flex-between h-full'>
               <span className='text-sm text-zinc-700 dark:text-white select-none'>فقط دوره های رایگان</span>
               <label className='relative cursor-pointer select-none'>
-                  <input type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
+                  <input onChange={() => setStatus('free')} type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
                   <span className='toggle__select'></span>
               </label>
             </div>
@@ -150,7 +152,7 @@ const MobileFilter = ({showMobileFilter , setShowMobileFilter}) => {
           <div className='flex-between h-full'>
             <span className='text-sm text-zinc-700 dark:text-white select-none'>در حال پیش فروش</span>
             <label className='relative cursor-pointer select-none'>
-                  <input type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
+                  <input onChange={() => setStatus('presell')} type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
                   <span className='toggle__select'></span>
               </label>
           </div>

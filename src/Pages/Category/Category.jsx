@@ -98,31 +98,56 @@ function Category() {
  const {categoryName} = useParams()
  const [courseByCategory , setCourseByCategory] = useState([])
  const [showItems , setShowItems] = useState([])
+ const [status , setStatus] = useState('all')
+ const [filteredCourses , setFilteredCourses] = useState([])
 useEffect(() => {
      axios(`${BaseURL}courses/category/${categoryName}`)
    .then(categoryInfo => {
     setCourseByCategory(categoryInfo.data)
+    setFilteredCourses(categoryInfo.data)
   })
 
 } , [categoryName])
-
+useEffect(() => {
+   switch(status){
+    case 'free' : {
+        const freeCourses = courseByCategory.filter(courses => courses.price === 0)
+        setFilteredCourses(freeCourses)
+        break;
+    }
+    case 'money' : {
+        const moneyCourses = courseByCategory.filter(courses => courses.price !== 0)
+        setFilteredCourses(moneyCourses)
+        break;
+    }
+    case 'first' : {
+        const reverseCourses = courseByCategory.slice().reverse()
+        setFilteredCourses(reverseCourses)
+        break;
+    }
+    default : {
+     setFilteredCourses(courseByCategory)
+     break;
+    }
+   }
+} , [status])
   return (
     <>
   {/* Category Title */}
-   <TopPageTitle title='تعداد دوره' countCourse={courseByCategory.length} bgColor="bg-rose-500" /> 
+   <TopPageTitle title='تعداد دوره' countCourse={filteredCourses.length} bgColor="bg-rose-500" /> 
 
 {/* Main Section */}
 <section className='grid items-start grid-rows-1 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5 mt-9 sm:mt-25'>
      {/* Sidebar */}
-     <SearchFilter />
+     <SearchFilter setStatus={setStatus}/>
      {/* Main Content */}
      <section className='col-span-1 lg:col-span-2 xl:col-span-3 order-1 lg:order-2'>
          {/* Sort */}
-          <TopSort BtnOne=" همه دوره ها" BtnTwo="ارزان ترین" BtnThree=" گران ترین" BtnFour="پرمخاطب‌ها" />
+          <TopSort BtnOne=" همه دوره ها" BtnTwo="جدیدترین" BtnThree=" ارزان ترین" BtnFour="گران ترین" BtnFive="پرمخاطب‌ها" status={status} setStatus={setStatus}/>
           {/* Course List */}
           <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
         {
-            courseByCategory.length > 0 ?  
+            filteredCourses.length > 0 ?  
             showItems.map(({_id, shortName , cover , name , description , creator , price}) => {
                 return(
                     <React.Fragment key={_id}>
@@ -133,8 +158,8 @@ useEffect(() => {
         : <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای برای این دسته بندی ثبت نگردیده است</Alert></div>
         }
         {
-            courseByCategory.length > 0 ?  <div className='flex-center col-span-3 my-8'>
-            <Pagination items={courseByCategory} itemsCount={3} pathname={`/category/${categoryName}`} setShowItems={setShowItems}/>
+            filteredCourses.length > 0 ?  <div className='flex-center col-span-3 my-8'>
+            <Pagination items={filteredCourses} itemsCount={3} pathname={`/category/${categoryName}`} setShowItems={setShowItems}/>
              </div> : null
         }
        

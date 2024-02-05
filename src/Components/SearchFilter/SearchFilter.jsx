@@ -2,7 +2,7 @@ import { Search } from '@mui/icons-material'
 import React from 'react'
 import Button from '../../common/Form/Button'
 
-function SearchFilter({children}) {
+function SearchFilter({children , setStatus}) {
   const SearchHandler = () => {
     
   }
@@ -24,7 +24,17 @@ function SearchFilter({children}) {
             <div className='flex-between h-full'>
               <span className='text-sm text-zinc-700 dark:text-white select-none'>فقط دوره های رایگان</span>
               <label className='relative cursor-pointer select-none'>
-                  <input type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
+                  <input onChange={() => setStatus('free')} type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
+                  <span className='toggle__select'></span>
+              </label>
+            </div>
+         </div>
+         {/* Money Course */}
+         <div className='px-7 h-17 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl'>
+            <div className='flex-between h-full'>
+              <span className='text-sm text-zinc-700 dark:text-white select-none'>فقط دوره های پولی</span>
+              <label className='relative cursor-pointer select-none'>
+                  <input onChange={() => setStatus('money')} type='checkbox' className='toggle__input absolute h-0 w-0 opacity-0'/>
                   <span className='toggle__select'></span>
               </label>
             </div>
