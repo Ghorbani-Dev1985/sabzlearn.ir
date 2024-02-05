@@ -9,14 +9,12 @@ import { BaseURL } from '../../Utils/Utils'
 
 
 function PopularCourses() {
-  const [courses, setCourses] = useState([]);
+  const [popularCourses, setPopularCourses] = useState([]);
   useEffect(() => {
-    axios.get(`${BaseURL}courses`).then((response) => {
-      setCourses(response.data);
+    axios.get(`${BaseURL}courses/popular`).then((response) => {
+      setPopularCourses(response.data);
     });
   }, []);
-  const filteredCourses = courses.filter(course => course.price === 0)
-  console.log(filteredCourses)
   return (
     // PopularCourses Component
     <section className='mt-25'>
@@ -26,7 +24,7 @@ function PopularCourses() {
        <Slider>
          {
          
-         filteredCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
+         popularCourses.map(({_id, shortName , cover , name , description , creator , price}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
