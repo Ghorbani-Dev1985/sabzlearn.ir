@@ -35,6 +35,7 @@ export default LoginRegister
 
 
 const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos}) =>{
+  const {LogoutHandler} = useAuth()
   console.log(userInfos.name)
   const dashboardLinks = [
     {
@@ -99,7 +100,10 @@ const UserProfile = ({showUserProfileMenu , setShowUserProfileMenu , userInfos})
             })
           }
            {/* Logout */}
-           <div className='mt-2 pt-2 border-t border-t-gray-200 dark:border-t-mainSlate'>
+           <div onClick={() => {
+            LogoutHandler()
+            setShowUserProfileMenu(false)
+           }} className='mt-2 pt-2 border-t border-t-gray-200 dark:border-t-mainSlate'>
                 <Link to="" className='flex-between text-zinc-700 dark:text-white px-2.5 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-mainSlate transition-colors'>
                 <span className='flex items-center gap-x-3'>
                      <LogoutOutlined className='size-5'/>

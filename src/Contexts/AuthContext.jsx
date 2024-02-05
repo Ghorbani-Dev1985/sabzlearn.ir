@@ -4,6 +4,7 @@ import axios from "axios";
 import { BaseURL } from "../Utils/Utils";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({
   isLoggedIn: false,
@@ -14,6 +15,7 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
+  const Navigate = useNavigate()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState(null)
   const [userInfos, setUserInfos] = useState(null)
@@ -29,7 +31,9 @@ export const AuthProvider = ({ children }) => {
     setToken(null)
     setUserInfos({})
     localStorage.removeItem('user')
-  } , [])
+    setIsLoggedIn(false)
+    Navigate('/')
+  } , [token])
 
   useEffect(() => {
      const localStorageData = JSON.parse(localStorage.getItem('user'))
