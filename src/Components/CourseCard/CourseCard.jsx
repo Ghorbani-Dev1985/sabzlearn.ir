@@ -7,6 +7,7 @@ import r from '../../../Backend/public/courses/covers/fareelancer.png'
 
 function CourseCard(
   {id, shortName , cover , name , description , creator , price , courseAverageScore}) {
+    console.log(shortName)
   const [isImgLoaded , setIsImgLoaded] = useState(true)
   return (
     

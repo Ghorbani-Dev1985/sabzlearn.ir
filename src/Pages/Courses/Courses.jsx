@@ -8,6 +8,7 @@ import { useCourses } from '../../Contexts/CoursesContext'
 import Pagination from '../../Components/Pagination/Pagination'
 import { Alert } from '@mui/material'
 
+
 const courseCount = [
     {
     id: 1,
@@ -136,58 +137,60 @@ const courses = [
 function Courses() {
 const title = useTitle('دوره ها')
 const {courses} = useCourses()
+console.log(courses)
 const [showItems , setShowItems] = useState([])
 const [status , setStatus] = useState('all')
-const [filteredCourses , setFilteredCourses] = useState([])
+const [filteredAllCourses , setFilteredAllCourses] = useState([])
 const [searchValue , setSearchValue] = useState('')
 const SearchChangeHandler = (event) => {
    setSearchValue(event.target.value)
    if(searchValue.length >= 1){
    const filterBySearch = courses.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
-   setFilteredCourses(filterBySearch)
+   setFilteredAllCourses(filterBySearch)
    }
 }
 useEffect(() => {
     switch(status){
      case 'free' : {
          const freeCourses = courses.filter(courses => courses.price === 0)
-         setFilteredCourses(freeCourses)
+         setFilteredAllCourses(freeCourses)
          break;
      }
      case 'money' : {
          const moneyCourses = courses.filter(courses => courses.price !== 0)
-         setFilteredCourses(moneyCourses)
+         setFilteredAllCourses(moneyCourses)
          break;
      }
      case 'presell' : {
          const presellCourses = courses.filter(courses => courses.isComplete === 0)
-         setFilteredCourses(presellCourses)
+         setFilteredAllCourses(presellCourses)
          break;
      }
      case 'first' : {
          const reverseCourses = courses.slice().reverse()
-         setFilteredCourses(reverseCourses)
+         setFilteredAllCourses(reverseCourses)
          break;
      }
      case 'cheap' : {
          let originalArray = [...courses]
          const cheapCourses = originalArray.sort((a, b) => (a.price > b.price ? 1 : -1))
-         setFilteredCourses(cheapCourses)
+         setFilteredAllCourses(cheapCourses)
          break;
      }
      case 'expensive' : {
          let originalArray = [...courses]
-         const cheapCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
-         setFilteredCourses(cheapCourses)
+         const expensiveCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
+         setFilteredAllCourses(expensiveCourses)
          break;
      }
      case 'popular' : {
          const reverseCourses = courses.filter(courses => courses.courseAverageScore === 5)
-         setFilteredCourses(reverseCourses)
+         setFilteredAllCourses(reverseCourses)
          break;
      }
      default : {
-      setFilteredCourses(courses)
+        console.log(courses)
+      setFilteredAllCourses(courses)
       break;
      }
     }
@@ -228,7 +231,8 @@ useEffect(() => {
               {/* List */}
               <div className='grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
               {
-                filteredCourses.length > 0 ? showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
+                filteredAllCourses.length > 0 ?
+                 showItems.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
@@ -238,8 +242,8 @@ useEffect(() => {
               }
           {/* Pagination */}
           {
-            filteredCourses.length > 0 &&<div className='flex-center col-span-3 my-8'>
-            <Pagination items={filteredCourses} itemsCount={3} pathname="/courses" setShowItems={setShowItems}/>
+            filteredAllCourses.length > 0 && <div className='flex-center col-span-3 my-8'>
+            <Pagination items={filteredAllCourses} itemsCount={3} pathname='/courses' setShowItems={setShowItems}/>
              </div>
           }
               </div>

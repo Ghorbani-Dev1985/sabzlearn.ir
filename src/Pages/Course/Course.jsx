@@ -38,7 +38,6 @@ import { useAuth } from "../../Contexts/AuthContext";
 import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import axios from "axios";
 import FreePrice from "../../common/FreePrice/FreePrice";
-import useTitle from "../../Hooks/useTitle";
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -64,7 +63,7 @@ function Course() {
   const CourseAddToCartHandler = () => {
     
   }
-
+ console.log(courseName)
     useEffect(() => {
       const localStorageData = JSON.parse(localStorage.getItem('user'))
        axios(`${BaseURL}courses/${courseName}` , {
@@ -87,6 +86,7 @@ function Course() {
     })
 
   } , []);
+
   return (
     <>
     {/* Breadcrumb */}

@@ -6,7 +6,6 @@ const courseRoutes = require("./routes/v1/course");
 const menuRoutes = require("./routes/v1/menu");
 const categoryRoutes = require("./routes/v1/category");
 const articlesRoutes = require("./routes/v1/article");
-const commentsRoutes = require("./routes/v1/comment");
 const bodyParser = require('body-parser')
 const cors = require("cors");
 
@@ -29,6 +28,5 @@ app.use("/v1/courses", courseRoutes);
 app.use("/v1/menus", menuRoutes);
 app.use("/v1/category", categoryRoutes);
 app.use("/v1/articles", articlesRoutes);
-app.use("/v1/comments", commentsRoutes);
 
 module.exports = app;

@@ -146,8 +146,8 @@ useEffect(() => {
     }
     case 'expensive' : {
         let originalArray = [...courseByCategory]
-        const cheapCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
-        setFilteredCourses(cheapCourses)
+        const expensiveCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
+        setFilteredCourses(expensiveCourses)
         break;
     }
     case 'popular' : {
