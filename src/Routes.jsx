@@ -10,6 +10,7 @@ import Layout from "./Layout/Layout";
 import LayoutWithoutHeaderFooter from './Layout/LayoutWithoutHeaderFooter'
 import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 import NotFound from "./Pages/404/404";
+import ContactUS from "./Pages/ContactUS/ContactUS";
 
 
 let routes = [
@@ -53,6 +54,12 @@ let routes = [
         {
             path: '/termsConditions',
             element: <TermsConditions />
+        }
+    ]},
+    {element: <Layout /> , children: [
+        {
+            path: '/contactUS',
+            element: <ContactUS />
         }
     ]},
     {element: <LayoutWithoutHeaderFooter /> , children : [

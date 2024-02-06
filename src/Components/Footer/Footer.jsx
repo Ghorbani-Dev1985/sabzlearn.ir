@@ -11,8 +11,8 @@ const quickAccessLinks = [
     },
     {
         _id: 2,
-        href: "/userAccount/tickets",
-        title : " ارسال تیکت"
+        href: "/contactUS",
+        title : "  ارتباط با ما"
     },
     {
         _id: 3,

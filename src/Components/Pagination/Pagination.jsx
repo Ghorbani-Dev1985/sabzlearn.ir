@@ -14,7 +14,7 @@ function Pagination({items , itemsCount , pathname , setShowItems}) {
         let pagesNumber = Math.ceil(items.length / itemsCount)
         setPagesCount(pagesNumber)
     }, [page , items])
-    console.log(pagesCount , page)
+
   return (
     <nav aria-label="Page navigation example">
   <ul className="flex items-center -space-x-px h-8 text-sm">
