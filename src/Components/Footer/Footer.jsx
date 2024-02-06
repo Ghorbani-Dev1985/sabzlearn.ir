@@ -75,10 +75,9 @@ function Footer() {
             <div className='flex flex-col gap-4'>
             <Divider className="dark:border-mainSlate"/>
               <h4 className='font-DanaBold'>عضویت در خبرنامه</h4>
-            <div className='h-17 shadow-light dark:shadow-none bg-gray-100 dark:bg-gray-800 dark:border border-gray-700 rounded-2xl overflow-hidden'>
+            <div className='shadow-light dark:shadow-none bg-gray-100 dark:bg-gray-800 dark:border border-gray-700 rounded-2xl overflow-hidden'>
         <div className='h-full flex-between text-slate-500 dark:text-gray-500'>
-         {/* <input type='text' className='w-full bg-transparent dark:bg-transparent outline-none text-sm font-dana pr-7 border-none' placeholder='ایمیل خود را وارد نمایدید ' /> */}
-         <Input id="Email" element="input" customStyle='w-full bg-transparent dark:bg-transparent text-sm font-dana pr-7 border-none outline-none' placeholder=" 'ایمیل خود را وارد نمایدید " validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
+         <Input id="Email" element="input" customStyle='w-full bg-transparent dark:bg-transparent text-sm font-dana pr-7 rounded-none border-none outline-none' placeholder=" ایمیل خود را وارد نماید " validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
          <Button btnType="submit" onClick={newsLatterHandler} className="h-full px-2 bg-primary text-white" disabled={false} > عضویت</Button>
         </div>
      </div>
