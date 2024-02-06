@@ -1,7 +1,12 @@
-import { Instagram, Telegram } from '@mui/icons-material'
-import React, { useEffect } from 'react'
+import { Email, Instagram, Telegram } from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../Hooks/useFetch'
+import Button from '../../common/Form/Button'
+import { Divider } from '@mui/material'
+import { RequiredValidator , MinValidator , MaxValidator , EmailValidator } from '../../Validators/Rules'
+import Input from '../../common/Form/Input'
+import useForm from '../../Hooks/useForm'
 
 const quickAccessLinks = [
     {
@@ -25,7 +30,18 @@ const quickAccessLinks = [
 
 function Footer() {
     const { datas: usefulLinks } = useFetch("menus/topbar", "");
+    const [newsLatterValue , setNewsLatterValue] = useState('')
     const ShuffledLinks = [...usefulLinks].sort(() => 0.5 - Math.random())
+    const [formState , onInputHandler] = useForm({
+      Email: {
+        value: '',
+        isValid: false
+      },
+
+    } , false)
+     const newsLatterHandler = () => {
+
+     }
   return (
     <footer className='pt-8 lg:pt-16 mt-24 bg-white dark:bg-transparent dark:border-t border-t-gray-700 font-danaLight text-slate-500 dark:text-slate-400 text-base xl:text-lg'>
         <div className='container'>
@@ -49,11 +65,23 @@ function Footer() {
                 </div>
                 <Link to="https://www.instagram.com/sabzlearn_" className='dir-ltr text-hover font-DanaBold'>@sabzlearn_</Link>
             </div>
+           
             <div className='flex items-center gap-x-4'>
                 <div className='flex-center rounded-full size-8 bg-blue-500 text-white bg-gradient-to-b from-blue-400 to-blue-600'>
                  <Telegram className='size-5'/>
                 </div>
                  <Link to="https://t.me/sabzlearn" className='dir-ltr font-DanaBold'>@sabzlearn</Link>
+            </div>
+            <div className='flex flex-col gap-4'>
+            <Divider className="dark:border-mainSlate"/>
+              <h4 className='font-DanaBold'>عضویت در خبرنامه</h4>
+            <div className='h-17 shadow-light dark:shadow-none bg-gray-100 dark:bg-gray-800 dark:border border-gray-700 rounded-2xl overflow-hidden'>
+        <div className='h-full flex-between text-slate-500 dark:text-gray-500'>
+         {/* <input type='text' className='w-full bg-transparent dark:bg-transparent outline-none text-sm font-dana pr-7 border-none' placeholder='ایمیل خود را وارد نمایدید ' /> */}
+         <Input id="Email" element="input" customStyle='w-full bg-transparent dark:bg-transparent text-sm font-dana pr-7 border-none outline-none' placeholder=" 'ایمیل خود را وارد نمایدید " validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
+         <Button btnType="submit" onClick={newsLatterHandler} className="h-full px-2 bg-primary text-white" disabled={false} > عضویت</Button>
+        </div>
+     </div>
             </div>
             </div>
            </div>

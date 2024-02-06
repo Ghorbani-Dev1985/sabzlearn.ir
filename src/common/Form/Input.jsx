@@ -16,7 +16,7 @@ const inputReducer = (state , action) => {
     }
 }
 
-function Input({children, element , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations , id , onInputHandler}) {
+function Input({children, element , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations , id , onInputHandler , customStyle}) {
    
     const [mainInput , dispatch] = useReducer(inputReducer , {
         value: '',
@@ -41,7 +41,7 @@ function Input({children, element , textareaPlaceholder , type = 'text' , placeh
     <div className="relative">
           <input
               type={type}
-              className={`${mainInput.isValid ? "border border-primary" : "border border-rose-500"} outline-none pl-9 sm:pl-12`}
+              className={`${customStyle ? {customStyle} : `${mainInput.isValid ? "border border-primary" : "border border-rose-500"} outline-none pl-9 sm:pl-12`} `}
               placeholder={placeholder}
               value={mainInput.value}
               onChange={OnChangeHandler}
