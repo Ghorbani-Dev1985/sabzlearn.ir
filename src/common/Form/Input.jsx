@@ -17,7 +17,6 @@ const inputReducer = (state , action) => {
 }
 
 function Input({children, element , textareaPlaceholder , type = 'text' , placeholder  ,  icon , validations , id , onInputHandler , customStyle}) {
-   console.log(customStyle)
     const [mainInput , dispatch] = useReducer(inputReducer , {
         value: '',
         inValid: true

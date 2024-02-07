@@ -1,5 +1,5 @@
 import { Email, Instagram, Telegram } from '@mui/icons-material'
-import React, { useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../Hooks/useFetch'
 import Button from '../../common/Form/Button'
@@ -7,6 +7,9 @@ import { Divider } from '@mui/material'
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator } from '../../Validators/Rules'
 import Input from '../../common/Form/Input'
 import useForm from '../../Hooks/useForm'
+import usePost from '../../Hooks/usePost'
+import axios from 'axios'
+import { BaseURL } from '../../Utils/Utils'
 
 const quickAccessLinks = [
     {
@@ -28,10 +31,11 @@ const quickAccessLinks = [
 
 
 
-function Footer() {
-    const { datas: usefulLinks } = useFetch("menus/topbar", "");
+export default memo(function Footer() {
+   const { datas: usefulLinks } = useFetch("menus/topbar", "")
     const [newsLatterValue , setNewsLatterValue] = useState('')
-    const ShuffledLinks = [...usefulLinks].sort(() => 0.5 - Math.random())
+    const ShuffledLinks = useCallback([...usefulLinks].sort(() => 0.5 - Math.random()), [usefulLinks])
+
     const [formState , onInputHandler] = useForm({
       Email: {
         value: '',
@@ -39,8 +43,12 @@ function Footer() {
       },
 
     } , false)
-     const newsLatterHandler = () => {
-
+     const NewsLatterHandler = () => {
+      const newNewsletterInfo = JSON.stringify({
+        email : formState.inputs.Email.value,
+      })
+      const {datas : newNewsletter} = usePost('newsletters' , newNewsletterInfo , false)
+      console.log(newNewsletter)
      }
   return (
     <footer className='pt-8 lg:pt-16 mt-24 bg-white dark:bg-transparent dark:border-t border-t-gray-700 font-danaLight text-slate-500 dark:text-slate-400 text-base xl:text-lg'>
@@ -78,7 +86,7 @@ function Footer() {
             <div className='shadow-light dark:shadow-none bg-gray-100 dark:bg-gray-800 dark:border border-gray-700 rounded-2xl overflow-hidden'>
         <div className='h-full flex-between text-slate-500 dark:text-gray-500'>
          <Input id="Email" element="input" customStyle='w-full bg-transparent dark:bg-transparent text-sm font-dana pr-7 rounded-none border-none outline-none' placeholder=" ایمیل خود را وارد نماید " validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
-         <Button btnType="submit" onClick={newsLatterHandler} className="h-full px-2 bg-primary text-white" disabled={false} > عضویت</Button>
+         <Button btnType="submit" onClick={NewsLatterHandler} className="h-full px-2 bg-primary text-white" disabled={false} > عضویت</Button>
         </div>
      </div>
             </div>
@@ -93,9 +101,8 @@ function Footer() {
       </div>
     </footer>
   )
-}
+})
 
-export default Footer
 
 const FooterLinks = ({title , linkList}) => {
     return(

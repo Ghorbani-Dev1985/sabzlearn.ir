@@ -1,11 +1,11 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useCallback } from 'react'
 import axios from 'axios';
 import { BaseURL } from '../Utils/Utils';
 import { useShowLoading } from '../Contexts/ShowLoadingContext';
 import toast from 'react-hot-toast';
 import { useShowRealtimeDatas } from '../Contexts/ShowRealtimeDatasContext';
 
-function useFetch(url , userToken) {
+const useFetch = (url , userToken) => {
   const [datas , setDatas] = useState([])
   const {showRealtimeDatas} = useShowRealtimeDatas()
   const {isShowLoading , setIsShowLoading} = useShowLoading()
