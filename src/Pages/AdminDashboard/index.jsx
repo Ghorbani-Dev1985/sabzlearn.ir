@@ -17,7 +17,7 @@ function index() {
      <section className='w-full max-w-[1432px] mx-auto bg-gray-100 dark:bg-gray-main md:p-10 lg:rounded-4xl'>
     <header className='flex-between bg-white dark:bg-gray md:bg-transparent dark:border-b md:border-none border-b-gray-700 mb-6 md:mb-14 p-5 md:p-0'>
     <h3 className="hidden md:block font-DanaBold text-2xl text-zinc-700 dark:text-white">
-				  عزیز؛ خوش اومدی 🙌
+				<span className='text-primary font-DanaBold'>{userInfos && userInfos.name}</span>  عزیز؛ خوش اومدی 🙌
 			</h3>
             <div className='flex gap-x-3.5 md:gap-x-7'>
                 {/* Notification */}
