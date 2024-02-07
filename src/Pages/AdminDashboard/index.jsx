@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import SideBar from '../../Components/AdminDashboard/SideBar/SideBar'
 import { Notifications } from '@mui/icons-material'
-// import {DesktopDarkMode} from '../../Components/Header/DesktopDarkMode'
+import DesktopDarkMode from '../../Components/Header/DesktopDarkMode'
 
 
 function index() {
@@ -37,7 +37,7 @@ function index() {
                     }
 				</div>
                 {/* Dark Theme */}
-                {/* <DesktopDarkMode /> */}
+                <DesktopDarkMode />
             </div>
     </header>
       <div className='px-5 md:px-0'>
