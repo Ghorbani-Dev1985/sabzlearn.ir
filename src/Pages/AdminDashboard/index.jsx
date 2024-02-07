@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../../Components/AdminDashboard/SideBar/SideBar";
 import { Notifications } from "@mui/icons-material";
 import DesktopDarkMode from "../../Components/Header/DesktopDarkMode";
 import { Backdrop } from "@mui/material";
 import { useAuth } from "../../Contexts/AuthContext";
+import usePut from "../../Hooks/usePut";
 
 function index() {
   const [showNotification, setShowNotification] = useState(false);
   const { isLoggedIn, userInfos } = useAuth();
-  console.log(userInfos);
+  const SeeNotificationHandler = (_id) => {
+      const putReq = usePut(`notifications/see/${_id}`)
+      setShowNotification(false)
+    }
+
   return (
     <main className="md:bg-white md:dark:bg-gray-800 flex gap-x-10 2xl:gap-x-14 lg:px-8 xl:px-14 2xl:px-25 lg:py-7">
       <SideBar />
@@ -57,12 +62,13 @@ function index() {
                         userInfos.notifications.map(({ _id, msg }) => {
                           return (
                             <React.Fragment key={_id}>
-                              <div className="flex-between bg-gray-100 dark:bg-gray-700 p-3 rounded-xl">
-                                <p className="text-sm">{msg}</p>
+                              <div className="flex-between bg-gray-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-mainSlate transition-colors p-3 rounded-xl">
+                                <p className="text-wrap">{msg}</p>
                                 <div>
                                   <label className="relative cursor-pointer select-none">
                                     <input
                                       type="checkbox"
+                                      onChange={() => SeeNotificationHandler(_id)}
                                       className="toggle__input absolute h-0 w-0 opacity-0"
                                     />
                                     <span className="toggle__select"></span>
