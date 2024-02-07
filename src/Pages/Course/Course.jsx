@@ -63,26 +63,20 @@ function Course() {
   const CourseAddToCartHandler = () => {
     
   }
- console.log(courseName)
     useEffect(() => {
       const localStorageData = JSON.parse(localStorage.getItem('user'))
-       axios(`${BaseURL}courses/${courseName}` , {
+       axios(`${BaseURL}course/${courseName}` , {
        method: 'POST',
        headers : {
          'Authorization' : `Bearer ${localStorageData === null ? null : localStorageData.token}`
        }
      })
      .then(courseInfo => {
-      if(courseInfo.data){
         setComments(courseInfo.data.comments)
         setCreator(courseInfo.data.creator)
         setSessions(courseInfo.data.sessions)
         setCourseDetails(courseInfo.data)
         document.title = courseInfo.data.name
-      }else{
-        toast.error('چنین دوره ای یافت نگردید')
-        Navigate('/*')
-      }
     })
 
   } , []);
