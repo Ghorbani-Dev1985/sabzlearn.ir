@@ -17,12 +17,17 @@ import LogoTypeDark from "../../assets/Images/svgs/logoTypeDark.svg";
 import MobileDarkMode from "./MobileDarkMode";
 import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
 import Button from "../../common/Form/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MobileNav({ menus }) {
   const { colorTheme } = usePublicDarkMode();
   const [openMobileNav, setMobileNav] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [searchValue , setSearchValue] = useState('')
+  const Navigate = useNavigate()
+  const SearchHandler = () => {
+     Navigate(`/search/${searchValue}`)
+  }
   const handleChangeAccordion = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -36,7 +41,6 @@ function MobileNav({ menus }) {
 
     setMobileNav((prev) => !prev);
   };
-  const SearchHandler = () => {};
   return (
     <>
       <Button btnType="button" disabled={false} onClick={toggleDrawer}>
@@ -87,8 +91,8 @@ function MobileNav({ menus }) {
             <Divider className="dark:border-mainSlate" />
             <form class="block mt-7">
               <label class="relative w-full h-12 block transition-all">
-                <input
-                  class="rounded-xl bg-gray-100 dark:focus:text-white text-slate-500 placeholder:text-slate-500 dark:text-gray-500 dark:placeholder-gray-500 w-full h-full dark:border dark:border-gray-700 dark:focus:border-gray-600 dark:bg-gray-800 text-base pl-12 pr-5 block transition-all"
+                <input value={searchValue} onChange={(event) => setSearchValue(event.target.value)}
+                  class="rounded-xl bg-gray-100 dark:focus:text-white outline-none text-slate-500 placeholder:text-slate-500 dark:text-gray-500 dark:placeholder-gray-500 w-full h-full dark:border dark:border-gray-700 dark:focus:border-gray-600 dark:bg-gray-800 text-base pl-12 pr-5 block transition-all"
                   name="s"
                   type="text"
                   placeholder="جستجو"

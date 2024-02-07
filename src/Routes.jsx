@@ -11,6 +11,7 @@ import LayoutWithoutHeaderFooter from './Layout/LayoutWithoutHeaderFooter'
 import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 import NotFound from "./Pages/404/404";
 import ContactUS from "./Pages/ContactUS/ContactUS";
+import Search from "./Pages/Search.jsx/Search";
 
 
 let routes = [
@@ -60,6 +61,12 @@ let routes = [
         {
             path: '/contactUS',
             element: <ContactUS />
+        }
+    ]},
+    {element: <Layout /> , children: [
+        {
+            path: '/search/:value',
+            element: <Search />
         }
     ]},
     {element: <LayoutWithoutHeaderFooter /> , children : [

@@ -161,7 +161,6 @@ useEffect(() => {
     }
    }
 } , [status])
- 
   return (
     <>
   {/* Category Title */}
