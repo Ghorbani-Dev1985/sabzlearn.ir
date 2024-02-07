@@ -4,32 +4,38 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { NavLink } from 'react-router-dom';
-import { Article, Group, Home } from '@mui/icons-material';
+import { Article, Folder, Group, Home } from '@mui/icons-material';
 import { List } from '@mui/material';
 
 
 const AdminDashboardNavItems = [
   {
     id: 1,
-    to: '',
+    to: 'adminDashboard_VNqM5yZGo3c^GM',
     icon: <Home />,
     text: 'نمای کلی'
   },
   {
     id: 2,
-    to: '',
+    to: 'users',
     icon: <Group />,
     text: ' کاربرها'
   },
   {
     id: 3,
-    to: '',
+    to: 'courses',
+    icon: <Folder />,
+    text: ' دوره‌ها'
+  },
+  {
+    id: 4,
+    to: 'menus',
     icon: <List />,
     text: ' منوها'
   },
   {
-    id: 4,
-    to: '',
+    id: 5,
+    to: 'blogs',
     icon: <Article />,
     text: ' مقاله‌ها'
   },
@@ -61,7 +67,9 @@ function SideBar() {
             return (
               <React.Fragment key={id}>
               <NavLink to={to} className={({ isActive }) =>
-              `${isActive ? 'bg-primary' : 'bg-transparent'} flex items-center gap-x-2.5 h-10 px-3 rounded-lg text-white`
+               isActive
+               ? "flex items-center gap-x-2.5 h-10 px-3 bg-primary rounded-lg text-white hover:text-white"
+               : "flex items-center gap-x-2.5 h-10 px-3 bg-transparent rounded-lg text-white"
             }>{icon}{text}</NavLink>
             </React.Fragment>
             )

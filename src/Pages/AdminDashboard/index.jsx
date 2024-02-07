@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import SideBar from '../../Components/AdminDashboard/SideBar/SideBar'
 import { Notifications } from '@mui/icons-material'
 import DesktopDarkMode from '../../Components/Header/DesktopDarkMode'
+import { Backdrop } from '@mui/material'
 
 
 function index() {
@@ -17,24 +18,29 @@ function index() {
 			</h3>
             <div className='flex gap-x-3.5 md:gap-x-7'>
                 {/* Notification */}
-                <div class="relative group" id="notifications">
-					<div onClick={() => setShowNotification((prev) => !prev)} class="notifications flex-center w-12 h-12 md:w-14 md:h-14 bg-gray-100 md:bg-white dark:bg-gray-800 text-slate-500 dark:text-gray-600 rounded-full cursor-pointer">
+                <div className="relative group" id="notifications">
+					<div onClick={() => setShowNotification((prev) => !prev)} className="notifications flex-center w-12 h-12 md:w-14 md:h-14 bg-gray-100 md:bg-white dark:bg-gray-800 text-slate-500 dark:text-gray-600 rounded-full cursor-pointer">
 						     <Notifications className='size-6 md:size-7'/>
                         </div>
 					  {/* Show Notification */}
-					{
-                        showNotification &&
-                        <div class="absolute left-0 top-full pt-4 z-10 transition-all -translate-x-28 md:translate-x-0 hide" id="notifications-dropdown">
-						<div class="w-80 md:w-96 bg-white dark:bg-gray-800 py-5 px-4.5 rounded-2xl">
-							<div class="flex items-center justify-between pb-3.5 mb-3.5 border-b border-b-gray-200 dark:border-b-slate-500">
-								<span class="font-danaMedium text-xl text-zinc-700 dark:text-white">اعلان ها</span>
+                      <Backdrop
+        sx={{ color: '#fff', zIndex: '30' }}
+        open={showNotification}
+        onClick={() => setShowNotification((prev) => !prev)}
+      ></Backdrop>
+             {
+                showNotification &&  <div className="absolute left-0 top-full pt-4 z-50 transition-all -translate-x-28 md:translate-x-0 hide" id="notifications-dropdown">
+						<div className="w-80 md:w-96 bg-white dark:bg-gray-800 py-5 px-4.5 rounded-2xl">
+							<div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-b-gray-200 dark:border-b-slate-500">
+								<span className="font-danaMedium text-xl text-zinc-700 dark:text-white">اعلان ها</span>
 															</div>
-							<div class="notifications-list max-h-96 overflow-y-auto space-y-3 -ml-2 pl-2 text-zinc-700 dark:text-white">
-								<div class="text-center bg-gray-100 dark:bg-gray-700 p-3 rounded-xl">اعلان جدیدی وجود ندارد.</div>
+							<div className="notifications-list max-h-96 overflow-y-auto space-y-3 -ml-2 pl-2 text-zinc-700 dark:text-white">
+								<div className="text-center bg-gray-100 dark:bg-gray-700 p-3 rounded-xl">اعلان جدیدی وجود ندارد.</div>
 															</div>
 						</div>
 					</div>
-                    }
+             }
+					
 				</div>
                 {/* Dark Theme */}
                 <DesktopDarkMode />
