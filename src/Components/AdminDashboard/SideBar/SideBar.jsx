@@ -4,14 +4,14 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { NavLink } from 'react-router-dom';
-import { Article, Folder, Group, Home } from '@mui/icons-material';
-import { List } from '@mui/material';
+import { Article, Folder, Group, Home , List} from '@mui/icons-material';
+
 
 
 const AdminDashboardNavItems = [
   {
     id: 1,
-    to: 'adminDashboard_VNqM5yZGo3c^GM',
+    to: 'Overview',
     icon: <Home />,
     text: 'نمای کلی'
   },

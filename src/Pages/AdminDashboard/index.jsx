@@ -4,17 +4,20 @@ import SideBar from '../../Components/AdminDashboard/SideBar/SideBar'
 import { Notifications } from '@mui/icons-material'
 import DesktopDarkMode from '../../Components/Header/DesktopDarkMode'
 import { Backdrop } from '@mui/material'
+import { useAuth } from '../../Contexts/AuthContext'
 
 
 function index() {
     const [showNotification , setShowNotification] = useState(false)
+    const {isLoggedIn , userInfos} = useAuth()
+    console.log(userInfos)
   return (
     <main className='md:bg-white md:dark:bg-gray-800 flex gap-x-10 2xl:gap-x-14 lg:px-8 xl:px-14 2xl:px-25 lg:py-7'>
      <SideBar />
      <section className='w-full max-w-[1432px] mx-auto bg-gray-100 dark:bg-gray-main md:p-10 lg:rounded-4xl'>
     <header className='flex-between bg-white dark:bg-gray md:bg-transparent dark:border-b md:border-none border-b-gray-700 mb-6 md:mb-14 p-5 md:p-0'>
     <h3 className="hidden md:block font-DanaBold text-2xl text-zinc-700 dark:text-white">
-				moh1985  عزیز؛ خوش اومدی 🙌
+				  عزیز؛ خوش اومدی 🙌
 			</h3>
             <div className='flex gap-x-3.5 md:gap-x-7'>
                 {/* Notification */}

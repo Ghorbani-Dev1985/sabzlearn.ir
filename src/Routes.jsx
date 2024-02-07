@@ -17,6 +17,7 @@ import UsersAdminDashboard from "./Pages/AdminDashboard/Users/Users";
 import CoursesAdminDashboard from "./Pages/AdminDashboard/Courses/Courses";
 import MenusAdminDashboard from "./Pages/AdminDashboard/Menus/Menus";
 import BlogsAdminDashboard from './Pages/AdminDashboard/Blogs/Blogs';
+import Overview from "./Pages/AdminDashboard/Overview/Overview";
 
 
 
@@ -93,6 +94,7 @@ let routes = [
             path: '/adminDashboard_VNqM5yZGo3c^GM/*',
             element: <AdminDashboard />,
             children: [
+            {path: 'overview' , element : <Overview />} ,
             {path: 'users' , element : <UsersAdminDashboard />} ,
             {path: 'courses' , element : <CoursesAdminDashboard />},
             {path: 'menus' , element : <MenusAdminDashboard />},
