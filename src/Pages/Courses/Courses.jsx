@@ -7,6 +7,8 @@ import CourseCard from '../../Components/CourseCard/CourseCard'
 import { useCourses } from '../../Contexts/CoursesContext'
 import Pagination from '../../Components/Pagination/Pagination'
 import { Alert } from '@mui/material'
+import { BaseURL } from '../../Utils/Utils'
+import axios from 'axios'
 
 
 const courseCount = [
@@ -136,8 +138,8 @@ const courses = [
 
 function Courses() {
 const title = useTitle('دوره ها')
-const {courses} = useCourses()
-console.log(courses)
+// const {courses} = useCourses()
+  const [allCourses , setAllCourses] = useState([])
 const [showItems , setShowItems] = useState([])
 const [status , setStatus] = useState('all')
 const [filteredAllCourses , setFilteredAllCourses] = useState([])
@@ -145,52 +147,60 @@ const [searchValue , setSearchValue] = useState('')
 const SearchChangeHandler = (event) => {
    setSearchValue(event.target.value)
    if(searchValue.length >= 1){
-   const filterBySearch = courses.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
+   const filterBySearch = allCourses.filter(course => course.name.trim().toLowerCase().includes(event.target.value))
    setFilteredAllCourses(filterBySearch)
    }
 }
 useEffect(() => {
+    axios(`${BaseURL}courses`)
+  .then(allCoursesInfo => {
+    setAllCourses(allCoursesInfo.data)
+   setFilteredAllCourses(allCoursesInfo.data)
+ })
+
+} , [])
+useEffect(() => {
     switch(status){
      case 'free' : {
-         const freeCourses = courses.filter(courses => courses.price === 0)
+         const freeCourses = allCourses.filter(courses => courses.price === 0)
          setFilteredAllCourses(freeCourses)
          break;
      }
      case 'money' : {
-         const moneyCourses = courses.filter(courses => courses.price !== 0)
+         const moneyCourses = allCourses.filter(courses => courses.price !== 0)
          setFilteredAllCourses(moneyCourses)
          break;
      }
      case 'presell' : {
-         const presellCourses = courses.filter(courses => courses.isComplete === 0)
+         const presellCourses = allCourses.filter(courses => courses.isComplete === 0)
          setFilteredAllCourses(presellCourses)
          break;
      }
      case 'first' : {
-         const reverseCourses = courses.slice().reverse()
+         const reverseCourses = allCourses.slice().reverse()
          setFilteredAllCourses(reverseCourses)
          break;
      }
      case 'cheap' : {
-         let originalArray = [...courses]
+         let originalArray = [...allCourses]
          const cheapCourses = originalArray.sort((a, b) => (a.price > b.price ? 1 : -1))
          setFilteredAllCourses(cheapCourses)
          break;
      }
      case 'expensive' : {
-         let originalArray = [...courses]
+         let originalArray = [...allCourses]
          const expensiveCourses = originalArray.sort((a, b) => (a.price < b.price ? 1 : -1))
          setFilteredAllCourses(expensiveCourses)
          break;
      }
      case 'popular' : {
-         const reverseCourses = courses.filter(courses => courses.courseAverageScore === 5)
+         const reverseCourses = allCourses.filter(courses => courses.courseAverageScore === 5)
          setFilteredAllCourses(reverseCourses)
          break;
      }
      default : {
-        console.log(courses)
-      setFilteredAllCourses(courses)
+        console.log(allCourses)
+      setFilteredAllCourses(allCourses)
       break;
      }
     }

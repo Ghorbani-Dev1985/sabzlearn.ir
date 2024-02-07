@@ -3,18 +3,17 @@ import { QueryBuilder, Star } from "@mui/icons-material";
 import React, { useState } from "react";
 import TomanGreen from "../../assets/Images/svgs/toman-green.svg";
 import { Link } from "react-router-dom";
-import r from '../../../Backend/public/courses/covers/fareelancer.png'
+
 
 function CourseCard(
   {id, shortName , cover , name , description , creator , price , courseAverageScore}) {
-    console.log(shortName)
   const [isImgLoaded , setIsImgLoaded] = useState(true)
   return (
     
       isImgLoaded ? <div className="flex flex-col overflow-hidden bg-white dark:bg-gray-800 shadow-light dark:shadow-none dark:xl:border dark:border-gray-700 rounded-2xl">
       {/* Course Img */}
       <div className="relative h-42">
-        <Link to={`course/${shortName}`} className="w-full h-full block">
+        <Link to={`/course/${shortName}`} className="w-full h-full block">
           <img
             src={`../../../Backend/public/courses/covers/${cover}`}
             className="block w-full h-full max-h-[149px] object-cover rounded-2xl"
@@ -61,7 +60,7 @@ function CourseCard(
                 </Link>
         {/* Title */}
         <h4 className="font-DanaMd min-h-14 max-h-14 line-clamp-2 text-zinc-700 dark:text-white mb-2.5">
-          <Link to={`course/${shortName}`}>{name}</Link>
+          <Link to={`/course/${shortName}`}>{name}</Link>
         </h4>
         {/* Description */}
         {
