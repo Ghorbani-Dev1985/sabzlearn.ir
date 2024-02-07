@@ -12,6 +12,13 @@ import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 import NotFound from "./Pages/404/404";
 import ContactUS from "./Pages/ContactUS/ContactUS";
 import Search from "./Pages/Search.jsx/Search";
+import AdminDashboard from './Pages/AdminDashboard/index'
+import UsersAdminDashboard from "./Pages/AdminDashboard/Users/Users";
+import CoursesAdminDashboard from "./Pages/AdminDashboard/Courses/Courses";
+import MenusAdminDashboard from "./Pages/AdminDashboard/Menus/Menus";
+import BlogsAdminDashboard from './Pages/AdminDashboard/Blogs/Blogs';
+
+
 
 
 
@@ -82,6 +89,16 @@ let routes = [
             element: <Register />
         }
     ]},
+     { 
+            path: '/adminDashboard_VNqM5yZGo3c^GM/*',
+            element: <AdminDashboard />,
+            children: [
+            {path: 'users' , element : <UsersAdminDashboard />} ,
+            {path: 'courses' , element : <CoursesAdminDashboard />},
+            {path: 'menus' , element : <MenusAdminDashboard />},
+            {path: 'blogs' , element : <BlogsAdminDashboard />},
+            ],
+        },
     {element: <LayoutWithoutHeaderFooter /> , children : [
         { 
             path: '/*',
