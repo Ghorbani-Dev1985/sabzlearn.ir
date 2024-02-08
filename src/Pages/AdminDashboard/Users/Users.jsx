@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
-import SkeletonLoging from "../../../Components/SkeletonLoging/SkeletonLoging";
+import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid, faIR } from "@mui/x-data-grid";
 import { Alert, Button } from "@mui/material";
 import {
@@ -46,7 +46,6 @@ function Users() {
   const [phoneNumber , setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [password , setPassword] = useState('')
-  console.log(users);
   const [formState, onInputHandler] = useForm(
     {
       FullName: {
@@ -393,7 +392,7 @@ function Users() {
       </fieldset>
 
       {isShowLoading ? (
-        <SkeletonLoging listsToRender={5} />
+        <SkeletonLoading listsToRender={5} />
       ) : (
         <>
           <div className="w-full dark:text-white">

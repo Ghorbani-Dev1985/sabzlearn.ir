@@ -1,6 +1,6 @@
 import React from 'react'
 import { Skeleton } from '@mui/material'
-function SkeletonLoging({listsToRender}) {
+function SkeletonLoading({listsToRender}) {
   return (
     <>
        {
@@ -16,4 +16,4 @@ function SkeletonLoging({listsToRender}) {
   )
 }
 
-export default SkeletonLoging
+export default SkeletonLoading

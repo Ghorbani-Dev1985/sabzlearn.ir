@@ -496,3 +496,6 @@ input + svg {
 :is(.dark .css-1n8qmw5-MuiTablePagination-root , .dark .css-lizalf-MuiButtonBase-root-MuiIconButton-root.Mui-disabled){
   color: #fff;
 }
+.css-q6j2um-MuiDataGrid-root .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell{
+  white-space: wrap;
+}
