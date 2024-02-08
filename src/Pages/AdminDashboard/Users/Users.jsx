@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
@@ -9,11 +9,12 @@ import { Block, DeleteOutlineOutlined, Edit } from "@mui/icons-material";
 import NoImg from "../../../assets/Images/CommentFormUser/none.png";
 import Swal from "sweetalert2";
 import useDelete from "../../../Hooks/useDelete";
+import usePut from "../../../Hooks/usePut";
 
 function Users() {
   const { datas: users } = useFetch("users", true);
   const { isShowLoading, setIsShowLoading } = useShowLoading();
-  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas();
+  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   console.log(users);
   const columns = [
     {
@@ -99,15 +100,16 @@ function Users() {
       align: "center",
       renderCell: (user) => {
         return (
-          <div
+         <div
             onClick={() => {
-              setShowEditModal(true);
-              setUpdateUserID(user.id);
+              UserBanHandler(user.id)
             }}
             className="flex-center cursor-pointer text-pink-700 hover:text-pink-300 transition-colors"
           >
             <Block className="size-5"/>
           </div>
+          
+         
         );
       },
     },
@@ -122,7 +124,7 @@ function Users() {
           <div
             onClick={() => {
               setShowEditModal(true);
-              setUpdateUserID(user.id);
+              UpdateUserHandler(user.id)
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
@@ -164,7 +166,27 @@ function Users() {
       },
     },
   ];
-
+   //Ban Function
+   const UserBanHandler = (userID) => {
+    Swal.fire({
+      title: "برای مسدودسازی مطمعن هستید؟",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const usrBan = usePut(`users/ban/${userID}`)
+        setShowRealTimeDatas((prev) => !prev)
+      }
+    });
+   }
+   //Edit Function
+   const UpdateUserHandler = (userID , event) => {
+        event.preventDefault()
+   }
   //  Delete Function
   const DeleteUserHandler = (userID) => {
     console.log(userID)
