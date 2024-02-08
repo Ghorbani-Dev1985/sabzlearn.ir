@@ -64,14 +64,17 @@ function Register() {
             }
           })
           .then(response => {
-            console.log(response)
-            LoginHandler(response.data.user , response.data.accessToken)
-            toast.success("ثبت نام با موفقیت انجام گردید")
-            Navigate('/')
+            console.log(response.data)
+            if(response.ok){
+              LoginHandler(response.data.user , response.data.accessToken)
+              toast.success("ثبت نام با موفقیت انجام گردید")
+              Navigate('/')
+            }else{
+              toast.error("ثبت نام انجام نشد")
+            }
           })
           .catch(error => {
-              console.log(error)
-              toast.error("  خطا در اتصال به سرور ");
+            toast.error("این شماره مسدود شده است")
           })
           
         }else{
