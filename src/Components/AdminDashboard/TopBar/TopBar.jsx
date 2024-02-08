@@ -1,17 +1,33 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { CheckCircle, Notifications } from "@mui/icons-material";
+import { CheckCircle, FolderOpenOutlined, HomeOutlined, Notifications, PermIdentityOutlined, SmsOutlined } from "@mui/icons-material";
 import DesktopDarkMode from "../../Header/DesktopDarkMode";
 import { Backdrop } from "@mui/material";
 import usePut from "../../../Hooks/usePut";
 import axios from "axios";
 import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
+import UserProfile from "../../../Components/UserProfile/UserProfile";
+import { Link } from "react-router-dom";
+import UserImg from '../../../assets/Images/CommentFormUser/none.png'
+
+
+const dashboardLinks = [
+  {
+  id: 1,
+  to: '',
+  icon: <HomeOutlined className='size-5'/>,
+  linkText: 'حساب کاربری'
+},
+
+]
+
+
 
 function TopBar() {
   const [adminInfos, setAdminInfos] = useState({});
   const [showNotification, setShowNotification] = useState(false);
   const [allNotifications, setAllNotifications] = useState([]);
-
+  const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
   const GetNonfiction = () => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
     return(
@@ -105,7 +121,30 @@ function TopBar() {
         </div>
         {/* Dark Theme */}
         <DesktopDarkMode />
-        
+        <div className='relative z-20 shrink-0'>
+            <div onClick={() => setShowUserProfileMenu((prev) => !prev)}>
+              <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-12 md:size-14 rounded-full inline-block cursor-pointer'/>
+            </div>
+          {
+            showUserProfileMenu && <UserProfile showUserProfileMenu={showUserProfileMenu} setShowUserProfileMenu={setShowUserProfileMenu} left={'left-0'} >
+            {
+            dashboardLinks.map(({id, to , icon , linkText}) => {
+              return(
+                <React.Fragment key={id}>
+                <Link to={to} className='flex-between text-zinc-700 dark:text-white px-2.5 h-[46px] rounded-xl hover:bg-gray-100 dark:hover:bg-mainSlate transition-colors'>
+                   <span className='flex items-center gap-x-3'>
+                    {icon}
+                    {linkText}
+                    </span>
+                </Link>
+                </React.Fragment>
+              )
+            })
+          }
+        </UserProfile>
+          }
+            </div>
+       
       </div>
     </header>
   );

@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }) => {
     setUserInfos({})
     localStorage.removeItem('user')
     setIsLoggedIn(false)
+    toast.success('خروج از سیستم با موفقیت انجام شد')
     Navigate('/')
   } , [token])
 

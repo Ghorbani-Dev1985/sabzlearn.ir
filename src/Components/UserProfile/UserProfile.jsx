@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { LogoutOutlined } from "@mui/icons-material"
 
 
-const UserProfile = ({children, showUserProfileMenu , setShowUserProfileMenu}) =>{
+const UserProfile = ({children, showUserProfileMenu , setShowUserProfileMenu , left , wallet}) =>{
     const {LogoutHandler , userInfos} = useAuth()
     return (
      <>
@@ -16,7 +16,7 @@ const UserProfile = ({children, showUserProfileMenu , setShowUserProfileMenu}) =
       onClick={() => setShowUserProfileMenu((prev) => !prev)}
       >
     </Backdrop>
-    <div className='absolute z-50 left-25 top-full pt-4 transition-all '>
+    <div className={`${left ? `${left}` : 'left-25'} absolute z-50 top-full pt-4 transition-all`}>
        <div className='w-[278px] bg-white dark:bg-gray-700 py-5 px-6 rounded-2xl'>
           {/* Header */}
             <div className='flex items-center border-b border-b-gray-200 dark:border-b-mainSlate pb-5 mb-2'>
@@ -24,8 +24,11 @@ const UserProfile = ({children, showUserProfileMenu , setShowUserProfileMenu}) =
                 <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-14 rounded-full inline-block'/>
                 </Link>
                 <div className='mr-2.5 flex flex-col gap-y-1 overflow-hidden'>
-                <span className="text-lg text-zinc-700 dark:text-white inline-block truncate"> {userInfos.name}</span>
-                <span className="text-sm text-sky-500 dark:text-secondary inline-block font-danaMedium">موجودی: 0 تومان</span>
+                <span className="text-lg text-zinc-700 dark:text-white inline-block truncate"> {userInfos && userInfos.name}</span>
+                {
+                  wallet &&  <span className="text-sm text-sky-500 dark:text-secondary inline-block font-danaMedium">موجودی: 0 تومان</span>
+                }
+               
                 </div>
             </div>
             {/* Links */}

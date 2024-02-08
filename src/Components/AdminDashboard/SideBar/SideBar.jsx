@@ -4,7 +4,8 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Folder, Group, Home , List} from '@mui/icons-material';
+import { Article, Folder, Group, Home , List, LogoutOutlined} from '@mui/icons-material';
+import { useAuth } from '../../../Contexts/AuthContext';
 
 
 
@@ -42,9 +43,10 @@ const AdminDashboardNavItems = [
 ]
 
 function SideBar() {
-  const {  colorTheme } = usePublicDarkMode();
+  const {  colorTheme } = usePublicDarkMode()
+  const {LogoutHandler} = useAuth()
   return (
-    <aside className='fixed top-0 bottom-0 -right-64 z-30 lg:static bg-white dark:bg-gray-800 flex flex-col w-64 lg:w-56 lg:mt-10 px-7 py-5 lg:px-0 lg:py-0 shrink-0 lg:min-h-[calc(100vh-68px)] transition-all lg:transition-none'>
+    <aside className='fixed top-0 bottom-0 -right-64 z-20 lg:static bg-white dark:bg-gray-800 flex flex-col w-64 lg:w-56 lg:mt-10 px-7 py-5 lg:px-0 lg:py-0 shrink-0 lg:min-h-[calc(100vh-68px)] transition-all lg:transition-none'>
       {/* Logo */}
       <div className='pb-5 mb-7 border-b md:border-none border-b-gray-200 dark:border-b-mainSlate'>
       <Link to="/" className='flex-between gap-3 '><img src={Logo} alt="ghorbani-dev.ir" className="w-28 h-26" />
@@ -75,6 +77,12 @@ function SideBar() {
             )
           })
         }
+         <p onClick={LogoutHandler} className='flex items-center gap-x-2.5 h-10 px-3 bg-transparent rounded-lg text-rose-500 hover:text-rose-700 transition-colors cursor-pointer'>
+                  <span className='flex items-center gap-x-3'>
+                       <LogoutOutlined className='size-5'/>
+                       خروج
+                  </span>
+                  </p>
        </div>
     </aside>
   )
