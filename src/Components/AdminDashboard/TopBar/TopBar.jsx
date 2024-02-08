@@ -105,6 +105,7 @@ function TopBar() {
         </div>
         {/* Dark Theme */}
         <DesktopDarkMode />
+        
       </div>
     </header>
   );
