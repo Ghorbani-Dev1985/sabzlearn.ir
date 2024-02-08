@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Notifications } from "@mui/icons-material";
+import { CheckCircle, Notifications } from "@mui/icons-material";
 import DesktopDarkMode from "../../Header/DesktopDarkMode";
 import { Backdrop } from "@mui/material";
 import usePut from "../../../Hooks/usePut";
@@ -12,26 +12,33 @@ function TopBar() {
   const [showNotification, setShowNotification] = useState(false);
   const [allNotifications, setAllNotifications] = useState([]);
 
-  const SeeNotificationHandler = (_id) => {
-      const putReq = usePut(`notifications/see/${_id}`);
-      setShowNotification(false)
-  };
-
-  useEffect(() => {
+  const GetNonfiction = () => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
-    axios(`${BaseURL}auth/me`, {
-      headers: {
-        'Authorization' : `Bearer ${localStorageData.token}`,
-      },
-    })
-      .then((response) => {
-        setAdminInfos(response.data);
-        setAllNotifications(response.data.notifications);
+    return(
+      axios(`${BaseURL}auth/me`, {
+        headers: {
+          'Authorization' : `Bearer ${localStorageData.token}`,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-        toast.error("  خطا در اتصال به سرور ");
-      });
+        .then((response) => {
+          setAdminInfos(response.data);
+          setAllNotifications(response.data.notifications);
+          console.log('ok')
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("  خطا در اتصال به سرور ");
+        })
+    )
+    }
+    const SeeNotificationHandler = (_id) => {
+        const putReq = usePut(`notifications/see/${_id}`);
+        GetNonfiction()
+        console.log('ok')
+        setShowNotification(false)
+    };
+    useEffect(() => {
+      GetNonfiction()
   }, []);
 
   console.log(allNotifications);
@@ -79,15 +86,8 @@ function TopBar() {
                         <React.Fragment key={_id}>
                           <div className="flex-between bg-gray-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-mainSlate transition-colors p-3 rounded-xl">
                             <p className="text-wrap">{msg}</p>
-                            <div>
-                              <label className="relative cursor-pointer select-none">
-                                <input
-                                  type="checkbox"
-                                  onChange={() => SeeNotificationHandler(_id)}
-                                  className="toggle__input absolute h-0 w-0 opacity-0"
-                                />
-                                <span className="toggle__select"></span>
-                              </label>
+                            <div onClick={() => SeeNotificationHandler(_id)} className="text-primary cursor-pointer">
+                              <CheckCircle className="size-6"/>
                             </div>
                           </div>
                         </React.Fragment>

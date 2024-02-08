@@ -46,8 +46,8 @@ function SideBar() {
   return (
     <aside className='fixed top-0 bottom-0 -right-64 z-30 lg:static bg-white dark:bg-gray-800 flex flex-col w-64 lg:w-56 lg:mt-10 px-7 py-5 lg:px-0 lg:py-0 shrink-0 lg:min-h-[calc(100vh-68px)] transition-all lg:transition-none'>
       {/* Logo */}
-      <div className='flex-between gap-3 pb-5 mb-7 border-b md:border-none border-b-gray-200 dark:border-b-mainSlate'>
-      <Link to="/"><img src={Logo} alt="ghorbani-dev.ir" className="w-28 h-26" />
+      <div className='pb-5 mb-7 border-b md:border-none border-b-gray-200 dark:border-b-mainSlate'>
+      <Link to="/" className='flex-between gap-3 '><img src={Logo} alt="ghorbani-dev.ir" className="w-28 h-26" />
                 {
                   colorTheme === 'dark' ? <img
                   src={LogoTypeLight}
