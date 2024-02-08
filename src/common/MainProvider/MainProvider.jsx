@@ -6,6 +6,7 @@ import { ShowLoadingProvider } from '../../Contexts/ShowLoadingContext'
 import { ShowRealtimeDatasProvider } from '../../Contexts/ShowRealtimeDatasContext'
 import { CoursesContextProvider } from '../../Contexts/CoursesContext'
 import { BlogsContextProvider } from '../../Contexts/BlogsContext'
+import { EditModalProvider } from '../../Contexts/EditModalContext'
 
 
 function MainProvider({children}) {
@@ -14,6 +15,8 @@ function MainProvider({children}) {
     <DarkModeContextProvider>
       <ShowLoadingProvider>
       <ShowRealtimeDatasProvider>
+      <EditModalProvider>
+
       <AuthProvider>
         <CoursesContextProvider>
           <BlogsContextProvider>
@@ -21,6 +24,7 @@ function MainProvider({children}) {
           </BlogsContextProvider>
         </CoursesContextProvider>
       </AuthProvider>
+      </EditModalProvider>
       </ShowRealtimeDatasProvider>
       </ShowLoadingProvider>
     </DarkModeContextProvider>

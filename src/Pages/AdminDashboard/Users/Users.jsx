@@ -1,21 +1,106 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
 import SkeletonLoging from "../../../Components/SkeletonLoging/SkeletonLoging";
 import { DataGrid, faIR } from "@mui/x-data-grid";
 import { Alert, Button } from "@mui/material";
-import { Block, DeleteOutlineOutlined, Edit } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Block,
+  DeleteOutlineOutlined,
+  Edit,
+  KeyOutlined,
+  LocalPostOfficeOutlined,
+  Person,
+  PhoneIphoneOutlined,
+} from "@mui/icons-material";
 import NoImg from "../../../assets/Images/CommentFormUser/none.png";
 import Swal from "sweetalert2";
 import useDelete from "../../../Hooks/useDelete";
 import usePut from "../../../Hooks/usePut";
+import Input from "../../../common/Form/Input";
+import {
+  RequiredValidator,
+  MinValidator,
+  MaxValidator,
+  EmailValidator,
+  PhoneValidator,
+} from "../../../Validators/Rules";
+import useForm from "../../../Hooks/useForm";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { BaseURL } from "../../../Utils/Utils";
+import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
+import { useEditModal } from "../../../Contexts/EditModalContext";
+import useUpdate from "../../../Hooks/useUpdate";
 
 function Users() {
-  const { datas: users } = useFetch("users", true);
-  const { isShowLoading, setIsShowLoading } = useShowLoading();
+  const { datas: users } = useFetch("users", true)
+  const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
+  const { showEditModal, setShowEditModal } = useEditModal()
+  const [updateUserID, setUpdateUserID] = useState("")
+  const [fullName , setFullName] = useState('')
+  const [username , setUserName] = useState('')
+  const [phoneNumber , setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [password , setPassword] = useState('')
   console.log(users);
+  const [formState, onInputHandler] = useForm(
+    {
+      FullName: {
+        value: "",
+        isValid: false,
+      },
+      UserName: {
+        value: "",
+        isValid: false,
+      },
+      Email: {
+        value: "",
+        isValid: false,
+      },
+      PhoneNumber: {
+        value: "",
+        isValid: false,
+      },
+      Password: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
+  const AddNewUserHandler = (event) => {
+    event.preventDefault();
+    const newUserInfos = JSON.stringify({
+      name: formState.inputs.FullName.value,
+      username: formState.inputs.UserName.value,
+      phone: formState.inputs.PhoneNumber.value,
+      email: formState.inputs.Email.value,
+      password: formState.inputs.Password.value,
+      confirmPassword: formState.inputs.Password.value,
+    });
+    axios
+      .post(`${BaseURL}auth/register`, newUserInfos, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          toast.success("ثبت نام با موفقیت انجام گردید");
+          setShowRealTimeDatas((prev) => !prev);
+        } else {
+          toast.error("ثبت نام انجام نشد");
+        }
+      })
+      .catch((error) => {
+        toast.error("این شماره مسدود شده است");
+      });
+  };
   const columns = [
     {
       field: "id",
@@ -100,16 +185,14 @@ function Users() {
       align: "center",
       renderCell: (user) => {
         return (
-         <div
+          <div
             onClick={() => {
-              UserBanHandler(user.id)
+              UserBanHandler(user.id);
             }}
             className="flex-center cursor-pointer text-pink-700 hover:text-pink-300 transition-colors"
           >
-            <Block className="size-5"/>
+            <Block className="size-5" />
           </div>
-          
-         
         );
       },
     },
@@ -124,11 +207,12 @@ function Users() {
           <div
             onClick={() => {
               setShowEditModal(true);
-              UpdateUserHandler(user.id)
+              UpdateUserHandler(user.id);
+              setUpdateUserID(user.id)
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
-            <Edit className="size-5"/>
+            <Edit className="size-5" />
           </div>
         );
       },
@@ -143,7 +227,7 @@ function Users() {
         return (
           <div
             onClick={() => {
-              DeleteUserHandler(user.id)
+              DeleteUserHandler(user.id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -166,8 +250,8 @@ function Users() {
       },
     },
   ];
-   //Ban Function
-   const UserBanHandler = (userID) => {
+  //Ban Function
+  const UserBanHandler = (userID) => {
     Swal.fire({
       title: "برای مسدودسازی مطمعن هستید؟",
       icon: "error",
@@ -178,18 +262,26 @@ function Users() {
       cancelButtonText: "انصراف",
     }).then((result) => {
       if (result.isConfirmed) {
-        const usrBan = usePut(`users/ban/${userID}`)
-        setShowRealTimeDatas((prev) => !prev)
+        const usrBan = usePut(`users/ban/${userID}`);
+        setShowRealTimeDatas((prev) => !prev);
       }
     });
-   }
-   //Edit Function
-   const UpdateUserHandler = (userID , event) => {
-        event.preventDefault()
-   }
+  };
+  //Edit Function
+  const UpdateUserHandler = (userID) => {
+    console.log(userID)
+    let updateUserInfos = JSON.stringify({
+      name: formState.inputs.FullName.value,
+      username: formState.inputs.UserName.value,
+      phone: formState.inputs.PhoneNumber.value,
+      email: formState.inputs.Email.value,
+      password: formState.inputs.Password.value,
+    })
+    const updateUser = useUpdate(`users/${userID}` , updateUserInfos ) 
+  };
   //  Delete Function
   const DeleteUserHandler = (userID) => {
-    console.log(userID)
+    console.log(userID);
     Swal.fire({
       title: "برای حذف کاربر مطمعن هستید؟",
       icon: "warning",
@@ -200,13 +292,106 @@ function Users() {
       cancelButtonText: "انصراف",
     }).then((result) => {
       if (result.isConfirmed) {
-        const usrDel = useDelete(`users/${userID}`)
-        setShowRealTimeDatas((prev) => !prev)
+        const usrDel = useDelete(`users/${userID}`);
+        setShowRealTimeDatas((prev) => !prev);
       }
     });
-  }
+  };
+  useEffect(() => {
+    console.log(users)
+    let filterUpdateUser = users.find((user) => user._id === updateUserID)
+    console.log(filterUpdateUser)
+    if (filterUpdateUser) {
+      setFullName(filterUpdateUser.name)
+      setUserName(filterUpdateUser.username)
+      setPhoneNumber(filterUpdateUser.phone)
+      setEmail(filterUpdateUser.email)
+      setPassword(filterUpdateUser.password)
+    }
+  }, [updateUserID]);
   return (
     <>
+      <fieldset className="border border-gray-200 rounded-lg p-3">
+        <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
+          افزودن کاربر جدید
+        </legend>
+        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+          <Input
+            id="FullName"
+            element="input"
+            placeholder="نام کامل"
+            icon={<Person className="left-3 sm:left-4" />}
+            validations={[
+              RequiredValidator(),
+              MinValidator(8),
+              MaxValidator(20),
+            ]}
+            onInputHandler={onInputHandler}
+          />
+          <Input
+            id="UserName"
+            element="input"
+            placeholder="نام کاربری"
+            icon={<AccountCircle className="left-3 sm:left-4" />}
+            validations={[
+              RequiredValidator(),
+              MinValidator(8),
+              MaxValidator(20),
+            ]}
+            onInputHandler={onInputHandler}
+          />
+          <Input
+            id="Email"
+            element="input"
+            placeholder=" ایمیل"
+            icon={<LocalPostOfficeOutlined className="left-3 sm:left-4" />}
+            validations={[
+              RequiredValidator(),
+              MinValidator(8),
+              MaxValidator(20),
+              EmailValidator(),
+            ]}
+            onInputHandler={onInputHandler}
+          />
+          <Input
+            id="PhoneNumber"
+            element="input"
+            type="number"
+            placeholder=" تلفن تماس"
+            icon={<PhoneIphoneOutlined className="left-3 sm:left-4" />}
+            validations={[
+              RequiredValidator(),
+              MinValidator(8),
+              MaxValidator(20),
+              PhoneValidator(),
+            ]}
+            onInputHandler={onInputHandler}
+          />
+          <Input
+            id="Password"
+            element="input"
+            placeholder="  کلمه عبور"
+            icon={<KeyOutlined className="left-3 sm:left-4" />}
+            validations={[
+              RequiredValidator(),
+              MinValidator(8),
+              MaxValidator(20),
+            ]}
+            onInputHandler={onInputHandler}
+          />
+        </div>
+        <div className="flex justify-end items-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            disabled={!formState.isFormValid}
+            onClick={AddNewUserHandler}
+          >
+            افزودن کاربر
+          </Button>
+        </div>
+      </fieldset>
+
       {isShowLoading ? (
         <SkeletonLoging listsToRender={5} />
       ) : (
@@ -215,7 +400,7 @@ function Users() {
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
             {users.length > 1 ? (
               <DataGrid
-                rows={users.reverse().map((user, index) => {
+                rows={users.map((user, index) => {
                   return { id: index + 1, ...user };
                 })}
                 className="dark:text-white"
@@ -235,6 +420,70 @@ function Users() {
           </div>
         </>
       )}
+      {/* Edit Modal */}
+      <EditModal>
+        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='نام کامل'
+              value={fullName}
+              onChange={(event) =>setFullName(event.target.value)}
+              />
+          <Person className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='نام کاربری'
+              value={username}
+              onChange={(event) =>setUserName(event.target.value)}
+              />
+          <AccountCircle className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder=' تلفن تماس'
+              value={phoneNumber}
+              onChange={(event) =>setPhoneNumber(event.target.value)}
+              />
+          <PhoneIphoneOutlined className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder=' ایمیل'
+              value={email}
+              onChange={(event) =>setEmail(event.target.value)}
+              />
+          <LocalPostOfficeOutlined className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder=' کلمه عیور'
+              value={password}
+              onChange={(event) =>setPassword(event.target.value)}
+              />
+          <LocalPostOfficeOutlined className="left-3 sm:left-4" />
+          </div>
+        </div>
+        <div className="flex justify-end items-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={UpdateUserHandler}
+          >
+            ویرایش کاربر
+          </Button>
+        </div>
+      </EditModal>
     </>
   );
 }
