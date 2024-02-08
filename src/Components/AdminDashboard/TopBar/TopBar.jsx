@@ -39,7 +39,6 @@ function TopBar() {
         .then((response) => {
           setAdminInfos(response.data);
           setAllNotifications(response.data.notifications);
-          console.log('ok')
         })
         .catch((error) => {
           console.log(error);
@@ -50,7 +49,6 @@ function TopBar() {
     const SeeNotificationHandler = (_id) => {
         const putReq = usePut(`notifications/see/${_id}`);
         GetNonfiction()
-        console.log('ok')
         setShowNotification(false)
     };
     useEffect(() => {
