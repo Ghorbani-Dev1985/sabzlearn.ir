@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import axios from 'axios';
 import { BaseURL } from '../Utils/Utils';
 import toast from 'react-hot-toast';
 
 
-function usePut(url , newItemInfos ) {
+const usePut = (url , newItemInfos ) => {
     axios.put(`${BaseURL}${url}` , newItemInfos , {
       headers : {
         'Content-Type' : 'application/json',

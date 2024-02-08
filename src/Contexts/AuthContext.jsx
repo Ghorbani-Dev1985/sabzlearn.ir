@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import useFetch from "../Hooks/useFetch";
 import axios from "axios";
 import { BaseURL } from "../Utils/Utils";
 import { useCallback } from "react";

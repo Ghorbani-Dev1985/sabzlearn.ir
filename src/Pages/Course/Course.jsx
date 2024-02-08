@@ -65,8 +65,7 @@ function Course() {
   }
     useEffect(() => {
       const localStorageData = JSON.parse(localStorage.getItem('user'))
-       axios(`${BaseURL}course/${courseName}` , {
-       method: 'POST',
+       axios(`${BaseURL}courses/${courseName}` , {
        headers : {
          'Authorization' : `Bearer ${localStorageData === null ? null : localStorageData.token}`
        }
