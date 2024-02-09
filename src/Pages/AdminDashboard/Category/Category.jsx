@@ -8,6 +8,8 @@ import { Edit } from "@mui/icons-material";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid , faIR} from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
+import Swal from "sweetalert2";
+import useDelete from "../../../Hooks/useDelete";
 
 function Category() {
   const title = useTitle("دسته بندی‌ها - پنل کاربری");
@@ -71,11 +73,11 @@ function Category() {
       width: 50,
       headerAlign: "center",
       align: "center",
-      renderCell: (user) => {
+      renderCell: (category) => {
         return (
           <div
             onClick={() => {
-              DeleteUserHandler(user.id);
+              DeleteCategoryHandler(category.id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -98,6 +100,23 @@ function Category() {
       },
     },
   ];
+    //  Delete Function
+    const DeleteCategoryHandler = (categoryID) => {
+        Swal.fire({
+          title: "برای حذف دسته بندی مطمعن هستید؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#f43f5e",
+          cancelButtonColor: "#0ea5e9",
+          confirmButtonText: "تایید",
+          cancelButtonText: "انصراف",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const catDel = useDelete(`category/${categoryID}`);
+            setShowRealTimeDatas((prev) => !prev);
+          }
+        });
+      };
   return (
     <>
       {isShowLoading ? (
