@@ -34,8 +34,10 @@ import { BaseURL } from "../../../Utils/Utils";
 import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import { useEditModal } from "../../../Contexts/EditModalContext";
 import useUpdate from "../../../Hooks/useUpdate";
+import useTitle from "../../../Hooks/useTitle";
 
 function Users() {
+  const title = useTitle('کاربر‌ها - پنل کاربری')
   const { datas: users } = useFetch("users", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()

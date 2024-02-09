@@ -7,9 +7,11 @@ import { useEditModal } from '../../../Contexts/EditModalContext';
 import { Alert } from '@mui/material';
 import { DataGrid , faIR} from '@mui/x-data-grid';
 import { Edit } from '@mui/icons-material';
+import useTitle from '../../../Hooks/useTitle';
 
 
 function Courses() {
+  const title = useTitle('دوره‌ها - پنل کاربری')
   const { datas: courses } = useFetch("courses", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
