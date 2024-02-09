@@ -14,6 +14,7 @@ import Button from "../../../common/Form/Button";
 import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import useUpdate from "../../../Hooks/useUpdate";
 import usePost from "../../../Hooks/usePost";
+import toast from "react-hot-toast";
 
 function Category() {
   const title = useTitle("دسته بندی‌ها - پنل کاربری");
@@ -39,7 +40,7 @@ function Category() {
     {
       field: "title",
       headerName: " عنوان",
-      width: 180,
+      width: 200,
       height: 150,
       headerAlign: "center",
       align: "center",
@@ -48,7 +49,7 @@ function Category() {
     {
       field: "name",
       headerName: " لینک",
-      width: 180,
+      width: 200,
       height: 150,
       headerAlign: "center",
       align: "center",
@@ -56,7 +57,7 @@ function Category() {
     {
       field: "editAction",
       headerName: "ویرایش",
-      width: 70,
+      width: 90,
       height: 150,
       headerAlign: "center",
       align: "center",
@@ -77,7 +78,7 @@ function Category() {
     {
       field: "deleteAction",
       headerName: "حذف",
-      width: 50,
+      width: 90,
       headerAlign: "center",
       align: "center",
       renderCell: (category) => {
@@ -113,9 +114,13 @@ function Category() {
       title: updateCategoryTitle,
       name: updateCategoryName
     })
-    const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
-    setShowRealTimeDatas((prev) => !prev)
-    setShowEditModal(false)
+    if(updateCategoryTitle && updateCategoryName){
+        const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
+        setShowRealTimeDatas((prev) => !prev)
+        setShowEditModal(false)
+    }else if(updateCategoryTitle.length <= 2 && updateCategoryName.length <= 2 ){
+        toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+    }
   };
     //  Delete Function
     const DeleteCategoryHandler = (categoryID) => {
@@ -140,10 +145,14 @@ function Category() {
             title: categoryTitle,
             name: categoryName
           })
-          const addNew = usePost('category' , newCategoryInfos , true)
-          setCategoryTitle('')
-          setCategoryName('')
-          setShowRealTimeDatas((prev) => !prev)
+          if(categoryTitle && categoryName){
+              const addNew = usePost('category' , newCategoryInfos , true)
+              setCategoryTitle('')
+              setCategoryName('')
+              setShowRealTimeDatas((prev) => !prev)
+          }else if(categoryTitle.length <= 2 && categoryName.length <= 2){
+            toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+          }
       }
       useEffect(() => {
         let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
@@ -163,7 +172,7 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
-              placeholder='نام دسته بندی'
+              placeholder='نام دسته بندی*'
               value={categoryTitle}
               onChange={(event) => setCategoryTitle(event.target.value)}
               />
@@ -173,7 +182,7 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
-              placeholder='لینک دسته بندی'
+              placeholder='لینک دسته بندی*'
               value={categoryName}
               onChange={(event) => setCategoryName(event.target.value)}
               />
@@ -225,7 +234,7 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
-              placeholder='نام دسته بندی'
+              placeholder='نام دسته بندی*'
               value={updateCategoryTitle}
               onChange={(event) => setUpdateCategoryTitle(event.target.value)}
               />
@@ -235,7 +244,7 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
-              placeholder='لینک دسته بندی'
+              placeholder='لینک دسته بندی*'
               value={updateCategoryName}
               onChange={(event) => setUpdateCategoryName(event.target.value)}
               />
