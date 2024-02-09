@@ -1,37 +1,49 @@
-import React, { useState } from 'react'
-import useFetch from '../../../Hooks/useFetch';
-import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading';
-import { useShowLoading } from '../../../Contexts/ShowLoadingContext';
-import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext';
-import { useEditModal } from '../../../Contexts/EditModalContext';
-import { Alert } from '@mui/material';
-import { DataGrid , faIR} from '@mui/x-data-grid';
-import { AttachMoneyOutlined, AutorenewOutlined, CloudUploadOutlined, DescriptionOutlined, Edit, FolderOpenOutlined, InsertLinkOutlined } from '@mui/icons-material';
-import useTitle from '../../../Hooks/useTitle';
-import Swal from 'sweetalert2';
-import useDelete from '../../../Hooks/useDelete';
-import Button from '../../../common/Form/Button';
-
-
+import React, { useState } from "react";
+import useFetch from "../../../Hooks/useFetch";
+import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
+import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
+import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
+import { useEditModal } from "../../../Contexts/EditModalContext";
+import { Alert } from "@mui/material";
+import { DataGrid, faIR } from "@mui/x-data-grid";
+import {
+  AttachMoneyOutlined,
+  AutorenewOutlined,
+  CloudUploadOutlined,
+  DescriptionOutlined,
+  Edit,
+  FolderOpenOutlined,
+  HeadsetMicOutlined,
+  InsertLinkOutlined,
+} from "@mui/icons-material";
+import useTitle from "../../../Hooks/useTitle";
+import Swal from "sweetalert2";
+import useDelete from "../../../Hooks/useDelete";
+import Button from "../../../common/Form/Button";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import usePost from "../../../Hooks/usePost";
+import axios from "axios";
+import { BaseURL } from "../../../Utils/Utils";
+import toast from "react-hot-toast";
 
 function Courses() {
-  const title = useTitle('دوره‌ها - پنل کاربری')
+  const title = useTitle("دوره‌ها - پنل کاربری")
   const { datas: courses } = useFetch("courses", true)
   const { datas: categories } = useFetch("category", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   const { showEditModal, setShowEditModal } = useEditModal()
   const [updateUserID, setUpdateUserID] = useState("")
-  const [courseName , setCourseName] = useState('')
-  const [courseDescription , setCourseDescription] = useState('')
-  const [courseShortName , setCourseShortName] = useState('')
-  const [courseCategoryID , setCourseCategoryID] = useState('')
-  const [isCompleteCourse , setIsCompleteCourse] = useState(0)
-  const [coursePrice , setCoursePrice] = useState('')
-  const [courseSupport , setCourseSupport] = useState('')
-  const [courseStatus , setCourseStatus] = useState('')
-  const [courseCover , setCourseCover] = useState('')
-  console.log(categories)
+  const [courseName, setCourseName] = useState("")
+  const [courseDescription, setCourseDescription] = useState("")
+  const [courseShortName, setCourseShortName] = useState("")
+  const [courseCategoryID, setCourseCategoryID] = useState("")
+  const [isCompleteCourse, setIsCompleteCourse] = useState(0)
+  const [coursePrice, setCoursePrice] = useState("")
+  const [courseSupport, setCourseSupport] = useState("")
+  const [courseStatus, setCourseStatus] = useState("start")
+  const [courseCover, setCourseCover] = useState({})
   const columns = [
     {
       field: "id",
@@ -53,7 +65,7 @@ function Courses() {
           <img
             src={`${
               user.row.cover
-                ? `../../../../Backend/public/courses/covers${user.row.cover}`
+                ? `http://localhost:5000/courses/covers/${user.row.cover}`
                 : `${NoImg}`
             } `}
             className=""
@@ -87,10 +99,9 @@ function Courses() {
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
-        return (
-          user.row.price ? 
+        return user.row.price ? (
           user.row.price.toLocaleString()
-          :
+        ) : (
           <span>رایگان</span>
         );
       },
@@ -114,7 +125,7 @@ function Courses() {
         return (
           <span
             className={`${
-              user.row.isComplete 
+              user.row.isComplete
                 ? "bg-emerald-100 text-primary p-1 rounded-lg"
                 : "bg-gray-200 text-mainSlate p-1 rounded-lg"
             }`}
@@ -140,9 +151,7 @@ function Courses() {
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
-        return (
-          user.row.categoryID.title
-        );
+        return user.row.categoryID.title;
       },
     },
     {
@@ -158,7 +167,7 @@ function Courses() {
             onClick={() => {
               setShowEditModal(true);
               UpdateUserHandler(user.id);
-              setUpdateUserID(user.id)
+              setUpdateUserID(user.id);
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
@@ -200,138 +209,214 @@ function Courses() {
       },
     },
   ];
-      //  Delete Function
-      const DeleteCourseHandler = (courseID) => {
-        Swal.fire({
-          title: "برای حذف دوره مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const courseDel = useDelete(`courses/${courseID}`);
-            setShowRealTimeDatas((prev) => !prev);
-          }
-        });
-      };
-      //Add New Function
-      const AddNewCourseHandler = () => {
-           
+  //  Delete Function
+  const DeleteCourseHandler = (courseID) => {
+    Swal.fire({
+      title: "برای حذف دوره مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const courseDel = useDelete(`courses/${courseID}`);
+        setShowRealTimeDatas((prev) => !prev)
       }
+    });
+  };
+
+  //Add New Function
+  const AddNewCourseHandler = (event) => {
+    event.preventDefault()
+    let newCourseFormData = new FormData()
+    newCourseFormData.append('name' , courseName)
+    newCourseFormData.append('description' , courseDescription)
+    newCourseFormData.append('shortName' , courseShortName)
+    newCourseFormData.append('categoryID' , courseCategoryID)
+    newCourseFormData.append('isComplete' , +isCompleteCourse)
+    newCourseFormData.append('price' , +coursePrice)
+    newCourseFormData.append('support' , courseSupport)
+    newCourseFormData.append('status' , courseStatus)
+    newCourseFormData.append('cover' , courseCover)
+
+    axios.post(`${BaseURL}courses` , newCourseFormData, {
+      headers : {
+        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if(response.status === 201){
+        
+        toast.success("  افزودن دوره با موفقیت انجام شد")
+        setCourseName('')
+        setCourseCategoryID('')
+        setCourseShortName('')
+        setCoursePrice('')
+        setCourseSupport('')
+        setCourseStatus('')
+        setCourseCover('')
+        setCourseDescription('')
+        setShowRealTimeDatas((prev) => !prev)
+      }else{
+        toast.error("افزودن دوره انجام نشد");
+      }
+    })
+    .catch(error => {
+        console.log(error)
+        toast.error("  خطا در اتصال به سرور ");
+    })
+  };
+  
   return (
     <>
-        <fieldset className="border border-gray-200 rounded-lg p-3">
+      <fieldset className="border border-gray-200 rounded-lg p-3">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن دوره جدید
         </legend>
         <div className="flex flex-wrap justify-between gap-5 child:w-48p">
-        <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder='نام  *'
+          <div className="relative">
+            <input
+              type="text"
+              className="outline-none pl-9 sm:pl-12 bg-white"
+              placeholder="نام  *"
               value={courseName}
               onChange={(event) => setCourseName(event.target.value)}
-              />
-          <FolderOpenOutlined className="left-3 sm:left-4" />
+            />
+            <FolderOpenOutlined className="left-3 sm:left-4" />
           </div>
           <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder=' توضیحات *'
-              value={courseDescription}
-              onChange={(event) => setCourseDescription(event.target.value)}
-              />
-          <DescriptionOutlined className="left-3 sm:left-4" />
+            <select
+              defaultValue={'انتخاب دسته بندی دوره'}
+              onChange={(event) => setCourseCategoryID(event.target.value)}
+              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value={'انتخاب دسته بندی دوره'} disabled>انتخاب دسته بندی دوره</option>
+              {categories.map(({ _id, title }) => {
+                return (
+                  <React.Fragment key={_id}>
+                    <option value={_id} className="px-3">
+                      {title}
+                    </option>
+                  </React.Fragment>
+                );
+              })}
+            </select>
           </div>
           <div className="relative">
-        <select onChange={(event) => setCourseCategoryID(event.target.value)} className='bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-        <option selected disabled> انتخاب دسته بندی دوره</option>
-          {
-            categories.map(({_id , title}) => {
-              return(
-                <React.Fragment key={_id}>
-               <option value={_id} className='px-3'>{title}</option>
-                </React.Fragment>
-              )
-            })
-          }
-        </select>
-          </div>
-          <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder=' لینک *'
+            <input
+              type="text"
+              className="outline-none pl-9 sm:pl-12 bg-white"
+              placeholder=" لینک *"
               value={courseShortName}
-              onChange={(event) => setCourseName(event.target.value)}
-              />
-          <InsertLinkOutlined className="left-3 sm:left-4" />
+              onChange={(event) => setCourseShortName(event.target.value)}
+            />
+            <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
           <div className="relative">
-          <input
-              type='number'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder=' مبلغ *'
+            <input
+              type="number"
+              className="outline-none pl-9 sm:pl-12 bg-white"
+              placeholder=" مبلغ *"
               value={coursePrice}
               onChange={(event) => setCoursePrice(event.target.value)}
-              />
-          <AttachMoneyOutlined className="left-3 sm:left-4" />
+            />
+            <AttachMoneyOutlined className="left-3 sm:left-4" />
           </div>
-          <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder=' پشتیبانی *'
+          <div className="relative mt-11">
+            <input
+              type="text"
+              className="outline-none pl-9 sm:pl-12 bg-white"
+              placeholder=" پشتیبانی *"
               value={courseSupport}
               onChange={(event) => setCourseSupport(event.target.value)}
-              />
-          <AttachMoneyOutlined className="left-3 sm:left-4" />
+            />
+            <HeadsetMicOutlined className="left-3 sm:left-4" />
           </div>
-         <div>
-
-<h3 className="mb-4 font-semibold text-gray-900 dark:text-white">وضعیت دوره</h3>
-<ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-    <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-        <div className="flex items-center ps-3">
-            <input id="Presell" type="radio" value="" name="list-radio" hidden className="peer " />
-            <label htmlFor="Presell" className="w-full cursor-pointer py-3 peer-checked:text-primary peer-checked:font-DanaBold ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">پیش فروش</label>
+          <div>
+            <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+              وضعیت دوره
+            </h3>
+            <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                <div className="flex items-center ps-3">
+                  <input
+                    id="Start"
+                    type="radio"
+                    value="start"
+                    onChange={(event) => setCourseStatus(event.target.value)}
+                    hidden
+                    name="list-radio"
+                    className="peer"
+                  />
+                  <label
+                    htmlFor="Start"
+                    className="w-full cursor-pointer peer-checked:text-primary peer-checked:font-DanaBold py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    در حال برگزاری
+                  </label>
+                </div>
+              </li>
+              <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                <div className="flex items-center ps-3">
+                  <input
+                    id="Presell"
+                    type="radio"
+                    value="Presell"
+                    onChange={(event) => setCourseStatus(event.target.value)}
+                    name="list-radio"
+                    hidden
+                    className="peer "
+                  />
+                  <label
+                    htmlFor="Presell"
+                    className="w-full cursor-pointer py-3 peer-checked:text-primary peer-checked:font-DanaBold ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    پیش فروش
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-    </li>
-    <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-        <div className="flex items-center ps-3">
-            <input id="Start" type="radio" value="" hidden name="list-radio" className="peer" />
-            <label htmlFor="Start" className="w-full cursor-pointer peer-checked:text-primary peer-checked:font-DanaBold py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">در حال برگزاری
+        <div className="flex-center w-full max-w-xl mx-auto my-7">
+          <div className="flex-center w-full relative">
+            <label
+              htmlFor="CoverUpload"
+              className="flex-center flex-col w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            >
+              <div className="flex-center flex-col pt-5 pb-6">
+                <CloudUploadOutlined className="text-gray-500 mb-2" />
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">انتخاب فایل</span> یا فایل را
+                  بکشید و اینجا رها کنید
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  WEBP, PNG, JPG , JPEG (سایز 768x432px )
+                </p>
+               <span className="text-mainSlate dark:text-white my-3">{courseCover.name}</span> 
+              </div>
+              <input id="CoverUpload" type="file" onChange={(event) => setCourseCover(event.target.files[0])} accept=".webp , .jpg , .png, .jpeg" className="h-full absolute z-50 opacity-0" />
             </label>
+          </div>
         </div>
-    </li>
-</ul>
-         </div>
-
-
-<div className="flex-center w-full">
-    <label htmlFor="dropzone-file" className="flex-center flex-col w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-        <div className="flex-center flex-col pt-5 pb-6">
-           <CloudUploadOutlined className='text-gray-500 mb-2'/>
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">انتخاب فایل</span> یا فایل را بکشید و اینجا رها کنید</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">webp, PNG, JPG (سایز 800x400px )</p>
-        </div>
-        <input id="dropzone-file" type="file" className="hidden" />
-    </label>
-</div> 
-
-         </div>
+        <CKEditor
+          editor={ClassicEditor}
+          data=""
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setCourseDescription(data);
+          }}
+        />
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
             onClick={AddNewCourseHandler}
           >
-            افزودن دوره 
+            افزودن دوره
           </Button>
         </div>
       </fieldset>
@@ -358,13 +443,13 @@ function Courses() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ  دوره ای تاکنون ثبت نگردیده است</Alert>
+              <Alert severity="info">هیچ دوره ای تاکنون ثبت نگردیده است</Alert>
             )}
           </div>
         </>
       )}
     </>
-  )
+  );
 }
 
-export default Courses
+export default Courses;

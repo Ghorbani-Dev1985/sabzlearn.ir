@@ -499,3 +499,9 @@ input + svg {
 .css-q6j2um-MuiDataGrid-root .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell{
   white-space: wrap;
 }
+.ck-editor{
+  direction: rtl;
+}
+.ck-content{
+  text-align: right !important;
+}
