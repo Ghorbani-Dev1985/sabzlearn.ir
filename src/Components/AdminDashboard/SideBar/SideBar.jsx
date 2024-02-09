@@ -78,7 +78,7 @@ function SideBar() {
               <NavLink to={to} className={({ isActive }) =>
                isActive
                ? "flex items-center gap-x-2.5 h-10 px-3 bg-primary rounded-lg text-white hover:text-white"
-               : "flex items-center gap-x-2.5 h-10 px-3 bg-transparent rounded-lg text-white"
+               : "flex items-center gap-x-2.5 h-10 px-3 bg-transparent rounded-lg text-zinc-500"
             }>{icon}{text}</NavLink>
             </React.Fragment>
             )

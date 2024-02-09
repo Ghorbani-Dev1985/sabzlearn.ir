@@ -171,7 +171,7 @@ function Category() {
         <div className="relative">
           <input
               type='text'
-              className= 'outline-none pl-9 sm:pl-12'
+              className= 'outline-none pl-9 sm:pl-12 bg-white'
               placeholder='نام دسته بندی*'
               value={categoryTitle}
               onChange={(event) => setCategoryTitle(event.target.value)}
@@ -181,7 +181,7 @@ function Category() {
           <div className="relative">
           <input
               type='text'
-              className= 'outline-none pl-9 sm:pl-12'
+              className= 'outline-none pl-9 sm:pl-12 bg-white'
               placeholder='لینک دسته بندی*'
               value={categoryName}
               onChange={(event) => setCategoryName(event.target.value)}
