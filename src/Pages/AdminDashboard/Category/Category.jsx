@@ -24,6 +24,8 @@ function Category() {
   const [updateCategoryID, setUpdateCategoryID] = useState("")
   const [categoryTitle , setCategoryTitle] = useState('')
   const [categoryName , setCategoryName] = useState('')
+  const [updateCategoryTitle , setUpdateCategoryTitle] = useState('')
+  const [updateCategoryName , setUpdateCategoryName] = useState('')
   console.log(categories);
   const columns = [
     {
@@ -108,8 +110,8 @@ function Category() {
   //Edit Function
   const UpdateCategoryHandler = () => {
     let updateCategoryInfos = JSON.stringify({
-      title: categoryTitle,
-      name: categoryName
+      title: updateCategoryTitle,
+      name: updateCategoryName
     })
     const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
     setShowRealTimeDatas((prev) => !prev)
@@ -146,8 +148,8 @@ function Category() {
       useEffect(() => {
         let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
         if (filterUpdateUser) {
-          setCategoryTitle(filterUpdateUser.title)
-          setCategoryName(filterUpdateUser.name)
+          setUpdateCategoryTitle(filterUpdateUser.title)
+          setUpdateCategoryName(filterUpdateUser.name)
         }
       }, [updateCategoryID]);
   return (
@@ -224,8 +226,8 @@ function Category() {
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
               placeholder='نام دسته بندی'
-              value={categoryTitle}
-              onChange={(event) => setCategoryTitle(event.target.value)}
+              value={updateCategoryTitle}
+              onChange={(event) => setUpdateCategoryTitle(event.target.value)}
               />
           <FolderCopyOutlined className="left-3 sm:left-4" />
           </div>
@@ -234,8 +236,8 @@ function Category() {
               type='text'
               className= 'outline-none pl-9 sm:pl-12'
               placeholder='لینک دسته بندی'
-              value={categoryName}
-              onChange={(event) => setCategoryName(event.target.value)}
+              value={updateCategoryName}
+              onChange={(event) => setUpdateCategoryName(event.target.value)}
               />
           <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
