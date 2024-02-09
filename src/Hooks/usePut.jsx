@@ -15,7 +15,7 @@ const usePut = (url , newItemInfos ) => {
       console.log(response)
       if(response.status === 200){
         
-        toast.success("  درخواست شما با موفقت انجام شد");
+        toast.success("  درخواست شما با موفقیت انجام شد");
       }else{
         toast.error("درخواست شما انجام نشد");
       }

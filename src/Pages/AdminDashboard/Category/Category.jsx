@@ -13,6 +13,7 @@ import useDelete from "../../../Hooks/useDelete";
 import Button from "../../../common/Form/Button";
 import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import useUpdate from "../../../Hooks/useUpdate";
+import usePost from "../../../Hooks/usePost";
 
 function Category() {
   const title = useTitle("دسته بندی‌ها - پنل کاربری");
@@ -131,6 +132,17 @@ function Category() {
           }
         });
       };
+      //New Category
+      const AddNewCategoryHandler = () => {
+        let newCategoryInfos = JSON.stringify({
+            title: categoryTitle,
+            name: categoryName
+          })
+          const addNew = usePost('category' , newCategoryInfos , true)
+          setCategoryTitle('')
+          setCategoryName('')
+          setShowRealTimeDatas((prev) => !prev)
+      }
       useEffect(() => {
         let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
         if (filterUpdateUser) {
@@ -140,6 +152,42 @@ function Category() {
       }, [updateCategoryID]);
   return (
     <>
+    <fieldset className="border border-gray-200 rounded-lg p-3">
+        <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
+          افزودن دسته بندی جدید
+        </legend>
+        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='نام دسته بندی'
+              value={categoryTitle}
+              onChange={(event) => setCategoryTitle(event.target.value)}
+              />
+          <FolderCopyOutlined className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='لینک دسته بندی'
+              value={categoryName}
+              onChange={(event) => setCategoryName(event.target.value)}
+              />
+          <InsertLinkOutlined className="left-3 sm:left-4" />
+          </div>
+         </div>
+        <div className="flex justify-end items-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={AddNewCategoryHandler}
+          >
+            افزودن دسته بندی
+          </Button>
+        </div>
+      </fieldset>
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
