@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useTitle from "../../../Hooks/useTitle";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
 import { useEditModal } from "../../../Contexts/EditModalContext";
-import { Edit } from "@mui/icons-material";
+import { Edit, FolderCopyOutlined, InsertLinkOutlined } from "@mui/icons-material";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid , faIR} from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
 import useDelete from "../../../Hooks/useDelete";
+import Button from "../../../common/Form/Button";
+import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
+import useUpdate from "../../../Hooks/useUpdate";
 
 function Category() {
   const title = useTitle("دسته بندی‌ها - پنل کاربری");
-  const { datas: categories } = useFetch("category", false);
-  const { isShowLoading, setIsShowLoading } = useShowLoading();
-  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas();
-  const { showEditModal, setShowEditModal } = useEditModal();
-  const [updateCategoryID, setUpdateCategoryID] = useState("");
+  const { datas: categories } = useFetch("category", false)
+  const { isShowLoading, setIsShowLoading } = useShowLoading()
+  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
+  const { showEditModal, setShowEditModal } = useEditModal()
+  const [updateCategoryID, setUpdateCategoryID] = useState("")
+  const [categoryTitle , setCategoryTitle] = useState('')
+  const [categoryName , setCategoryName] = useState('')
   console.log(categories);
   const columns = [
     {
@@ -52,13 +57,12 @@ function Category() {
       height: 150,
       headerAlign: "center",
       align: "center",
-      renderCell: (user) => {
+      renderCell: (category) => {
         return (
           <div
             onClick={() => {
-              setShowEditModal(true);
-              UpdateUserHandler(user.id);
-              setUpdateUserID(user.id);
+              setShowEditModal(true)
+              setUpdateCategoryID(category.id)
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
@@ -100,6 +104,16 @@ function Category() {
       },
     },
   ];
+  //Edit Function
+  const UpdateCategoryHandler = () => {
+    let updateCategoryInfos = JSON.stringify({
+      title: categoryTitle,
+      name: categoryName
+    })
+    const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
+    setShowRealTimeDatas((prev) => !prev)
+    setShowEditModal(false)
+  };
     //  Delete Function
     const DeleteCategoryHandler = (categoryID) => {
         Swal.fire({
@@ -117,6 +131,13 @@ function Category() {
           }
         });
       };
+      useEffect(() => {
+        let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
+        if (filterUpdateUser) {
+          setCategoryTitle(filterUpdateUser.title)
+          setCategoryName(filterUpdateUser.name)
+        }
+      }, [updateCategoryID]);
   return (
     <>
       {isShowLoading ? (
@@ -147,6 +168,40 @@ function Category() {
           </div>
         </>
       )}
+         {/* Edit Modal */}
+         <EditModal>
+        <div className="min-w-96">
+        <div className="relative mb-4">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='نام دسته بندی'
+              value={categoryTitle}
+              onChange={(event) => setCategoryTitle(event.target.value)}
+              />
+          <FolderCopyOutlined className="left-3 sm:left-4" />
+          </div>
+          <div className="relative mb-4">
+          <input
+              type='text'
+              className= 'outline-none pl-9 sm:pl-12'
+              placeholder='لینک دسته بندی'
+              value={categoryName}
+              onChange={(event) => setCategoryName(event.target.value)}
+              />
+          <InsertLinkOutlined className="left-3 sm:left-4" />
+          </div>
+        </div>
+        <div className="flex justify-end items-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={UpdateCategoryHandler}
+          >
+            ویرایش دسته بندی
+          </Button>
+        </div>
+      </EditModal>
     </>
   );
 }
