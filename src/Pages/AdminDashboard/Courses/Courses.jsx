@@ -396,7 +396,7 @@ function Courses() {
         </div>
         <CKEditor
           editor={ClassicEditor}
-          data=""
+          data={courseDescription}
           onChange={(event, editor) => {
             const data = editor.getData();
             setCourseDescription(data);

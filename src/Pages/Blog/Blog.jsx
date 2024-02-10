@@ -108,12 +108,15 @@ function Blog() {
                 <span>{blogCreator.createdAt && ChangeGregorianDateToPersian(blogCreator.createdAt)}</span>
               </div>
             </div>
+            <div className="w-full flex-center">
+              <img src={`http://localhost:5000/courses/covers/${blogDetails.cover}`} alt={blogDetails.title} className="rounded-md mb-4"/>
+            </div>
             {/* Html Template */}
             <ShowHtmlTemplate
               showMoreDesc={showMoreDesc}
               setShowMoreDesc={setShowMoreDesc}
             >
-             {blogDetails.description}
+              <div dangerouslySetInnerHTML={{ __html: blogDetails.body}} />
             </ShowHtmlTemplate>
           </div>
           {/* Comment */}
