@@ -100,7 +100,7 @@ function LastCourses() {
      {/* Last Course List */}
      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
         {
-            courses.splice(0 , 9).map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
+            courses.splice(0 , 8).map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
                         <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>

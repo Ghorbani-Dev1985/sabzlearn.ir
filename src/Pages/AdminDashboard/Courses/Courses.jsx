@@ -49,7 +49,6 @@ function Courses() {
       field: "id",
       headerName: "ردیف",
       width: 10,
-      height: 150,
       headerAlign: "center",
       align: "center",
     },
@@ -57,18 +56,13 @@ function Courses() {
       field: "photo",
       headerName: " عکس ",
       width: 70,
-      height: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
         return (
           <img
-            src={`${
-              user.row.cover
-                ? `http://localhost:5000/courses/covers/${user.row.cover}`
-                : `${NoImg}`
-            } `}
-            className=""
+            src={`http://localhost:5000/courses/covers/${user.row.cover}`}
+            className="object-fill"
             alt="ghorbani-dev.ir"
           />
         );
@@ -78,7 +72,6 @@ function Courses() {
       field: "name",
       headerName: " عنوان",
       width: 180,
-      height: 150,
       headerAlign: "center",
       align: "center",
       whiteSpace: "wrap",
@@ -87,7 +80,6 @@ function Courses() {
       field: "creator",
       headerName: " مدرس",
       width: 180,
-      height: 150,
       headerAlign: "center",
       align: "center",
     },
@@ -95,7 +87,6 @@ function Courses() {
       field: "prices",
       headerName: " مبلغ (تومان)",
       width: 100,
-      height: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
@@ -110,7 +101,6 @@ function Courses() {
       field: "registers",
       headerName: " تعداد ثبت نام  ",
       width: 110,
-      height: 150,
       headerAlign: "center",
       align: "center",
     },
@@ -118,7 +108,6 @@ function Courses() {
       field: "showStatus",
       headerName: " وضعیت ",
       width: 120,
-      height: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
@@ -139,7 +128,6 @@ function Courses() {
       field: "shortName",
       headerName: " لینک ",
       width: 110,
-      height: 150,
       headerAlign: "center",
       align: "center",
     },
@@ -147,7 +135,6 @@ function Courses() {
       field: "category",
       headerName: " دسته بندی ",
       width: 120,
-      height: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
@@ -158,7 +145,6 @@ function Courses() {
       field: "editAction",
       headerName: "ویرایش",
       width: 70,
-      height: 150,
       headerAlign: "center",
       align: "center",
       renderCell: (user) => {
@@ -241,33 +227,39 @@ function Courses() {
     newCourseFormData.append('status' , courseStatus)
     newCourseFormData.append('cover' , courseCover)
 
-    axios.post(`${BaseURL}courses` , newCourseFormData, {
-      headers : {
-        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-      }
-    })
-    .then(response => {
-      console.log(response)
-      if(response.status === 201){
-        
-        toast.success("  افزودن دوره با موفقیت انجام شد")
-        setCourseName('')
-        setCourseCategoryID('')
-        setCourseShortName('')
-        setCoursePrice('')
-        setCourseSupport('')
-        setCourseStatus('')
-        setCourseCover('')
-        setCourseDescription('')
-        setShowRealTimeDatas((prev) => !prev)
-      }else{
-        toast.error("افزودن دوره انجام نشد");
-      }
-    })
-    .catch(error => {
-        console.log(error)
-        toast.error("  خطا در اتصال به سرور ");
-    })
+     if(courseName && courseDescription && courseShortName && courseCategoryID && coursePrice && courseSupport && courseCover.name){
+       axios.post(`${BaseURL}courses` , newCourseFormData, {
+         headers : {
+           'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+         }
+       })
+       .then(response => {
+         console.log(response)
+         if(response.status === 201){
+           
+           toast.success("  افزودن دوره با موفقیت انجام شد")
+           setCourseName('')
+           setCourseCategoryID('')
+           setCourseShortName('')
+           setCoursePrice('')
+           setCourseSupport('')
+           setCourseStatus('')
+           setCourseCover('')
+           setCourseDescription('')
+           setShowRealTimeDatas((prev) => !prev)
+         }else{
+           toast.error("افزودن دوره انجام نشد");
+         }
+       })
+       .catch(error => {
+           console.log(error)
+           toast.error('خطا در اتصال به سرور')
+          })
+        }else if(courseName.length <=2 && courseShortName.length <=2 && courseSupport.length <=1){
+          toast.error('تعداد کاراکترها کمتر از حد مجاز می باشد')
+        }else{
+          toast.error('عکس دوره را آپلود نمایید')
+        }
   };
   
   return (
@@ -398,7 +390,7 @@ function Courses() {
                 </p>
                <span className="text-mainSlate dark:text-white my-3">{courseCover.name}</span> 
               </div>
-              <input id="CoverUpload" type="file" onChange={(event) => setCourseCover(event.target.files[0])} accept=".webp , .jpg , .png, .jpeg" className="h-full absolute z-50 opacity-0" />
+              <input id="CoverUpload" type="file" required onChange={(event) => setCourseCover(event.target.files[0])} accept=".webp , .jpg , .png, .jpeg" className="h-full absolute z-50 opacity-0" />
             </label>
           </div>
         </div>
@@ -432,11 +424,12 @@ function Courses() {
                   return { id: index + 1, ...course };
                 })}
                 className="dark:text-white"
+                rowHeight={150}
                 getRowId={(course) => course._id}
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 10 },
+                    paginationModel: { page: 0, pageSize: 25 },
                   },
                 }}
                 localeText={faIR.components.MuiDataGrid.defaultProps.localeText}

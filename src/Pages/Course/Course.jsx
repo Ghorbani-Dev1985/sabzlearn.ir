@@ -12,7 +12,6 @@ import {
 } from "@mui/icons-material";
 import TomanDark from "../../assets/Images/svgs/toman-black.svg";
 import TomanLight from "../../assets/Images/svgs/toman-white.svg";
-import Banner from "../../assets/Images/Courses/Course-thumbnail-Dashboard2-1-768x432.webp";
 import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
 import StatusIcon from "../../assets/Images/svgs/status.svg";
 import courseCategory from "../../assets/Images/svgs/courseCategory.svg";
@@ -156,7 +155,7 @@ function Course() {
         </div>
         {/* Banner */}
         <div className="shrink-0 mb-3 sm:mb-6 lg:mb-0 w-full h-auto md:w-10/12 lg:w-[440px] lg:h-[270px] xl:w-[610px] xl:h-[343px] rounded-2xl sm:rounded-3xl overflow-hidden">
-          <img src={Banner} alt="gorbani-dev.ir" />
+          <img src={`http://localhost:5000/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" />
         </div>
       </section>
       {/* Data */}
