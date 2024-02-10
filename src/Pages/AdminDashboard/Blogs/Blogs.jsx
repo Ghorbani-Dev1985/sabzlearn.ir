@@ -178,7 +178,10 @@ function Blogs() {
           </div>
         </>
       )}
-     
+       {/* Show Detail */}
+       <DetailsModal>
+       <div dangerouslySetInnerHTML={{ __html: blogBody }} />
+      </DetailsModal>
     </>
   )
 }
