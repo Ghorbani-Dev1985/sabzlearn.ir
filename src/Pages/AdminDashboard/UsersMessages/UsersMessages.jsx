@@ -8,6 +8,8 @@ import { useEditModal } from '../../../Contexts/EditModalContext'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { Alert } from '@mui/material'
 import { DataGrid , faIR} from '@mui/x-data-grid'
+import Swal from 'sweetalert2'
+import useDelete from '../../../Hooks/useDelete'
 
 function UsersMessages() {
     const title = useTitle("پیام‌ها - پنل کاربری")
@@ -70,13 +72,13 @@ function UsersMessages() {
           width: 70,
           headerAlign: "center",
           align: "center",
-          renderCell: (user) => {
+          renderCell: (UserMessage) => {
             return (
               <div
                 onClick={() => {
                   setShowEditModal(true);
-                  UpdateUserHandler(user.id);
-                  setUpdateUserID(user.id)
+                  UpdateUserHandler(UserMessage.id);
+                  setUpdateUserID(UserMessage.id)
                 }}
                 className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
               >
@@ -91,11 +93,11 @@ function UsersMessages() {
           width: 50,
           headerAlign: "center",
           align: "center",
-          renderCell: (user) => {
+          renderCell: (UserMessage) => {
             return (
               <div
                 onClick={() => {
-                  DeleteUserHandler(user.id);
+                  DeleteContactHandler(UserMessage.id);
                 }}
                 className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
               >
@@ -118,6 +120,23 @@ function UsersMessages() {
           },
         },
       ];
+      //Delete Function
+      const DeleteContactHandler = (DeleteContactHandlerID) =>{
+        Swal.fire({
+            title: "برای حذف پیام مطمعن هستید؟",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#f43f5e",
+            cancelButtonColor: "#0ea5e9",
+            confirmButtonText: "تایید",
+            cancelButtonText: "انصراف",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const contactDel = useDelete(`contact/${DeleteContactHandlerID}`);
+              setShowRealTimeDatas((prev) => !prev)
+            }
+          });
+      }
   return (
     <>
        {isShowLoading ? (
