@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useTitle from '../../../Hooks/useTitle'
 import useFetch from '../../../Hooks/useFetch'
-import { Edit } from '@mui/icons-material'
+import { Edit, RemoveRedEye } from '@mui/icons-material'
 import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
 import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext'
 import { useEditModal } from '../../../Contexts/EditModalContext'
+import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { Alert } from '@mui/material'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import Swal from 'sweetalert2'
 import useDelete from '../../../Hooks/useDelete'
+import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 
 function UsersMessages() {
     const title = useTitle("پیام‌ها - پنل کاربری")
@@ -17,6 +19,8 @@ function UsersMessages() {
     const { isShowLoading, setIsShowLoading } = useShowLoading()
     const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
     const { showEditModal, setShowEditModal } = useEditModal()
+    const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
+    const [magBody , setMsgBody] = useState('')
     console.log(UsersMessages)
     const columns = [
         {
@@ -34,13 +38,6 @@ function UsersMessages() {
           align: "center",
         },
         {
-          field: "body",
-          headerName: "متن کامل ",
-          width: 220,
-          headerAlign: "center",
-          align: "center",
-        },
-        {
           field: "phone",
           headerName: " تلفن تماس",
           width: 120,
@@ -54,6 +51,25 @@ function UsersMessages() {
           headerAlign: "center",
           align: "center",
         },
+        {
+            field: "bodyText",
+            headerName: "  متن کامل ",
+            width: 140,
+            headerAlign: "center",
+            align: "center",
+            renderCell: (UserMessage) => {
+              return (
+                <p onClick={() => {
+                    setShowDetailsModal(true)
+                    setMsgBody(UserMessage.row.body)
+                }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
+                    <RemoveRedEye className="size-6 text-amber-500"/>
+                   
+                </p>
+                
+              );
+            },
+          },
         {
           field: "answerStatus",
           headerName: "  وضعیت ",
@@ -168,6 +184,10 @@ function UsersMessages() {
           </div>
         </>
       )}
+      {/* Show Detail */}
+      <DetailsModal>
+           {magBody}
+      </DetailsModal>
     </>
   )
 }

@@ -7,6 +7,7 @@ import { ShowRealtimeDatasProvider } from '../../Contexts/ShowRealtimeDatasConte
 import { CoursesContextProvider } from '../../Contexts/CoursesContext'
 import { BlogsContextProvider } from '../../Contexts/BlogsContext'
 import { EditModalProvider } from '../../Contexts/EditModalContext'
+import { DetailsModalProvider } from '../../Contexts/DetailsModalContext'
 
 
 function MainProvider({children}) {
@@ -16,7 +17,7 @@ function MainProvider({children}) {
       <ShowLoadingProvider>
       <ShowRealtimeDatasProvider>
       <EditModalProvider>
-
+       <DetailsModalProvider>
       <AuthProvider>
         <CoursesContextProvider>
           <BlogsContextProvider>
@@ -24,6 +25,7 @@ function MainProvider({children}) {
           </BlogsContextProvider>
         </CoursesContextProvider>
       </AuthProvider>
+       </DetailsModalProvider>
       </EditModalProvider>
       </ShowRealtimeDatasProvider>
       </ShowLoadingProvider>
