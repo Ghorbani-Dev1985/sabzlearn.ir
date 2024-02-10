@@ -253,7 +253,7 @@ useEffect(() => {
           {/* Pagination */}
           {
             filteredAllCourses.length > 0 && <div className='flex-center col-span-3 my-8'>
-            <Pagination items={filteredAllCourses} itemsCount={3} pathname='/courses' setShowItems={setShowItems}/>
+            <Pagination items={filteredAllCourses} itemsCount={9} pathname='/courses' setShowItems={setShowItems}/>
              </div>
           }
               </div>

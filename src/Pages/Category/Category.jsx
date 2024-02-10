@@ -189,7 +189,7 @@ useEffect(() => {
         }
         {
             filteredCourses.length > 0 ?  <div className='flex-center col-span-3 my-8'>
-            <Pagination items={filteredCourses} itemsCount={3} pathname={`/category/${categoryName}`} setShowItems={setShowItems}/>
+            <Pagination items={filteredCourses} itemsCount={9} pathname={`/category/${categoryName}`} setShowItems={setShowItems}/>
              </div> : null
         }
        
