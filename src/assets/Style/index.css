@@ -490,8 +490,11 @@ input + svg {
 :is(.dark .css-o0qdv9-MuiButtonBase-root-MuiPaginationItem-root ,.dark .css-llj3c1-MuiPaginationItem-root){
   color: #fff;
 }
-:is(.dark .css-o0qdv9-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected){
+:is(.dark .css-o0qdv9-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected , .dark .ck.ck-editor__main>.ck-editor__editable){
   background-color: rgb(40 41 61);
+}
+:is(.dark .ck.ck-editor__main>.ck-editor__editable){
+  color: #fff;
 }
 :is(.dark .css-1n8qmw5-MuiTablePagination-root , .dark .css-lizalf-MuiButtonBase-root-MuiIconButton-root.Mui-disabled){
   color: #fff;
@@ -504,4 +507,7 @@ input + svg {
 }
 .ck-content{
   text-align: right !important;
+}
+.ck.ck-editor__editable_inline> * {
+  direction: rtl;
 }
