@@ -4,7 +4,7 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message} from '@mui/icons-material';
+import { Article, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
 
 
@@ -28,27 +28,33 @@ const AdminDashboardNavItems = [
     icon: <Folder />,
     text: ' دوره‌ها'
   },
-  {
+   {
     id: 4,
+    to: 'sessions',
+    icon: <CreateNewFolder />,
+    text: ' جلسه دوره‌ها '
+  },
+  {
+    id: 5,
     to: 'category',
     icon: <FolderCopy />,
     text: ' دسته بندی‌ها'
   },
   
   {
-    id: 5,
+    id: 6,
     to: 'menus',
     icon: <List />,
     text: ' منوها'
   },
   {
-    id: 6,
+    id: 7,
     to: 'blogs',
     icon: <Article />,
     text: ' مقاله‌ها'
   },
   {
-    id: 7,
+    id: 8,
     to: 'messages',
     icon: <Message />,
     text: ' پیام‌ها'

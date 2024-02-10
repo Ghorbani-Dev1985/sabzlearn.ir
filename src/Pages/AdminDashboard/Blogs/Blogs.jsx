@@ -331,7 +331,7 @@ function Blogs() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ پیامی تاکنون ثبت نگردیده است</Alert>
+              <Alert severity="info">هیچ مقاله ای تاکنون ثبت نگردیده است</Alert>
             )}
           </div>
         </>
