@@ -27,7 +27,6 @@ function UsersMessages() {
     const [magBody , setMsgBody] = useState('')
     const [sendAnswerText , setSendAnswerText] = useState('')
     const [userEmail , setUserEmail] = useState('')
-    console.log(UsersMessages)
     const columns = [
         {
           field: "id",
@@ -191,7 +190,7 @@ function UsersMessages() {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 25 },
+                    paginationModel: { page: 0, pageSize: 10 },
                   },
                 }}
                 localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
@@ -214,7 +213,7 @@ function UsersMessages() {
         <textarea rows="8" placeholder=' متن پاسخ *' value={sendAnswerText} onChange={(event) => setSendAnswerText(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
           </div>
         </div>
-        <div className="flex justify-end items-center">
+        <div className="flex-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"

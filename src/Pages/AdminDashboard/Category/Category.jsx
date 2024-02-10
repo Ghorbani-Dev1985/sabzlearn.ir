@@ -251,7 +251,7 @@ function Category() {
           <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
         </div>
-        <div className="flex justify-end items-center">
+        <div className="flex-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
