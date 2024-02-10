@@ -18,7 +18,7 @@ import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
-
+import DOMPurify from 'dompurify'
 
 function Blogs() {
   const title = useTitle("مقاله‌ها - پنل کاربری")
@@ -338,7 +338,7 @@ function Blogs() {
       )}
        {/* Show Detail */}
        <DetailsModal>
-       <div dangerouslySetInnerHTML={{ __html: blogBody }} />
+       <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blogBody) }} />
       </DetailsModal>
     </>
   )

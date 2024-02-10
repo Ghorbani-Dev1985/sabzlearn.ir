@@ -3,7 +3,7 @@ import { QueryBuilder, Star } from "@mui/icons-material";
 import React, { useState } from "react";
 import TomanGreen from "../../assets/Images/svgs/toman-green.svg";
 import { Link } from "react-router-dom";
-
+import DOMPurify from 'dompurify'
 
 function CourseCard(
   {id, shortName , cover , name , description , creator , price , courseAverageScore}) {
@@ -65,7 +65,7 @@ function CourseCard(
         {/* Description */}
         {
           description &&    <p className="font-Dana text-sm h-10 min-h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
-          <div dangerouslySetInnerHTML={{ __html: description }} />
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }} />
         </p>
         }
      

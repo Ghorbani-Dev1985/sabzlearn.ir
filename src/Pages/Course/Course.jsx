@@ -37,6 +37,8 @@ import { useAuth } from "../../Contexts/AuthContext";
 import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import axios from "axios";
 import FreePrice from "../../common/FreePrice/FreePrice";
+import DOMPurify from 'dompurify'
+
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
@@ -96,7 +98,7 @@ function Course() {
               {courseDetails.name}
             </h1>
             <p className="font-Dana text-xl/8 line-clamp-4 lg:line-clamp-2 xl:line-clamp-3 mt-3.5 xl:mt-5 text-zinc-700 dark:text-white">
-              <div dangerouslySetInnerHTML={{ __html: courseDetails.description }} />
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(courseDetails.description) }} />
             </p>
           </div>
           {/* Btn & Price */}
@@ -273,7 +275,7 @@ function Course() {
               showMoreDesc={showMoreDesc}
               setShowMoreDesc={setShowMoreDesc}
             >
-              <div dangerouslySetInnerHTML={{ __html: courseDetails.description }} />
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(courseDetails.description) }} />
             </ShowHtmlTemplate>
           </div>
           {/* Episode List */}

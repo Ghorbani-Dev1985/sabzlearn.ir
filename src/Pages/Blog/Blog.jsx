@@ -14,6 +14,8 @@ import BlogCategory from "../../Components/BlogCategory/BlogCategory";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
+import DOMPurify from 'dompurify'
+
 
 const newBlogs = [
   {
@@ -116,7 +118,7 @@ function Blog() {
               showMoreDesc={showMoreDesc}
               setShowMoreDesc={setShowMoreDesc}
             >
-              <div dangerouslySetInnerHTML={{ __html: blogDetails.body}} />
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blogDetails.body)}} />
             </ShowHtmlTemplate>
           </div>
           {/* Comment */}
