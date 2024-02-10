@@ -65,7 +65,7 @@ function CourseCard(
         {/* Description */}
         {
           description &&    <p className="font-Dana text-sm h-10 min-h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
-          {description}
+          <div dangerouslySetInnerHTML={{ __html: description }} />
         </p>
         }
      

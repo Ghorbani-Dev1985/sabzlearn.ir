@@ -78,6 +78,7 @@ function Course() {
       document.title = courseInfo.data.name;
     });
   }, []);
+  
   return (
     <>
       {/* Breadcrumb */}
@@ -95,7 +96,7 @@ function Course() {
               {courseDetails.name}
             </h1>
             <p className="font-Dana text-xl/8 line-clamp-4 lg:line-clamp-2 xl:line-clamp-3 mt-3.5 xl:mt-5 text-zinc-700 dark:text-white">
-              {courseDetails.description}
+              <div dangerouslySetInnerHTML={{ __html: courseDetails.description }} />
             </p>
           </div>
           {/* Btn & Price */}
@@ -128,8 +129,8 @@ function Course() {
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
                     {courseDetails.price > 0 ? (
                       <>
-                        {" "}
-                        {courseDetails.price}{" "}
+                       
+                        {courseDetails.price.toLocaleString()}
                         {colorTheme === "light" ? (
                           <img
                             src={TomanLight}
@@ -272,7 +273,7 @@ function Course() {
               showMoreDesc={showMoreDesc}
               setShowMoreDesc={setShowMoreDesc}
             >
-              {courseDetails.description}
+              <div dangerouslySetInnerHTML={{ __html: courseDetails.description }} />
             </ShowHtmlTemplate>
           </div>
           {/* Episode List */}
