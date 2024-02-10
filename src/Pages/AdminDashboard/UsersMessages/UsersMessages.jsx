@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useTitle from '../../../Hooks/useTitle'
 import useFetch from '../../../Hooks/useFetch'
-import { Edit, RemoveRedEye } from '@mui/icons-material'
+import { MarkChatRead, MarkEmailRead, RemoveRedEye } from '@mui/icons-material'
 import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
 import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext'
 import { useEditModal } from '../../../Contexts/EditModalContext'
@@ -12,6 +12,10 @@ import { DataGrid , faIR} from '@mui/x-data-grid'
 import Swal from 'sweetalert2'
 import useDelete from '../../../Hooks/useDelete'
 import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
+import EditModal from '../../../Components/AdminDashboard/EditModal/EditModal'
+import Button from '../../../common/Form/Button'
+import usePost from '../../../Hooks/usePost'
+import toast from 'react-hot-toast'
 
 function UsersMessages() {
     const title = useTitle("پیام‌ها - پنل کاربری")
@@ -21,6 +25,8 @@ function UsersMessages() {
     const { showEditModal, setShowEditModal } = useEditModal()
     const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
     const [magBody , setMsgBody] = useState('')
+    const [sendAnswerText , setSendAnswerText] = useState('')
+    const [userEmail , setUserEmail] = useState('')
     console.log(UsersMessages)
     const columns = [
         {
@@ -33,7 +39,7 @@ function UsersMessages() {
         {
           field: "name",
           headerName: " نام کامل",
-          width: 100,
+          width: 180,
           headerAlign: "center",
           align: "center",
         },
@@ -47,7 +53,7 @@ function UsersMessages() {
         {
           field: "email",
           headerName: " آدرس ایمیل ",
-          width: 200,
+          width: 250,
           headerAlign: "center",
           align: "center",
         },
@@ -84,8 +90,8 @@ function UsersMessages() {
         },
         {
           field: "editAction",
-          headerName: "ویرایش",
-          width: 70,
+          headerName: "ارسال پاسخ",
+          width: 90,
           headerAlign: "center",
           align: "center",
           renderCell: (UserMessage) => {
@@ -93,12 +99,11 @@ function UsersMessages() {
               <div
                 onClick={() => {
                   setShowEditModal(true);
-                  UpdateUserHandler(UserMessage.id);
-                  setUpdateUserID(UserMessage.id)
+                  setUserEmail(UserMessage.row.email)
                 }}
                 className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
               >
-                <Edit className="size-5" />
+                <MarkChatRead className="size-8" />
               </div>
             );
           },
@@ -136,6 +141,20 @@ function UsersMessages() {
           },
         },
       ];
+      //Answer Function
+      const SendAnswerHandler = () => {
+        let sendAnswerInfos = JSON.stringify({
+            email: userEmail,
+            answer: sendAnswerText
+        })
+        if(sendAnswerText){
+            const sendAnswer = usePost('contact/answer' , sendAnswerInfos , true)
+            setShowEditModal(false)
+            setShowRealTimeDatas((prev) => !prev)
+        }else{
+            toast.error('لطفا متن پاسخ را وارد نمایید')
+        }
+      }
       //Delete Function
       const DeleteContactHandler = (DeleteContactHandlerID) =>{
         Swal.fire({
@@ -188,6 +207,23 @@ function UsersMessages() {
       <DetailsModal>
            {magBody}
       </DetailsModal>
+      {/* Send Answer */}
+      <EditModal headerText="ارسال پاسخ">
+        <div className="min-w-96">
+        <div className="relative mb-4">
+        <textarea rows="8" placeholder=' متن پاسخ *' value={sendAnswerText} onChange={(event) => setSendAnswerText(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
+          </div>
+        </div>
+        <div className="flex justify-end items-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={SendAnswerHandler}
+          >
+          ارسال پاسخ
+          </Button>
+        </div>
+      </EditModal>
     </>
   )
 }

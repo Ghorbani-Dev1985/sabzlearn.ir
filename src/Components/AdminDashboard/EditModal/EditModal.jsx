@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-function EditModal({children}) {
+function EditModal({children , headerText}) {
     const {showEditModal , setShowEditModal} = useEditModal()
   return (
     <Dialog
@@ -22,7 +22,7 @@ function EditModal({children}) {
     aria-describedby="alert-dialog-slide-description"
   >
     <Box className='flex-between bg-slate-100 p-5 dark:bg-gray-800 dark:text-white'>
-            <p className='flex flex-1 justify-center font-DanaBold text-2xl'> ویرایش </p>
+            <p className='flex flex-1 justify-center font-DanaBold text-2xl'>{headerText ? headerText : 'ویرایش'} </p>
            <p onClick={() => setShowEditModal(false)} className='text-rose-500 cursor-pointer flex-center'><Close /></p> 
     </Box>
     <DialogContent className='dark:bg-gray-main'>
