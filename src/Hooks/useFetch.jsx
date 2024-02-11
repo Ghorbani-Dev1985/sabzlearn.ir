@@ -17,12 +17,17 @@ const useFetch = (url , userToken) => {
       }
     })
     .then(response => {
+      
       setDatas(response.data)
       setIsShowLoading(false)
     })
     .catch(error => {
-        console.log(error)
-        toast.error("  خطا در اتصال به سرور ");
+        console.log(error.message)
+        if(error.message === 'Request failed with status code 404'){
+          toast.error(" نظری تاکنون ثبت نگردیده است")
+        }else{
+          toast.error(" خطا در برقراری با سرور")
+        }
     })
     } , [url , showRealtimeDatas]);
   return {datas}
