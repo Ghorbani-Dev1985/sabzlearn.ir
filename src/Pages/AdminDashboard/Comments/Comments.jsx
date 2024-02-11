@@ -138,11 +138,11 @@ function Comments() {
       width: 50,
       headerAlign: "center",
       align: "center",
-      renderCell: (menu) => {
+      renderCell: (comment) => {
         return (
           <div
             onClick={() => {
-              DeleteMenuHandler(menu.id);
+              DeleteCommentHandler(comment.id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -201,9 +201,9 @@ function Comments() {
           }
      }
      //Delete Function
-     const DeleteMenuHandler = (menuID) =>{
+     const DeleteCommentHandler = (commentID) =>{
       Swal.fire({
-          title: "برای حذف منو مطمعن هستید؟",
+          title: "برای حذف نظر مطمعن هستید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#f43f5e",
@@ -212,7 +212,7 @@ function Comments() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const menuDel = useDelete(`menus/${menuID}`);
+            const commentDel = useDelete(`comments/${commentID}`);
             setShowRealTimeDatas((prev) => !prev)
           }
         });
