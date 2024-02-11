@@ -5,7 +5,7 @@ import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext
 import { useEditModal } from '../../../Contexts/EditModalContext'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, DoneAllOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, RemoveDoneOutlined, RemoveRedEye } from '@mui/icons-material'
+import { CloudUploadOutlined, DoneAllOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, MarkChatRead, RemoveDoneOutlined, RemoveRedEye } from '@mui/icons-material'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
@@ -18,6 +18,9 @@ import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
+import EditModal from '../../../Components/AdminDashboard/EditModal/EditModal'
+import usePost from '../../../Hooks/usePost'
+import usePut from '../../../Hooks/usePut'
 
 
 function Comments() {
@@ -31,6 +34,8 @@ function Comments() {
   const [menuHref, setMenuHref] = useState("")
   const [menuParentID, setMenuParentID] = useState('')
   const [commentBody , setCommentBody] = useState('')
+  const [commentID , setCommentID] = useState('')
+  const [commentAnswerText , setCommentAnswerText] = useState('')
   console.log(Comments)
   const columns = [
     {
@@ -110,7 +115,27 @@ function Comments() {
       align: "center",
       renderCell: (comment) => {
         return (
-          comment.row.answer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
+          comment.row.isAnswer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
+        );
+      },
+    },
+    {
+      field: "editAction",
+      headerName: "ارسال پاسخ",
+      width: 90,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (comment) => {
+        return (
+          <div
+            onClick={() => {
+              setShowEditModal(true);
+              setCommentID(comment.id)
+            }}
+            className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
+          >
+            <MarkChatRead className="size-8" />
+          </div>
         );
       },
     },
@@ -120,16 +145,19 @@ function Comments() {
       width: 50,
       headerAlign: "center",
       align: "center",
-      renderCell: (menu) => {
+      renderCell: (comment) => {
         return (
-          <div
+          
+            comment.row.answer ? <DoneAllOutlined className='size-7 text-gray-600'/> :  <div
             onClick={() => {
-              DeleteMenuHandler(menu.id);
+              AcceptCommentHandler(comment.id)
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
            <DoneAllOutlined className='size-7'/>
           </div>
+          
+        
         );
       },
     },
@@ -139,16 +167,18 @@ function Comments() {
       width: 50,
       headerAlign: "center",
       align: "center",
-      renderCell: (menu) => {
+      renderCell: (comment) => {
         return (
+          comment.row.answer ? 
           <div
             onClick={() => {
-              DeleteMenuHandler(menu.id);
+              RejectCommentHandler(comment.id);
             }}
             className="flex-center cursor-pointer text-amber-500 hover:text-amber-300 transition-colors"
           >
            <RemoveDoneOutlined className='size-7'/>
           </div>
+          :  <RemoveDoneOutlined className='size-7 text-gray-600'/>
         );
       },
     },
@@ -185,41 +215,54 @@ function Comments() {
       },
     },
   ];
-     //Add Function
-     const AddNewMenuHandler = (event) => {
-      event.preventDefault()
-      let addNewMenuInfos = {
-        title : menuTitle,
-        href: menuHref,
-        parent: menuParentID === '' ? undefined : menuParentID ,
-      }
-
-       if(menuTitle && menuHref){
-         axios.post(`${BaseURL}menus` , addNewMenuInfos, {
-           headers : {
-             'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-           }
-         })
-         .then(response => {
-           console.log(response)
-           if(response.status === 201){
-             toast.success("  افزودن منو با موفقیت انجام شد")
-             setMenuTitle('')
-             setMenuHref('')
-             setMenuParentID('')
-             setShowRealTimeDatas((prev) => !prev)
-           }else{
-             toast.error("افزودن منو انجام نشد");
-           }
-         })
-         .catch(error => {
-             console.log(error)
-             toast.error('خطا در اتصال به سرور')
-            })
-          }else{
-            toast.error('لطفا موارد را وارد نمایید')
+     //Accept Function
+       const AcceptCommentHandler = (commentID) => {
+        Swal.fire({
+          title: "برای تایید نظر مطمعن هستید؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#f43f5e",
+          cancelButtonColor: "#0ea5e9",
+          confirmButtonText: "تایید",
+          cancelButtonText: "انصراف",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const accept = usePut(`comments/accept/${commentID}`)
+            setShowRealTimeDatas((prev) => !prev)
           }
-     }
+        });
+       }
+          //Accept Function
+       const RejectCommentHandler = (commentID) => {
+        Swal.fire({
+          title: "برای رد نظر مطمعن هستید؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#f43f5e",
+          cancelButtonColor: "#0ea5e9",
+          confirmButtonText: "تایید",
+          cancelButtonText: "انصراف",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const accept = usePut(`comments/reject/${commentID}`)
+            setShowRealTimeDatas((prev) => !prev)
+          }
+        });
+       }
+       
+        //Answer Function
+        const SendAnswerHandler = () => {
+          let sendAnswerInfos = JSON.stringify({
+              answer: commentAnswerText
+          })
+          if(commentAnswerText){
+              const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , true)
+              setShowEditModal(false)
+              setShowRealTimeDatas((prev) => !prev)
+          }else{
+              toast.error('لطفا متن پاسخ را وارد نمایید')
+          }
+        }
      //Delete Function
      const DeleteCommentHandler = (commentID) =>{
       Swal.fire({
@@ -239,7 +282,7 @@ function Comments() {
     }
   return (
     <>
-     <fieldset className="border border-gray-200 rounded-lg p-3">
+     {/* <fieldset className="border border-gray-200 rounded-lg p-3">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن مقاله جدید
         </legend>
@@ -264,22 +307,6 @@ function Comments() {
             />
             <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
-           {/* <div className="relative">
-            <select
-              defaultValue={'انتخاب منوی اصلی'}
-              onChange={(event) => setMenuParentID(event.target.value)}
-              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value={'انتخاب منوی اصلی'} disabled>انتخاب منوی اصلی</option>
-              {
-                Menus.map((menu) => {
-                 return(              
-                    !Boolean(menu.parent) && (<option value={menu._id}>{menu.title}</option>)
-                 )
-              })}
-            </select>
-          </div> */}
-
         </div>
         <div className="flex justify-end items-center">
           <Button
@@ -290,7 +317,7 @@ function Comments() {
             افزودن منو
           </Button>
         </div>
-      </fieldset>
+      </fieldset> */}
        {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
@@ -305,7 +332,7 @@ function Comments() {
                 className="dark:text-white"
                 rowHeight={150}
                 getRowId={(menu) => menu._id}
-                getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
+                getRowClassName={(UsersMessages) => `${UsersMessages.row.isAnswer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
                 columns={columns}
                 initialState={{
                   pagination: {
@@ -325,6 +352,23 @@ function Comments() {
        <DetailsModal>
            {commentBody}
       </DetailsModal>
+       {/* Send Answer */}
+       <EditModal headerText="ارسال پاسخ">
+        <div className="min-w-96">
+        <div className="relative mb-4">
+        <textarea rows="8" placeholder=' متن پاسخ *' value={commentAnswerText} onChange={(event) => setCommentAnswerText(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
+          </div>
+        </div>
+        <div className="flex-center">
+          <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={SendAnswerHandler}
+          >
+          ارسال پاسخ
+          </Button>
+        </div>
+      </EditModal>
     </>
   )
 }
