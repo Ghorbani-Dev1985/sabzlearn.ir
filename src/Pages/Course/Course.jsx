@@ -289,7 +289,7 @@ function Course() {
               <div className="text-zinc-700 dark:text-white">07:08</div>
             </div>
             {sessions.length > 0 ? (
-              sessions.map(({ _id, time, free, title }, index) => {
+              sessions.map(({ _id, time, free, title , video}, index) => {
                 return (
                   <React.Fragment key={_id}>
                     <Accordion className="w-full !rounded-2xl my-4 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
@@ -303,10 +303,10 @@ function Course() {
                       </AccordionSummary>
                       <AccordionDetails>
                         <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-                          {!free &&
-                          courseDetails.isUserRegisteredToThisCourse ? (
+                          {!free ? (
                             <Link
-                              to=""
+                              to={`http://localhost:5000/courses/covers/${video}`}
+                              target="_blank"
                               className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
                             >
                               <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
