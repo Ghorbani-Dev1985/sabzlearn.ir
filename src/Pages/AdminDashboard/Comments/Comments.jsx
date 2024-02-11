@@ -30,6 +30,7 @@ function Comments() {
   const [menuTitle, setMenuTitle] = useState("")
   const [menuHref, setMenuHref] = useState("")
   const [menuParentID, setMenuParentID] = useState('')
+  const [commentBody , setCommentBody] = useState('')
   console.log(Comments)
   const columns = [
     {
@@ -47,7 +48,7 @@ function Comments() {
       align: "center",
     },
     {
-      field: "creatorInfo",
+      field: "creatorName",
       headerName: "   نام نویسنده",
       width: 120,
       headerAlign: "center",
@@ -59,7 +60,7 @@ function Comments() {
       },
     },
     {
-      field: "creatorInfo",
+      field: "creatorUsername",
       headerName: "   نام کاربری",
       width: 120,
       headerAlign: "center",
@@ -71,7 +72,7 @@ function Comments() {
       },
     },
     {
-      field: "creatorInfo",
+      field: "creatorPhone",
       headerName: "   تلفن تماس ",
       width: 120,
       headerAlign: "center",
@@ -80,6 +81,25 @@ function Comments() {
         return (
           comment.row.creator.phone
           );
+      },
+    },
+    {
+      field: "bodyText",
+      headerName: "  متن کامل ",
+      width: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (comment) => {
+        return (
+          <p onClick={() => {
+              setShowDetailsModal(true)
+              setCommentBody(comment.row.body)
+          }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
+              <RemoveRedEye className="size-6 text-amber-500"/>
+             
+          </p>
+          
+        );
       },
     },
     {
@@ -301,6 +321,10 @@ function Comments() {
           </div>
         </>
       )}
+       {/* Show Detail */}
+       <DetailsModal>
+           {commentBody}
+      </DetailsModal>
     </>
   )
 }
