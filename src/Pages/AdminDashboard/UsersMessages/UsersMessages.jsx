@@ -187,6 +187,7 @@ function UsersMessages() {
                 className="dark:text-white"
                 rowHeight={150}
                 getRowId={(UsersMessage) => UsersMessage._id}
+                getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
                 columns={columns}
                 initialState={{
                   pagination: {
