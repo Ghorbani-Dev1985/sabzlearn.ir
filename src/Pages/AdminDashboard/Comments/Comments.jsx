@@ -5,7 +5,7 @@ import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext
 import { useEditModal } from '../../../Contexts/EditModalContext'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, DoneAllOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, MarkChatRead, RemoveDoneOutlined, RemoveRedEye } from '@mui/icons-material'
+import { CloudUploadOutlined, DoneAllOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, MarkChatRead, RemoveCircleOutlineOutlined, RemoveDoneOutlined, RemoveRedEye } from '@mui/icons-material'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
@@ -48,7 +48,7 @@ function Comments() {
     {
       field: "course",
       headerName: " نام دوره ",
-      width: 180,
+      width: 130,
       headerAlign: "center",
       align: "center",
     },
@@ -79,7 +79,7 @@ function Comments() {
     {
       field: "creatorPhone",
       headerName: "   تلفن تماس ",
-      width: 120,
+      width: 90,
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
@@ -91,7 +91,7 @@ function Comments() {
     {
       field: "bodyText",
       headerName: "  متن کامل ",
-      width: 140,
+      width: 80,
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
@@ -183,6 +183,26 @@ function Comments() {
       },
     },
     {
+      field: "ban",
+      headerName: "مسدود سازی",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (comment) => {
+        return (
+          
+          <div
+            onClick={() => {
+              BanUserHandler(comment.id);
+            }}
+            className="flex-center cursor-pointer text-red-500 hover:text-red-300 transition-colors"
+          >
+           <RemoveCircleOutlineOutlined className='size-7'/>
+          </div>
+        );
+      },
+    },
+    {
       field: "deleteAction",
       headerName: "حذف",
       width: 50,
@@ -192,7 +212,7 @@ function Comments() {
         return (
           <div
             onClick={() => {
-              DeleteCommentHandler(comment.id);
+              DeleteCommentHandler(comment.row.creator._id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -249,11 +269,28 @@ function Comments() {
           }
         });
        }
-       
+       //Ban User Function
+
+       const BanUserHandler = (userID) => {
+        Swal.fire({
+          title: "برای مسدود شدن کاربر مطمعن هستید؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#f43f5e",
+          cancelButtonColor: "#0ea5e9",
+          confirmButtonText: "تایید",
+          cancelButtonText: "انصراف",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const accept = usePut(`users/ban/${userID}`)
+            setShowRealTimeDatas((prev) => !prev)
+          }
+        });
+       }
         //Answer Function
         const SendAnswerHandler = () => {
           let sendAnswerInfos = JSON.stringify({
-              answer: commentAnswerText
+              body: commentAnswerText
           })
           if(commentAnswerText){
               const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , true)
