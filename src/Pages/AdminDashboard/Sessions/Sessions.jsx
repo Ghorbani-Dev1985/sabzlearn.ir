@@ -22,7 +22,7 @@ import DOMPurify from 'dompurify'
 
 function Sessions() {
   const title = useTitle("جلسه دوره‌ها - پنل کاربری")
-  const { datas: Blogs } = useFetch("articles", true)
+  const { datas: Sessions } = useFetch("courses/sessions", true)
   const { datas: courses } = useFetch("courses", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
@@ -33,30 +33,14 @@ function Sessions() {
   const [courseID , setCourseID] = useState('')
   const [sessionVideo , setSessionVideo] = useState("")
   const [isFree, setIsFree] = useState(1)
-
-  const columns = [
+ console.log(Sessions)
+   const columns = [
     {
       field: "id",
       headerName: "ردیف",
       width: 10,
       headerAlign: "center",
       align: "center",
-    },
-    {
-      field: "photo",
-      headerName: " عکس ",
-      width: 70,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (blog) => {
-        return (
-          <img
-            src={`http://localhost:5000/courses/covers/${blog.row.cover}`}
-            className="object-fill"
-            alt="ghorbani-dev.ir"
-          />
-        );
-      },
     },
     {
       field: "title",
@@ -66,64 +50,34 @@ function Sessions() {
       align: "center",
     },
     {
-      field: "creatorName",
-      headerName: "   نویسنده",
+      field: "courseName",
+      headerName: "    عنوان دوره",
       width: 120,
       headerAlign: "center",
       align: "center",
-      renderCell: (blog) => {
-        return (
-          blog.row.creator.name
-        );
-      },
+      // renderCell: (session) => {
+      //   return (
+      //      session.course.name && session.course.name
+      //     console.log(`${session.row.course && session.row.course}`)
+      //   );
+      // },
     },
     {
-      field: "creatorPhone",
-      headerName: " تلفن نویسنده ",
+      field: "time",
+      headerName: " زمان",
       width: 120,
       headerAlign: "center",
       align: "center",
-      renderCell: (blog) => {
-        return (
-          blog.row.creator.phone
-        );
-      },
     },
     {
-      field: "description",
-      headerName: " چکیده",
-      width: 250,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-        field: "bodyText",
-        headerName: "  متن کامل ",
-        width: 140,
-        headerAlign: "center",
-        align: "center",
-        renderCell: (blog) => {
-          return (
-            <p onClick={() => {
-                setShowDetailsModal(true)
-                setBlogBody(blog.row.body)
-            }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
-                <RemoveRedEye className="size-6 text-amber-500"/>
-               
-            </p>
-            
-          );
-        },
-      },
-    {
-      field: "answerStatus",
+      field: "sessionIsfree",
       headerName: "  وضعیت ",
       width: 140,
       headerAlign: "center",
       align: "center",
-      renderCell: (blog) => {
+      renderCell: (session) => {
         return (
-            blog.row.publish ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'> منتشر شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پیش نویس</span>
+            session.row.free ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>  نقدی</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>رایگان </span>
         );
       },
     },
@@ -133,11 +87,11 @@ function Sessions() {
       width: 50,
       headerAlign: "center",
       align: "center",
-      renderCell: (blog) => {
+      renderCell: (session) => {
         return (
           <div
             onClick={() => {
-              DeleteBlogHandler(blog.id);
+              DeleteSessionHandler(session.row._id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -159,7 +113,7 @@ function Sessions() {
         );
       },
     },
-  ];
+   ];
      //Add Function
      const AddNewSessionHandler = (event) => {
       event.preventDefault()
@@ -201,9 +155,10 @@ function Sessions() {
           }
      }
      //Delete Function
-     const DeleteBlogHandler = (blogID) =>{
+     const DeleteSessionHandler = (sessionID) =>{
+      console.log(sessionID)
       Swal.fire({
-          title: "برای حذف پیام مطمعن هستید؟",
+          title: "برای حذف جلسه مطمعن هستید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#f43f5e",
@@ -212,7 +167,7 @@ function Sessions() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const blogDel = useDelete(`articles/${blogID}`);
+            const sessionDel = useDelete(`courses/sessions/${sessionID}`);
             setShowRealTimeDatas((prev) => !prev)
           }
         });
@@ -345,14 +300,14 @@ function Sessions() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
-            {Blogs.length > 1 ? (
+            {Sessions.length > 1 ? (
               <DataGrid
-                rows={Blogs.map((blog, index) => {
-                  return { id: index + 1, ...blog };
+                rows={Sessions.map((session, index) => {
+                  return { id: index + 1, ...session };
                 })}
                 className="dark:text-white"
                 rowHeight={150}
-                getRowId={(blog) => blog._id}
+                getRowId={(session) => session._id}
                 columns={columns}
                 initialState={{
                   pagination: {
