@@ -80,7 +80,6 @@ function Course() {
       document.title = courseInfo.data.name;
     });
   }, []);
-  
   return (
     <>
       {/* Breadcrumb */}
@@ -403,16 +402,13 @@ function Course() {
           {/* Teacher Section In Mobile */}
           <div className="hidden lg:block bg-white dark:bg-gray-800 px-5 py-6 shadow-light dark:shadow-none rounded-2xl text-center">
             <img
-              src={User}
+              src={`http://localhost:5000/courses/covers/${creator.profile}`}
               className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
-              alt="ghorbani-dev.ir"
+              alt={creator.name}
             />
             <h4 className="text-zinc-700 dark:text-white text-2xl mb-1">
               {creator.name}
             </h4>
-            <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
-              برنامه نویس و توسعه دهنده فول استک وب
-            </p>
             <Link
               to="#"
               className="flex-center my-3 gap-x-1.5 text-slate-500 dark:text-gray-500 text-sm"
@@ -421,11 +417,41 @@ function Course() {
               <Logout className="size-5" />
             </Link>
             <p className="text-zinc-700 dark:text-white font-danaLight mt-2.5">
-              اولین کدم رو 14 سالگی زدم، حدود 9 سال پیش که با زبان ویژوال بیسیک
-              بود و بعد حدودا 2 سال تو فیلد برنامه نویسی موبایل با زبان جاوا کار
-              کردم و در نهایت با عشقی به اسم جاوا اسکریپت آشنا شدم و حدودا یه 7
-              سالی هست جاوا اسکریپت کد می‌زنم و به صورت Mern Stack فعالیت
-              می‌کنم.
+             {
+              creator.username === 'qadir_yolme' && ''
+             }
+             {
+              creator.username === 'amin_saeedi' && <p>
+                اولین کدم رو 14 سالگی زدم، حدود 9 سال پیش که با زبان ویژوال بیسیک
+                بود و بعد حدودا 2 سال تو فیلد برنامه نویسی موبایل با زبان جاوا کار
+                کردم و در نهایت با عشقی به اسم جاوا اسکریپت آشنا شدم و حدودا یه 7
+                سالی هست جاوا اسکریپت کد می‌زنم و به صورت Mern Stack فعالیت
+                می‌کنم.
+              </p>
+             }
+             {
+              creator.username === 'HamidrezaEbadi' && 'توسعه دهنده فرانت سبزلرن'
+             }
+             {
+              creator.username === 'rezadolati01' && <p>
+                تقریبا 10 ساله در زمینه برنامه نویسی فعال هستم، 5 سال پیش اولین شرکت خودم رو تاسیس کردم، 1 سال پیش اولین فروشگاه اینترنتی خودم رو توسعه دادم. عاشق زبان برنامه نویسی پایتون هستم و در کنار پایتون زبان های دیگه ای رو هم کار میکنم. در حال حاضر، توسعه دهنده بک اند با جنگو و فارغ التحصیل رشته امنیت از دانشگاه سراسری تبریز هستم و 3 ساله در زمینه هوش مصنوعی هم فعالیت میکنم.
+              </p>
+             }
+             {
+              creator.username === 'amscan77' && <p>
+                تقریبا 8 سالی هست که تو حوزه هک و امنیت فعالیت میکنم علاقه اصلیم بحث تهاجمی (Offensive) هست ، 3 سالی هست که توی حوزه تیم قرمز (RedTeam) فعالیت میکنم و به نظرم همه حوزه های هک جذابه و نمیشه از دستش داد :)
+              </p>
+             }
+             {
+              creator.username === 'moein123' && <p>
+              سال ۹۷ وارد دنیای برنامه نویسی شدم و الان ۵ ساله توی این بازی ام، از دروازه php و فریمورک هاش مثل کُدِگنایتر و لاراول کارمو شروع کردم و بعد تر تجربه کد زدن با nodeJs, expressJs و NestJs رو داشتم. یاد دادن همیشه برام کار جذابی بوده و خوب انجامش دادم ولی هیچوقت خودمو استاد ندونستم و نمیدونم. امیدوارم بتونم برات رفیق خوبی توی مسیر یادگیری بهتر برنامه نویسی باشم:)
+              </p>
+             }
+             {
+              creator.username === 'mehrshad_b' && <p>
+                مهرشاد براتی هستم برنامه نویس و توسعه دهنده فول استک وب و دانشجوی ارشد رشته کامپیوتر گرایش نرم افزار
+              </p>
+             }
             </p>
           </div>
           {/* Short Link */}
