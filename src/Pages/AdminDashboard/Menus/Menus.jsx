@@ -5,7 +5,7 @@ import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext
 import { useEditModal } from '../../../Contexts/EditModalContext'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, FolderOpenOutlined, InsertLinkOutlined, RemoveRedEye } from '@mui/icons-material'
+import { CloudUploadOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, RemoveRedEye } from '@mui/icons-material'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
@@ -66,7 +66,7 @@ function Menus() {
       renderCell: (menu) => {
          console.log(menu.row.parent)
         return (
-          menu.row.parent ? menu.row.parent.title : 'منوی اصلی'
+          menu.row.parent ? menu.row.parent.title : <GppGood className='text-primary'/>
           );
       },
     },
@@ -78,7 +78,7 @@ function Menus() {
       align: "center",
       renderCell: (menu) => {
         return (
-          menu.row.parent ? menu.row.parent.href : 'منوی اصلی'
+          menu.row.parent ? menu.row.parent.href : <GppGood className='text-primary'/>
         );
       },
     },
@@ -159,9 +159,9 @@ function Menus() {
           }
      }
      //Delete Function
-     const DeleteBlogHandler = (blogID) =>{
+     const DeleteMenuHandler = (menuID) =>{
       Swal.fire({
-          title: "برای حذف پیام مطمعن هستید؟",
+          title: "برای حذف منو مطمعن هستید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#f43f5e",
@@ -170,7 +170,7 @@ function Menus() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const blogDel = useDelete(`articles/${blogID}`);
+            const menuDel = useDelete(`menus/${menuID}`);
             setShowRealTimeDatas((prev) => !prev)
           }
         });
