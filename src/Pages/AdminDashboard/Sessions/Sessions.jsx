@@ -55,12 +55,11 @@ function Sessions() {
       width: 120,
       headerAlign: "center",
       align: "center",
-      // renderCell: (session) => {
-      //   return (
-      //      session.course.name && session.course.name
-      //     console.log(`${session.row.course && session.row.course}`)
-      //   );
-      // },
+      renderCell: (session) => {
+        return (
+         session.row.course.name
+        );
+      },
     },
     {
       field: "time",

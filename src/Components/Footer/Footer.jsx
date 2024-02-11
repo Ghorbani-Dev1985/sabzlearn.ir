@@ -1,4 +1,4 @@
-import { Email, Instagram, Telegram } from '@mui/icons-material'
+import { AlternateEmail, Email, Instagram, PhoneIphone, Telegram } from '@mui/icons-material'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../Hooks/useFetch'
@@ -11,6 +11,7 @@ import usePost from '../../Hooks/usePost'
 import axios from 'axios'
 import { BaseURL } from '../../Utils/Utils'
 import toast from 'react-hot-toast'
+
 
 const quickAccessLinks = [
     {
@@ -34,6 +35,7 @@ const quickAccessLinks = [
 
 export default memo(function Footer() {
    const { datas: usefulLinks } = useFetch("menus/topbar", "")
+   const { datas: infos } = useFetch("infos/index", "")
     const [newsLatterValue , setNewsLatterValue] = useState('')
     const ShuffledLinks = useCallback([...usefulLinks].sort(() => 0.5 - Math.random()), [usefulLinks])
     const [formState , onInputHandler] = useForm({
@@ -75,6 +77,19 @@ export default memo(function Footer() {
           <div className='flex flex-col items-center sm:items-start gap-y-5 sm:flex-grow'>
             <h4 className='font-DanaMd text-2xl text-zinc-700 dark:text-white'>درباره ما</h4>
             <p className='sm:max-w-xs'>سبزلرن یک اکادمی خصوصی آموزش برنامه نویسی هست که با هدف تحویل نیروی متخصص بر پایه تولید محتوای غیرسطحی فعالیت میکند</p>
+            <div className='w-full flex-between'>
+            <a href='tel:989921558293' className='dir-ltr'>
+             <PhoneIphone /> <span>{infos.phone}</span>
+            </a>
+            <a href='mailto:sabzlearn@gmail.com' className='dir-ltr'>
+             <AlternateEmail /> <span>{infos.email}</span>
+            </a>
+            </div>
+            <div className='w-full flex-between'>
+              <div className='flex-center gap-3'><p className='flex-center bg-emerald-100 dark:bg-mainSlate text-primary size-12 font-DanaBold text-2xl p-2 rounded-full'>{infos.coursesCount}</p><span>دوره</span></div>
+              <div className='flex-center gap-3'><p className='flex-center bg-emerald-100 dark:bg-mainSlate text-primary size-12 font-DanaBold text-2xl p-2 rounded-full'>{infos.usersCount}</p><span>کاربر</span></div>
+              <div className='flex-center gap-3'><p className='flex-center bg-emerald-100 dark:bg-mainSlate text-primary size-12 font-DanaBold text-2xl p-2 rounded-full'>{infos.totalTime}</p><span>ساعت</span></div>
+            </div>
           </div>
           {/*  Footer Links */}
            <FooterLinks title="دسترسی سریع" linkList={quickAccessLinks}/>
