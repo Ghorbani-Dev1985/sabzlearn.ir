@@ -299,7 +299,7 @@ function Sessions() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
-            {Sessions.length > 1 ? (
+            {Sessions.length > 0 ? (
               <DataGrid
                 rows={Sessions.map((session, index) => {
                   return { id: index + 1, ...session };

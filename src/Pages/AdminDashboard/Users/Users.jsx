@@ -399,7 +399,7 @@ function Users() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
-            {users.length > 1 ? (
+            {users.length > 0 ? (
               <DataGrid
                 rows={users.map((user, index) => {
                   return { id: index + 1, ...user };

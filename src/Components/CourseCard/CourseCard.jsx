@@ -29,7 +29,7 @@ function CourseCard(
       </div>
       {/* Body */}
       <div className="px-5 pb-3.5 pt-2.5 flex-grow">
-        {/* {category.length > 1 ? (
+        {/* {category.length > 0 ? (
           category.map(({ id, categoryTitle, categoryLink }) => {
             return (
               <React.Fragment key={id}>

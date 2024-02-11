@@ -313,7 +313,7 @@ function Blogs() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
-            {Blogs.length > 1 ? (
+            {Blogs.length > 0 ? (
               <DataGrid
                 rows={Blogs.map((blog, index) => {
                   return { id: index + 1, ...blog };

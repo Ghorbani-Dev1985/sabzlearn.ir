@@ -30,6 +30,7 @@ function Header() {
         </div>
         {/* Main Nav */}
         <ul className="hidden lg:flex gap-x-5 text-base xl:text-lg child:relative">
+
           {
             menus.map(({_id , href , title , submenus})=> {
               return(
@@ -39,15 +40,21 @@ function Header() {
                 {submenus.length > 0 && <ExpandMore className="size-5" />}  
                 </Link>
                 {
-                 submenus && submenus.map(({_id, href , title}) => {
-                  return (
-            <div key={_id} className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10">
-              <div className="flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base">
-                <Link to={href} className="submenu__link">{title}</Link>
+                submenus.length > 0 && (
+                  <>
+                <div key={_id} className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full pt-1 xl:pt-4 transition-all z-10">
+                  <div className="flex flex-col gap-y-5 w-64 bg-white dark:bg-gray-700 shadow-light dark:shadow-none py-5 px-6 rounded-2xl text-base">
+                   {
+                     submenus.map(({_id, href , title}) => {
+                      return (
+                    <Link to={href} className="submenu__link">{title}</Link>
+                    )
+                  })
+                }
+                </div>
               </div>
-            </div>
-                  )
-                 })
+                  </>
+                )
                 }
           </li>
               )

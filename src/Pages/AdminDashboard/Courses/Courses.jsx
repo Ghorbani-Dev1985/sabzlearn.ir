@@ -418,7 +418,7 @@ function Courses() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
-            {courses.length > 1 ? (
+            {courses.length > 0 ? (
               <DataGrid
                 rows={courses.map((course, index) => {
                   return { id: index + 1, ...course };

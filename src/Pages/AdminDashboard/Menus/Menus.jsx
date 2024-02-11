@@ -18,22 +18,18 @@ import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
-import DOMPurify from 'dompurify'
+
 
 function Menus() {
   const title = useTitle("منو‌ها - پنل کاربری")
   const { datas: Menus } = useFetch("menus/all", true)
-  const { datas: categories } = useFetch("category", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   const { showEditModal, setShowEditModal } = useEditModal()
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
-  const [blogTitle, setBlogTitle] = useState("")
-  const [blogDescription, setBlogDescription] = useState("")
-  const [blogShortName, setBlogShortName] = useState("")
-  const [blogCategoryID, setBlogCategoryID] = useState("")
-  const [blogBody , setBlogBody] = useState('')
-  const [blogCover, setBlogCover] = useState({})
+  const [menuTitle, setMenuTitle] = useState("")
+  const [menuHref, setMenuHref] = useState("")
+  const [menuParentID, setMenuParentID] = useState('')
   console.log(Menus)
   const columns = [
     {
@@ -64,7 +60,6 @@ function Menus() {
       headerAlign: "center",
       align: "center",
       renderCell: (menu) => {
-         console.log(menu.row.parent)
         return (
           menu.row.parent ? menu.row.parent.title : <GppGood className='text-primary'/>
           );
@@ -116,18 +111,16 @@ function Menus() {
     },
   ];
      //Add Function
-     const AddNewBlogHandler = (event) => {
+     const AddNewMenuHandler = (event) => {
       event.preventDefault()
-      let newBlogFormData = new FormData()
-      newBlogFormData.append('title' , blogTitle)
-      newBlogFormData.append('description' , blogDescription)
-      newBlogFormData.append('shortName' , blogShortName)
-      newBlogFormData.append('categoryID' , blogCategoryID)
-      newBlogFormData.append('body' , blogBody)
-      newBlogFormData.append('cover' , blogCover)
-    console.log(blogCover.name)
-       if(blogTitle && blogDescription && blogShortName && blogCategoryID && blogCover.name){
-         axios.post(`${BaseURL}articles` , newBlogFormData, {
+      let addNewMenuInfos = {
+        title : menuTitle,
+        href: menuHref,
+        parent: menuParentID === '' ? undefined : menuParentID ,
+      }
+
+       if(menuTitle && menuHref){
+         axios.post(`${BaseURL}menus` , addNewMenuInfos, {
            headers : {
              'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
            }
@@ -135,27 +128,21 @@ function Menus() {
          .then(response => {
            console.log(response)
            if(response.status === 201){
-             
-             toast.success("  افزودن مقاله با موفقیت انجام شد")
-             setBlogTitle('')
-             setBlogDescription('')
-             setBlogShortName('')
-             setBlogCategoryID('')
-             setBlogCover('')
-             setBlogBody('')
+             toast.success("  افزودن منو با موفقیت انجام شد")
+             setMenuTitle('')
+             setMenuHref('')
+             setMenuParentID('')
              setShowRealTimeDatas((prev) => !prev)
            }else{
-             toast.error("افزودن مقاله انجام نشد");
+             toast.error("افزودن منو انجام نشد");
            }
          })
          .catch(error => {
              console.log(error)
              toast.error('خطا در اتصال به سرور')
             })
-          }else if(blogTitle.length <=2 && blogShortName.length <=2){
-            toast.error('تعداد کاراکترها کمتر از حد مجاز می باشد')
           }else{
-            toast.error('عکس مقاله را آپلود نمایید')
+            toast.error('لطفا موارد را وارد نمایید')
           }
      }
      //Delete Function
@@ -186,9 +173,9 @@ function Menus() {
             <input
               type="text"
               className="outline-none pl-9 sm:pl-12 bg-white"
-              placeholder="نام  *"
-              value={blogTitle}
-              onChange={(event) => setBlogTitle(event.target.value)}
+              placeholder=" عنوان *"
+              value={menuTitle}
+              onChange={(event) => setMenuTitle(event.target.value)}
             />
             <FolderOpenOutlined className="left-3 sm:left-4" />
           </div>
@@ -197,68 +184,35 @@ function Menus() {
               type="text"
               className="outline-none pl-9 sm:pl-12 bg-white"
               placeholder=" لینک *"
-              value={blogShortName}
-              onChange={(event) => setBlogShortName(event.target.value)}
+              value={menuHref}
+              onChange={(event) => setMenuHref(event.target.value)}
             />
             <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
-          <textarea rows="8" placeholder='  چکیده *' value={blogDescription} onChange={(event) => setBlogDescription(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
            <div className="relative">
             <select
-              defaultValue={'انتخاب دسته بندی دوره'}
-              onChange={(event) => setBlogCategoryID(event.target.value)}
+              defaultValue={'انتخاب منوی اصلی'}
+              onChange={(event) => setMenuParentID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'انتخاب دسته بندی دوره'} disabled>انتخاب دسته بندی دوره</option>
-              {categories.map(({ _id, title }) => {
-                return (
-                  <React.Fragment key={_id}>
-                    <option value={_id} className="px-3">
-                      {title}
-                    </option>
-                  </React.Fragment>
-                );
+              <option value={'انتخاب منوی اصلی'} disabled>انتخاب منوی اصلی</option>
+              {
+                Menus.map((menu) => {
+                 return(              
+                    !Boolean(menu.parent) && (<option value={menu._id}>{menu.title}</option>)
+                 )
               })}
             </select>
-        <div className="flex-center w-full mx-auto my-3">
-          <div className="flex-center w-full relative">
-            <label
-              htmlFor="CoverUpload"
-              className="flex-center flex-col w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex-center flex-col pt-5 pb-6">
-                <CloudUploadOutlined className="text-gray-500 mb-2" />
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">انتخاب فایل</span> یا فایل را
-                  بکشید و اینجا رها کنید
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  WEBP, PNG, JPG , JPEG (سایز 768x432px )
-                </p>
-               <span className="text-mainSlate dark:text-white my-3">{blogCover.name}</span> 
-              </div>
-              <input id="CoverUpload" type="file" required onChange={(event) => setBlogCover(event.target.files[0])} accept=".webp , .jpg , .png, .jpeg" className="h-full absolute z-50 opacity-0" />
-            </label>
           </div>
+
         </div>
-          </div>
-    
-        </div>
-        <CKEditor
-          editor={ClassicEditor}
-          data={blogBody}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            setBlogBody(data);
-          }}
-        />
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewBlogHandler}
+            onClick={AddNewMenuHandler}
           >
-            افزودن مقاله
+            افزودن منو
           </Button>
         </div>
       </fieldset>
@@ -268,7 +222,7 @@ function Menus() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست منوها</h2>
-            {Menus.length > 1 ? (
+            {Menus.length > 0 ? (
               <DataGrid
                 rows={Menus.map((menu, index) => {
                   return { id: index + 1, ...menu };
@@ -291,10 +245,6 @@ function Menus() {
           </div>
         </>
       )}
-       {/* Show Detail */}
-       <DetailsModal>
-       <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blogBody) }} />
-      </DetailsModal>
     </>
   )
 }

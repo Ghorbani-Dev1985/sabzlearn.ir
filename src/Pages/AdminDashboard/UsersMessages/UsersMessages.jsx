@@ -179,7 +179,7 @@ function UsersMessages() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
-            {UsersMessages.length > 1 ? (
+            {UsersMessages.length > 0 ? (
               <DataGrid
                 rows={UsersMessages.map((UsersMessage, index) => {
                   return { id: index + 1, ...UsersMessage };

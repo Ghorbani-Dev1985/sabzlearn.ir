@@ -79,7 +79,7 @@ function Course() {
       setCourseDetails(courseInfo.data);
       document.title = courseInfo.data.name;
     });
-  }, []);
+  }, [courseName]);
   return (
     <>
       {/* Breadcrumb */}

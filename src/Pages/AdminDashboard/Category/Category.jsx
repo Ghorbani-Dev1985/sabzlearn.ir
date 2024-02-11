@@ -205,7 +205,7 @@ function Category() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
-            {categories.length > 1 ? (
+            {categories.length > 0 ? (
               <DataGrid
                 rows={categories.map((category, index) => {
                   return { id: index + 1, ...category };
