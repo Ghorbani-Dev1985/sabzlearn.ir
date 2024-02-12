@@ -4,7 +4,7 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Comment, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message} from '@mui/icons-material';
+import { Article, Comment, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
 
 
@@ -63,6 +63,12 @@ const AdminDashboardNavItems = [
     to: 'messages',
     icon: <Message />,
     text: ' پیام‌ها'
+  }, 
+   {
+    id: 10,
+    to: 'discount',
+    icon: <Percent />,
+    text: ' کدهای تخفیف'
   },
 ]
 

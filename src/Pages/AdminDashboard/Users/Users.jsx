@@ -399,6 +399,7 @@ function Users() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {users.length > 0 ? (
               <DataGrid
                 rows={users.map((user, index) => {
@@ -418,6 +419,7 @@ function Users() {
             ) : (
               <Alert severity="info">هیچ کاربری تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

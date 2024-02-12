@@ -48,7 +48,7 @@ function Comments() {
     {
       field: "course",
       headerName: " نام دوره ",
-      width: 130,
+      width: 160,
       headerAlign: "center",
       align: "center",
     },
@@ -79,7 +79,7 @@ function Comments() {
     {
       field: "creatorPhone",
       headerName: "   تلفن تماس ",
-      width: 90,
+      width: 120,
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
@@ -110,12 +110,12 @@ function Comments() {
     {
       field: "parentMenuLink",
       headerName: "  وضعیت",
-      width: 150,
+      width: 160,
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
         return (
-          comment.row.isAnswer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
+          comment.row.answer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
         );
       },
     },
@@ -319,48 +319,13 @@ function Comments() {
     }
   return (
     <>
-     {/* <fieldset className="border border-gray-200 rounded-lg p-3">
-        <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
-          افزودن مقاله جدید
-        </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
-          <div className="relative">
-            <input
-              type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
-              placeholder=" عنوان *"
-              value={menuTitle}
-              onChange={(event) => setMenuTitle(event.target.value)}
-            />
-            <FolderOpenOutlined className="left-3 sm:left-4" />
-          </div>
-          <div className="relative">
-            <input
-              type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
-              placeholder=" لینک *"
-              value={menuHref}
-              onChange={(event) => setMenuHref(event.target.value)}
-            />
-            <InsertLinkOutlined className="left-3 sm:left-4" />
-          </div>
-        </div>
-        <div className="flex justify-end items-center">
-          <Button
-            btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewMenuHandler}
-          >
-            افزودن منو
-          </Button>
-        </div>
-      </fieldset> */}
        {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست نظرها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {Comments.length > 0 ? (
               <DataGrid
                 rows={Comments.map((menu, index) => {
@@ -369,7 +334,7 @@ function Comments() {
                 className="dark:text-white"
                 rowHeight={150}
                 getRowId={(menu) => menu._id}
-                getRowClassName={(UsersMessages) => `${UsersMessages.row.isAnswer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
+                getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
                 columns={columns}
                 initialState={{
                   pagination: {
@@ -382,6 +347,7 @@ function Comments() {
             ) : (
               <Alert severity="info">هیچ نظری ای تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

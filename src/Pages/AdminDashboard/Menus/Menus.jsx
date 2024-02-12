@@ -222,6 +222,7 @@ function Menus() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست منوها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {Menus.length > 0 ? (
               <DataGrid
                 rows={Menus.map((menu, index) => {
@@ -242,6 +243,7 @@ function Menus() {
             ) : (
               <Alert severity="info">هیچ منو ای تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

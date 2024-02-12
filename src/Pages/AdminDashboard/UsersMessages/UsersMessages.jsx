@@ -179,6 +179,7 @@ function UsersMessages() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {UsersMessages.length > 0 ? (
               <DataGrid
                 rows={UsersMessages.map((UsersMessage, index) => {
@@ -186,6 +187,7 @@ function UsersMessages() {
                 })}
                 className="dark:text-white"
                 rowHeight={150}
+                
                 getRowId={(UsersMessage) => UsersMessage._id}
                 getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
                 columns={columns}
@@ -200,6 +202,7 @@ function UsersMessages() {
             ) : (
               <Alert severity="info">هیچ پیامی تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

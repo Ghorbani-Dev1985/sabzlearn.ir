@@ -264,11 +264,12 @@ function Courses() {
   
   return (
     <>
-      <fieldset className="border border-gray-200 rounded-lg p-3">
+      
+         <fieldset className="border border-gray-200 rounded-lg p-3">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن دوره جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <div className="flex flex-wrap justify-between gap-5 md:child:w-30p lg:child:w-48p">
           <div className="relative">
             <input
               type="text"
@@ -394,7 +395,9 @@ function Courses() {
             </label>
           </div>
         </div>
+
         <CKEditor
+          width= "500px"
           editor={ClassicEditor}
           data={courseDescription}
           onChange={(event, editor) => {
@@ -412,12 +415,14 @@ function Courses() {
           </Button>
         </div>
       </fieldset>
+     
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {courses.length > 0 ? (
               <DataGrid
                 rows={courses.map((course, index) => {
@@ -438,6 +443,7 @@ function Courses() {
             ) : (
               <Alert severity="info">هیچ دوره ای تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

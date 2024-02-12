@@ -22,7 +22,7 @@ import UsersMessagesDashboard from './Pages/AdminDashboard/UsersMessages/UsersMe
 import CommentsAdminDashboard from './Pages/AdminDashboard/Comments/Comments'
 import Overview from "./Pages/AdminDashboard/Overview/Overview";
 import SessionsAdminDashboard from './Pages/AdminDashboard/Sessions/Sessions'
-
+import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
 
 
 
@@ -106,6 +106,7 @@ let routes = [
             {path: 'menus' , element : <MenusAdminDashboard />},
             {path: 'blogs' , element : <BlogsAdminDashboard />},
             {path: 'messages' , element : <UsersMessagesDashboard />},
+            {path: 'discount' , element : <DiscountDashboard />},
             ],
         },
     {element: <LayoutWithoutHeaderFooter /> , children : [

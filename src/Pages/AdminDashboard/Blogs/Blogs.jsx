@@ -320,6 +320,7 @@ function Blogs() {
                 })}
                 className="dark:text-white"
                 rowHeight={150}
+                sx={{ maxWidth: 630 }}
                 getRowId={(blog) => blog._id}
                 columns={columns}
                 initialState={{
