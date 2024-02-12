@@ -7,7 +7,12 @@ const CoursesContext = createContext();
 export const CoursesContextProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
-    axios.get(`${BaseURL}courses`).then((response) => {
+    axios.get(`${BaseURL}courses` , {
+      headers : {
+        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    })
+    .then((response) => {
       setCourses(response.data);
     });
   }, []);

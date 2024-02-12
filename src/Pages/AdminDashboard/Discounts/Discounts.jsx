@@ -4,7 +4,7 @@ import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
 import { useEditModal } from "../../../Contexts/EditModalContext";
-import { Edit, FolderCopyOutlined, InsertLinkOutlined } from "@mui/icons-material";
+import { Discount, Edit, FolderCopyOutlined, InsertLinkOutlined, LocalOffer } from "@mui/icons-material";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid , faIR} from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
@@ -15,19 +15,21 @@ import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import useUpdate from "../../../Hooks/useUpdate";
 import usePost from "../../../Hooks/usePost";
 import toast from "react-hot-toast";
+import { useCourses } from "../../../Contexts/CoursesContext";
 
 function Category() {
   const title = useTitle(" کدهای تخفیف - پنل کاربری");
   const { datas: Discounts } = useFetch("offs", true)
+  const { datas: Courses } = useFetch("courses", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   const { showEditModal, setShowEditModal } = useEditModal()
   const [updateCategoryID, setUpdateCategoryID] = useState("")
-  const [categoryTitle , setCategoryTitle] = useState('')
-  const [categoryName , setCategoryName] = useState('')
-  const [updateCategoryTitle , setUpdateCategoryTitle] = useState('')
-  const [updateCategoryName , setUpdateCategoryName] = useState('')
-  console.log(Discounts);
+  const [discountCode , setDiscountCode] = useState('')
+  const [discountPercent , setDiscountPercent] = useState('')
+  const [discountCourseID , setDiscountCourseID] = useState('-1')
+  const [discountMaxUse , setDiscountMaxUse] = useState('')
+  console.log(Courses);
   const columns = [
     {
       field: "id",
@@ -133,19 +135,19 @@ function Category() {
     },
   ];
   //Edit Function
-  const UpdateCategoryHandler = () => {
-    let updateCategoryInfos = JSON.stringify({
-      title: updateCategoryTitle,
-      name: updateCategoryName
-    })
-    if(updateCategoryTitle && updateCategoryName){
-        const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
-        setShowRealTimeDatas((prev) => !prev)
-        setShowEditModal(false)
-    }else if(updateCategoryTitle.length <= 2 && updateCategoryName.length <= 2 ){
-        toast.error('تعداد کاراکترها کمتر از حد مجاز است')
-    }
-  };
+  // const UpdateCategoryHandler = () => {
+  //   let updateCategoryInfos = JSON.stringify({
+  //     title: updateCategoryTitle,
+  //     name: updateCategoryName
+  //   })
+  //   if(updateCategoryTitle && updateCategoryName){
+  //       const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
+  //       setShowRealTimeDatas((prev) => !prev)
+  //       setShowEditModal(false)
+  //   }else if(updateCategoryTitle.length <= 2 && updateCategoryName.length <= 2 ){
+  //       toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+  //   }
+  // };
     //  Delete Function
     const DeleteCategoryHandler = (categoryID) => {
         Swal.fire({
@@ -163,19 +165,23 @@ function Category() {
           }
         });
       };
-      //New Category
-      const AddNewCategoryHandler = () => {
-        let newCategoryInfos = JSON.stringify({
-            title: categoryTitle,
-            name: categoryName
+      //New Function
+      const AddNewDiscountHandler = () => {
+        let newDiscountInfos = JSON.stringify({
+          code: discountCode,
+          percent: discountPercent,
+          course: discountCourseID,
+          max: discountMaxUse,
           })
-          if(categoryTitle && categoryName){
-              const addNew = usePost('category' , newCategoryInfos , true)
-              setCategoryTitle('')
-              setCategoryName('')
+          if(discountCode && discountPercent && discountCourseID !== '-1' && discountMaxUse){
+              const addNew = usePost('offs' , newDiscountInfos , true)
+              setDiscountCode('')
+              setDiscountPercent('')
+              setDiscountCourseID('-1')
+              setDiscountMaxUse('')
               setShowRealTimeDatas((prev) => !prev)
-          }else if(categoryTitle.length <= 2 && categoryName.length <= 2){
-            toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+          }else if(discountCode.length <= 2){
+            toast.error('لطفا فرم را تکمیل نمایید')
           }
       }
       // useEffect(() => {
@@ -196,9 +202,9 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder='نام دسته بندی*'
-              value={categoryTitle}
-              onChange={(event) => setCategoryTitle(event.target.value)}
+              placeholder=' کد تخفیف *'
+              value={discountCode}
+              onChange={(event) => setDiscountCode(event.target.value)}
               />
           <FolderCopyOutlined className="left-3 sm:left-4" />
           </div>
@@ -206,20 +212,48 @@ function Category() {
           <input
               type='text'
               className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder='لینک دسته بندی*'
-              value={categoryName}
-              onChange={(event) => setCategoryName(event.target.value)}
+              placeholder='  درصد تخفیف*'
+              value={discountPercent}
+              onChange={(event) => setDiscountPercent(event.target.value)}
               />
-          <InsertLinkOutlined className="left-3 sm:left-4" />
+          <LocalOffer className="left-3 sm:left-4" />
+          </div>
+          <div className="relative">
+            <select
+              defaultValue='-1'
+              onChange={(event) => setDiscountCourseID(event.target.value)}
+              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value='-1' disabled>انتخاب دوره</option>
+              {Courses.map(({ _id, name }) => {
+                return (
+                  <React.Fragment key={_id}>
+                    <option value={_id} className="px-3">
+                      {name}
+                    </option>
+                  </React.Fragment>
+                );
+              })}
+            </select>
+          </div>
+          <div className="relative">
+          <input
+              type='number'
+              className= 'outline-none pl-9 sm:pl-12 bg-white'
+              placeholder='   تعداد استفاده*'
+              value={discountMaxUse}
+              onChange={(event) => setDiscountMaxUse(event.target.value)}
+              />
+          <Discount className="left-3 sm:left-4" />
           </div>
          </div>
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewCategoryHandler}
+            onClick={AddNewDiscountHandler}
           >
-            افزودن دسته بندی
+            افزودن کد تخفیف 
           </Button>
         </div>
       </fieldset>
@@ -252,7 +286,7 @@ function Category() {
         </>
       )}
          {/* Edit Modal */}
-         <EditModal>
+         {/* <EditModal>
         <div className="min-w-96">
         <div className="relative mb-4">
           <input
@@ -284,7 +318,7 @@ function Category() {
             ویرایش دسته بندی
           </Button>
         </div>
-      </EditModal>
+      </EditModal> */}
     </>
   );
 }
