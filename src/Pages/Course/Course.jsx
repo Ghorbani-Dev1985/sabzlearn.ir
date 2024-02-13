@@ -38,6 +38,7 @@ import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import axios from "axios";
 import FreePrice from "../../common/FreePrice/FreePrice";
 import DOMPurify from 'dompurify'
+import Swal from "sweetalert2";
 
 
 function Course() {
@@ -102,7 +103,49 @@ function Course() {
           toast.error("  خطا در اتصال به سرور ");
       })
     }else{
-      toast.error('اتصال به درگاه بانک انجام نشده است')
+      Swal.fire({
+        title: "کد تخفیف دارید؟",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3b82f6",
+        cancelButtonColor: "#3f3f46",
+        confirmButtonText: "ورود کد تخفیف",
+        cancelButtonText: "خیر",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'لطفا کد تخفیف را وارد کنید',
+            content: 'input',
+            showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#3f3f46",
+        confirmButtonText: "ادامه",
+        cancelButtonText: "ثبت بدون کد تخفیف",
+          }).then(result => {
+            if(!result.isConfirmed){
+              axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price} , {
+                headers : {
+                  'Content-Type' : 'application/json',
+                  'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                }
+              })
+              .then(response => {
+                console.log(response)
+                if(response.status === 201 || response.status === 200){
+                  toast.success(" ثبت نام در دوره با موفقت انجام شد")
+                  GetCourseDetails()
+                }else{
+                  toast.error("ثبت نام در دوره انجام نشد");
+                }
+              })
+              .catch(error => {
+                  console.log(error)
+                  toast.error("  خطا در اتصال به سرور ");
+              })
+            }
+          })
+        }
+      });
     }
   }
   useEffect(() => {
