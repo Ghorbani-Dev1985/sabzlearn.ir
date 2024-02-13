@@ -19,6 +19,7 @@ import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
 import DOMPurify from 'dompurify'
+import { Link } from 'react-router-dom'
 
 function Blogs() {
   const title = useTitle("مقاله‌ها - پنل کاربری")
@@ -59,11 +60,18 @@ function Blogs() {
       },
     },
     {
-      field: "title",
+      field: "blogsTitle",
       headerName: " عنوان ",
       width: 180,
       headerAlign: "center",
       align: "center",
+      renderCell: (blog) => {
+        return (
+          blog.row.publish === 1 ? 
+          blog.row.title : 
+          <Link to={`draft/${blog.row.shortName}`} className='text-primary hover:text-emerald-600 transition-colors'>{blog.row.title}</Link>
+        );
+      },
     },
     {
       field: "creatorName",
@@ -350,7 +358,7 @@ function Blogs() {
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
             onClick={AddNewBlogHandler}
           >
-            افزودن مقاله
+            انتشار مقاله
           </Button>
         </div>
       </fieldset>
