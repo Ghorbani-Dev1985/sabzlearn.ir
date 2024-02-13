@@ -28,7 +28,7 @@ function BlogCard({
         <div className="relative pt-1.5">
           {/* Title & Description */}
           <h4 className="font-DanaMd h-12 max-h-12 line-clamp-2 text-base text-zinc-700 dark:text-white mb-2.5">
-            <Link to={`blog/${shortName}`}>{title}</Link>
+            <Link to={`/blog/${shortName}`}>{title}</Link>
           </h4>
           <p className="font-Dana text-sm h-24 line-clamp-4 text-slate-500 dark:text-slate-400">
             {body}
@@ -63,7 +63,7 @@ function BlogCard({
           {/* More Link */}
           <div className="flex-center py-3.5 border-t border-t-gray-100 dark:border-gray-700">
             <Link
-              to={`blog/${shortName}`}
+              to={`/blog/${shortName}`}
               className="text-zinc-700 dark:text-white hover:text-primary dark:hover:text-primary space-x-2.5 font-DanaMd transition-colors"
             >
               مطالعه مقاله

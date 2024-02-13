@@ -15,6 +15,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import DOMPurify from 'dompurify'
+import { useBlogs } from "../../Contexts/BlogsContext";
 
 
 const newBlogs = [
@@ -48,7 +49,8 @@ const newBlogs = [
 function Blog() {
   const {isLoggedIn } = useAuth()
   const {blogName} = useParams()
-
+  const {blogs} = useBlogs()
+  const publishedBlogs = blogs.filter(blog => blog.publish === 1)
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
   const [blogDetails , setBlogDetails] = useState([])
@@ -74,7 +76,7 @@ function Blog() {
     setBlogCreator(blogInfo.data.creator)
   })
 
-} , []);
+} , [blogName]);
 
   return (
     <>
@@ -141,10 +143,10 @@ function Blog() {
               جدیدترین نوشته ها
             </span>
             <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
-              {newBlogs.map(({ id, to, title }) => {
+              {publishedBlogs.slice(0, 5).map(({ _id, shortName, title }) => {
                 return (
-                  <React.Fragment key={id}>
-                    <Link to={to}>{title}</Link>
+                  <React.Fragment key={_id}>
+                    <Link to={`/blog/${shortName}`}>{title}</Link>
                   </React.Fragment>
                 );
               })}
