@@ -61,7 +61,7 @@ const blogs = [
 function Blogs() {
   const title = useTitle(" وبلاگ - سبزلرن");
   const {blogs} = useBlogs()
- 
+  const publishedBlogsFilter = blogs.filter(blog => blog.publish === 1)
   const [showItems , setShowItems] = useState([])
   return (
     <>
