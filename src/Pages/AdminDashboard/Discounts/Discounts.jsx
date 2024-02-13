@@ -81,27 +81,6 @@ function Category() {
       align: "center",
     },
     {
-      field: "perceاnt",
-      headerName: "درصد",
-      width: 90,
-      height: 150,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (category) => {
-        return (
-          <div
-            onClick={() => {
-              setShowEditModal(true)
-              setUpdateCategoryID(category.id)
-            }}
-            className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
-          >
-            <Edit className="size-5" />
-          </div>
-        );
-      },
-    },
-    {
       field: "deleteAction",
       headerName: "حذف",
       width: 90,
@@ -134,20 +113,6 @@ function Category() {
       },
     },
   ];
-  //Edit Function
-  // const UpdateCategoryHandler = () => {
-  //   let updateCategoryInfos = JSON.stringify({
-  //     title: updateCategoryTitle,
-  //     name: updateCategoryName
-  //   })
-  //   if(updateCategoryTitle && updateCategoryName){
-  //       const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
-  //       setShowRealTimeDatas((prev) => !prev)
-  //       setShowEditModal(false)
-  //   }else if(updateCategoryTitle.length <= 2 && updateCategoryName.length <= 2 ){
-  //       toast.error('تعداد کاراکترها کمتر از حد مجاز است')
-  //   }
-  // };
     //  Delete Function
     const DeleteDiscountHandler = (discountID) => {
         Swal.fire({
@@ -184,13 +149,7 @@ function Category() {
             toast.error('لطفا فرم را تکمیل نمایید')
           }
       }
-      // useEffect(() => {
-      //   let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
-      //   if (filterUpdateUser) {
-      //     setUpdateCategoryTitle(filterUpdateUser.title)
-      //     setUpdateCategoryName(filterUpdateUser.name)
-      //   }
-      // }, [updateCategoryID]);
+
   return (
     <>
     <fieldset className="border border-gray-200 rounded-lg p-3">

@@ -115,7 +115,7 @@ function Course() {
         if (result.isConfirmed) {
           Swal.fire({
             title: 'لطفا کد تخفیف را وارد کنید',
-            content: 'input',
+           input: 'text',
             showCancelButton: true,
         confirmButtonColor: "#10b981",
         cancelButtonColor: "#3f3f46",
@@ -141,6 +141,42 @@ function Course() {
               .catch(error => {
                   console.log(error)
                   toast.error("  خطا در اتصال به سرور ");
+              })
+            }else{
+              console.log(result)
+              axios.post(`${BaseURL}offs/${result.value}` , {course: courseDetails._id} , {
+                headers : {
+                  'Content-Type' : 'application/json',
+                  'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                }
+              })
+              .then(response => {
+                console.log(response.data)
+                axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price - (courseDetails.price  * +response.data.percent / 100)} , {
+                  headers : {
+                    'Content-Type' : 'application/json',
+                    'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+                  }
+                })
+                .then(response => {
+                  console.log(response)
+                  if(response.status === 201){
+                    toast.success(" ثبت نام در دوره با موفقت انجام شد")
+                    GetCourseDetails()
+                  }
+                })
+                .catch(error => {
+                    console.log(error)
+                    toast.error("  خطا در اتصال به سرور ");
+                })
+              })
+              .catch(error => {
+                  console.log(error.response.data)
+                  if(error.response.status === 404){
+                    toast.error("  کد تخفیف معتبر نمی باشد")
+                  }else if(error.response.status === 409){
+                    toast.error("  استفاده از کد تخفیف به اتمام رسیده است")
+                  }
               })
             }
           })
