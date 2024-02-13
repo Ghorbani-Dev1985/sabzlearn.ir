@@ -107,11 +107,11 @@ function Category() {
       width: 90,
       headerAlign: "center",
       align: "center",
-      renderCell: (category) => {
+      renderCell: (discount) => {
         return (
           <div
             onClick={() => {
-              DeleteCategoryHandler(category.id);
+              DeleteDiscountHandler(discount.id);
             }}
             className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
           >
@@ -149,9 +149,9 @@ function Category() {
   //   }
   // };
     //  Delete Function
-    const DeleteCategoryHandler = (categoryID) => {
+    const DeleteDiscountHandler = (discountID) => {
         Swal.fire({
-          title: "برای حذف دسته بندی مطمعن هستید؟",
+          title: "برای حذف کد تخفیف مطمعن هستید؟",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#f43f5e",
@@ -160,7 +160,7 @@ function Category() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const catDel = useDelete(`category/${categoryID}`);
+            const offDel = useDelete(`offs/${discountID}`)
             setShowRealTimeDatas((prev) => !prev);
           }
         });
