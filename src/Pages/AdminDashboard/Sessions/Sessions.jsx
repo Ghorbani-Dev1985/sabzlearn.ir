@@ -30,7 +30,7 @@ function Sessions() {
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [sessionTitle, setSessionTitle] = useState("")
   const [sessionTime, setSessionTime] = useState("")
-  const [courseID , setCourseID] = useState('')
+  const [courseID , setCourseID] = useState('-1')
   const [sessionVideo , setSessionVideo] = useState("")
   const [isFree, setIsFree] = useState(1)
  console.log(Sessions)
@@ -201,11 +201,12 @@ function Sessions() {
           <div>
           <div className="relative my-12">
             <select
-              defaultValue={'انتخاب دوره'}
+              value={courseID}
+              defaultValue={'-1'}
               onChange={(event) => setCourseID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'انتخاب دوره'} disabled>انتخاب دوره</option>
+              <option value={'-1'} disabled>انتخاب دوره</option>
               {courses.map(({ _id, name }) => {
                 return (
                   <React.Fragment key={_id}>

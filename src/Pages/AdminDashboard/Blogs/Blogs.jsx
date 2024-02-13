@@ -31,7 +31,7 @@ function Blogs() {
   const [blogTitle, setBlogTitle] = useState("")
   const [blogDescription, setBlogDescription] = useState("")
   const [blogShortName, setBlogShortName] = useState("")
-  const [blogCategoryID, setBlogCategoryID] = useState("")
+  const [blogCategoryID, setBlogCategoryID] = useState("-1")
   const [blogBody , setBlogBody] = useState('')
   const [blogCover, setBlogCover] = useState({})
   const columns = [
@@ -250,11 +250,12 @@ function Blogs() {
           <textarea rows="8" placeholder='  چکیده *' value={blogDescription} onChange={(event) => setBlogDescription(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
            <div className="relative">
             <select
-              defaultValue={'انتخاب دسته بندی دوره'}
+              value={blogCategoryID}
+              defaultValue={'-1'}
               onChange={(event) => setBlogCategoryID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'انتخاب دسته بندی دوره'} disabled>انتخاب دسته بندی دوره</option>
+              <option value={'-1'} disabled>انتخاب دسته بندی دوره</option>
               {categories.map(({ _id, title }) => {
                 return (
                   <React.Fragment key={_id}>
@@ -313,6 +314,7 @@ function Blogs() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
+            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {Blogs.length > 0 ? (
               <DataGrid
                 rows={Blogs.map((blog, index) => {
@@ -320,7 +322,6 @@ function Blogs() {
                 })}
                 className="dark:text-white"
                 rowHeight={150}
-                sx={{ maxWidth: 630 }}
                 getRowId={(blog) => blog._id}
                 columns={columns}
                 initialState={{
@@ -334,6 +335,7 @@ function Blogs() {
             ) : (
               <Alert severity="info">هیچ مقاله ای تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}

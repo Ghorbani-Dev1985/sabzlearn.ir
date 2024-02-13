@@ -38,7 +38,7 @@ function Courses() {
   const [courseName, setCourseName] = useState("")
   const [courseDescription, setCourseDescription] = useState("")
   const [courseShortName, setCourseShortName] = useState("")
-  const [courseCategoryID, setCourseCategoryID] = useState("")
+  const [courseCategoryID, setCourseCategoryID] = useState("-1")
   const [isCompleteCourse, setIsCompleteCourse] = useState(0)
   const [coursePrice, setCoursePrice] = useState("")
   const [courseSupport, setCourseSupport] = useState("")
@@ -282,11 +282,12 @@ function Courses() {
           </div>
           <div className="relative">
             <select
-              defaultValue={'انتخاب دسته بندی دوره'}
+              value={courseCategoryID}
+              defaultValue={'-1'}
               onChange={(event) => setCourseCategoryID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'انتخاب دسته بندی دوره'} disabled>انتخاب دسته بندی دوره</option>
+              <option value={'-1'} disabled>انتخاب دسته بندی دوره</option>
               {categories.map(({ _id, title }) => {
                 return (
                   <React.Fragment key={_id}>
