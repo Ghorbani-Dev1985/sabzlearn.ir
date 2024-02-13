@@ -49,7 +49,7 @@ function Overview() {
     {
       field: "email",
       headerName: " ایمیل",
-      width: 150,
+      width: 200,
       headerAlign: "center",
       align: "center",
     },
@@ -94,28 +94,7 @@ function Overview() {
         toast.error("  خطا در اتصال به سرور ");
       });
   }, []);
-  const Navigate = useNavigate();
-  useEffect(() => {
-    axios
-      .get(`${BaseURL}auth/me`, {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("user")).token
-          }`,
-        },
-      })
-      .then((response) => {
-        if (response.data.role !== "ADMIN") {
-          Navigate("/");
-          toast.error("امکان دسترسی وجود ندارد");
-        }
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("  خطا در اتصال به سرور ");
-      });
-  }, []);
+
   return (
     <>
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-40">

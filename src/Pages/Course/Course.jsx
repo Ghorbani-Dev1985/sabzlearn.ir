@@ -62,8 +62,7 @@ function Course() {
       toast.error("لطفا ابتدا در سایت وارد شوید");
     }
   };
-  const CourseAddToCartHandler = () => {};
-  useEffect(() => {
+  const GetCourseDetails = () => {
     const localStorageData = JSON.parse(localStorage.getItem("user"));
     axios(`${BaseURL}courses/${courseName}`, {
       headers: {
@@ -78,7 +77,36 @@ function Course() {
       setCategory(courseInfo.data.categoryID);
       setCourseDetails(courseInfo.data);
       document.title = courseInfo.data.name;
-    });
+    })
+  }
+  const RegisterCourseHandler = () => {
+    console.log(courseDetails.price)
+    if(courseDetails.price === 0){
+      axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price} , {
+        headers : {
+          'Content-Type' : 'application/json',
+          'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+        }
+      })
+      .then(response => {
+        console.log(response)
+        if(response.status === 201 || response.status === 200){
+          toast.success(" ثبت نام در دوره با موفقت انجام شد")
+          GetCourseDetails()
+        }else{
+          toast.error("ثبت نام در دوره انجام نشد");
+        }
+      })
+      .catch(error => {
+          console.log(error)
+          toast.error("  خطا در اتصال به سرور ");
+      })
+    }else{
+      toast.error('اتصال به درگاه بانک انجام نشده است')
+    }
+  }
+  useEffect(() => {
+    GetCourseDetails()
   }, [courseName]);
   return (
     <>
@@ -108,20 +136,17 @@ function Course() {
                   btnType="submit"
                   className="w-full flex-center sm:w-auto button-xl rounded-lg button-secondary"
                   disabled={false}
-                  onClick={CourseAddToCartHandler}
                 >
-                  {" "}
-                  <PlayCircleFilledWhiteOutlined /> مشاهده دوره{" "}
+                  <PlayCircleFilledWhiteOutlined /> مشاهده دوره
                 </Button>
               ) : (
                 <Button
                   btnType="submit"
                   className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary"
                   disabled={false}
-                  onClick={CourseAddToCartHandler}
+                  onClick={RegisterCourseHandler}
                 >
-                  {" "}
-                  <GppGoodOutlined /> شرکت در دوره{" "}
+                  <GppGoodOutlined /> شرکت در دوره
                 </Button>
               )}
 

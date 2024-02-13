@@ -12,7 +12,8 @@ import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 import NotFound from "./Pages/404/404";
 import ContactUS from "./Pages/ContactUS/ContactUS";
 import Search from "./Pages/Search.jsx/Search";
-import AdminDashboard from './Pages/AdminDashboard/index'
+import AdminDashboard from './Pages/AdminDashboard/Index'
+import OverviewAdminDashboard from "./Pages/AdminDashboard/Overview/Overview";
 import UsersAdminDashboard from "./Pages/AdminDashboard/Users/Users";
 import CoursesAdminDashboard from "./Pages/AdminDashboard/Courses/Courses";
 import MenusAdminDashboard from "./Pages/AdminDashboard/Menus/Menus";
@@ -21,7 +22,6 @@ import DraftAdminDashboard from './Pages/AdminDashboard/Blogs/Draft';
 import CategoryAdminDashboard from './Pages/AdminDashboard/Category/Category';
 import UsersMessagesDashboard from './Pages/AdminDashboard/UsersMessages/UsersMessages'
 import CommentsAdminDashboard from './Pages/AdminDashboard/Comments/Comments'
-import Overview from "./Pages/AdminDashboard/Overview/Overview";
 import SessionsAdminDashboard from './Pages/AdminDashboard/Sessions/Sessions'
 import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
 
@@ -95,10 +95,10 @@ let routes = [
         }
     ]},
      { 
-            path: '/adminDashboard_VNqM5yZGo3c^GM/*',
+            path: '/adminDashboard_VNqM5yZGo3cGM/*',
             element: <AdminDashboard />,
             children: [
-            {path: '' , element : <Overview />} ,
+            {path: 'overview' , element : <OverviewAdminDashboard />} ,
             {path: 'users' , element : <UsersAdminDashboard />} ,
             {path: 'courses' , element : <CoursesAdminDashboard />},
             {path: 'sessions' , element : <SessionsAdminDashboard />},
