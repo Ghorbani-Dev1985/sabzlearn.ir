@@ -136,7 +136,7 @@ function Sessions() {
              setSessionTitle('')
              setSessionTime('')
              setSessionVideo('')
-             setCourseID('')
+             setCourseID('-1')
              setIsFree('')
              setShowRealTimeDatas((prev) => !prev)
            }else{

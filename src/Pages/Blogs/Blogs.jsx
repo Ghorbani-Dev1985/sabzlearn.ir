@@ -61,6 +61,7 @@ const blogs = [
 function Blogs() {
   const title = useTitle(" وبلاگ - سبزلرن");
   const {blogs} = useBlogs()
+ 
   const [showItems , setShowItems] = useState([])
   return (
     <>
@@ -101,7 +102,7 @@ function Blogs() {
               }
             )}
              <div className='flex-center col-span-3 my-8'>
-            <Pagination items={blogs} itemsCount={3} pathname="/blogs" setShowItems={setShowItems}/>
+            <Pagination items={publishedBlogsFilter} itemsCount={3} pathname="/blogs" setShowItems={setShowItems}/>
              </div>
           </div>
           {/* {

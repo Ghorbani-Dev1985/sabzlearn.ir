@@ -131,7 +131,7 @@ function Menus() {
              toast.success("  افزودن منو با موفقیت انجام شد")
              setMenuTitle('')
              setMenuHref('')
-             setMenuParentID('')
+             setMenuParentID('-1')
              setShowRealTimeDatas((prev) => !prev)
            }else{
              toast.error("افزودن منو انجام نشد");
@@ -199,8 +199,10 @@ function Menus() {
               <option value={'-1'} disabled>انتخاب منوی اصلی</option>
               {
                 Menus.map((menu) => {
-                 return(              
-                    !Boolean(menu.parent) && (<option value={menu._id}>{menu.title}</option>)
+                 return(  
+                    <React.Fragment key={menu._id}>
+                      !Boolean(menu.parent) && (<option value={menu._id}>{menu.title}</option>)
+                    </React.Fragment>            
                  )
               })}
             </select>

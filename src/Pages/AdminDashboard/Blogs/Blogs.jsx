@@ -160,6 +160,48 @@ function Blogs() {
       },
     },
   ];
+    //Draft Function
+      const AddNewBlogInDraftHandler = (event) => {
+      event.preventDefault()
+      let newBlogFormData = new FormData()
+      newBlogFormData.append('title' , blogTitle)
+      newBlogFormData.append('description' , blogDescription)
+      newBlogFormData.append('shortName' , blogShortName)
+      newBlogFormData.append('categoryID' , blogCategoryID)
+      newBlogFormData.append('body' , blogBody)
+      newBlogFormData.append('cover' , blogCover)
+      console.log(blogTitle, blogDescription, blogShortName , blogCategoryID , blogCover.name , blogTitle.length, blogShortName.length, blogBody.length )
+       if(blogTitle && blogDescription && blogShortName && blogCategoryID && blogCover.name && blogTitle.length >= 2 && blogShortName.length >= 2 && blogBody.length >= 10){
+        axios.post(`${BaseURL}articles/draft` , newBlogFormData, {
+          headers : {
+            'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+          }
+        })
+        .then(response => {
+          console.log(response)
+          if(response.status === 201){
+            
+            toast.success("  پیش نویس مقاله با موفقیت انجام شد")
+            setBlogTitle('')
+            setBlogDescription('')
+            setBlogShortName('')
+            setBlogCategoryID('-1')
+            setBlogCover('')
+            setBlogBody('')
+            setShowRealTimeDatas((prev) => !prev)
+          }else{
+            toast.error("پیش نویس مقاله انجام نشد")
+          }
+        })
+        .catch(error => {
+            console.log(error)
+            toast.error('خطا در اتصال به سرور')
+           })
+          }else{
+            toast.error('لطفا فرم را با تعداد کاراکتر مجاز تکمیل نمایید')
+          }
+  
+     }
      //Add Function
      const AddNewBlogHandler = (event) => {
       event.preventDefault()
@@ -170,8 +212,7 @@ function Blogs() {
       newBlogFormData.append('categoryID' , blogCategoryID)
       newBlogFormData.append('body' , blogBody)
       newBlogFormData.append('cover' , blogCover)
-    console.log(blogCover.name)
-       if(blogTitle && blogDescription && blogShortName && blogCategoryID && blogCover.name){
+       if(blogTitle && blogDescription && blogShortName && blogBody && blogCategoryID && blogCover.name && blogTitle.length  >= 2 && blogShortName.length >= 2 && blogBody.length >= 10){
          axios.post(`${BaseURL}articles` , newBlogFormData, {
            headers : {
              'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
@@ -185,7 +226,7 @@ function Blogs() {
              setBlogTitle('')
              setBlogDescription('')
              setBlogShortName('')
-             setBlogCategoryID('')
+             setBlogCategoryID('-1')
              setBlogCover('')
              setBlogBody('')
              setShowRealTimeDatas((prev) => !prev)
@@ -197,10 +238,8 @@ function Blogs() {
              console.log(error)
              toast.error('خطا در اتصال به سرور')
             })
-          }else if(blogTitle.length <=2 && blogShortName.length <=2){
-            toast.error('تعداد کاراکترها کمتر از حد مجاز می باشد')
           }else{
-            toast.error('عکس مقاله را آپلود نمایید')
+            toast.error('لطفا فرم را با تعداد کاراکتر مجاز تکمیل نمایید')
           }
      }
      //Delete Function
@@ -298,7 +337,14 @@ function Blogs() {
             setBlogBody(data);
           }}
         />
-        <div className="flex justify-end items-center">
+        <div className="flex justify-end items-center gap-5">
+        <Button
+            btnType="submit"
+            className="button-md h-12 sm:button-lg rounded-xl button-secondary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            onClick={AddNewBlogInDraftHandler}
+          >
+            پیش نویس مقاله
+          </Button>
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"

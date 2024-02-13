@@ -239,7 +239,7 @@ function Courses() {
            
            toast.success("  افزودن دوره با موفقیت انجام شد")
            setCourseName('')
-           setCourseCategoryID('')
+           setCourseCategoryID('-1')
            setCourseShortName('')
            setCoursePrice('')
            setCourseSupport('')
