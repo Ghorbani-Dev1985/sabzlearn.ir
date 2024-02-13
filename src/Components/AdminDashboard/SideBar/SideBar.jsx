@@ -12,7 +12,7 @@ import { useAuth } from '../../../Contexts/AuthContext';
 const AdminDashboardNavItems = [
   {
     id: 1,
-    to: 'Overview',
+    to: '/adminDashboard_VNqM5yZGo3c^GM',
     icon: <Home />,
     text: 'نمای کلی'
   },

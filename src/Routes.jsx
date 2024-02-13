@@ -98,7 +98,7 @@ let routes = [
             path: '/adminDashboard_VNqM5yZGo3c^GM/*',
             element: <AdminDashboard />,
             children: [
-            {path: 'overview' , element : <Overview />} ,
+            {path: '' , element : <Overview />} ,
             {path: 'users' , element : <UsersAdminDashboard />} ,
             {path: 'courses' , element : <CoursesAdminDashboard />},
             {path: 'sessions' , element : <SessionsAdminDashboard />},
