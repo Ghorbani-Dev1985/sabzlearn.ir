@@ -39,15 +39,18 @@ import axios from "axios";
 import FreePrice from "../../common/FreePrice/FreePrice";
 import DOMPurify from 'dompurify'
 import Swal from "sweetalert2";
+import useFetch from "../../Hooks/useFetch";
 
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
+  const { courseName } = useParams()
   const { isLoggedIn, userInfos } = useAuth();
+  const {datas : RelatedCourses} = useFetch(`courses/related/${courseName}` , true)
+  console.log(RelatedCourses)
   const Navigate = useNavigate();
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
-  const { courseName } = useParams();
 
   const [comments, setComments] = useState([]);
   const [sessions, setSessions] = useState([]);
@@ -557,6 +560,22 @@ function Course() {
               </p>
              }
             </p>
+          </div>
+           {/* New Blogs */}
+           <div className="hidden lg:block dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl py-6 px-6 xl:px-10">
+            <span className="flex items-center gap-x-2.5 mb-5 -mr-6 xl:-mr-10 text-zinc-700 dark:text-white font-danaDemiBold text-2xl">
+              <span className="block w-7 h-2 bg-emerald-500 rounded-l-sm -mr-px"></span>
+              دوره‌های مرتبط
+            </span>
+            <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
+              {RelatedCourses.map(({ id, shortName, name }) => {
+                return (
+                  <React.Fragment key={id}>
+                    <Link to={`/course/${shortName}`}>{name}</Link>
+                  </React.Fragment>
+                );
+              })}
+            </div>
           </div>
           {/* Short Link */}
           <ShortLink bgColor="bg-sky-500" link="https://sabzlearn.ir/?p=2862" />
