@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
 import useTitle from '../../../Hooks/useTitle'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import useFetch from '../../../Hooks/useFetch'
 import { Alert } from '@mui/material'
+import { RemoveRedEye } from '@mui/icons-material'
+import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
+import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 
 
 function Orders() {
   const title = useTitle("دوره‌های من - سبزلرن ")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const {datas : Courses} = useFetch('orders' , true)
-  console.log(Courses)
+  const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
+  const [courseID , setCourseID] = useState('')
+  const {datas : OneCourse} = useFetch(`orders/${courseID}` , true)
+    console.log(OneCourse)
     const columns = [
       {
         field: "id",
@@ -49,26 +55,22 @@ function Orders() {
         },
       },
       {
-        field: "courseStatus",
-        headerName: " وضعیت برگزاری ",
-        width: 180,
+        field: "showDetails",
+        headerName: "  جزییات ",
+        width: 140,
         headerAlign: "center",
         align: "center",
         renderCell: (course) => {
           return (
-            course.row.course.status === "start" ? ' در حال برگزاری' : 'پیش فروش'
-          );
-        },
-      },
-      {
-        field: "courseIsComplete",
-        headerName: " وضعیت ضبط ",
-        width: 180,
-        headerAlign: "center",
-        align: "center",
-        renderCell: (course) => {
-          return (
-            course.row.course.isComplete === 1 ? <span className='bg-emerald-50 text-primary p-1 rounded-lg font-DanaBold'>تکمیل شده</span> : <span className='bg-amber-50 text-amber-600 p-1 rounded-lg'>در حال ضبط</span>
+            <p onClick={() => {
+                setShowDetailsModal(true)
+                setCourseID(course.id)
+                
+            }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
+                <RemoveRedEye className="size-6 text-amber-500"/>
+               
+            </p>
+            
           );
         },
       },
@@ -101,6 +103,7 @@ function Orders() {
       },
 
     ];
+   
   return (
     <>
            {isShowLoading ? (
@@ -108,7 +111,7 @@ function Orders() {
       ) : (
         <>
           <div className="w-full dark:text-white">
-            <h2 className="font-DanaBold my-8 text-2xl">لیست دوره ها</h2>
+            <h2 className="font-DanaBold my-8 text-2xl">لیست دوره های خریداری شده</h2>
             <div className='lg:max-w-[40rem] xl:max-w-full'>
             {Courses.length > 0 ? (
               <DataGrid
@@ -121,7 +124,7 @@ function Orders() {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 25 },
+                    paginationModel: { page: 0, pageSize: 5 },
                   },
                 }}
                 localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
@@ -134,6 +137,46 @@ function Orders() {
           </div>
         </>
       )}
+        {/* Show Detail */}
+        <DetailsModal>
+<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr className='text-center'>
+                <th scope="col" className="px-6 py-3">
+                    وضعیت ضبط
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    وضعیت برگزاری
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    نوع پشتیبانی
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    لینک
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   {OneCourse && OneCourse[0].course.isComplete === 1 ? <span className='bg-emerald-50 text-primary p-1 rounded-lg font-DanaBold'>تکمیل شده</span> : <span className='bg-amber-50 text-amber-600 p-1 rounded-lg'>در حال ضبط</span>}
+                </th>
+                <td className="px-6 py-4">
+                {OneCourse && OneCourse[0].course.status === "start" ? 'درحال برگزاری' : 'پیش فروش'}
+                </td>
+                <td className="px-6 py-4">
+                  {OneCourse && OneCourse[0].course.support}
+                </td>
+                <td className="px-6 py-4">
+                {OneCourse && OneCourse[0].course.shortName}
+                </td>
+            </tr>
+          
+        </tbody>
+    </table>
+</div>
+      </DetailsModal>
     </>
   )
 }
