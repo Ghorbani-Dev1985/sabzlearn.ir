@@ -16,7 +16,7 @@ function NewTicketForm({setNewTicketForm}) {
         event.preventDefault()
         let NewTicketInfo = JSON.stringify({
             departmentID,
-            departmentSubID: departmentID,
+            departmentSubID: '65cce5bc95ff4d0e047abde2',
             title: ticketTitle,
             priority: '2',
             body: ticketBody,

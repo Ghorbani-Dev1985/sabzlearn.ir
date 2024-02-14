@@ -10,7 +10,7 @@ import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/Detail
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import { useEffect } from 'react'
 import axios from 'axios'
-import { BaseURL } from '../../../Utils/Utils'
+import { BaseURL, ChangeGregorianDateToPersian } from '../../../Utils/Utils'
 import InfosBox from '../../../Components/InfosBoxInDashboard/InfosBoxInDashboard'
 import { Link } from 'react-router-dom'
 import NewTicketForm from './NewTicketForm'
@@ -19,27 +19,76 @@ import NewTicketForm from './NewTicketForm'
 function Tickets() {
   const title = useTitle("تیکت‌ ها - سبزلرن ")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
-
+  const {datas : tickets} = useFetch('tickets' , true)
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [userCourses , setUserCourses] = useState([])
   const [showNewTicketForm , setNewTicketForm] = useState(false)
-  
-  // console.log(Departments)
- useEffect(() => {
-  axios.get(`${BaseURL}users/courses/` , {
-    headers : {
-      'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-    }
-  })
-  .then(response => {
-    console.log(response.data.course)
-    setUserCourses(response.data)
-  })
-  .catch(error => {
-      console.log(error.message)
-  })
- }, [])
-   console.log(userCourses)
+  const columns = [
+    {
+      field: "id",
+      headerName: "ردیف",
+      width: 10,
+      height: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "title",
+      headerName: " عنوان",
+      width: 400,
+      height: 150,
+      headerAlign: "center",
+      align: "center",
+      whiteSpace: "wrap",
+    },
+    {
+      field: "ticketDate",
+      headerName: " تاریخ",
+      width: 200,
+      height: 150,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (ticket) => {
+        return (
+          <div className='dir-ltr'>
+          { ChangeGregorianDateToPersian(ticket.row.createdAt)} - ({ticket.row.createdAt.slice(11 , 16)})
+          </div>
+           
+          );
+      },
+    },
+    {
+      field: "ticketDep",
+      headerName: " دپارتمان",
+      width: 200,
+      height: 150,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (ticket) => {
+        return (
+          <span className='text-xs py-1 px-1.5 text-slate-500 dark:text-yellow-400 bg-slate-500/10 dark:bg-yellow-400/10 rounded'>
+           {ticket.row.departmentID}
+          </span>
+           
+          );
+      },
+    },
+    {
+      field: "ticketStatus",
+      headerName: " وضعیت",
+      width: 200,
+      height: 150,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (ticket) => {
+        return (
+          ticket.row.isAnswer === 1 ?  <span className='text-xs py-1 px-1.5 text-slate-500 dark:text-yellow-400 bg-slate-500/10 dark:bg-yellow-400/10 rounded'>بسته شده </span> : <span className='text-xs py-1 px-1.5 text-slate-500 dark:text-yellow-400 bg-slate-500/10 dark:bg-yellow-400/10 rounded'> در حال بررسی</span>
+          );
+      },
+    },
+
+  ];
+   console.log(tickets)
   return (
     <>
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-14">
@@ -75,49 +124,35 @@ function Tickets() {
                 showNewTicketForm &&
               <NewTicketForm setNewTicketForm={setNewTicketForm}/>
                }
-      {isShowLoading ? (
+          {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
-         <div className='grid grid-rows-2 xs:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5'>
-            {
-              userCourses.map((course) => {
-                let randomNumber = Math.floor(Math.random() * 101)
-                return(
-                  <React.Fragment key={course.course._id}>
-                    <div className="course flex flex-col overflow-hidden bg-white dark:bg-gray-800 shadow-light dark:shadow-none dark:border dark:border-gray-700 rounded-2xl">
-                        {/*  Course Banner  */}
-                            <div className="relative h-42">
-                    <Link to={`/course/${course.course.shortName}`} className="w-full h-full block" title="آموزش جاوا اسکریپت رایگان مقدماتی تا پیشرفته + مینی پروژه">
-                        <img className="block w-full h-full object-cover rounded-2xl" src={`http://localhost:5000/courses/covers/${course.course.cover}`} alt={course.course.name} />
-                    </Link>
-                </div>
-                        {/* Course Body */}
-            <div className="px-5 pb-3.5 pt-2.5 flex-grow ">
-                {/* Course Title */}
-                <h4 className="font-danaMedium h-16 line-clamp-2 text-zinc-700 dark:text-white mb-2.5">
-                    <Link to={`/course/${course.course.shortName}`}>{course.course.name}</Link>
-                </h4>
-                {/* Course Footer */}
-	            <div className="pt-3 border-t border-t-gray-100 dark:border-t-gray-700">
-		            <div className="flex items-center justify-between text-xs mb-1.5">
-			            <span className="text-zinc-700 dark:text-white">میزان مشاهده</span>
-			            <span className="text-slate-500 dark:text-slate-400">{randomNumber}%</span>
-		            </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-         <div className="bg-primary h-2 rounded-full" style={{width: `${randomNumber}%`}}></div>
-                 </div>
-	            </div>
-            </div>
-        </div>
-                  </React.Fragment>
-                 )
-              })
-            }
-         </div>
+          <div className="w-full dark:text-white">
+            <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
+            {tickets.length > 0 ? (
+              <DataGrid
+                rows={tickets.map((ticket, index) => {
+                  return { id: index + 1, ...ticket };
+                })}
+                className="dark:text-white"
+                getRowId={(ticket) => ticket._id}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+                localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
+                pageSizeOptions={[5, 10, 25, 100, 200]}
+              />
+            ) : (
+              <Alert severity="info">هیچ تیکتی تاکنون ثبت نگردیده است</Alert>
+            )}
+          </div>
         </>
       )}
- 
+           
     </>
   )
 }
