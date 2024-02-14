@@ -293,7 +293,7 @@ function Comments() {
               body: commentAnswerText
           })
           if(commentAnswerText){
-              const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , true)
+              const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , "ارسال پاسخ با موفقیت انجام شد")
               setShowEditModal(false)
               setShowRealTimeDatas((prev) => !prev)
           }else{

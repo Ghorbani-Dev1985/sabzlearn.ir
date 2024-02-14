@@ -6,7 +6,7 @@ import { useShowRealtimeDatas } from '../Contexts/ShowRealtimeDatasContext';
 import { useShowLoading } from '../Contexts/ShowLoadingContext';
 
 
-function usePost(url , newItemInfos , answer) {
+function usePost(url , newItemInfos , tostText) {
   axios.post(`${BaseURL}${url}` , newItemInfos , {
     headers : {
       'Content-Type' : 'application/json',
@@ -16,7 +16,7 @@ function usePost(url , newItemInfos , answer) {
   .then(response => {
     console.log(response)
     if(response.status === 201 || response.status === 200){
-      answer ? toast.success(" ارسال پاسخ با موفقیت انجام شد") : toast.success("  افزودن با موفقیت انجام شد")
+      toast.success(tostText ? tostText : " افزودن با موفقیت انجام شد") 
     }else{
       toast.error("افزودن انجام نشد");
     }

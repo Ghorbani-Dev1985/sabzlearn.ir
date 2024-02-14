@@ -29,6 +29,8 @@ import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
 import MySabzlearn from './Pages/MySabzlearn/Index'
 import OrdersMySabzlearn from './Pages/MySabzlearn/Orders/Orders'
 import CoursesMySabzlearn from './Pages/MySabzlearn/Courses/Courses'
+import TicketsMySabzlearn from './Pages/MySabzlearn/Tickets/Tickets'
+
 
 let routes = [
     {element: <Layout /> , children: [
@@ -120,6 +122,7 @@ let routes = [
             children: [
                 {path: 'orders' , element : <OrdersMySabzlearn />} ,
                 {path: 'courses' , element : <CoursesMySabzlearn />} ,
+                {path: 'tickets' , element : <TicketsMySabzlearn />} ,
             ],
         },
     {element: <LayoutWithoutHeaderFooter /> , children : [

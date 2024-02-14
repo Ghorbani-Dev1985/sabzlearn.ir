@@ -7,17 +7,17 @@ import useFetch from "../../../Hooks/useFetch";
 import { FolderCopy, HowToReg, OndemandVideo } from "@mui/icons-material";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
-import { DataGrid , faIR} from "@mui/x-data-grid";
+import { DataGrid, faIR } from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
 import InfosBox from "../../../Components/InfosBoxInDashboard/InfosBoxInDashboard";
 
 function Overview() {
   const { datas: infos } = useFetch("infos/p-admin", true);
 
-  const { isShowLoading, setIsShowLoading } = useShowLoading()
+  const { isShowLoading, setIsShowLoading } = useShowLoading();
   const [infoDetails, setInfoDetails] = useState([]);
   const [lastUsers, setLastUsers] = useState([]);
-  console.log(lastUsers)
+  console.log(lastUsers);
   const columns = [
     {
       field: "id",
@@ -45,7 +45,7 @@ function Overview() {
       headerName: " تلفن تماس",
       width: 120,
       headerAlign: "center",
-      align: "center"
+      align: "center",
     },
     {
       field: "email",
@@ -74,7 +74,6 @@ function Overview() {
         );
       },
     },
-   
   ];
   useEffect(() => {
     axios
@@ -138,22 +137,24 @@ function Overview() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl"> کاربرهای جدید</h2>
-            <div className='lg:max-w-[40rem] xl:max-w-full'>
-            {lastUsers.length > 0 ? (
-              <DataGrid
-                rows={lastUsers.map((lastUser, index) => {
-                  return { id: index + 1, ...lastUser };
-                })}
-                className="dark:text-white"
-                rowHeight={150}
-                getRowId={(lastUser) => lastUser._id}
-                columns={columns}
-                hideFooter
-                localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
-              />
-            ) : (
-              <Alert severity="info">تاکنون کاربری ثبت نگردیده است</Alert>
-            )}
+            <div className="lg:max-w-[40rem] xl:max-w-full">
+              {lastUsers.length > 0 ? (
+                <DataGrid
+                  rows={lastUsers.map((lastUser, index) => {
+                    return { id: index + 1, ...lastUser };
+                  })}
+                  className="dark:text-white"
+                  rowHeight={150}
+                  getRowId={(lastUser) => lastUser._id}
+                  columns={columns}
+                  hideFooter
+                  localeText={
+                    faIR.components.MuiDataGrid.defaultProps.localeText
+                  }
+                />
+              ) : (
+                <Alert severity="info">تاکنون کاربری ثبت نگردیده است</Alert>
+              )}
             </div>
           </div>
         </>
@@ -163,4 +164,3 @@ function Overview() {
 }
 
 export default Overview;
-

@@ -5,7 +5,7 @@ import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import useFetch from '../../../Hooks/useFetch'
 import { Alert } from '@mui/material'
-import { FolderCopy, MonetizationOn, RemoveRedEye, RocketLaunch } from '@mui/icons-material'
+import { AddCircleOutline, FolderCopy, MonetizationOn, RemoveRedEye, RocketLaunch } from '@mui/icons-material'
 import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import { useEffect } from 'react'
@@ -13,13 +13,18 @@ import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import InfosBox from '../../../Components/InfosBoxInDashboard/InfosBoxInDashboard'
 import { Link } from 'react-router-dom'
+import NewTicketForm from './NewTicketForm'
 
 
-function Courses() {
-  const title = useTitle("دوره‌های من - سبزلرن ")
+function Tickets() {
+  const title = useTitle("تیکت‌ ها - سبزلرن ")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
+
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [userCourses , setUserCourses] = useState([])
+  const [showNewTicketForm , setNewTicketForm] = useState(false)
+  
+  // console.log(Departments)
  useEffect(() => {
   axios.get(`${BaseURL}users/courses/` , {
     headers : {
@@ -42,21 +47,34 @@ function Courses() {
                 color={"bg-amber-600 dark:bg-yellow-400"}
                 title=" دوره های ثبت نام شده "
                 count={userCourses.length}
-                icon={<FolderCopy className="text-white size-12" />}
+                icon={<FolderCopy className="text-white size-10" />}
               />
                <InfosBox
                 color={"bg-sky-500 dark:bg-secondary"}
                 title=" دوره های نقدی "
                 count={userCourses.filter(course => course.price !== 0).length}
-                icon={<MonetizationOn className="text-white size-12" />}
+                icon={<MonetizationOn className="text-white size-10" />}
               />
                <InfosBox
                 color={"bg-primary"}
                 title=" دوره های رایگان "
                 count={userCourses.filter(course => course.price === 0).length}
-                icon={<RocketLaunch className="text-white size-12" />}
+                icon={<RocketLaunch className="text-white size-10" />}
               />
+               <div onClick={() => setNewTicketForm((prev) => !prev)} className='cursor-pointer select-none'>
+               <InfosBox
+                color={"bg-secondary"}
+                title=" تیکت جدید "
+                count=''
+                transparent={true}
+                icon={<AddCircleOutline className="text-white size-12" />}
+              />
+               </div>
       </div>
+               {
+                showNewTicketForm &&
+              <NewTicketForm setNewTicketForm={setNewTicketForm}/>
+               }
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
@@ -104,5 +122,5 @@ function Courses() {
   )
 }
 
-export default Courses
+export default Tickets
 
