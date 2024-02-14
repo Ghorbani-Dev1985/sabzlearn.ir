@@ -5,7 +5,7 @@ import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import useFetch from '../../../Hooks/useFetch'
 import { Alert } from '@mui/material'
-import { AddCircleOutline, FolderCopy, MonetizationOn, RemoveRedEye, RocketLaunch } from '@mui/icons-material'
+import { AddCircleOutline, ConfirmationNumber, DraftsOutlined, FolderCopy, ForumOutlined, MonetizationOn, RemoveRedEye, RocketLaunch } from '@mui/icons-material'
 import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import { useEffect } from 'react'
@@ -19,7 +19,7 @@ import NewTicketForm from './NewTicketForm'
 function Tickets() {
   const title = useTitle("تیکت‌ ها - سبزلرن ")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
-  const {datas : tickets} = useFetch('tickets' , true)
+  const {datas : tickets} = useFetch('tickets/user' , true)
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [userCourses , setUserCourses] = useState([])
   const [showNewTicketForm , setNewTicketForm] = useState(false)
@@ -33,13 +33,22 @@ function Tickets() {
       align: "center",
     },
     {
-      field: "title",
+      field: "ticketTitle",
       headerName: " عنوان",
       width: 400,
       height: 150,
       headerAlign: "center",
       align: "center",
       whiteSpace: "wrap",
+      renderCell: (ticket) => {
+        return (
+          ticket.row.amser === 1 ?
+          <Link to={`viewTicket/${ticket.id}`}>
+           {ticket.row.title}
+          </Link>
+           : ticket.row.title
+          );
+      },
     },
     {
       field: "ticketDate",
@@ -94,21 +103,21 @@ function Tickets() {
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-14">
               <InfosBox
                 color={"bg-amber-600 dark:bg-yellow-400"}
-                title=" دوره های ثبت نام شده "
-                count={userCourses.length}
-                icon={<FolderCopy className="text-white size-10" />}
+                title=" همه تیکت ها"
+                count={tickets.length}
+                icon={<ConfirmationNumber className="text-white size-10" />}
               />
                <InfosBox
                 color={"bg-sky-500 dark:bg-secondary"}
-                title=" دوره های نقدی "
-                count={userCourses.filter(course => course.price !== 0).length}
-                icon={<MonetizationOn className="text-white size-10" />}
+                title=" تیکت های باز"
+                count={tickets.filter(ticket => ticket.isAnswer === 0).length}
+                icon={<DraftsOutlined className="text-white size-10" />}
               />
                <InfosBox
-                color={"bg-primary"}
-                title=" دوره های رایگان "
-                count={userCourses.filter(course => course.price === 0).length}
-                icon={<RocketLaunch className="text-white size-10" />}
+                color={"bg-rose-500"}
+                title="   بسته شده"
+                count={userCourses.filter(course => course.price === 1).length}
+                icon={<ForumOutlined className="text-white size-10" />}
               />
                <div onClick={() => setNewTicketForm((prev) => !prev)} className='cursor-pointer select-none'>
                <InfosBox

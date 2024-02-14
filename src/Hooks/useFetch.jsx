@@ -24,7 +24,7 @@ const useFetch = (url , userToken) => {
     .catch(error => {
         console.log(error.message)
         if(error.message === 'Request failed with status code 404'){
-          toast.error(" نظری تاکنون ثبت نگردیده است")
+          toast.error(" موردی یافت نگردید")
         }else{
           toast.error(" خطا در برقراری با سرور")
         }

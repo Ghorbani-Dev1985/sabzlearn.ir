@@ -20,7 +20,7 @@ function NewTicketForm({setNewTicketForm}) {
             title: ticketTitle,
             priority: '2',
             body: ticketBody,
-            
+            course: undefined,
         })
         console.log(ticketTitle , ticketBody , departmentID )
         if(ticketTitle && ticketBody && departmentID && ticketTitle.length >= 2 && ticketBody.length >= 10){
