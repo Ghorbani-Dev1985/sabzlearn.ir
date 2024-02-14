@@ -4,7 +4,7 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Comment, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
+import { Article, Comment, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent, ShoppingBag} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
 
 
@@ -13,10 +13,15 @@ const AdminDashboardNavItems = [
   {
     id: 1,
     to: 'orders',
-    icon: <FolderCopy />,
-    text: ' دوره‌های من '
+    icon: <ShoppingBag />,
+    text: '  سفارش‌ها '
   },
-
+  {
+    id: 2,
+    to: 'courses',
+    icon: <FolderCopy />,
+    text: '  دوره‌های من '
+  },
 ]
 
 function SideBar() {

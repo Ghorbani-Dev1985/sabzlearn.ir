@@ -8,16 +8,17 @@ import { Alert } from '@mui/material'
 import { RemoveRedEye } from '@mui/icons-material'
 import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
+import axios from 'axios'
+import { BaseURL } from '../../../Utils/Utils'
 
 
 function Orders() {
-  const title = useTitle("دوره‌های من - سبزلرن ")
+  const title = useTitle(" سفارش‌ها - سبزلرن ")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const {datas : Courses} = useFetch('orders' , true)
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
-  const [courseID , setCourseID] = useState('')
-  const {datas : OneCourse} = useFetch(`orders/${courseID}` , true)
-    console.log(OneCourse)
+  const [oneCourse , setOneCourse] = useState([])
+  
     const columns = [
       {
         field: "id",
@@ -64,7 +65,7 @@ function Orders() {
           return (
             <p onClick={() => {
                 setShowDetailsModal(true)
-                setCourseID(course.id)
+                ShowCourseDetails(course.id)
                 
             }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
                 <RemoveRedEye className="size-6 text-amber-500"/>
@@ -103,7 +104,20 @@ function Orders() {
       },
 
     ];
-   
+   const ShowCourseDetails = (courseID) => {
+    axios.get(`${BaseURL}orders/${courseID}` , {
+      headers : {
+        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      setOneCourse(response.data[0].course)
+    })
+    .catch(error => {
+        console.log(error.message)
+    })
+   }
   return (
     <>
            {isShowLoading ? (
@@ -139,7 +153,8 @@ function Orders() {
       )}
         {/* Show Detail */}
         <DetailsModal>
-<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            
+         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className='text-center'>
@@ -160,22 +175,24 @@ function Orders() {
         <tbody>
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                   {OneCourse && OneCourse[0].course.isComplete === 1 ? <span className='bg-emerald-50 text-primary p-1 rounded-lg font-DanaBold'>تکمیل شده</span> : <span className='bg-amber-50 text-amber-600 p-1 rounded-lg'>در حال ضبط</span>}
+                   {oneCourse.isComplete === 1 ? <span className='bg-emerald-50 text-primary p-1 rounded-lg font-DanaBold'>تکمیل شده</span> : <span className='bg-amber-50 text-amber-600 p-1 rounded-lg'>در حال ضبط</span>}
                 </th>
                 <td className="px-6 py-4">
-                {OneCourse && OneCourse[0].course.status === "start" ? 'درحال برگزاری' : 'پیش فروش'}
+                {oneCourse.status === "start" ? 'درحال برگزاری' : 'پیش فروش'}
                 </td>
                 <td className="px-6 py-4">
-                  {OneCourse && OneCourse[0].course.support}
+                  {oneCourse.support}
                 </td>
                 <td className="px-6 py-4">
-                {OneCourse && OneCourse[0].course.shortName}
+                {oneCourse && oneCourse.shortName}
                 </td>
             </tr>
           
         </tbody>
     </table>
 </div>
+          
+
       </DetailsModal>
     </>
   )
