@@ -5,12 +5,13 @@ import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import useFetch from '../../../Hooks/useFetch'
 import { Alert } from '@mui/material'
-import { RemoveRedEye } from '@mui/icons-material'
+import { FolderCopy, MonetizationOn, RemoveRedEye, RocketLaunch } from '@mui/icons-material'
 import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
+import InfosBox from '../../../Components/InfosBoxInDashboard/InfosBoxInDashboard'
 
 
 function Courses() {
@@ -35,6 +36,26 @@ function Courses() {
    console.log(userCourses)
   return (
     <>
+      <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-40">
+              <InfosBox
+                color={"bg-amber-600 dark:bg-yellow-400"}
+                title=" دوره های ثبت نام شده "
+                count={userCourses.length}
+                icon={<FolderCopy className="text-white size-12" />}
+              />
+               <InfosBox
+                color={"bg-sky-500 dark:bg-secondary"}
+                title=" دوره های نقدی "
+                count={userCourses.filter(course => course.price !== 0).length}
+                icon={<MonetizationOn className="text-white size-12" />}
+              />
+               <InfosBox
+                color={"bg-primary"}
+                title=" دوره های رایگان "
+                count={userCourses.filter(course => course.price === 0).length}
+                icon={<RocketLaunch className="text-white size-12" />}
+              />
+      </div>
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
