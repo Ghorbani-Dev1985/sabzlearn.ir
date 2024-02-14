@@ -12,6 +12,7 @@ import TermsConditions from "./Pages/TermsConditions/TermsConditions";
 import NotFound from "./Pages/404/404";
 import ContactUS from "./Pages/ContactUS/ContactUS";
 import Search from "./Pages/Search.jsx/Search";
+//Admin Dashboard
 import AdminDashboard from './Pages/AdminDashboard/Index'
 import OverviewAdminDashboard from "./Pages/AdminDashboard/Overview/Overview";
 import UsersAdminDashboard from "./Pages/AdminDashboard/Users/Users";
@@ -24,7 +25,9 @@ import UsersMessagesDashboard from './Pages/AdminDashboard/UsersMessages/UsersMe
 import CommentsAdminDashboard from './Pages/AdminDashboard/Comments/Comments'
 import SessionsAdminDashboard from './Pages/AdminDashboard/Sessions/Sessions'
 import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
-
+//MySabzlearn
+import MySabzlearn from './Pages/MySabzlearn/Index'
+import OverviewMySabzlearn from './Pages/MySabzlearn/Overview/Overview'
 
 
 let routes = [
@@ -109,6 +112,13 @@ let routes = [
             {path: 'blogs/draft/:shortName' , element : <DraftAdminDashboard />},
             {path: 'messages' , element : <UsersMessagesDashboard />},
             {path: 'discount' , element : <DiscountDashboard />},
+            ],
+        },
+        { 
+            path: '/mySabzlearn/*',
+            element: <MySabzlearn />,
+            children: [
+                {path: '' , element : <OverviewMySabzlearn />} ,
             ],
         },
     {element: <LayoutWithoutHeaderFooter /> , children : [
