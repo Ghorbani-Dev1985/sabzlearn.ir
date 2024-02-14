@@ -27,7 +27,7 @@ import SessionsAdminDashboard from './Pages/AdminDashboard/Sessions/Sessions'
 import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
 //MySabzlearn
 import MySabzlearn from './Pages/MySabzlearn/Index'
-import OverviewMySabzlearn from './Pages/MySabzlearn/Overview/Overview'
+import OrdersMySabzlearn from './Pages/MySabzlearn/Orders/Orders'
 
 
 let routes = [
@@ -118,7 +118,7 @@ let routes = [
             path: '/mySabzlearn/*',
             element: <MySabzlearn />,
             children: [
-                {path: '' , element : <OverviewMySabzlearn />} ,
+                {path: 'orders' , element : <OrdersMySabzlearn />} ,
             ],
         },
     {element: <LayoutWithoutHeaderFooter /> , children : [

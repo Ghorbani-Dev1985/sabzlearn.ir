@@ -5,31 +5,14 @@ import TopBar from "../../Components/MySabzlearn/TopBar/TopBar";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { BaseURL } from "../../Utils/Utils";
+import { useAuth } from "../../Contexts/AuthContext";
 
 function Index() {
   const Navigate = useNavigate();
-  useEffect(() => {
-    axios
-      .get(`${BaseURL}auth/me`, {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("user")).token
-          }`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data)
-        // if (response.data.role !== "ADMIN" || response.data.role !== "USER") {
-        //   Navigate("/");
-        //   toast.error("امکان دسترسی وجود ندارد");
-        // }
-        // console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("  خطا در اتصال به سرور ");
-      });
-  }, []);
+  const {isLoggedIn} = useAuth()
+  
+  console.log(isLoggedIn)
+
   return (
     <main className="md:bg-white md:dark:bg-gray-800 flex gap-x-10 2xl:gap-x-14 lg:px-8 xl:px-14 2xl:px-25 lg:py-7">
       <SideBar />

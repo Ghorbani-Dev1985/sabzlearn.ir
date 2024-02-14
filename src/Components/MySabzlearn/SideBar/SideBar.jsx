@@ -12,9 +12,9 @@ import { useAuth } from '../../../Contexts/AuthContext';
 const AdminDashboardNavItems = [
   {
     id: 1,
-    to: 'mySabzlearn',
-    icon: <Home />,
-    text: 'نمای کلی'
+    to: 'orders',
+    icon: <FolderCopy />,
+    text: ' دوره‌های من '
   },
 
 ]
