@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const Navigate = useNavigate()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState(null)
-  const [userInfos, setUserInfos] = useState(null)
+  const [userInfos, setUserInfos] = useState({})
 
   const LoginHandler = useCallback((userInfos, token) => {
     setToken(token)

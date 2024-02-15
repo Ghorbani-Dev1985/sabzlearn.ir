@@ -32,7 +32,7 @@ import OrdersMySabzlearn from './Pages/MySabzlearn/Orders/Orders'
 import CoursesMySabzlearn from './Pages/MySabzlearn/Courses/Courses'
 import TicketsMySabzlearn from './Pages/MySabzlearn/Tickets/Tickets'
 import ViewTicketMySabzlearn from './Pages/MySabzlearn/Tickets/ViewTicket'
-
+import EditProfileMySabzlearn from './Pages/MySabzlearn/EditProfile/EditProfile'
 
 
 let routes = [
@@ -128,6 +128,7 @@ let routes = [
                 {path: 'courses' , element : <CoursesMySabzlearn />} ,
                 {path: 'tickets' , element : <TicketsMySabzlearn />} ,
                 {path: 'tickets/viewTicket/:id' , element : <ViewTicketMySabzlearn />} ,
+                {path: 'editProfile' , element : <EditProfileMySabzlearn />} ,
             ],
         },
     {element: <LayoutWithoutHeaderFooter /> , children : [
