@@ -16,7 +16,8 @@ import useUpdate from "../../../Hooks/useUpdate";
 import usePost from "../../../Hooks/usePost";
 import toast from "react-hot-toast";
 
-function Category() {
+
+function Discounts() {
   const title = useTitle(" کدهای تخفیف - پنل کاربری");
   const { datas: Discounts } = useFetch("offs", true)
   const { datas: Courses } = useFetch("courses", true)
@@ -282,4 +283,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Discounts;

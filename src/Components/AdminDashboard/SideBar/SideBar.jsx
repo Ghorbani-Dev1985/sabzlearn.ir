@@ -4,7 +4,7 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Comment, ConfirmationNumber, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
+import { Article, Campaign, Comment, ConfirmationNumber, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
 
 
@@ -76,7 +76,12 @@ const AdminDashboardNavItems = [
     icon: <Percent />,
     text: ' کدهای تخفیف'
   },
-  
+  {
+    id: 12,
+    to: 'campaign',
+    icon: <Campaign />,
+    text: '  ایجاد کمپین'
+  },
 ]
 
 function SideBar() {

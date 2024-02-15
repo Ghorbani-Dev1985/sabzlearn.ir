@@ -18,7 +18,7 @@ function PrivateAdminDashboard({children}) {
   return (
     <>
       {
-        userInfos.role === 'ADMIN' && <>{children}</>
+        userInfos.role === 'ADMIN' && <>{children}</> 
       }
     </>
   )
