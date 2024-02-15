@@ -24,6 +24,7 @@ import CategoryAdminDashboard from './Pages/AdminDashboard/Category/Category';
 import UsersMessagesDashboard from './Pages/AdminDashboard/UsersMessages/UsersMessages'
 import CommentsAdminDashboard from './Pages/AdminDashboard/Comments/Comments'
 import SessionsAdminDashboard from './Pages/AdminDashboard/Sessions/Sessions'
+import TicketsMessagesDashboard from './Pages/AdminDashboard/Tickets/Tickets'
 import DiscountDashboard from './Pages/AdminDashboard/Discounts/Discounts'
 //MySabzlearn
 import MySabzlearn from './Pages/MySabzlearn/Index'
@@ -115,6 +116,7 @@ let routes = [
             {path: 'blogs' , element : <BlogsAdminDashboard />},
             {path: 'blogs/draft/:shortName' , element : <DraftAdminDashboard />},
             {path: 'messages' , element : <UsersMessagesDashboard />},
+            {path: 'tickets' , element : <TicketsMessagesDashboard />},
             {path: 'discount' , element : <DiscountDashboard />},
             ],
         },

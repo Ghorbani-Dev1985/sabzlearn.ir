@@ -23,6 +23,7 @@ function Tickets() {
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [userCourses , setUserCourses] = useState([])
   const [showNewTicketForm , setNewTicketForm] = useState(false)
+  console.log(tickets)
   const columns = [
     {
       field: "id",
@@ -42,7 +43,7 @@ function Tickets() {
       whiteSpace: "wrap",
       renderCell: (ticket) => {
         return (
-          ticket.row.amser === 1 ?
+          ticket.row.answer === 1 ?
           <Link to={`viewTicket/${ticket.id}`}>
            {ticket.row.title}
           </Link>
@@ -97,7 +98,6 @@ function Tickets() {
     },
 
   ];
-   console.log(tickets)
   return (
     <>
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-14">

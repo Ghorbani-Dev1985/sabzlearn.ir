@@ -13,27 +13,27 @@ function ViewTicket() {
         <span className="font-danaMedium md:text-xl text-zinc-700 dark:text-white"> پیام های تیکت </span>
     </div>
     <div className='space-y-4'>
-
-        {
-            ticketDetails.map(({ticket , answer , index}) => {
-                return(
-                <React.Fragment key={index}>
                   {/* Ticket */}
            <div className="w-11/12 sm:w-2/3 bg-gray-100 dark:bg-gray-700 text-zinc-700 dark:text-white p-4 rounded-2xl rounded-tr-sm">
-                <p className="font-danaLight mt-4.5">{ticket} </p>   
+                <p className="font-danaLight mt-4.5">{ticketDetails.ticket} </p>   
             </div>
             {/* Answer */}
              {
-                answer.length &&
+                ticketDetails.answer &&
             <div className="w-11/12 sm:w-2/3 mr-auto bg-sky-500/30 dark:bg-secondary/20 text-zinc-700 dark:text-white p-4 rounded-2xl rounded-tr-sm">
-                <p className="font-danaLight mt-4.5">{answer}</p>
+                <p className="font-danaLight mt-4.5">{ticketDetails.answer}</p>
             </div>
              }
+
+        {/* {
+            ticketDetails.map(({ticket , answer , index}) => {
+                return(
+                <React.Fragment key={index}>
                 </React.Fragment>
                 
               )
             })
-        }
+        } */}
     </div>
     </div>
   )

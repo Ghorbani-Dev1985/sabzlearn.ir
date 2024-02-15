@@ -4,7 +4,7 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Comment, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
+import { Article, Comment, ConfirmationNumber, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
 
 
@@ -64,12 +64,19 @@ const AdminDashboardNavItems = [
     icon: <Message />,
     text: ' پیام‌ها'
   }, 
-   {
+  {
     id: 10,
+    to: 'tickets',
+    icon: <ConfirmationNumber />,
+    text: ' تیکت ها '
+  },
+   {
+    id: 11,
     to: 'discount',
     icon: <Percent />,
     text: ' کدهای تخفیف'
   },
+  
 ]
 
 function SideBar() {

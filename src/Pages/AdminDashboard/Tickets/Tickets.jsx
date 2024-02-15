@@ -17,16 +17,18 @@ import Button from '../../../common/Form/Button'
 import usePost from '../../../Hooks/usePost'
 import toast from 'react-hot-toast'
 
-function UsersMessages() {
-    const title = useTitle("پیام‌ها - پنل کاربری")
-    const { datas: UsersMessages } = useFetch("contact", true)
+function Tickets() {
+    const title = useTitle("تیکت ها - پنل کاربری")
+    const { datas: Tickets } = useFetch("tickets", true)
     const { isShowLoading, setIsShowLoading } = useShowLoading()
     const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
     const { showEditModal, setShowEditModal } = useEditModal()
     const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
-    const [magBody , setMsgBody] = useState('')
+    const [ticketBody , setTicketBody] = useState('')
     const [sendAnswerText , setSendAnswerText] = useState('')
+    const [ticketID , setTicketID] = useState('')
     const [userEmail , setUserEmail] = useState('')
+   console.log(Tickets)
     const columns = [
         {
           field: "id",
@@ -36,22 +38,22 @@ function UsersMessages() {
           align: "center",
         },
         {
-          field: "name",
+          field: "user",
           headerName: " نام کامل",
           width: 180,
           headerAlign: "center",
           align: "center",
         },
         {
-          field: "phone",
-          headerName: " تلفن تماس",
+          field: "title",
+          headerName: " عنوان ",
           width: 120,
           headerAlign: "center",
           align: "center",
         },
         {
-          field: "email",
-          headerName: " آدرس ایمیل ",
+          field: "departmentID",
+          headerName: " دپارتمان",
           width: 250,
           headerAlign: "center",
           align: "center",
@@ -62,11 +64,11 @@ function UsersMessages() {
             width: 140,
             headerAlign: "center",
             align: "center",
-            renderCell: (UserMessage) => {
+            renderCell: (ticket) => {
               return (
                 <p onClick={() => {
                     setShowDetailsModal(true)
-                    setMsgBody(UserMessage.row.body)
+                    setTicketBody(ticket.row.body)
                 }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
                     <RemoveRedEye className="size-6 text-amber-500"/>
                    
@@ -81,9 +83,9 @@ function UsersMessages() {
           width: 140,
           headerAlign: "center",
           align: "center",
-          renderCell: (UserMessage) => {
+          renderCell: (ticket) => {
             return (
-                UserMessage.row.answer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
+                ticket.row.answer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
             );
           },
         },
@@ -93,12 +95,14 @@ function UsersMessages() {
           width: 90,
           headerAlign: "center",
           align: "center",
-          renderCell: (UserMessage) => {
+          renderCell: (ticket) => {
             return (
               <div
                 onClick={() => {
                   setShowEditModal(true);
-                  setUserEmail(UserMessage.row.email)
+                  setTicketID(ticket.id)
+                  setUserEmail(ticket.row.email)
+
                 }}
                 className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
               >
@@ -107,47 +111,15 @@ function UsersMessages() {
             );
           },
         },
-        {
-          field: "deleteAction",
-          headerName: "حذف",
-          width: 50,
-          headerAlign: "center",
-          align: "center",
-          renderCell: (UserMessage) => {
-            return (
-              <div
-                onClick={() => {
-                  DeleteContactHandler(UserMessage.id);
-                }}
-                className="flex-center cursor-pointer text-rose-500 hover:text-rose-300 transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                  />
-                </svg>
-              </div>
-            );
-          },
-        },
       ];
       //Answer Function
       const SendAnswerHandler = () => {
         let sendAnswerInfos = JSON.stringify({
-            email: userEmail,
-            answer: sendAnswerText
+            ticketID,
+            body: sendAnswerText
         })
         if(sendAnswerText){
-            const sendAnswer = usePost('contact/answer' , sendAnswerInfos , true)
+            const sendAnswer = usePost('tickets/answer' , sendAnswerInfos)
             setShowEditModal(false)
             setShowRealTimeDatas((prev) => !prev)
         }else{
@@ -178,18 +150,18 @@ function UsersMessages() {
       ) : (
         <>
           <div className="w-full dark:text-white">
-            <h2 className="font-DanaBold my-8 text-2xl">لیست پیام ها</h2>
+            <h2 className="font-DanaBold my-8 text-2xl">لیست تیکت ها</h2>
             <div className='lg:max-w-[40rem] xl:max-w-full'>
-            {UsersMessages.length > 0 ? (
+            {Tickets.length > 0 ? (
               <DataGrid
-                rows={UsersMessages.map((UsersMessage, index) => {
-                  return { id: index + 1, ...UsersMessage };
+                rows={Tickets.map((ticket, index) => {
+                  return { id: index + 1, ...ticket };
                 })}
                 className="dark:text-white"
                 rowHeight={150}
                 
-                getRowId={(UsersMessage) => UsersMessage._id}
-                getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
+                getRowId={(ticket) => ticket._id}
+                getRowClassName={(tickets) => `${tickets.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
                 columns={columns}
                 initialState={{
                   pagination: {
@@ -208,7 +180,7 @@ function UsersMessages() {
       )}
       {/* Show Detail */}
       <DetailsModal>
-           {magBody}
+           {ticketBody}
       </DetailsModal>
       {/* Send Answer */}
       <EditModal headerText="ارسال پاسخ">
@@ -231,4 +203,4 @@ function UsersMessages() {
   )
 }
 
-export default UsersMessages
+export default Tickets
