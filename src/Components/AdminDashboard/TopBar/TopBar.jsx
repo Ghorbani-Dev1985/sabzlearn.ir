@@ -29,22 +29,24 @@ function TopBar() {
   const [allNotifications, setAllNotifications] = useState([]);
   const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
   const GetNonfiction = () => {
-    const localStorageData = JSON.parse(localStorage.getItem("user"));
-    return(
-      axios(`${BaseURL}auth/me`, {
-        headers: {
-          'Authorization' : `Bearer ${localStorageData.token}`,
-        },
-      })
-        .then((response) => {
-          setAdminInfos(response.data);
-          setAllNotifications(response.data.notifications);
+    const localStorageDataToken = JSON.parse(localStorage.getItem("user")).token
+    if(localStorageDataToken !== ''){
+      return(
+        axios(`${BaseURL}auth/me`, {
+          headers: {
+            'Authorization' : `Bearer ${localStorageDataToken}`,
+          },
         })
-        .catch((error) => {
-          console.log(error);
-          toast.error("  خطا در اتصال به سرور ");
-        })
-    )
+          .then((response) => {
+            setAdminInfos(response.data);
+            setAllNotifications(response.data.notifications);
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("  خطا در اتصال به سرور ");
+          })
+      )
+    }
     }
     const SeeNotificationHandler = (_id) => {
         const putReq = usePut(`notifications/see/${_id}`);
@@ -52,7 +54,7 @@ function TopBar() {
         setShowNotification(false)
     };
     useEffect(() => {
-      GetNonfiction()
+      JSON.parse(localStorage.getItem("user")).token !== '' && GetNonfiction()
   }, []);
 
   console.log(allNotifications);

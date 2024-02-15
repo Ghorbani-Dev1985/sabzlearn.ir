@@ -12,25 +12,23 @@ import { DetailsModalProvider } from '../../Contexts/DetailsModalContext'
 
 function MainProvider({children}) {
   return (
+      <AuthProvider>
    <OpenCloseProvider>
     <DarkModeContextProvider>
       <ShowLoadingProvider>
       <ShowRealtimeDatasProvider>
       <EditModalProvider>
        <DetailsModalProvider>
-      <AuthProvider>
-        <CoursesContextProvider>
-          <BlogsContextProvider>
+        <BlogsContextProvider>
             {children}
           </BlogsContextProvider>
-        </CoursesContextProvider>
-      </AuthProvider>
        </DetailsModalProvider>
       </EditModalProvider>
       </ShowRealtimeDatasProvider>
       </ShowLoadingProvider>
     </DarkModeContextProvider>
    </OpenCloseProvider>
+      </AuthProvider>
          
   )
 }

@@ -15,7 +15,6 @@ import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import useUpdate from "../../../Hooks/useUpdate";
 import usePost from "../../../Hooks/usePost";
 import toast from "react-hot-toast";
-import { useCourses } from "../../../Contexts/CoursesContext";
 
 function Category() {
   const title = useTitle(" کدهای تخفیف - پنل کاربری");

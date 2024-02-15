@@ -12,6 +12,8 @@ import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import NonUserAvatar from '../../../assets/Images/CommentFormUser/none.png'
 import { useAuth } from '../../../Contexts/AuthContext'
+import usePut from '../../../Hooks/usePut'
+import toast from 'react-hot-toast'
 
 function EditProfile() {
   const title = useTitle(" جزییات حساب - سبزلرن ")
@@ -21,16 +23,30 @@ function EditProfile() {
   const [userName , setUserName] = useState('')
   const [phone , setPhone] = useState('')
   const [email , setEmail] = useState('')
-  const [password , setPassword] = useState('')
   const [newPassword , setNewPassword] = useState('')
-  console.log(userInfos.name)
+  console.log(userInfos)
+  const EditProfileHandler = (event) => {
+    event.preventDefault()
+    let newUserInfos = JSON.stringify({
+      name: fullName,
+	    username: userName,
+	   email,
+	   password: newPassword,
+	    phone
+    })
+    if(fullName && userName && phone && email && newPassword && fullName.length >= 3 && userName.length >= 3 && phone.length >=10 && email.length >= 5 && newPassword.length >= 7){
+      const editProfile = usePut('users/' , newUserInfos)
+    }else{
+      toast.error('لطفا فرم را با مقادیر صحیح پر نمایید')
+    }
+  }
   useEffect(() => {
     setFullName(userInfos.name)
     setPhone(userInfos.phone)
     setEmail(userInfos.email)
     setUserName(userInfos.username)
-    setPassword(userInfos.password)
-  } ,[])
+    
+  } ,[userInfos])
   return (
     <div className='grid grid-cols-1 xl:grid-cols-3 gap-10'>
       <div className="xl:col-span-2 bg-white dark:bg-gray-800 p-4.5 rounded-2xl">
@@ -46,24 +62,24 @@ function EditProfile() {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-6">
 				<div>
 					<label for="phone" className="font-DanaBold text-zinc-700 dark:text-white">شماره موبایل</label>
-					<input type="text" value={phone} onChange={(event) => setPhone(event.target.value)} className="dir-ltr mt-3.5 md:mt-4 bg-gray-200 cursor-not-allowed" />
+					<input type="text" value={phone} onChange={(event) => setPhone(event.target.value)} className="dir-ltr outline-none mt-3.5 md:mt-4 bg-gray-200" />
 				</div>
 				
 				<div>
 					<label for="first_name" className="font-DanaBold text-zinc-700 dark:text-white"> نام و نام خانوادگی </label>
-					<input type="text" value={fullName} onChange={(event) => setFullName(event.target.value)} className="mt-3.5 md:mt-4" id="first_name" name="first_name" />
+					<input type="text" value={fullName} onChange={(event) => setFullName(event.target.value)} className="outline-none mt-3.5 md:mt-4" id="first_name" name="first_name" />
 				</div>
 				<div>
 					<label for="username" className="font-DanaBold text-zinc-700 dark:text-white">نام کاربری</label>
-					<input type="text" value={userName} onChange={(event) => setUserName(event.target.value)} className="dir-ltr mt-3.5 md:mt-4 bg-gray-200 cursor-not-allowed" />
+					<input type="text" value={userName} onChange={(event) => setUserName(event.target.value)} className="outline-none dir-ltr mt-3.5 md:mt-4 bg-gray-200" />
 				</div>
 				<div>
 					<label for="email" className="font-DanaBold text-zinc-700 dark:text-white">ایمیل</label>
-					<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="dir-ltr  mt-3.5 md:mt-4" name="email" />
+					<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="outline-none dir-ltr  mt-3.5 md:mt-4" name="email" />
 				</div>
 			</div>
 		<div className='w-full flex justify-end'>
-			<button type="submit" className="button-lg button-primary rounded-xl mr-auto w-full md:w-auto mt-10">ثبت اطلاعات</button>
+			<button onClick={EditProfileHandler} type="submit" className="button-lg button-primary rounded-xl mr-auto w-full md:w-auto mt-10">ثبت اطلاعات</button>
     </div>
 	</div>
   <div className="xl:col-span-1 bg-white dark:bg-gray-800 p-4.5 rounded-2xl">
@@ -73,17 +89,17 @@ function EditProfile() {
 			<div className="space-y-5 md:space-y-6">
 				<div>
 					<label for="old_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور فعلی</label>
-					<input type="password" value={password} onChange={(event) => setPassword(event.target.value)}  name="old_pass" className="mt-3.5 md:mt-4 mb-3" placeholder="رمز فعلی را وارد کنید" />
+					<input type="password"  name="old_pass" className="outline-none mt-3.5 md:mt-4 mb-3" placeholder="رمز فعلی را وارد کنید" />
 					<a href="" className="text-slate-500 dark:text-slate-400 text-sm">رمز عبور را فراموش کرده اید؟</a>
 				</div>
 				<div>
-					<label for="new_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور جدید</label>
-					<input type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} className="mt-3.5 md:mt-4" name="new_pass" placeholder="رمز جدید را وارد کنید" />
+					<label for="new_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور جدید* </label>
+					<input type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} className="outline-none mt-3.5 md:mt-4" name="new_pass" placeholder="رمز جدید را وارد کنید" />
 				</div>
 			</div>
-      <div className='w-full flex justify-end'>
-			<button type="submit" className="button-lg button-primary rounded-xl mr-auto w-full md:w-auto mt-10">تغییر رمز</button>
-      </div>
+      {/* <div className='w-full flex justify-end'>
+			<button type="submit" className="button-lg button-primary rounded-xl mr-auto w-full md:w-auto mt-10" disabled>تغییر رمز</button>
+      </div> */}
 	</div>
     </div>
   )

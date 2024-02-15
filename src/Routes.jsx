@@ -34,6 +34,10 @@ import TicketsMySabzlearn from './Pages/MySabzlearn/Tickets/Tickets'
 import ViewTicketMySabzlearn from './Pages/MySabzlearn/Tickets/ViewTicket'
 import EditProfileMySabzlearn from './Pages/MySabzlearn/EditProfile/EditProfile'
 
+//Private
+import PrivateAdminDashboard from "./Components/Private/PrivateAdminDashboard"
+
+
 
 let routes = [
     {element: <Layout /> , children: [
@@ -103,8 +107,8 @@ let routes = [
         }
     ]},
      { 
-            path: '/adminDashboard_VNqM5yZGo3cGM/*',
-            element: <AdminDashboard />,
+            path: '/adminDashboard/*',
+            element:  <PrivateAdminDashboard><AdminDashboard /></PrivateAdminDashboard>,
             children: [
             {path: 'overview' , element : <OverviewAdminDashboard />} ,
             {path: 'users' , element : <UsersAdminDashboard />} ,

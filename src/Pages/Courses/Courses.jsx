@@ -4,7 +4,6 @@ import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 import SearchFilter from '../../Components/SearchFilter/SearchFilter'
 import TopSort from '../../Components/TopSort/TopSort'
 import CourseCard from '../../Components/CourseCard/CourseCard'
-import { useCourses } from '../../Contexts/CoursesContext'
 import Pagination from '../../Components/Pagination/Pagination'
 import { Alert } from '@mui/material'
 import { BaseURL } from '../../Utils/Utils'
@@ -138,7 +137,6 @@ const courses = [
 
 function Courses() {
 const title = useTitle('دوره ها')
-// const {courses} = useCourses()
   const [allCourses , setAllCourses] = useState([])
 const [showItems , setShowItems] = useState([])
 const [status , setStatus] = useState('all')
