@@ -238,7 +238,7 @@ function Course() {
                     {courseDetails.price > 0 ? (
                       <>
                        
-                        {courseDetails.price.toLocaleString()}
+                        {courseDetails.discount && courseDetails.price.toLocaleString()}
                         {colorTheme === "light" ? (
                           <img
                             src={TomanLight}

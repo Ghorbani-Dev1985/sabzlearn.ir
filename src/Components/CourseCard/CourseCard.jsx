@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import DOMPurify from 'dompurify'
 
 function CourseCard(
-  {id, shortName , cover , name , description , creator , price , courseAverageScore}) {
+  {id, shortName , discount , categoryTitle , categoryShortName ,  cover , name , description , creator , price , courseAverageScore}) {
   const [isImgLoaded , setIsImgLoaded] = useState(true)
   return (
     
@@ -21,42 +21,20 @@ function CourseCard(
           />
         </Link>
         {/* Offer Tag */}
-        {/* {isOffer && (
+        {discount && price !== 0 && (
           <span className="absolute right-2.5 top-2.5 flex-center w-12 h-6 bg-primary text-white rounded-xl font-DanaBold text-sm">
-            {offerPercent}
+            {discount}%
           </span>
-        )} */}
+        )}
       </div>
       {/* Body */}
       <div className="px-5 pb-3.5 pt-2.5 flex-grow">
-        {/* {category.length > 0 ? (
-          category.map(({ id, categoryTitle, categoryLink }) => {
-            return (
-              <React.Fragment key={id}>
-                <Link
-                  to={categoryLink}
-                  className="inline-flex items-center justify-center text-xs !text-sky-500 dark:text-yellow-400 bg-sky-500/10 dark:bg-yellow-400/10 py-1
-                  px-1.5 mx-1 mb-2.5 rounded"
-                >
-                  {categoryTitle}
-                </Link>
-              </React.Fragment>
-            );
-          })
-        ) : (
-          <Link
-            to={category[0].categoryLink}
-            className="inline-flex items-center justify-center text-xs text-sky-500 dark:text-yellow-400 bg-sky-500/10 dark:bg-yellow-400/10 py-1 px-1.5 mb-2.5 rounded"
-          >
-            {category[0].categoryTitle}
-          </Link>
-        )} */}
          <Link
-                  to=""
+                  to={`category/${categoryShortName}/1`}
                   className="inline-flex items-center justify-center text-xs !text-sky-500 dark:text-yellow-400 bg-sky-500/10 dark:bg-yellow-400/10 py-1
                   px-1.5 mx-1 mb-2.5 rounded"
                 >
-                 فرانت اند
+                 {categoryTitle}
                 </Link>
         {/* Title */}
         <h4 className="font-DanaMd min-h-14 max-h-14 line-clamp-2 text-zinc-700 dark:text-white mb-2.5">
@@ -124,7 +102,7 @@ function CourseCard(
           </span>
           <div className="flex flex-col items-start">
             <span className='line-through offer inline-block relative font-Dana text-zinc-400 dark:text-slate-400 text-sm -mb-1.5 -mr-3 h-6'>
-              {/* {offerPrice && offerPrice.toLocaleString()} */}
+              {discount && price !== 0 && price - (price * discount) / 100}
             </span>
             <span className="flex-center gap-1 font-DanaMd text-xl text-primary space-x-1.5">
               {

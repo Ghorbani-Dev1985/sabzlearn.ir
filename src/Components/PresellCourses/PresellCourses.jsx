@@ -24,11 +24,11 @@ function PresellCourses() {
        <Slider>
          {
          
-         presellCourses.map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
+         presellCourses.map(({_id, shortName , discount , categoryID , cover , name , description , creator , price , courseAverageScore}) => {
            return(
              <React.Fragment key={_id}>
                           <SwiperSlide className='rounded-2xl'>
-                          <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
+                          <CourseCard shortName={shortName} discount={discount} categoryTitle={categoryID.title} categoryShortName={categoryID.name} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                           </SwiperSlide>
                     </React.Fragment>
                 )

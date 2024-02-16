@@ -84,13 +84,13 @@ const lastCourses = [
         price: 279600
     }
 ]
-
 function LastCourses() {
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState([])
     useEffect(() => {
-      axios.get(`${BaseURL}courses`).then((response) => {
-        setCourses(response.data);
-      });
+        axios.get(`${BaseURL}courses`)
+        .then((response) => {
+            setCourses(response.data)
+        });
     }, []);
   return (
     <section className='relative mt-22 sm:mt-40'>
@@ -100,10 +100,10 @@ function LastCourses() {
      {/* Last Course List */}
      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
         {
-            courses.splice(0 , 8).map(({_id, shortName , cover , name , description , creator , price , courseAverageScore}) => {
+            courses.splice(0 , 8).map(({_id, shortName , discount , categoryID , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
-                        <CourseCard shortName={shortName} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
+                        <CourseCard shortName={shortName} categoryTitle={categoryID.title} categoryShortName={categoryID.name} discount={discount} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                     </React.Fragment>
                 )
             })
