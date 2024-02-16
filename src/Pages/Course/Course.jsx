@@ -190,6 +190,7 @@ function Course() {
   useEffect(() => {
     GetCourseDetails()
   }, [courseName]);
+  console.log(courseDetails)
   return (
     <>
       {/* Breadcrumb */}
@@ -237,8 +238,10 @@ function Course() {
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
                     {courseDetails.price > 0 ? (
                       <>
-                       
-                        {courseDetails.discount && courseDetails.price.toLocaleString()}
+                      <div className="flex flex-col gap-3">
+                        <p className="line-through font-Dana text-zinc-400 dark:text-slate-400">{courseDetails.price.toLocaleString()}</p>
+                          <p className="flex-center gap-1">
+                        {courseDetails.discount && (courseDetails.price - (courseDetails.price * (courseDetails.discount) / 100)).toLocaleString()}
                         {colorTheme === "light" ? (
                           <img
                             src={TomanLight}
@@ -252,6 +255,8 @@ function Course() {
                             className="size-6"
                           />
                         )}
+                          </p>
+                      </div>
                       </>
                     ) : (
                       <FreePrice />

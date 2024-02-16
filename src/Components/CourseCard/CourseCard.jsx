@@ -102,12 +102,12 @@ function CourseCard(
           </span>
           <div className="flex flex-col items-start">
             <span className='line-through offer inline-block relative font-Dana text-zinc-400 dark:text-slate-400 text-sm -mb-1.5 -mr-3 h-6'>
-              {discount && price !== 0 && price - (price * discount) / 100}
+              {price && price.toLocaleString()}
             </span>
             <span className="flex-center gap-1 font-DanaMd text-xl text-primary space-x-1.5">
               {
               price > 0 ?
-             <>{price && price.toLocaleString()} <img src={TomanGreen} alt="ghorbani-dev.ir" className="size-4" /> </> :
+             <> {discount && price !== 0 && price - (price * discount) / 100} <img src={TomanGreen} alt="ghorbani-dev.ir" className="size-4" /> </> :
               <span className="font-Dana text-xl text-primary space-x-1.5">
               رایگان! </span>
               }
