@@ -5,19 +5,27 @@ import FrontEnd from '../../assets/Images/svgs/forntEndIcon.svg'
 import Security from '../../assets/Images/svgs/securityIcon.svg'
 import Python from '../../assets/Images/svgs/pythonIcon.svg'
 import SoftSkill from '../../assets/Images/svgs/softSkillIcon.svg'
+import { useCourses } from '../../Contexts/CoursesContext'
 
 
 function RoadMap() {
+  const {courses} = useCourses()
+  console.log(courses)
+  const frontEndCourseCount = courses.filter(course => course.categoryID.name === 'front-end').length
+  const securityCourseCount = courses.filter(course => course.categoryID.name === 'security').length
+  const pythonCourseCount = courses.filter(course => course.categoryID.name === 'python').length
+  const skillUpCourseCount = courses.filter(course => course.categoryID.name === 'skill-up').length
+  console.log(securityCourseCount)
   return (
     // Roadmap Component
     <section className='mt-25 relative'>
        <SectionTitle squareColor="bg-fuchsia-500" title="نقشه راه ها" subTitle="نقشه های راه برای شروع اصولی یادگیری" isLink={false} /> 
        {/* Roadmap */}
        <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
-          <SingleRoadMap to="" boxBgColor="from-[#FFB535] to-[#F2295B]" icon={FrontEnd} title="فرانت اند" countNumber={27} />
-          <SingleRoadMap to="" boxBgColor="from-[#30C4E5] to-[#27E55C]" icon={Security} title=" امنیت" countNumber={8} />
-          <SingleRoadMap to="" boxBgColor="from-[#9C33F7] to-[#2B9FFF]" icon={Python} title="پایتون" countNumber={6} />
-          <SingleRoadMap to="" boxBgColor="from-[#FF3571] to-[#870075]" icon={SoftSkill} title=" مهارت‌های نرم" countNumber={6} />
+          <SingleRoadMap to="" boxBgColor="from-[#FFB535] to-[#F2295B]" icon={FrontEnd} title="فرانت اند" countNumber={frontEndCourseCount} />
+          <SingleRoadMap to="" boxBgColor="from-[#30C4E5] to-[#27E55C]" icon={Security} title=" امنیت" countNumber={securityCourseCount} />
+          <SingleRoadMap to="" boxBgColor="from-[#9C33F7] to-[#2B9FFF]" icon={Python} title="پایتون" countNumber={pythonCourseCount} />
+          <SingleRoadMap to="" boxBgColor="from-[#FF3571] to-[#870075]" icon={SoftSkill} title=" مهارت‌های نرم" countNumber={skillUpCourseCount} />
        </div>
        <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-fuchsia-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-50"></div>
     </section>

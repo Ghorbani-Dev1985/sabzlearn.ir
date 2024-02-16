@@ -15,6 +15,7 @@ function MainProvider({children}) {
       <AuthProvider>
    <OpenCloseProvider>
     <DarkModeContextProvider>
+      <CoursesContextProvider>
       <ShowLoadingProvider>
       <ShowRealtimeDatasProvider>
       <EditModalProvider>
@@ -26,6 +27,7 @@ function MainProvider({children}) {
       </EditModalProvider>
       </ShowRealtimeDatasProvider>
       </ShowLoadingProvider>
+      </CoursesContextProvider>
     </DarkModeContextProvider>
    </OpenCloseProvider>
       </AuthProvider>
