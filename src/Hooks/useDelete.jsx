@@ -8,10 +8,6 @@ const useDelete = async (url ) => {
     .then((ResponseResult) => {
       ResponseResult.status === 200 && toast.success("حذف با موفقیت انجام گردید") 
     })
-    .catch((ResponseError) => {
-      console.log(ResponseError)
-      toast.success("حذف انجام نشد")
-    })
 }
 
 export default useDelete
