@@ -5,21 +5,27 @@ import UserImg from '../../assets/Images/CommentFormUser/none.png'
 import { FolderOpenOutlined, HomeOutlined, PermIdentityOutlined, SmsOutlined } from '@mui/icons-material'
 import UserProfile from '../../Components/UserProfile/UserProfile'
 const dashboardLinks = [
+  {
+    id: 1,
+    to: 'mySabzlearn/orders',
+    icon: <HomeOutlined className='size-5'/>,
+    linkText: ' سبزلرن من'
+  },
 {
-  id: 1,
-  to: 'mySabzlearn/orders',
+  id: 2,
+  to: 'mySabzlearn/courses',
   icon: <FolderOpenOutlined className='size-5'/>,
   linkText: ' دوره های من'
 },
 {
-  id: 2,
-  to: '',
+  id: 3,
+  to: 'mySabzlearn/tickets',
   icon: <SmsOutlined className='size-5'/>,
   linkText: ' تیکت های پشتیانی'
 },
 {
-  id: 3,
-  to: '',
+  id: 4,
+  to: 'mySabzlearn/editProfile',
   icon: <PermIdentityOutlined className='size-5'/>,
   linkText: ' جزییات حساب '
 },
