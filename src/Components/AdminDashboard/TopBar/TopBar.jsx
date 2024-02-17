@@ -121,29 +121,6 @@ function TopBar() {
         </div>
         {/* Dark Theme */}
         <DesktopDarkMode />
-        <div className='relative z-20 shrink-0'>
-            <div onClick={() => setShowUserProfileMenu((prev) => !prev)}>
-              <img src={UserImg} alt='ghorbani-dev.ir' className='object-cover size-12 md:size-14 rounded-full inline-block cursor-pointer'/>
-            </div>
-          {
-            showUserProfileMenu && <UserProfile showUserProfileMenu={showUserProfileMenu} setShowUserProfileMenu={setShowUserProfileMenu} left={'left-0'} >
-            {
-            dashboardLinks.map(({id, to , icon , linkText}) => {
-              return(
-                <React.Fragment key={id}>
-                <Link to={to} className='flex-between text-zinc-700 dark:text-white px-2.5 h-[46px] rounded-xl hover:bg-gray-100 dark:hover:bg-mainSlate transition-colors'>
-                   <span className='flex items-center gap-x-3'>
-                    {icon}
-                    {linkText}
-                    </span>
-                </Link>
-                </React.Fragment>
-              )
-            })
-          }
-        </UserProfile>
-          }
-            </div>
        
       </div>
     </header>

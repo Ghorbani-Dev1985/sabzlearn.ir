@@ -160,7 +160,7 @@ exports.changeUserRole = async (req, res, next) => {
     });
 
     const { role, id } = req.body;
-    console.log(role);
+    console.log(role , id);
 
     const user = await userModel.findByIdAndUpdate(
       { _id: id },

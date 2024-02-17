@@ -4,10 +4,11 @@ import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid, faIR } from "@mui/x-data-grid";
-import { Alert, Button } from "@mui/material";
+import { Alert } from "@mui/material";
 import {
   AccountCircle,
   Block,
+  ChangeCircle,
   DeleteOutlineOutlined,
   Edit,
   KeyOutlined,
@@ -35,6 +36,8 @@ import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
 import { useEditModal } from "../../../Contexts/EditModalContext";
 import useUpdate from "../../../Hooks/useUpdate";
 import useTitle from "../../../Hooks/useTitle";
+import Button from "../../../common/Form/Button";
+
 
 function Users() {
   const title = useTitle('کاربر‌ها - پنل کاربری')
@@ -251,6 +254,7 @@ function Users() {
       },
     },
   ];
+
   //Ban Function
   const UserBanHandler = (userID) => {
     Swal.fire({
@@ -282,7 +286,6 @@ function Users() {
   };
   //  Delete Function
   const DeleteUserHandler = (userID) => {
-    console.log(userID);
     Swal.fire({
       title: "برای حذف کاربر مطمعن هستید؟",
       icon: "warning",
@@ -299,9 +302,7 @@ function Users() {
     });
   };
   useEffect(() => {
-    console.log(users)
     let filterUpdateUser = users.find((user) => user._id === updateUserID)
-    console.log(filterUpdateUser)
     if (filterUpdateUser) {
       setFullName(filterUpdateUser.name)
       setUserName(filterUpdateUser.username)
