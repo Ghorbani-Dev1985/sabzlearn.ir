@@ -24,7 +24,7 @@ function EditProfile() {
   const [phone , setPhone] = useState('')
   const [email , setEmail] = useState('')
   const [newPassword , setNewPassword] = useState('')
-  console.log(userInfos)
+
   const EditProfileHandler = (event) => {
     event.preventDefault()
     let newUserInfos = JSON.stringify({
@@ -61,20 +61,20 @@ function EditProfile() {
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-6">
 				<div>
-					<label for="phone" className="font-DanaBold text-zinc-700 dark:text-white">شماره موبایل</label>
+					<label htmlFor="phone" className="font-DanaBold text-zinc-700 dark:text-white">شماره موبایل</label>
 					<input type="text" value={phone} onChange={(event) => setPhone(event.target.value)} className="dir-ltr outline-none mt-3.5 md:mt-4 bg-gray-200" />
 				</div>
 				
 				<div>
-					<label for="first_name" className="font-DanaBold text-zinc-700 dark:text-white"> نام و نام خانوادگی </label>
+					<label htmlFor="first_name" className="font-DanaBold text-zinc-700 dark:text-white"> نام و نام خانوادگی </label>
 					<input type="text" value={fullName} onChange={(event) => setFullName(event.target.value)} className="outline-none mt-3.5 md:mt-4" id="first_name" name="first_name" />
 				</div>
 				<div>
-					<label for="username" className="font-DanaBold text-zinc-700 dark:text-white">نام کاربری</label>
+					<label htmlFor="username" className="font-DanaBold text-zinc-700 dark:text-white">نام کاربری</label>
 					<input type="text" value={userName} onChange={(event) => setUserName(event.target.value)} className="outline-none dir-ltr mt-3.5 md:mt-4 bg-gray-200" />
 				</div>
 				<div>
-					<label for="email" className="font-DanaBold text-zinc-700 dark:text-white">ایمیل</label>
+					<label htmlFor="email" className="font-DanaBold text-zinc-700 dark:text-white">ایمیل</label>
 					<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="outline-none dir-ltr  mt-3.5 md:mt-4" name="email" />
 				</div>
 			</div>
@@ -88,12 +88,12 @@ function EditProfile() {
 		</div>
 			<div className="space-y-5 md:space-y-6">
 				<div>
-					<label for="old_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور فعلی</label>
+					<label htmlFor="old_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور فعلی</label>
 					<input type="password"  name="old_pass" className="outline-none mt-3.5 md:mt-4 mb-3" placeholder="رمز فعلی را وارد کنید" />
 					<a href="" className="text-slate-500 dark:text-slate-400 text-sm">رمز عبور را فراموش کرده اید؟</a>
 				</div>
 				<div>
-					<label for="new_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور جدید* </label>
+					<label htmlFor="new_pass" className="font-DanaBold text-zinc-700 dark:text-white">رمز عبور جدید* </label>
 					<input type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} className="outline-none mt-3.5 md:mt-4" name="new_pass" placeholder="رمز جدید را وارد کنید" />
 				</div>
 			</div>

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 
 function NewTicketForm({setNewTicketForm}) {
-    const {datas : departments} = useFetch('tickets/departments', true)
+    const {datas : departments} = useFetch('tickets/departments')
     const [departmentID , setDepartmentID] = useState('-1')
     const [ticketTitle , setTicketTitle] = useState('')
     const [ticketBody , setTicketBody] = useState('')
