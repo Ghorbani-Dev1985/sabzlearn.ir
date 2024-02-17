@@ -141,27 +141,6 @@ function Courses() {
         return user.row.categoryID.title;
       },
     },
-    // {
-    //   field: "editAction",
-    //   headerName: "ویرایش",
-    //   width: 70,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderCell: (user) => {
-    //     return (
-    //       <div
-    //         onClick={() => {
-    //           setShowEditModal(true);
-    //           UpdateUserHandler(user.id);
-    //           setUpdateUserID(user.id);
-    //         }}
-    //         className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
-    //       >
-    //         <Edit className="size-5" />
-    //       </div>
-    //     );
-    //   },
-    // },
     {
       field: "deleteAction",
       headerName: "حذف",
@@ -283,11 +262,10 @@ function Courses() {
           <div className="relative">
             <select
               value={courseCategoryID}
-              defaultValue={'-1'}
               onChange={(event) => setCourseCategoryID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'-1'} disabled>انتخاب دسته بندی دوره</option>
+              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب دسته بندی دوره</option>
               {categories.map(({ _id, title }) => {
                 return (
                   <React.Fragment key={_id}>

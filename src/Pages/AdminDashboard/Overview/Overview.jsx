@@ -17,7 +17,6 @@ function Overview() {
   const { isShowLoading, setIsShowLoading } = useShowLoading();
   const [infoDetails, setInfoDetails] = useState([]);
   const [lastUsers, setLastUsers] = useState([]);
-  console.log(lastUsers);
   const columns = [
     {
       field: "id",
@@ -98,37 +97,36 @@ function Overview() {
   return (
     <>
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-40">
-        {infoDetails.map(({ title, count }) => {
-          console.log(title);
-
-          if (title === "ثبت نامی‌ها") {
-            return (
-              <InfosBox
-                color={"bg-amber-600 dark:bg-yellow-400"}
-                title={title}
-                count={count}
-                icon={<HowToReg className="text-white size-12" />}
-              />
-            );
-          } else if (title === "دوره‌ها") {
-            return (
-              <InfosBox
-                color={"bg-sky-500 dark:bg-secondary"}
-                title={title}
-                count={count}
-                icon={<FolderCopy className="text-white size-12" />}
-              />
-            );
-          } else {
-            return (
-              <InfosBox
-                color={"bg-primary"}
-                title={title}
-                count={count}
-                icon={<OndemandVideo className="text-white size-12" />}
-              />
-            );
-          }
+        {infoDetails.map(({_id, title, count }) => {
+           
+            if (title === "ثبت نامی‌ها") {
+              return (
+                <InfosBox
+                  color={"bg-amber-600 dark:bg-yellow-400"}
+                  title={title}
+                  count={count}
+                  icon={<HowToReg className="text-white size-12" />}
+                />
+              );
+            } else if (title === "دوره‌ها") {
+              return (
+                <InfosBox
+                  color={"bg-sky-500 dark:bg-secondary"}
+                  title={title}
+                  count={count}
+                  icon={<FolderCopy className="text-white size-12" />}
+                />
+              );
+            } else {
+              return (
+                <InfosBox
+                  color={"bg-primary"}
+                  title={title}
+                  count={count}
+                  icon={<OndemandVideo className="text-white size-12" />}
+                />
+              );
+            }
         })}
       </div>
       {isShowLoading ? (

@@ -29,7 +29,7 @@ function Discounts() {
   const [discountPercent , setDiscountPercent] = useState('')
   const [discountCourseID , setDiscountCourseID] = useState('-1')
   const [discountMaxUse , setDiscountMaxUse] = useState('')
-  console.log(Courses);
+
   const columns = [
     {
       field: "id",
@@ -180,11 +180,10 @@ function Discounts() {
           <div className="relative">
             <select
               value={discountCourseID}
-              defaultValue='-1'
               onChange={(event) => setDiscountCourseID(event.target.value)}
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value='-1' disabled>انتخاب دوره</option>
+              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب دوره</option>
               {Courses.map(({ _id, name }) => {
                 return (
                   <React.Fragment key={_id}>
@@ -240,45 +239,12 @@ function Discounts() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ دسته بندی تاکنون ثبت نگردیده است</Alert>
+              <Alert severity="info">هیچ کد تخفیفی تاکنون ثبت نگردیده است</Alert>
             )}
           </div>
         </>
       )}
-         {/* Edit Modal */}
-         {/* <EditModal>
-        <div className="min-w-96">
-        <div className="relative mb-4">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12'
-              placeholder='نام دسته بندی*'
-              value={updateCategoryTitle}
-              onChange={(event) => setUpdateCategoryTitle(event.target.value)}
-              />
-          <FolderCopyOutlined className="left-3 sm:left-4" />
-          </div>
-          <div className="relative mb-4">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12'
-              placeholder='لینک دسته بندی*'
-              value={updateCategoryName}
-              onChange={(event) => setUpdateCategoryName(event.target.value)}
-              />
-          <InsertLinkOutlined className="left-3 sm:left-4" />
-          </div>
-        </div>
-        <div className="flex-center">
-          <Button
-            btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={UpdateCategoryHandler}
-          >
-            ویرایش دسته بندی
-          </Button>
-        </div>
-      </EditModal> */}
+
     </>
   );
 }

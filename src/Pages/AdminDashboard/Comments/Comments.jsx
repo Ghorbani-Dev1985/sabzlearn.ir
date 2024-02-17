@@ -36,7 +36,7 @@ function Comments() {
   const [commentBody , setCommentBody] = useState('')
   const [commentID , setCommentID] = useState('')
   const [commentAnswerText , setCommentAnswerText] = useState('')
-  console.log(Comments)
+  
   const columns = [
     {
       field: "id",

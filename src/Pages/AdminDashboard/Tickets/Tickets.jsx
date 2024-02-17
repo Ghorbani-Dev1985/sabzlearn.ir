@@ -28,7 +28,7 @@ function Tickets() {
     const [sendAnswerText , setSendAnswerText] = useState('')
     const [ticketID , setTicketID] = useState('')
     const [userEmail , setUserEmail] = useState('')
-   console.log(Tickets)
+
     const columns = [
         {
           field: "id",

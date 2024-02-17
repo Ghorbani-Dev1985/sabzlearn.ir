@@ -27,7 +27,7 @@ function Category() {
   const [categoryName , setCategoryName] = useState('')
   const [updateCategoryTitle , setUpdateCategoryTitle] = useState('')
   const [updateCategoryName , setUpdateCategoryName] = useState('')
-  console.log(categories);
+  
   const columns = [
     {
       field: "id",
