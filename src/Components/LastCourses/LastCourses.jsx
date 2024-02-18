@@ -9,7 +9,6 @@ import CourseSkeleton from '../../common/CourseSkeleton/CourseSkeleton';
 
 function LastCourses() {
     const {courses , courseIsShowLoading} = useCourses()
-    console.log(courseIsShowLoading)
   return (
     <section className='relative mt-22 sm:mt-40'>
          <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-sky-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] -top-80"></div>

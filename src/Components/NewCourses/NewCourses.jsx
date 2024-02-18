@@ -5,10 +5,11 @@ import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
 import { useCourses } from '../../Contexts/CoursesContext'
+import CourseSkeleton from '../../common/CourseSkeleton/CourseSkeleton'
 
 
 function NewCourses() {
-  const {courses} = useCourses()
+  const {courses , courseIsShowLoading} = useCourses()
   return (
     // NewCourses Component
     <section className='mt-25'>
@@ -23,20 +24,23 @@ function NewCourses() {
         </div>
         </SectionTitle> 
        {/* NewCourses */}
-    
-       <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
          {
-         
-         courses.map(({_id, shortName , discount , categoryID , cover , name , description , creator , price , courseAverageScore}) => {
+           courseIsShowLoading ? <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'><CourseSkeleton listsToRender={4}/></div> : 
+            <Slider SwiperNextBtnID="#NewCoursesSwiperNextBtn" SwiperPrevBtnID="#NewCoursesSwiperPrevBtn" >
+        {
+           courses.map(({_id, shortName , discount , categoryID , cover , name , description , creator , price , courseAverageScore}) => {
            return(
                           <SwiperSlide className='rounded-2xl' key={_id}>
                           <CourseCard shortName={shortName} discount={discount} categoryTitle={categoryID.title} categoryShortName={categoryID.name} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
+                            
                           </SwiperSlide>
                 )
               })
         }
        </Slider>
 
+         }
+      
     </section>
   )
 }
