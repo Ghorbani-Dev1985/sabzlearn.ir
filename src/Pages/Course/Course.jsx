@@ -27,7 +27,8 @@ import {
   AccordionSummary,
   Alert,
   Box,
-} from "@mui/material";
+  Skeleton,
+} from "@mui/material"
 import toast from "react-hot-toast";
 import ShowHtmlTemplate from "../../Components/ShowHtmlTemplate/ShowHtmlTemplate";
 import Comment from "../../Components/Comment/Comment";
@@ -108,12 +109,7 @@ function Course() {
         cancelButtonText: "ثبت بدون کد تخفیف",
           }).then(result => {
             if(!result.isConfirmed){
-              axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price} , {
-                headers : {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-                }
-              })
+              const ResponseResult = ApiRequest.post(`courses/${courseDetails._id}/register` , {price: courseDetails.price})
               .then(response => {
                 console.log(response)
                 if(response.status === 201 || response.status === 200){
@@ -123,45 +119,18 @@ function Course() {
                   toast.error("ثبت نام در دوره انجام نشد");
                 }
               })
-              .catch(error => {
-                  console.log(error)
-                  toast.error("  خطا در اتصال به سرور ");
-              })
             }else{
               console.log(result)
-              axios.post(`${BaseURL}offs/${result.value}` , {course: courseDetails._id} , {
-                headers : {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-                }
-              })
+              const ResponseResult = ApiRequest.post(`offs/${result.value}` , {price: courseDetails.price})
               .then(response => {
                 console.log(response.data)
-                axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price - (courseDetails.price  * +response.data.percent / 100)} , {
-                  headers : {
-                    'Content-Type' : 'application/json',
-                    'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-                  }
-                })
+                const ResponseResult = ApiRequest.post(`courses/${courseDetails._id}/register` , {price: courseDetails.price - (courseDetails.price  * +response.data.percent / 100)})
                 .then(response => {
-                  console.log(response)
                   if(response.status === 201){
                     toast.success(" ثبت نام در دوره با موفقت انجام شد")
                     GetCourseDetails()
                   }
                 })
-                .catch(error => {
-                    console.log(error)
-                    toast.error("  خطا در اتصال به سرور ");
-                })
-              })
-              .catch(error => {
-                  console.log(error.response.data)
-                  if(error.response.status === 404){
-                    toast.error("  کد تخفیف معتبر نمی باشد")
-                  }else if(error.response.status === 409){
-                    toast.error("  استفاده از کد تخفیف به اتمام رسیده است")
-                  }
               })
             }
           })
@@ -172,14 +141,13 @@ function Course() {
   useEffect(() => {
     GetCourseDetails()
   }, [courseName]);
-  console.log(courseDetails)
   return (
     <>
       {/* Breadcrumb */}
       <Breadcrumb
         linkOneTo="/courses/1"
         linkOneTitle="دوره ها "
-        linkTwoTo={`/category/${courseDetails.categoryID.name}/1`}
+        linkTwoTo={`/category/${category.name}/1`}
         linkTwoTitle="ارتقای مهارت "
         linkThreeTitle="توسعه کتابخانه با جاوااسکریپت"
       />
@@ -189,38 +157,52 @@ function Course() {
         <div className="flex flex-col justify-between w-full">
           <div>
             <h1 className="font-MorabbaBold text-2xl/[42px] sm:text-3xl/[48px] lg:text-[32px]/[48px] text-zinc-700 dark:text-white lg:line-clamp-2">
-              {courseDetails.name}
+              {
+                courseDetails.name ? courseDetails.name :
+              <Skeleton variant="text" width={'80%'} height={50} />
+              }
+              
             </h1>
-            <p className="font-Dana text-xl/8 line-clamp-4 lg:line-clamp-2 xl:line-clamp-3 mt-3.5 xl:mt-5 text-zinc-700 dark:text-white">
-              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(courseDetails.description) }} />
-            </p>
+            <div className="font-Dana text-xl/8 line-clamp-4 lg:line-clamp-2 xl:line-clamp-3 mt-3.5 xl:mt-5 text-zinc-700 dark:text-white">
+              {
+                courseDetails.description ? <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(courseDetails.description) }} /> :
+                <Skeleton variant="text" width={'100%'} height={150} />
+              }
+              
+            </div>
           </div>
           {/* Btn & Price */}
           <div className="mt-5 pt-5 sm:pt-0 xl:mt-0 border-t sm:border-t-0 border-t-gray-100 dark:border-t-gray-700">
             <div className="flex flex-col-reverse sm:flex-row justify-between mt-6 sm:mt-3.5 items-center">
-              {courseDetails.isUserRegisteredToThisCourse ? (
-                <Button
-                  btnType="submit"
-                  className="w-full flex-center sm:w-auto button-xl rounded-lg button-secondary"
-                  disabled={false}
-                >
-                  <PlayCircleFilledWhiteOutlined /> مشاهده دوره
-                </Button>
-              ) : (
-                <Button
-                  btnType="submit"
-                  className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary"
-                  disabled={false}
-                  onClick={RegisterCourseHandler}
-                >
-                  <GppGoodOutlined /> شرکت در دوره
-                </Button>
-              )}
+              {
+                courseDetails.isUserRegisteredToThisCourse ? 
+                courseDetails.isUserRegisteredToThisCourse ? (
+                  <Button
+                    btnType="submit"
+                    className="w-full flex-center sm:w-auto button-xl rounded-lg button-secondary"
+                    disabled={false}
+                  >
+                    <PlayCircleFilledWhiteOutlined /> مشاهده دوره
+                  </Button>
+                ) : (
+                  <Button
+                    btnType="submit"
+                    className="w-full flex-center sm:w-auto button-xl rounded-lg button-primary"
+                    disabled={false}
+                    onClick={RegisterCourseHandler}
+                  >
+                    <GppGoodOutlined /> شرکت در دوره
+                  </Button>
+                ) :
+                <Skeleton variant="text" width={'35%'} height={100} />
+              }
 
               <div className="text-center sm:text-right mb-5 sm:mb-0">
                 <div className="flex-center sm:justify-end mb-1">
                   <div className="flex-center gap-1 font-DanaBold text-3xl text-zinc-700 dark:text-white mr-4 sm:mr-2">
-                    {courseDetails.price > 0 ? (
+                     {
+                      courseDetails.price === 0 || courseDetails.price > 0 ?
+                    courseDetails.price > 0 ? (
                       <>
                       <div className="flex flex-col gap-3">
                         <p className="line-through font-Dana text-zinc-400 dark:text-slate-400">{courseDetails.price.toLocaleString()}</p>
@@ -244,7 +226,9 @@ function Course() {
                       </>
                     ) : (
                       <FreePrice />
-                    )}
+                    ) :
+                     <Skeleton variant="text" width={100} height={40} />
+                     }
                   </div>
                 </div>
               </div>
@@ -253,7 +237,11 @@ function Course() {
         </div>
         {/* Banner */}
         <div className="shrink-0 mb-3 sm:mb-6 lg:mb-0 w-full h-auto md:w-10/12 lg:w-[440px] lg:h-[270px] xl:w-[610px] xl:h-[343px] rounded-2xl sm:rounded-3xl overflow-hidden">
-          <img src={`http://localhost:5000/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" />
+          {
+            courseDetails.cover ? 
+            <img src={`http://localhost:5000/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" /> :
+            <Skeleton variant="text" width={'100%'} height={'100%'} />
+          }
         </div>
       </section>
       {/* Data */}
@@ -261,29 +249,45 @@ function Course() {
         <div className="w-full">
           {/* Details */}
           <div className="grid grid-rows-2 grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-5">
-            <DetailBoxInfo
-              icon={StatusIcon}
-              title="وضعیت دوره"
-              subTitle={courseDetails.isComplete ? "تکمیل شده" : "در حال ضبط"}
-            />
-            <DetailBoxInfo
-              icon={courseCategory}
-              title="دسته بندی"
-              subTitle={category.title}
-            />
-            <DetailBoxInfo
-              icon={LastUpdate}
-              title=" آخرین به روز رسانی   "
-              subTitle={
-                courseDetails.createdAt &&
-                ChangeGregorianDateToPersian(courseDetails.createdAt)
-              }
-            />
-            <DetailBoxInfo
-              icon={SupportWay}
-              title=" روش پشتیبانی"
-              subTitle={courseDetails.support}
-            />
+            {
+              courseDetails.isComplete ? 
+              <DetailBoxInfo
+                icon={StatusIcon}
+                title="وضعیت دوره"
+                subTitle={courseDetails.isComplete ? "تکمیل شده" : "در حال ضبط"}
+              /> :
+              <Skeleton variant="text" width={100} height={40} />
+            }
+            {
+              category.title ? 
+              <DetailBoxInfo
+                icon={courseCategory}
+                title="دسته بندی"
+                subTitle={category.title}
+              /> :
+              <Skeleton variant="text" width={100} height={40} />
+            }
+            {
+              courseDetails.createdAt ? 
+              <DetailBoxInfo
+                icon={LastUpdate}
+                title=" آخرین به روز رسانی   "
+                subTitle={
+                  courseDetails.createdAt &&
+                  ChangeGregorianDateToPersian(courseDetails.createdAt)
+                }
+              /> :
+              <Skeleton variant="text" width={100} height={40} />
+            }
+            {
+              courseDetails.support ? 
+              <DetailBoxInfo
+                icon={SupportWay}
+                title=" روش پشتیبانی"
+                subTitle={courseDetails.support}
+              /> :
+              <Skeleton variant="text" width={100} height={40} />
+            }
             <DetailBoxInfo
               icon={Prerequisite}
               title="  پیش نیاز"
@@ -302,7 +306,11 @@ function Course() {
                 <img src={Users} alt="ghorbani-dev.ir" className="size-8" />
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
-                    {courseDetails.courseStudentsCount}
+                    {
+                      courseDetails.courseStudentsCount ?
+                      courseDetails.courseStudentsCount :
+                      <Skeleton variant="text" width={100} height={40} />
+                    }
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
                     دانشجو
@@ -343,7 +351,11 @@ function Course() {
               />
               <div>
                 <h4 className="text-zinc-700 dark:text-white text-2xl mb-1 font-DanaBold">
-                  {creator.name}
+                  {
+                    creator.name ?
+                    creator.name :
+                    <Skeleton variant="text" width={100} height={40} />
+                  }
                 </h4>
                 <p className="text-slate-500 dark:text-gray-500 text-sm mt-1.5">
                   برنامه نویس و توسعه دهنده فول استک وب
@@ -384,76 +396,84 @@ function Course() {
               </div>
               <div className="text-zinc-700 dark:text-white">07:08</div>
             </div>
-            {sessions.length > 0 ? (
-              sessions.map(({ _id, time, free, title , video}, index) => {
-                return (
-                  <React.Fragment key={_id}>
-                    <Accordion className="w-full !rounded-2xl my-4 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
-                      <AccordionSummary
-                        expandIcon={<ExpandMore className="dark:text-white" />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                        className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
-                      >
-                        {title}
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
-                          {!free ? (
-                            <Link
-                              to={`http://localhost:5000/courses/covers/${video}`}
-                              target="_blank"
-                              className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
-                            >
-                              <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
-                                {index + 1}
+            {
+              sessions ? 
+              sessions.length > 0 ? (
+                sessions.map(({ _id, time, free, title , video}, index) => {
+                  return (
+                    <React.Fragment key={_id}>
+                      <Accordion className="w-full !rounded-2xl my-4 bg-gray-100 text-zinc-700 dark:bg-gray-700 dark:text-white before:hidden shadow-none transition-colors">
+                        <AccordionSummary
+                          expandIcon={<ExpandMore className="dark:text-white" />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                          className="py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-[#4A4B6D]"
+                        >
+                          {title}
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
+                            {!free ? (
+                              <Link
+                                to={`http://localhost:5000/courses/covers/${video}`}
+                                target="_blank"
+                                className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
+                              >
+                                <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                                  {index + 1}
+                                </span>
+                                <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                                  {title}
+                                </h4>
+                              </Link>
+                            ) : (
+                              <p className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]">
+                                <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
+                                  {index + 1}
+                                </span>
+                                <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
+                                  {title}
+                                </h4>
+                              </p>
+                            )}
+                            <Box className="w-full flex-between">
+                              <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
+                                {free ? "نقدی" : " جلسه رایگان"}
                               </span>
-                              <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
-                                {title}
-                              </h4>
-                            </Link>
-                          ) : (
-                            <p className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]">
-                              <span className="flex-center shrink-0 w-5 h-5 md:w-7 md:h-7 bg-white font-DanaBold text-xs md:text-base text-zinc-700 dark:text-white dark:bg-gray-800 group-hover:bg-primary group-hover:text-white rounded-md transition-colors">
-                                {index + 1}
-                              </span>
-                              <h4 className="text-zinc-700 dark:text-white group-hover:text-primary text-sm md:text-lg transition-colors">
-                                {title}
-                              </h4>
-                            </p>
-                          )}
-                          <Box className="w-full flex-between">
-                            <span className="inline-block h-[25px] leading-[25px] px-2.5 bg-gray-200 dark:bg-mainSlate text-zinc-700 dark:text-white group-hover:bg-primary/10 group-hover:text-primary text-xs rounded transition-colors">
-                              {free ? "نقدی" : " جلسه رایگان"}
-                            </span>
-                            <Box className="flex items-center gap-x-1.5 md:gap-x-2">
-                              <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
-                                {time}
-                              </span>
-                              {free ? (
-                                <LockOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
-                              ) : (
-                                <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
-                              )}
+                              <Box className="flex items-center gap-x-1.5 md:gap-x-2">
+                                <span className="text-slate-500 dark:text-gray-500 text-sm md:text-lg">
+                                  {time}
+                                </span>
+                                {free ? (
+                                  <LockOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                                ) : (
+                                  <PlayCircleFilledWhiteOutlined className="w-5 h-6 md:size-6 text-zinc-700 dark:text-white group-hover:text-primary transition-colors" />
+                                )}
+                              </Box>
                             </Box>
                           </Box>
-                        </Box>
-                      </AccordionDetails>
-                    </Accordion>
-                  </React.Fragment>
-                );
-              })
-            ) : (
-              <Alert severity="info">تاکنون جلسه ای ثبت نگردیده است</Alert>
-            )}
+                        </AccordionDetails>
+                      </Accordion>
+                    </React.Fragment>
+                  );
+                })
+              ) : (
+                <Alert severity="info">تاکنون جلسه ای ثبت نگردیده است</Alert>
+              ) :
+              <Skeleton variant="text" width={'100%'} height={90} />
+            }
           </div>
           {/* Comment */}
-          <Comment
-            showNewCommentForm={showNewCommentForm}
-            setShowNewCommentForm={setShowNewCommentForm}
-            NewCommentHandler={NewCommentHandler}
-            comments={comments}
-          />
+          {
+            comments ?
+            <Comment
+              showNewCommentForm={showNewCommentForm}
+              setShowNewCommentForm={setShowNewCommentForm}
+              NewCommentHandler={NewCommentHandler}
+              comments={comments}
+            /> :
+            <Skeleton variant="text" width={'100%'} height={100} />
+          }
         </div>
         {/* Aside */}
         <aside className="w-80 xl:w-96 shrink-0 sticky top-36 space-y-5">
@@ -464,7 +484,11 @@ function Course() {
                 <img src={Users} alt="ghorbani-dev.ir" className="size-8" />
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
-                    {courseDetails.courseStudentsCount}
+                    {
+                      courseDetails.courseStudentsCount ? 
+                      courseDetails.courseStudentsCount :
+                      <Skeleton variant="text" width={100} height={40} />
+                    }
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
                     دانشجو
@@ -497,13 +521,21 @@ function Course() {
           </div>
           {/* Teacher Section In Mobile */}
           <div className="hidden lg:block bg-white dark:bg-gray-800 px-5 py-6 shadow-light dark:shadow-none rounded-2xl text-center">
-            <img
-              src={`http://localhost:5000/courses/covers/${creator.profile}`}
-              className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
-              alt={creator.name}
-            />
+            {
+              creator.profile ?
+              <img
+                src={`http://localhost:5000/courses/covers/${creator.profile}`}
+                className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
+                alt={creator.name}
+              /> :
+              <Skeleton variant="circular" width={90} height={90} className="block mx-auto"/>
+            }
             <h4 className="text-zinc-700 dark:text-white text-2xl mb-1">
-              {creator.name}
+              {
+                creator.name ? 
+                creator.name :
+                <Skeleton variant="text" width={100} height={40} />
+              }
             </h4>
             <Link
               to="#"
@@ -557,13 +589,22 @@ function Course() {
               دوره‌های مرتبط
             </span>
             <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
-              {RelatedCourses.map(({ id, shortName, name }) => {
-                return (
-                  <React.Fragment key={id}>
-                    <Link to={`/course/${shortName}`}>{name}</Link>
-                  </React.Fragment>
-                );
-              })}
+              {
+                RelatedCourses ?
+                RelatedCourses.map(({ id, shortName, name }) => {
+                  return (
+                    <React.Fragment key={id}>
+                      <Link to={`/course/${shortName}`}>{name}</Link>
+                    </React.Fragment>
+                  );
+                }) :
+                <>
+                <Skeleton variant="text" width={'100%'} height={40} />
+                <Skeleton variant="text" width={'100%'} height={40} />
+                <Skeleton variant="text" width={'100%'} height={40} />
+                <Skeleton variant="text" width={'100%'} height={40} />
+                </>
+              }
             </div>
           </div>
           {/* Short Link */}

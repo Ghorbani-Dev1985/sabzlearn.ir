@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Breadcrumb({linkOneTo , linkOneTitle , linkTwoTo , linkTwoTitle , linkThreeTo , linkThreeTitle}) {
+  console.log(linkTwoTo)
   return (
     <div className='w-full h-[50px] flex items-center overflow-x-auto overflow-y-hidden rounded-2xl leading-7 bg-white dark:bg-gray-800 text-zinc-700 dark:text-white text-xl shadow-breadcrumb'>
       <div className='breadcrumb__item'>
