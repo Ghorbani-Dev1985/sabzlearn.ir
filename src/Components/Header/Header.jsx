@@ -47,7 +47,9 @@ function Header() {
                    {
                      submenus.map(({_id, href , title}) => {
                       return (
-                    <Link to={href} className="submenu__link">{title}</Link>
+                        <React.Fragment key={_id}>
+                          <Link to={href} className="submenu__link">{title}</Link>
+                        </React.Fragment>
                     )
                   })
                 }

@@ -21,7 +21,6 @@ ApiRequest.interceptors.response.use(
        if((response.status === 200 || response.status === 201) && (response.data.length === 0)){
         toast.success(" درخواست شما با موفقیت انجام شد")
     }
-    console.log(response)
         return response
     }),
     (error) => {
