@@ -2,6 +2,7 @@ import React from "react";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import BlogCard from "../BlogCard/BlogCard";
 import { useBlogs } from "../../Contexts/BlogsContext";
+import BlogSkeleton from "../../common/BlogSkeleton/BlogSkeleton";
 
 const LastArticles = [
   {
@@ -51,7 +52,8 @@ const LastArticles = [
 ];
 
 function LastBlogs() {
-  const {blogs} = useBlogs()
+  const {blogs , blogIsShowLoading} = useBlogs()
+  const publishBlogs = blogs.filter(blog => blog.publish === 1)
   return (
     // LastBlogs Component
     <section className="mt-25 relative">
@@ -65,7 +67,9 @@ function LastBlogs() {
       />
       {/* LastBlogs */}
       <div className="grid grid-rows-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {blogs.slice(0,4).map(
+         {
+          blogIsShowLoading ? <BlogSkeleton listsToRender={4}/> : 
+          publishBlogs.slice(0,4).map(
           ({ _id, shortName, cover, title, body, creator, createdAt }) => {
             return (
               <React.Fragment key={_id}>
@@ -80,7 +84,8 @@ function LastBlogs() {
               </React.Fragment>
             );
           }
-        )}
+        )
+         }
       </div>
       <div className="dark:hidden hidden md:block w-[500px] h-[500px] lg:w-[630px] lg:h-[630px] bg-pink-500 opacity-20 blur-2xl rounded-full -z-10 absolute -right-[320px] lg:-right-[400px] top-0"></div>
     </section>
