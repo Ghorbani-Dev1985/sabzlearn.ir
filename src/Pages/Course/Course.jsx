@@ -40,18 +40,17 @@ import FreePrice from "../../common/FreePrice/FreePrice";
 import DOMPurify from 'dompurify'
 import Swal from "sweetalert2";
 import useFetch from "../../Hooks/useFetch";
+import ApiRequest from "../../Services/Axios/Configs/Config";
 
 
 function Course() {
   const { colorTheme } = usePublicDarkMode();
   const { courseName } = useParams()
   const { isLoggedIn, userInfos } = useAuth();
-  const {datas : RelatedCourses} = useFetch(`courses/related/${courseName}` , true)
-  console.log(RelatedCourses)
-  const Navigate = useNavigate();
+  const {datas : RelatedCourses} = useFetch(`courses/related/${courseName}`)
+  const Navigate = useNavigate()
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [showNewCommentForm, setShowNewCommentForm] = useState(false);
-
   const [comments, setComments] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [creator, setCreator] = useState([]);
@@ -67,14 +66,8 @@ function Course() {
     }
   };
   const GetCourseDetails = () => {
-    const localStorageData = JSON.parse(localStorage.getItem("user"));
-    axios(`${BaseURL}courses/${courseName}`, {
-      headers: {
-        Authorization: `Bearer ${
-          localStorageData === null ? null : localStorageData.token
-        }`,
-      },
-    }).then((courseInfo) => {
+    const ResponseResult = ApiRequest(`courses/${courseName}`)
+  .then((courseInfo) => {
       setComments(courseInfo.data.comments);
       setCreator(courseInfo.data.creator);
       setSessions(courseInfo.data.sessions);
@@ -84,26 +77,15 @@ function Course() {
     })
   }
   const RegisterCourseHandler = () => {
-    console.log(courseDetails.price)
     if(courseDetails.price === 0){
-      axios.post(`${BaseURL}courses/${courseDetails._id}/register` , {price: courseDetails.price} , {
-        headers : {
-          'Content-Type' : 'application/json',
-          'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-        }
-      })
+      const ResponseResult = ApiRequest.post(`courses/${courseDetails._id}/register` , {price: courseDetails.price})
       .then(response => {
-        console.log(response)
         if(response.status === 201 || response.status === 200){
           toast.success(" ثبت نام در دوره با موفقت انجام شد")
           GetCourseDetails()
         }else{
           toast.error("ثبت نام در دوره انجام نشد");
         }
-      })
-      .catch(error => {
-          console.log(error)
-          toast.error("  خطا در اتصال به سرور ");
       })
     }else{
       Swal.fire({
@@ -195,7 +177,9 @@ function Course() {
     <>
       {/* Breadcrumb */}
       <Breadcrumb
+        linkOneTo="/courses/1"
         linkOneTitle="دوره ها "
+        linkTwoTo={`/category/${courseDetails.categoryID.name}/1`}
         linkTwoTitle="ارتقای مهارت "
         linkThreeTitle="توسعه کتابخانه با جاوااسکریپت"
       />

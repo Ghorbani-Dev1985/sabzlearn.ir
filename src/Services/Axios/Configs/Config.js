@@ -8,7 +8,7 @@ const ApiRequest = axios.create({
     headers: {
         'Content-Type' : 'application/json',
         Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-    }
+    },
 })
 
 ApiRequest.interceptors.request.use(
