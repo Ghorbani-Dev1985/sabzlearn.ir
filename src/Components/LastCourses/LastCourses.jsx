@@ -17,8 +17,8 @@ function LastCourses() {
      <SectionTitle squareColor="bg-amber-400 dark:bg-yellow-400" title="آخرین دوره ها" subTitle="سکوی پرتاپ شما به سمت موفقیت" isLink={true} to="/courses/1" linkText="مشاهده همه دوره ها" /> 
      {/* Last Course List */}
      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
-             <CourseSkeleton listsToRender={8}/>
-        {/* {
+         {
+            courseIsShowLoading ?  <CourseSkeleton listsToRender={8}/> : 
             courses.splice(0 , 8).map(({_id, shortName , discount , categoryID , cover , name , description , creator , price , courseAverageScore}) => {
                 return(
                     <React.Fragment key={_id}>
@@ -26,7 +26,9 @@ function LastCourses() {
                     </React.Fragment>
                 )
             })
-        } */}
+        }
+         
+
      </div>
     </section>
   )
