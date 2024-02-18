@@ -591,9 +591,9 @@ function Course() {
             <div className="flex flex-col font-danaLight text-xl text-zinc-700 dark:text-white last:child:pb-0 last:child:border-b-0 child:py-3 child:border-b child:border-dashed child:border-b-slate-500 dark:child:border-b-gray-500">
               {
                 RelatedCourses ?
-                RelatedCourses.map(({ id, shortName, name }) => {
+                RelatedCourses.map(({_id, shortName, name }) => {
                   return (
-                    <React.Fragment key={id}>
+                    <React.Fragment key={_id}>
                       <Link to={`/course/${shortName}`}>{name}</Link>
                     </React.Fragment>
                   );
