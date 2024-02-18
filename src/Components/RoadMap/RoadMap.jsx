@@ -10,12 +10,10 @@ import { useCourses } from '../../Contexts/CoursesContext'
 
 function RoadMap() {
   const {courses} = useCourses()
-  console.log(courses)
   const frontEndCourseCount = courses.filter(course => course.categoryID.name === 'front-end').length
   const securityCourseCount = courses.filter(course => course.categoryID.name === 'security').length
   const pythonCourseCount = courses.filter(course => course.categoryID.name === 'python').length
   const skillUpCourseCount = courses.filter(course => course.categoryID.name === 'skill-up').length
-  console.log(securityCourseCount)
   return (
     // Roadmap Component
     <section className='mt-25 relative'>

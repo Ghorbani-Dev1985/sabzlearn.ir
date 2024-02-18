@@ -1,15 +1,19 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { BaseURL } from "../Utils/Utils";
-import axios from "axios";
+import ApiRequest from "../Services/Axios/Configs/Config";
 
 const BlogsContext = createContext();
 
 export const BlogsContextProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
+  const abortController = new AbortController()
   useEffect(() => {
-    axios.get(`${BaseURL}articles`).then((response) => {
-      setBlogs(response.data);
+    const ResponseResult = ApiRequest('articles' , {signal: abortController.signal})
+    .then((response) => {
+      setBlogs(response.data)
     });
+    return () => {
+      abortController.abort()
+    }
   }, []);
   return (
     <BlogsContext.Provider value={{ blogs }}>

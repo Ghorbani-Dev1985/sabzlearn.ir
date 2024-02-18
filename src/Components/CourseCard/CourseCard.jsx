@@ -102,7 +102,7 @@ function CourseCard(
           </span>
           <div className="flex flex-col items-start">
             <span className='line-through offer inline-block relative font-Dana text-zinc-400 dark:text-slate-400 text-sm -mb-1.5 -mr-3 h-6'>
-              {price && price.toLocaleString()}
+              {price > 0 && price.toLocaleString()}
             </span>
             <span className="flex-center gap-1 font-DanaMd text-xl text-primary space-x-1.5">
               {
