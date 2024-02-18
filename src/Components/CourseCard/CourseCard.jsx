@@ -42,9 +42,9 @@ function CourseCard(
         </h4>
         {/* Description */}
         {
-          description &&    <p className="font-Dana text-sm h-10 min-h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
+          description &&    <div className="font-Dana text-sm h-10 min-h-10 line-clamp-2 text-slate-500 dark:text-slate-400">
           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }} />
-        </p>
+        </div>
         }
      
       </div>

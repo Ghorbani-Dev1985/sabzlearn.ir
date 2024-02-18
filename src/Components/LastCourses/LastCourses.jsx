@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import SectionTitle from '../SectionTitle/SectionTitle'
 import CourseCard from '../CourseCard/CourseCard'
-import axios from 'axios';
-import { BaseURL } from '../../Utils/Utils';
 import { useCourses } from '../../Contexts/CoursesContext';
 import CourseSkeleton from '../../common/CourseSkeleton/CourseSkeleton';
 

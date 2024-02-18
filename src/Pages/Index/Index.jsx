@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import LastCourses from "../../Components/LastCourses/LastCourses";
 import RoadMap from "../../Components/RoadMap/RoadMap";
@@ -8,9 +8,6 @@ import LastBlogs from "../../Components/LastBlogs/LastBlogs";
 import InstagramPage from "../../Components/InstagramPage/InstagramPage";
 import PresellCourses from "../../Components/PresellCourses/PresellCourses";
 import PopularCourses from "../../Components/PopularCourses/PopularCourses";
-import axios from "axios";
-import { BaseURL } from "../../Utils/Utils";
-
 
 function Index() {
  
