@@ -49,7 +49,7 @@ function HeroSection() {
             </Link>
             <Link
               to="#"
-              className="flex items-center gap-x-2.5 text-slate-500 dark:text-slate-400 group sm:text-xl"
+              className="flex items-center gap-x-2.5 text-slate-500 dark:text-slate-400 no-underline group sm:text-xl"
             >
               <span className="flex-center button-primary text-white p-0 w-10 sm:w-14 h-10 sm:h-14 rounded-full">
                 <svg

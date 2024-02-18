@@ -1,21 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { BaseURL } from "../Utils/Utils";
-import axios from "axios";
+import ApiRequest from "../Services/Axios/Configs/Config";
 
 const CoursesContext = createContext();
 
 export const CoursesContextProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
+  const abortController = new AbortController()
   useEffect(() => {
-    axios.get(`${BaseURL}courses` , {
-      headers : {
-        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-      }
-    })
+    const ResponseResult = ApiRequest('courses' , {signal: abortController.signal})
     .then((response) => {
-      setCourses(response.data);
+      setCourses(response.data)
     });
+    return () => {
+      abortController.abort()
+    }
   }, []);
+
   return (
     <CoursesContext.Provider value={{ courses }}>
       {children}
