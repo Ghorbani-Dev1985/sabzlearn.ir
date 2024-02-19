@@ -35,8 +35,7 @@ import Comment from "../../Components/Comment/Comment";
 import ShortLink from "../../Components/ShortLink/ShortLink";
 import Button from "../../common/Form/Button";
 import { useAuth } from "../../Contexts/AuthContext";
-import { BaseURL, ChangeGregorianDateToPersian } from "../../Utils/Utils";
-import axios from "axios";
+import { ChangeGregorianDateToPersian } from "../../Utils/Utils";
 import FreePrice from "../../common/FreePrice/FreePrice";
 import DOMPurify from 'dompurify'
 import Swal from "sweetalert2";

@@ -96,7 +96,9 @@ useEffect(() => {
                          <CourseCard shortName={shortName} discount={discount} cover={cover} name={name} description={description} creator={creator} price={price} courseAverageScore={courseAverageScore}/>
                     </React.Fragment>
                 )
-            }):  <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای با چنین مشخصات یافت نگردیده است</Alert></div>
+            })
+            
+            :  <div className='col-span-3'> <Alert severity="info" className="dark:bg-mainSlate dark:text-sky-500">هیچ دوره ای با چنین مشخصات یافت نگردیده است</Alert></div>
                 }
           {/* Pagination */}
           {
