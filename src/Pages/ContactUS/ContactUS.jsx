@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 
 function ContactUS() {
   const [showPassword, setShowPassword] = useState(false);
-  const title = useTitle(" ثبت نام")
+  const title = useTitle(" ارتباط با ما - سبزلرن")
   const { LoginHandler} = useAuth()
   const [isGoogleRecaptchaVerify , setIsGoogleRecaptchaVerify] = useState(false)
   const { register , handleSubmit , formState: {errors} , reset , isDirty, isValid , formState} = useForm(
