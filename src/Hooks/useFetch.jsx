@@ -10,7 +10,8 @@ const useFetch = (url) => {
   const abortController = new AbortController()
   useEffect(() => {
     setIsShowLoading(true);
-    const ResponseResult = ApiRequest(`${url}` , {signal: abortController.signal}).then((ResponseResult) => {
+    const ResponseResult = ApiRequest(`${url}` , {signal: abortController.signal})
+    .then((ResponseResult) => {
       setDatas(ResponseResult.data);
       setIsShowLoading(false);
     });

@@ -12,6 +12,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
 import { BaseURL } from "../../Utils/Utils";
 import ReCAPTCHA from "react-google-recaptcha";
+import ApiRequest from "../../Services/Axios/Configs/Config";
 
 function ContactUS() {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,18 +41,13 @@ function ContactUS() {
   const sendNewContactUsMsg = (event) => {
     event.preventDefault()
     
-        const newMsgInfos = JSON.stringify({
+        const newMsgInfos = {
           name: formState.inputs.FullName.value,
           phone: formState.inputs.MobilNumber.value,
           email: formState.inputs.Email.value,
           body: formState.inputs.UserMessage.value,
-        })
-
-          axios.post(`${BaseURL}contact` , newMsgInfos , {
-            headers : {
-              'Content-Type' : 'application/json'
-            }
-          })
+        }
+        const ResponseResult = ApiRequest.post('contact' , newMsgInfos)
           .then(response => {
             console.log(response)
             if(response.status === 201){
@@ -60,10 +56,6 @@ function ContactUS() {
             }else{
               toast.error("پیام شما ارسال نگردید")
             }
-          })
-          .catch(error => {
-              console.log(error)
-              toast.error("  خطا در اتصال به سرور ");
           })
   }
   const RecaptchaChangeHandler = () => {
