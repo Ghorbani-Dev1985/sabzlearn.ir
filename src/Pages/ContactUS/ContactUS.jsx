@@ -9,14 +9,12 @@ import useForm from "../../Hooks/useForm";
 import { RequiredValidator , MinValidator , MaxValidator , EmailValidator , PhoneValidator} from '../../Validators/Rules'
 import toast from "react-hot-toast";
 import { useAuth } from "../../Contexts/AuthContext";
-import axios from "axios";
-import { BaseURL } from "../../Utils/Utils";
 import ReCAPTCHA from "react-google-recaptcha";
 import ApiRequest from "../../Services/Axios/Configs/Config";
 
 function ContactUS() {
   const [showPassword, setShowPassword] = useState(false);
-  const title = useTitle(" ثبت نام");
+  const title = useTitle(" ثبت نام")
   const { LoginHandler} = useAuth()
   const Navigate = useNavigate()
   const [isGoogleRecaptchaVerify , setIsGoogleRecaptchaVerify] = useState(false)
@@ -41,22 +39,22 @@ function ContactUS() {
   const sendNewContactUsMsg = (event) => {
     event.preventDefault()
     
-        const newMsgInfos = {
-          name: formState.inputs.FullName.value,
-          phone: formState.inputs.MobilNumber.value,
-          email: formState.inputs.Email.value,
-          body: formState.inputs.UserMessage.value,
-        }
-        const ResponseResult = ApiRequest.post('contact' , newMsgInfos)
-          .then(response => {
-            console.log(response)
-            if(response.status === 201){
-              toast.success("پیام شما با موفقیت ارسال گردید")
-              Navigate('/')
-            }else{
-              toast.error("پیام شما ارسال نگردید")
-            }
-          })
+        // const newMsgInfos = {
+        //   name: formState.inputs.FullName.value,
+        //   phone: formState.inputs.MobilNumber.value,
+        //   email: formState.inputs.Email.value,
+        //   body: formState.inputs.UserMessage.value,
+        // }
+        // const ResponseResult = ApiRequest.post('contact' , newMsgInfos)
+        //   .then(response => {
+        //     console.log(response)
+        //     if(response.status === 201){
+        //       toast.success("پیام شما با موفقیت ارسال گردید")
+        //       Navigate('/')
+        //     }else{
+        //       toast.error("پیام شما ارسال نگردید")
+        //     }
+        //   })
   }
   const RecaptchaChangeHandler = () => {
     setIsGoogleRecaptchaVerify(true)
