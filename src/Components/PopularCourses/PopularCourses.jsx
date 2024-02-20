@@ -3,8 +3,6 @@ import SectionTitle from '../SectionTitle/SectionTitle'
 import Slider from '../../common/Slider/Slider'
 import { SwiperSlide } from 'swiper/react'
 import CourseCard from '../CourseCard/CourseCard'
-import axios from 'axios'
-import { BaseURL } from '../../Utils/Utils'
 import ApiRequest from '../../Services/Axios/Configs/Config'
 import CourseSkeleton from '../../common/CourseSkeleton/CourseSkeleton'
 

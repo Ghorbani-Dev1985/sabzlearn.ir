@@ -3,16 +3,22 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 
-const ApiRequest = axios.create({
-    baseURL: 'http://localhost:5000/v1/',
-    headers: {
-        'Content-Type' : 'application/json',
-        Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-    },
+const ApiRequest = axios.create(
+    {
+        baseURL: 'http://localhost:5000/v1/',
 })
 
+
 ApiRequest.interceptors.request.use(
-    (config) => {return config},
+    (config) => {
+        const getToken = JSON.parse(localStorage.getItem('user'))
+        if(getToken !== null){
+            console.log("f")
+            config.headers.Authorization = `Bearer ${getToken.token}`
+            config.headers["Content-Type"] = 'application/json'
+        }
+        return config
+    },
     (error) => {return Promise.reject(error)}
     )
 
@@ -33,6 +39,8 @@ ApiRequest.interceptors.response.use(
             toast.error("  کد تخفیف معتبر نمی باشد")
         }else if(error.response.status === 409){
             toast.error("  استفاده از کد تخفیف به اتمام رسیده است")
+          }else if(error.response.status === 401){
+            toast.error("  کاربری با چنین مشخصات یافت نگردید")
           }else{
             toast.error('خطا در اجرای درخواست')
           }
@@ -41,4 +49,4 @@ ApiRequest.interceptors.response.use(
     }
 )
 
-export default ApiRequest
+export default ApiRequest 

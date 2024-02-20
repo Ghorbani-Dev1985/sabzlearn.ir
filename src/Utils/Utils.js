@@ -5,12 +5,10 @@ const BaseURL = 'http://localhost:5000/v1/';
 export {BaseURL }
 
 function ChangeGregorianDateToPersian(date) {
-    console.log(+date)
     let gy, gm, gd
     gy = +date.slice(0,4)
     gm = +date.slice(5,7)
     gd = +date.slice(8,10)
-    console.log(gy, gm, gd)
     var g_d_m, jy, jm, jd, gy2, days;
     g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     gy2 = (gm > 2) ? (gy + 1) : gy;

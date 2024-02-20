@@ -174,7 +174,6 @@ function Course() {
           <div className="mt-5 pt-5 sm:pt-0 xl:mt-0 border-t sm:border-t-0 border-t-gray-100 dark:border-t-gray-700">
             <div className="flex flex-col-reverse sm:flex-row justify-between mt-6 sm:mt-3.5 items-center">
               {
-                courseDetails.isUserRegisteredToThisCourse ? 
                 courseDetails.isUserRegisteredToThisCourse ? (
                   <Button
                     btnType="submit"
@@ -192,8 +191,7 @@ function Course() {
                   >
                     <GppGoodOutlined /> شرکت در دوره
                   </Button>
-                ) :
-                <Skeleton variant="text" width={'35%'} height={100} />
+                )
               }
 
               <div className="text-center sm:text-right mb-5 sm:mb-0">
@@ -248,15 +246,12 @@ function Course() {
         <div className="w-full">
           {/* Details */}
           <div className="grid grid-rows-2 grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-5">
-            {
-              courseDetails.isComplete ? 
+
               <DetailBoxInfo
                 icon={StatusIcon}
                 title="وضعیت دوره"
                 subTitle={courseDetails.isComplete ? "تکمیل شده" : "در حال ضبط"}
-              /> :
-              <Skeleton variant="text" width={100} height={40} />
-            }
+              />           
             {
               category.title ? 
               <DetailBoxInfo
@@ -306,9 +301,7 @@ function Course() {
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
                     {
-                      courseDetails.courseStudentsCount ?
-                      courseDetails.courseStudentsCount :
-                      <Skeleton variant="text" width={100} height={40} />
+                      courseDetails.courseStudentsCount
                     }
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
@@ -484,10 +477,7 @@ function Course() {
                 <div className="flex-center flex-col">
                   <span className="font-DanaBold text-2xl text-zinc-700 dark:text-white">
                     {
-                      courseDetails.courseStudentsCount ? 
-                      courseDetails.courseStudentsCount :
-                      <Skeleton variant="text" width={100} height={40} />
-                    }
+                      courseDetails.courseStudentsCount }
                   </span>
                   <p className="text-slate-500 dark:text-gray-500 text-sm">
                     دانشجو
