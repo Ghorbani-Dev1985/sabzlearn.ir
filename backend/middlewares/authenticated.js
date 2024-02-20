@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   const authorizationHeader = req.header('Authorization')?.split(' ');
 
   if (authorizationHeader?.length != 2) {
-    return res.status(403).json({
+    return res.status(408).json({
       message: "this route is protected and you can't have access to  it.",
     });
   }

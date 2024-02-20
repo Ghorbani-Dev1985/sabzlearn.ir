@@ -76,7 +76,7 @@ function Login() {
         {/* Inputs */}
         <form onSubmit={handleSubmit(userLoginHandler)}>
           <div className="space-y-2.5 sm:space-y-3.5">
-                {/* FullName */}
+                {/* UserName */}
                 <div className="relative">
               <input
                 {...register("UserName", {
@@ -90,7 +90,7 @@ function Login() {
                     message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
                   },
                   pattern: {
-                    value: /^[\u0600-\u06FF\s]+$/g,
+                    value: /^[a-z0-9_-]{8,15}$/g,
                     message: "نام کاربری معتبر نمی باشد",
                   },
                 })}
@@ -118,7 +118,7 @@ function Login() {
                     message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
                   },
                   pattern: {
-                    value: /^^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
+                    value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
                     message: "کلمه عبور معتبر نمی باشد",
                   },
                 })}

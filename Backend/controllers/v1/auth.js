@@ -20,7 +20,7 @@ exports.register = async (req, res, next) => {
     });
 
     if (isUserExists) {
-      return res.status(409).json({
+      return res.status(405).json({
         message: "username or email is duplicate.",
       });
     }
