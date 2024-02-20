@@ -1,17 +1,12 @@
 import { AlternateEmail, Email, Instagram, PhoneIphone, Telegram } from '@mui/icons-material'
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useFetch from '../../Hooks/useFetch'
 import Button from '../../common/Form/Button'
 import { Divider } from '@mui/material'
-import { RequiredValidator , MinValidator , MaxValidator , EmailValidator } from '../../Validators/Rules'
-import Input from '../../common/Form/Input'
-import useForm from '../../Hooks/useForm'
-import usePost from '../../Hooks/usePost'
-import axios from 'axios'
-import { BaseURL } from '../../Utils/Utils'
 import toast from 'react-hot-toast'
-
+import { useForm } from "react-hook-form";
+import ApiRequest from '../../Services/Axios/Configs/Config'
 
 const quickAccessLinks = [
     {
@@ -34,26 +29,22 @@ const quickAccessLinks = [
 
 
 export default memo(function Footer() {
-   const { datas: usefulLinks } = useFetch("menus/topbar", "")
-   const { datas: infos } = useFetch("infos/index", "")
+   const { datas: usefulLinks } = useFetch("menus/topbar")
+   const { datas: infos } = useFetch("infos/index")
     const [newsLatterValue , setNewsLatterValue] = useState('')
     const ShuffledLinks = useCallback([...usefulLinks].sort(() => 0.5 - Math.random()), [usefulLinks])
-    const [formState , onInputHandler] = useForm({
-      Email: {
-        value: '',
-        isValid: false
+    const { register , handleSubmit , formState: {errors} , reset , isDirty, isValid , formState} = useForm(
+      {
+       mode: 'all'
       },
-
-    } , false)
-     const NewsLatterHandler = () => {
-      const newNewsletterInfo = JSON.stringify({
-        email : formState.inputs.Email.value,
-      })
-      axios.post(`${BaseURL}newsletters` , newNewsletterInfo , {
-        headers : {
-          'Content-Type' : 'application/json',
-        }
-      })
+      {
+       defaultValues: {
+        Email: '',
+       }
+    })
+     const NewsLatterHandler = (data) => {
+      console.log(data)
+      const ResponseResult = ApiRequest.post('newsletters' , {email: data.Email})
       .then(response => {
         if(response.status === 201){
           toast.success(" عضویت در خبرنامه با موفقیت انجام شد")
@@ -62,11 +53,7 @@ export default memo(function Footer() {
           toast.error(" عضویت در خبرنامه انجام نشد")
         }
       })
-      .catch(error => {
-          console.log(error)
-          toast.error("  خطا در اتصال به سرور ");
-      })
-     
+      reset()
      }
   return (
     <footer className='pt-8 lg:pt-16 mt-24 bg-white dark:bg-transparent dark:border-t border-t-gray-700 font-danaLight text-slate-500 dark:text-slate-400 text-base xl:text-lg'>
@@ -115,11 +102,34 @@ export default memo(function Footer() {
             <Divider className="dark:border-mainSlate"/>
               <h4 className='font-DanaBold'>عضویت در خبرنامه</h4>
             <div className='shadow-light dark:shadow-none bg-gray-100 dark:bg-gray-800 dark:border border-gray-700 rounded-2xl overflow-hidden'>
-        <div  className='h-full flex-between text-slate-500 dark:text-gray-500'>
-         <Input id="Email" element="input" customStyle='w-full bg-transparent dark:bg-transparent text-sm font-dana pr-7 rounded-none border-none outline-none' placeholder=" ایمیل خود را وارد نماید " validations={[RequiredValidator() , MinValidator(8) , MaxValidator(30) , EmailValidator()]} onInputHandler={onInputHandler}/>
-         <Button btnType="submit" onClick={NewsLatterHandler} className="h-full px-2 bg-primary text-white" disabled={false} > عضویت</Button>
+            <form className='h-full' onSubmit={handleSubmit(NewsLatterHandler)}>
+
+        <div className={`${errors.Email && 'border border-rose-500'} h-full flex-between text-slate-500 dark:text-gray-500`}>
+          <input
+             type="text"
+             {...register('Email' , {
+                required: 'وارد کردن ایمیل اجباری می باشد',
+                minLength: {
+                  value: 5,
+                  message: 'لطفا حداقل ۵ کاراکتر وارد نمایید'
+                },
+                maxLength: {
+                  value: 30,
+                  message: 'لطفا حداکثر ۲۰ کاراکتر وارد نمایید'
+                },
+                pattern: {
+                  value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}/g,
+                  message: 'لطفا ایمیل صحیح وارد نمایید'
+                }
+              })}
+              className={` outline-none pl-9 sm:pl-12 rounded-tl-none rounded-bl-none dir-ltr placeholder:text-right`}
+              placeholder="  *ایمیل"
+              />
+         <Button btnType="submit" className="h-full px-2 bg-primary text-white" disabled={!formState.isValid} > عضویت</Button>
         </div>
+                  </form>
      </div>
+        <span className="block text-rose-500 text-sm">{errors.Email && errors.Email.message}</span> 
             </div>
             </div>
            </div>

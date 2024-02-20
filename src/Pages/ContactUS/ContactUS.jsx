@@ -27,7 +27,7 @@ function ContactUS() {
       UserMessage: ''
      }
   })
-  console.log(isDirty , isValid)
+
   const FormSubmitting = (data) => {
     console.log(data)
     const newMsgInfos = {
@@ -106,7 +106,7 @@ function ContactUS() {
                 }
               })}
               className={`${errors.MobilNumber && 'border border-rose-500'} outline-none pl-9 sm:pl-12 placeholder:text-right`}
-              placeholder=" تلفن تماس*"
+              placeholder=" *تلفن تماس"
               />
             <PhoneIphone className="left-3 sm:left-4" />
           </div>    
@@ -131,7 +131,7 @@ function ContactUS() {
                 }
               })}
               className={`${errors.Email && 'border border-rose-500'} outline-none pl-9 sm:pl-12 dir-ltr placeholder:text-right`}
-              placeholder="  ایمیل*"
+              placeholder="  *ایمیل"
               />
             <Email className="left-3 sm:left-4" />
           </div> 
@@ -146,7 +146,7 @@ function ContactUS() {
                 maxLength: {
                   value: 150,
                   message: 'لطفا حداقل ۱۵۰ کاراکتر وارد نمایید'
-                },})} placeholder='پیام خود را وارد نمایید ...' className={`${errors.UserMessage && 'border border-rose-500'} mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors`}></textarea>
+                },})} placeholder='پیام خود را وارد نمایید ...*' className={`${errors.UserMessage && 'border border-rose-500'} mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors`}></textarea>
                 <span className="block text-rose-500 text-sm my-2">{errors.UserMessage && errors.UserMessage.message}</span> 
             <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" onChange={RecaptchaChangeHandler} />
         </div>
