@@ -1,6 +1,5 @@
 import { Email, Person, PhoneIphone, Visibility } from "@mui/icons-material";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
 import Button from "../../common/Form/Button";
 import useTitle from "../../Hooks/useTitle";
@@ -117,7 +116,7 @@ function ContactUS() {
                   pattern: {
                     value:
                       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g,
-                    message: "لطفا فقط عدد وارد نمایید",
+                    message: "لطفا فقط عدد انگلیسی وارد نمایید",
                   },
                 })}
                 className={`${

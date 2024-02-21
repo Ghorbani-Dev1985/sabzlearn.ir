@@ -2,13 +2,10 @@ import { Email, Person, PhoneIphone, Visibility } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoginRegisterTemplate from "../../Components/LoginRegisterTemplate/LoginRegisterTemplate";
-import Input from "../../common/Form/Input";
 import Button from "../../common/Form/Button";
 import useTitle from "../../Hooks/useTitle";
 import toast from "react-hot-toast";
 import { useAuth } from "../../Contexts/AuthContext";
-import axios from "axios";
-import { BaseURL } from "../../Utils/Utils";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import ApiRequest from "../../Services/Axios/Configs/Config";
@@ -140,7 +137,7 @@ function Register() {
                   pattern: {
                     value:
                       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g,
-                    message: "لطفا فقط عدد وارد نمایید",
+                    message: "لطفا فقط عدد انگلیسی وارد نمایید",
                   },
                 })}
                 className={`${
@@ -257,7 +254,7 @@ function Register() {
                   },
                   pattern: {
                     value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
-                    message: "کلمه عبور معتبر نمی باشد",
+                    message: "کلمه عبور معتبر نمی باشد ",
                   },
                   validate: (val) => {
                      if(watch('Password') != val){

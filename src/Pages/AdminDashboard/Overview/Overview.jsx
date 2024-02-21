@@ -97,36 +97,35 @@ function Overview() {
   return (
     <>
       <div className="flex-center flex-wrap gap-x-3 gap-y-4 md:gap-x-10 mb-40">
-        {infoDetails.map(({_id, title, count }) => {
-           
-            if (title === "ثبت نامی‌ها") {
-              return (
-                <InfosBox
-                  color={"bg-amber-600 dark:bg-yellow-400"}
-                  title={title}
-                  count={count}
-                  icon={<HowToReg className="text-white size-12" />}
-                />
-              );
-            } else if (title === "دوره‌ها") {
-              return (
-                <InfosBox
-                  color={"bg-sky-500 dark:bg-secondary"}
-                  title={title}
-                  count={count}
-                  icon={<FolderCopy className="text-white size-12" />}
-                />
-              );
-            } else {
-              return (
-                <InfosBox
-                  color={"bg-primary"}
-                  title={title}
-                  count={count}
-                  icon={<OndemandVideo className="text-white size-12" />}
-                />
-              );
-            }
+        {infoDetails.map(({ _id, title, count }) => {
+          if (title === "ثبت نامی‌ها") {
+            return (
+              <InfosBox
+                color={"bg-amber-600 dark:bg-yellow-400"}
+                title={title}
+                count={count}
+                icon={<HowToReg className="text-white size-12" />}
+              />
+            );
+          } else if (title === "دوره‌ها") {
+            return (
+              <InfosBox
+                color={"bg-sky-500 dark:bg-secondary"}
+                title={title}
+                count={count}
+                icon={<FolderCopy className="text-white size-12" />}
+              />
+            );
+          } else {
+            return (
+              <InfosBox
+                color={"bg-primary"}
+                title={title}
+                count={count}
+                icon={<OndemandVideo className="text-white size-12" />}
+              />
+            );
+          }
         })}
       </div>
       {isShowLoading ? (
@@ -135,25 +134,22 @@ function Overview() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl"> کاربرهای جدید</h2>
-            <div className="lg:max-w-[40rem] xl:max-w-full">
-              {lastUsers.length > 0 ? (
-                <DataGrid
-                  rows={lastUsers.map((lastUser, index) => {
-                    return { id: index + 1, ...lastUser };
-                  })}
-                  className="dark:text-white"
-                  rowHeight={150}
-                  getRowId={(lastUser) => lastUser._id}
-                  columns={columns}
-                  hideFooter
-                  localeText={
-                    faIR.components.MuiDataGrid.defaultProps.localeText
-                  }
-                />
-              ) : (
-                <Alert severity="info">تاکنون کاربری ثبت نگردیده است</Alert>
-              )}
-            </div>
+
+            {lastUsers.length > 0 ? (
+              <DataGrid
+                rows={lastUsers.map((lastUser, index) => {
+                  return { id: index + 1, ...lastUser };
+                })}
+                className="dark:text-white"
+                rowHeight={150}
+                getRowId={(lastUser) => lastUser._id}
+                columns={columns}
+                hideFooter
+                localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
+              />
+            ) : (
+              <Alert severity="info">تاکنون کاربری ثبت نگردیده است</Alert>
+            )}
           </div>
         </>
       )}

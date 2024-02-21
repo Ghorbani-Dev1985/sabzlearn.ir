@@ -10,7 +10,6 @@ ApiRequest.interceptors.request.use(
   (config) => {
     const getToken = JSON.parse(localStorage.getItem("user"));
     if (getToken !== null) {
-      console.log("f");
       config.headers.Authorization = `Bearer ${getToken.token}`;
       config.headers["Content-Type"] = "application/json";
     }
