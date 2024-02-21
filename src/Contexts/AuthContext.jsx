@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { BaseURL } from "../Utils/Utils";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import ApiRequest from "../Services/Axios/Configs/Config";
 
 const AuthContext = createContext({
   isLoggedIn: false,
@@ -18,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState(null)
   const [userInfos, setUserInfos] = useState({})
+  const abortController = new AbortController()
 
   const LoginHandler = useCallback((userInfos, token) => {
     setToken(token)
@@ -36,22 +36,22 @@ export const AuthProvider = ({ children }) => {
   } , [token])
 
   useEffect(() => {
-     const localStorageData = JSON.parse(localStorage.getItem('user'))
-     if(localStorageData){
-      axios.get(`${BaseURL}auth/me` , {
-        headers : {
-          'Authorization' : `Bearer ${localStorageData.token}`
-        }
-      })
-      .then(response => {
-        setIsLoggedIn(true)
-        setUserInfos(response.data)
-      })
-      .catch(error => {
-          console.log(error)
-          toast.error("  خطا در اتصال به سرور ");
-      })
-     }
+    const localStorageData = JSON.parse(localStorage.getItem('user'))
+    if(localStorageData){
+      const ResponseResult = ApiRequest('auth/me' , {signal: abortController.signal})
+      .then((response) => {
+         setIsLoggedIn(true)
+         setUserInfos(response.data)
+         if(response.data.role !== 'ADMIN'){
+          Navigate('/')
+         }
+      });
+      return () => {
+        abortController.abort()
+      }
+    }else{
+      Navigate('/')
+    }
   }, [LoginHandler])
   
   return (

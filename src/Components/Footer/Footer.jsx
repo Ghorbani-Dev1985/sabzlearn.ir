@@ -27,7 +27,7 @@ const quickAccessLinks = [
   },
   {
     _id: 3,
-    href: "/courses",
+    href: "/courses/1",
     title: " همه دوره ها",
   },
 ];
