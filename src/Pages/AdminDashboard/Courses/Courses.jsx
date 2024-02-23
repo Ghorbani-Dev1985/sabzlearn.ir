@@ -54,7 +54,7 @@ function Courses() {
         CourseShortName: "",
         CourseCover: "",
         CourseSupport: "",
-        CourseStatus: "",
+        CourseStatus: "start",
         CourseDescription: "",
       },
     }
@@ -262,7 +262,7 @@ function Courses() {
           افزودن دوره جدید
         </legend>
         <form onSubmit={handleSubmit(AddNewCourseHandler)}>
-          <div className="flex flex-wrap justify-between gap-5 md:child:w-30p lg:child:w-48p">
+          <div className="grid grid-cols-2 gap-5">
             {/* CourseName */}
             <div>
               <div className="relative">
@@ -417,9 +417,7 @@ function Courses() {
                 <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                   <div className="flex items-center ps-3">
                     <input
-                      {...register("CourseStatus", {
-                        required: true,
-                      })}
+                      
                       onChange={(event) =>
                         setValue("CourseStatus", event.target.value)
                       }
@@ -441,15 +439,13 @@ function Courses() {
                 <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                   <div className="flex items-center ps-3">
                     <input
-                      {...register("CourseStatus", {
-                        required: true,
-                      })}
+                      
                       onChange={(event) =>
                         setValue("CourseStatus", event.target.value)
                       }
                       id="Presell"
                       type="radio"
-                      value="Presell"
+                      value="presell"
                       name="list-radio"
                       hidden
                       className="peer "
@@ -463,6 +459,9 @@ function Courses() {
                   </div>
                 </li>
               </ul>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.CourseStatus && errors.CourseStatus.message}
+              </span>
             </div>
           </div>
           <div className="flex-center w-full max-w-xl mx-auto my-7">

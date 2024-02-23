@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import useFetch from '../../../Hooks/useFetch'
 import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
 import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext'
-import { useEditModal } from '../../../Contexts/EditModalContext'
-import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import useTitle from '../../../Hooks/useTitle'
-import { AccessTimeFilled, CloudUploadOutlined, FolderOpenOutlined, InsertLinkOutlined, RemoveRedEye } from '@mui/icons-material'
+import { AccessTimeFilled, CloudUploadOutlined, CreateNewFolder, InsertLinkOutlined } from '@mui/icons-material'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
-import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import useDelete from '../../../Hooks/useDelete'
 import Swal from 'sweetalert2'
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
-import DOMPurify from 'dompurify'
+import { useForm } from "react-hook-form";
 
 function Sessions() {
   const title = useTitle("جلسه دوره‌ها - پنل کاربری")
@@ -26,13 +21,36 @@ function Sessions() {
   const { datas: courses } = useFetch("courses", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
-  const { showEditModal, setShowEditModal } = useEditModal()
-  const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [sessionTitle, setSessionTitle] = useState("")
   const [sessionTime, setSessionTime] = useState("")
   const [courseID , setCourseID] = useState('-1')
   const [sessionVideo , setSessionVideo] = useState("")
-  const [isFree, setIsFree] = useState(1)
+  const SessionVideoRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    isDirty,
+    isValid,
+    watch,
+    control,
+    setValue,
+    formState,
+  } = useForm(
+    {
+      mode: "all",
+    },
+    {
+      defaultValues: {
+        SessionTitle: "",
+        SessionTime: "",
+        CourseID: "",
+        isFree: "1",
+      },
+    }
+  );
+  const { ref: registerRef, ...rest } = register("SessionVideo");
    const columns = [
     {
       field: "id",
@@ -113,16 +131,14 @@ function Sessions() {
     },
    ];
      //Add Function
-     const AddNewSessionHandler = (event) => {
-      event.preventDefault()
+     const AddNewSessionHandler = (data) => {
+       console.log(data)
       let newSessionFormData = new FormData()
-      newSessionFormData.append('title' , sessionTitle)
-      newSessionFormData.append('time' , +sessionTime)
+      newSessionFormData.append('title' , data.SessionTitle)
+      newSessionFormData.append('time' , (data.SessionTime))
       newSessionFormData.append('video' , sessionVideo)
-      newSessionFormData.append('free' , isFree)
-
-       if(sessionTitle && sessionTime && sessionVideo.name){
-         axios.post(`${BaseURL}courses/${courseID}/sessions` , newSessionFormData, {
+      newSessionFormData.append('free' , data.isFree)
+         axios.post(`${BaseURL}courses/${data.CourseID}/sessions` , newSessionFormData, {
            headers : {
              'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
            }
@@ -132,25 +148,13 @@ function Sessions() {
            if(response.status === 201){
              
              toast.success("  افزودن جلسه با موفقیت انجام شد")
-             setSessionTitle('')
-             setSessionTime('')
-             setSessionVideo('')
-             setCourseID('-1')
-             setIsFree('')
+             setSessionVideo({})
              setShowRealTimeDatas((prev) => !prev)
            }else{
              toast.error("افزودن جلسه انجام نشد");
            }
          })
-         .catch(error => {
-             console.log(error)
-             toast.error('خطا در اتصال به سرور')
-            })
-          }else if(blogTitle.length <=2 && blogShortName.length <=2){
-            toast.error('تعداد کاراکترها کمتر از حد مجاز می باشد')
-          }else{
-            toast.error('ویدیو جلسه را آپلود نمایید')
-          }
+         reset()
      }
      //Delete Function
      const DeleteSessionHandler = (sessionID) =>{
@@ -176,35 +180,74 @@ function Sessions() {
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن جلسه جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <form onSubmit={handleSubmit(AddNewSessionHandler)}>
+        <div className="grid grid-cols-2 gap-5">
+          <div>
           <div className="relative">
             <input
               type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
+              {...register("SessionTitle", {
+                required: "وارد کردن عنوان جلسه اجباری می باشد",
+                minLength: {
+                  value: 5,
+                  message: "لطفا حداقل ۵ کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 15,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+              })}
+              className={`${
+                errors.SessionTitle && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder=" عنوان *"
-              value={sessionTitle}
-              onChange={(event) => setSessionTitle(event.target.value)}
             />
-            <InsertLinkOutlined className="left-3 sm:left-4" />
+            <CreateNewFolder className="left-3 sm:left-4" />
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.SessionTitle && errors.SessionTitle.message}
+              </span>
+          </div>
+          <div>
           <div className="relative">
             <input
-              type="number"
-              className="outline-none pl-9 sm:pl-12 bg-white"
+              type="text"
+              {...register("SessionTime", {
+                required: "وارد کردن زمان جلسه اجباری می باشد",
+                minLength: {
+                  value: 4,
+                  message: "لطفا حداقل 4 کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 7,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+              })}
+              className={`${
+                errors.SessionTitle && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder=" زمان *"
-              value={sessionTime}
-              onChange={(event) => setSessionTime(event.target.value)}
             />
             <AccessTimeFilled className="left-3 sm:left-4" />
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.SessionTime && errors.SessionTime.message}
+              </span>
+          </div>
           <div>
+            <div>
           <div className="relative my-12">
             <select
-              value={courseID}
-              onChange={(event) => setCourseID(event.target.value)}
+              {...register("CourseID", {
+                required: " انتخاب دوره اجباری می باشد",
+              })}
+              onChange={(event) =>
+                setValue("CourseID", event.target.value)
+              }
+              defaultValue=""
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب دوره</option>
+              <option value="" disabled>انتخاب دوره</option>
               {courses.map(({ _id, name }) => {
                 return (
                   <React.Fragment key={_id}>
@@ -216,20 +259,27 @@ function Sessions() {
               })}
             </select>
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.CourseID && errors.CourseID.message}
+              </span>
+            </div>
           <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                 <div className="flex items-center ps-3">
                   <input
-                    id="Start"
+                    id="Isfree"
                     type="radio"
-                    value={1}
-                    onChange={(event) => setIsFree(event.target.value)}
+                    value="0"
+              
+                    onChange={(event) =>
+                      setValue("isFree", event.target.value)
+                    }
                     hidden
                     name="list-radio"
                     className="peer"
                   />
                   <label
-                    htmlFor="Start"
+                    htmlFor="Isfree"
                     className="w-full cursor-pointer peer-checked:text-primary peer-checked:font-DanaBold py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                    نقدی
@@ -239,16 +289,18 @@ function Sessions() {
               <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                 <div className="flex items-center ps-3">
                   <input
-                    id="Presell"
+                    id='NotFree'
                     type="radio"
-                    value={0}
-                    onChange={(event) => setIsFree(event.target.value)}
+                    value="1"
+                    onChange={(event) =>
+                      setValue("isFree", event.target.value)
+                    }
                     name="list-radio"
                     hidden
                     className="peer "
                   />
                   <label
-                    htmlFor="Presell"
+                    htmlFor="NotFree"
                     className="w-full cursor-pointer py-3 peer-checked:text-primary peer-checked:font-DanaBold ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                     رایگان
@@ -275,7 +327,17 @@ function Sessions() {
                 </p>
                <span className="text-mainSlate dark:text-white my-3">{sessionVideo.name}</span> 
               </div>
-              <input id="VideoUpload" type="file" required onChange={(event) => setSessionVideo(event.target.files[0])} accept=".mp4 , .mkv" className="h-full absolute z-50 opacity-0" />
+              <input id="VideoUpload"
+                {...register("SessionVideo", {
+                  required: true,
+                })}
+                name="SessionVideo"
+                {...rest}
+                ref={(event) => {
+                  registerRef(event);
+                  SessionVideoRef.current = event;
+                }}
+              type="file" required onChange={(event) => setSessionVideo(event.target.files[0])} accept=".mp4 , .mkv" className="h-full absolute z-50 opacity-0" />
             </label>
           </div>
         </div>
@@ -286,18 +348,19 @@ function Sessions() {
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewSessionHandler}
+            disabled={!formState.isValid}
           >
             افزودن جلسه
           </Button>
         </div>
+        </form>
       </fieldset>
        {isShowLoading ? (
-        <SkeletonLoading listsToRender={5} />
+        <SkeletonLoading listsToRender={10} />
       ) : (
         <>
           <div className="w-full dark:text-white">
-            <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
+            <h2 className="font-DanaBold my-8 text-2xl">لیست جلسه های دوره‌ها</h2>
             {Sessions.length > 0 ? (
               <DataGrid
                 rows={Sessions.map((session, index) => {
@@ -316,7 +379,7 @@ function Sessions() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ مقاله ای تاکنون ثبت نگردیده است</Alert>
+              <Alert severity="info">هیچ  جلسه ای تاکنون ثبت نگردیده است</Alert>
             )}
           </div>
         </>
