@@ -31,7 +31,7 @@ exports.getAll = async (req, res, next) => {
       .populate("creator", "-password")
       .lean();
     if (allOffs.length === 0) {
-      return res.status(404).json({ message: "No Off Available!" });
+      return res.status(402).json({ message: "No Off Available!" });
     }
     const offs = [];
 

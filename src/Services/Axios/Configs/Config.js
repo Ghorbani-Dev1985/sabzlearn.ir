@@ -35,7 +35,7 @@ ApiRequest.interceptors.response.use(
     if (status === 408) {
       toast.error("دسترسی غیر مجاز");
      // Navigate("/login");
-    } else if (status === 400) {
+    } else if (status === 402) {
       toast.error("  کد تخفیف معتبر نمی باشد");
     } else if (error.response.status === 409) {
       toast.error("  استفاده از کد تخفیف به اتمام رسیده است");

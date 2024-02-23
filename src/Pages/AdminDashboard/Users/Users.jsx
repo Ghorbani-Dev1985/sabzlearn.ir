@@ -69,7 +69,8 @@ function Users() {
       password: data.Password,
       confirmPassword: data.ConfirmPassword,
     };
-    const ResponseResult = ApiRequest.post("auth/register", newUserInfos).then(
+    const ResponseResult = ApiRequest.post("auth/register", newUserInfos)
+    .then(
       (response) => {
         console.log(response.data);
         if (response.data) {

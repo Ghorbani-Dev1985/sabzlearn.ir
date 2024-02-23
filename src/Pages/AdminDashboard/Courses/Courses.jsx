@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useFetch from "../../../Hooks/useFetch";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
-import { useEditModal } from "../../../Contexts/EditModalContext";
 import { Alert } from "@mui/material";
 import { DataGrid, faIR } from "@mui/x-data-grid";
 import {
   AttachMoneyOutlined,
-  AutorenewOutlined,
   CloudUploadOutlined,
-  DescriptionOutlined,
-  Edit,
   FolderOpenOutlined,
   HeadsetMicOutlined,
   InsertLinkOutlined,
@@ -22,23 +18,20 @@ import useDelete from "../../../Hooks/useDelete";
 import Button from "../../../common/Form/Button";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import usePost from "../../../Hooks/usePost";
 import axios from "axios";
 import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-
 function Courses() {
-  const title = useTitle("دوره‌ها - پنل کاربری")
-  const { datas: courses } = useFetch("courses")
-  const { datas: categories } = useFetch("category")
-  const { isShowLoading, setIsShowLoading } = useShowLoading()
-  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
-  const { showEditModal, setShowEditModal } = useEditModal()
-  const [updateUserID, setUpdateUserID] = useState("")
-  const [courseDescription, setCourseDescription] = useState("")
-  const [courseCover, setCourseCover] = useState({})
+  const title = useTitle("دوره‌ها - پنل کاربری");
+  const { datas: courses } = useFetch("courses");
+  const { datas: categories } = useFetch("category");
+  const { isShowLoading, setIsShowLoading } = useShowLoading();
+  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas();
+  const [courseDescription, setCourseDescription] = useState("");
+  const [courseCover, setCourseCover] = useState({});
+  const CourseCoverRef = useRef();
   const {
     register,
     handleSubmit,
@@ -62,10 +55,12 @@ function Courses() {
         CourseCover: "",
         CourseSupport: "",
         CourseStatus: "",
-        CourseDescription: ""
+        CourseDescription: "",
       },
     }
   );
+  const { ref: registerRef, ...rest } = register("CourseCover");
+
   const columns = [
     {
       field: "id",
@@ -209,61 +204,57 @@ function Courses() {
     }).then((result) => {
       if (result.isConfirmed) {
         const courseDel = useDelete(`courses/${courseID}`);
-        setShowRealTimeDatas((prev) => !prev)
+        setShowRealTimeDatas((prev) => !prev);
       }
     });
   };
 
   //Add New Function
   const AddNewCourseHandler = (data) => {
-    console.log(data.CourseCategoryID , data.CourseStatus , data.CourseDescription)
-    // event.preventDefault()
-    // let newCourseFormData = new FormData()
-    // newCourseFormData.append('name' , courseName)
-    // newCourseFormData.append('description' , courseDescription)
-    // newCourseFormData.append('shortName' , courseShortName)
-    // newCourseFormData.append('categoryID' , courseCategoryID)
-    // newCourseFormData.append('isComplete' , +isCompleteCourse)
-    // newCourseFormData.append('price' , +coursePrice)
-    // newCourseFormData.append('support' , courseSupport)
-    // newCourseFormData.append('status' , courseStatus)
-    // newCourseFormData.append('cover' , courseCover)
+    console.log(data.CourseCover);
+    let newCourseFormData = new FormData();
+    newCourseFormData.append("name", data.CourseName);
+    newCourseFormData.append("description", data.CourseDescription);
+    newCourseFormData.append("shortName", data.CourseShortName);
+    newCourseFormData.append("categoryID", data.CourseCategoryID);
+    newCourseFormData.append("isComplete", 0);
+    newCourseFormData.append("price", +data.CoursePrice);
+    newCourseFormData.append("support", data.CourseSupport);
+    newCourseFormData.append("status", data.CourseStatus);
+    newCourseFormData.append("cover", courseCover);
 
-    //  if(courseName && courseDescription && courseShortName && courseCategoryID && coursePrice && courseSupport && courseCover.name){
-    //    axios.post(`${BaseURL}courses` , newCourseFormData, {
-    //      headers : {
-    //        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-    //      }
-    //    })
-    //    .then(response => {
-    //      console.log(response)
-    //      if(response.status === 201){https://stackoverflow.com/questions
-           
-    //        toast.success("  افزودن دوره با موفقیت انجام شد")
-    //        setCourseName('')
-    //        setCourseCategoryID('-1')
-    //        setCourseShortName('')
-    //        setCoursePrice('')
-    //        setCourseSupport('')
-    //        setCourseStatus('')
-    //        setCourseCover('')
-    //        setCourseDescription('')
-    //        setShowRealTimeDatas((prev) => !prev)
-    //      }else{
-    //        toast.error("افزودن دوره انجام نشد");
-    //      }
-    //    })
-    //    .catch(error => {
-    //        console.log(error)
-    //        toast.error('خطا در اتصال به سرور')
-    //       })
-    //     }else if(courseName.length <=2 && courseShortName.length <=2 && courseSupport.length <=1){
-    //       toast.error('تعداد کاراکترها کمتر از حد مجاز می باشد')
-    //     }else{
-    //       toast.error('عکس دوره را آپلود نمایید')
-    //     }
+    axios
+      .post(`${BaseURL}courses`, newCourseFormData, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          //stackoverflow.com/questions
+
+          https: toast.success("  افزودن دوره با موفقیت انجام شد");
+          setCourseCover({});
+          setCourseDescription("");
+          setShowRealTimeDatas((prev) => !prev);
+        } else {
+          toast.error("افزودن دوره انجام نشد");
+        }
+      });
+    reset();
   };
-  
+  useEffect(() => {
+    register("CourseDescription", {
+      required: "وارد کردن  توضیحات دوره اجباری می باشد",
+      minLength: {
+        value: 15,
+        message: "لطفا حداقل 15 کاراکتر وارد نمایید",
+      },
+    });
+  });
   return (
     <>
       <fieldset className="border border-gray-200 rounded-lg p-3 mb-8">
@@ -304,12 +295,11 @@ function Courses() {
                 <select
                   {...register("CourseCategoryID", {
                     required: " انتخاب دسته بندی دوره اجباری می باشد",
-                    
                   })}
                   onChange={(event) =>
                     setValue("CourseCategoryID", event.target.value)
                   }
-                  defaultValue="" 
+                  defaultValue=""
                   className={`${
                     errors.CourseCategoryID && "border border-rose-500"
                   } bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
@@ -497,48 +487,50 @@ function Courses() {
                 <input
                   id="CoverUpload"
                   type="file"
-                  required
                   {...register("CourseCover", {
                     required: true,
                   })}
-                  onChange={(event) =>
-                    setValue("CourseCover", event.target.files[0])
-                  }
+                  name="CourseCover"
+                  {...rest}
+                  ref={(event) => {
+                    registerRef(event);
+                    CourseCoverRef.current = event;
+                  }}
+                  onChange={(event) => {
+                    setCourseCover(event.target.files[0]);
+                  }}
                   accept=".webp , .jpg , .png, .jpeg"
                   className="h-full absolute z-50 opacity-0"
                 />
               </label>
             </div>
             <span className="block text-rose-500 text-sm my-2">
-                {errors.CourseCover && errors.CourseCover.message}
-              </span>
+              {errors.CourseCover && errors.CourseCover.message}
+            </span>
           </div>
 
           <CKEditor
             width="500px"
             editor={ClassicEditor}
-            {...register("CourseDescription", {
-            required: "وارد کردن  توضیحات دوره اجباری می باشد",
-            minLength: {
-              value: 15,
-              message: "لطفا حداقل 15 کاراکتر وارد نمایید",
-            },
-          })}
-            value={"CourseDescription"}
-            
+            data={courseDescription}
             onChange={(event, editor) => {
               const data = editor.getData();
-              setValue("CourseDescription", data)
+              setValue("CourseDescription", data);
+              setCourseDescription(data);
             }}
- 
+            onBlur={(event, editor) => {
+              const data = editor.getData();
+              setValue("CourseDescription", data);
+              setCourseDescription(data);
+            }}
           />
-           <span className="block text-rose-500 text-sm my-2">
-                {errors.CourseDescription && errors.CourseDescription.message}
-              </span>
+          <span className="block text-rose-500 text-sm my-2">
+            {errors.CourseDescription && errors.CourseDescription.message}
+          </span>
           <div className="flex justify-end items-center">
             <Button
               btnType="submit"
-              className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+              className="button-md h-12 sm:button-lg rounded-xl button-primary select-none my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
               disabled={!formState.isValid}
             >
               افزودن دوره
@@ -548,7 +540,7 @@ function Courses() {
       </fieldset>
 
       {isShowLoading ? (
-        <SkeletonLoading listsToRender={5} />
+        <SkeletonLoading listsToRender={25} />
       ) : (
         <>
           <div className="w-full dark:text-white">
