@@ -7,13 +7,13 @@ import { AccessTimeFilled, CloudUploadOutlined, CreateNewFolder, InsertLinkOutli
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
-import useDelete from '../../../Hooks/useDelete'
 import Swal from 'sweetalert2'
 import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
 import { useForm } from "react-hook-form";
+import ApiRequest from '../../../Services/Axios/Configs/Config'
 
 function Sessions() {
   const title = useTitle("جلسه دوره‌ها - پنل کاربری")
@@ -169,8 +169,13 @@ function Sessions() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const sessionDel = useDelete(`courses/sessions/${sessionID}`);
-            setShowRealTimeDatas((prev) => !prev)
+            const ResponseResult = ApiRequest.delete(`courses/sessions/${sessionID}`)
+            .then((response) => {
+              if(response.status === 200){
+                toast.success("حذف جلسه دوره با موفقیت انجام گردید");
+                setShowRealTimeDatas((prev) => !prev);
+              }
+            })
           }
         });
     }

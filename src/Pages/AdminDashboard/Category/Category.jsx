@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useTitle from "../../../Hooks/useTitle";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
@@ -9,16 +9,17 @@ import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading
 import { DataGrid , faIR} from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
-import useDelete from "../../../Hooks/useDelete";
 import Button from "../../../common/Form/Button";
 import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
-import useUpdate from "../../../Hooks/useUpdate";
-import usePost from "../../../Hooks/usePost";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import ApiRequest from "../../../Services/Axios/Configs/Config";
+import EditCategory from "./EditCategory";
+
 
 function Category() {
   const title = useTitle("دسته بندی‌ها - پنل کاربری");
-  const { datas: categories } = useFetch("category", false)
+  const { datas: categories } = useFetch("category")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   const { showEditModal, setShowEditModal } = useEditModal()
@@ -28,6 +29,30 @@ function Category() {
   const [updateCategoryTitle , setUpdateCategoryTitle] = useState('')
   const [updateCategoryName , setUpdateCategoryName] = useState('')
   
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    isDirty,
+    isValid,
+    watch,
+    control,
+    setValue,
+    formState,
+  } = useForm(
+    {
+      mode: "all",
+    },
+    {
+      defaultValues: {
+        CategoryTitle: "",
+        CategoryLink: "",
+      },
+    }
+  );
+
   const columns = [
     {
       field: "id",
@@ -109,18 +134,19 @@ function Category() {
     },
   ];
   //Edit Function
-  const UpdateCategoryHandler = () => {
-    let updateCategoryInfos = JSON.stringify({
-      title: updateCategoryTitle,
-      name: updateCategoryName
-    })
-    if(updateCategoryTitle && updateCategoryName){
-        const updateCategory = useUpdate(`category/${updateCategoryID}` , updateCategoryInfos ) 
-        setShowRealTimeDatas((prev) => !prev)
-        setShowEditModal(false)
-    }else if(updateCategoryTitle.length <= 2 && updateCategoryName.length <= 2 ){
-        toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+  const UpdateCategoryHandler = (data) => {
+    let updateCategoryInfos = {
+      title: data.EditCategoryTitle,
+      name: data.EditCategoryLink
     }
+    const ResponseResult = ApiRequest.put(`category/${updateCategoryID}` , updateCategoryInfos)
+    .then((response) => { 
+      if (response.data) {
+        setShowRealTimeDatas((prev) => !prev);
+        setShowEditModal(false);
+        toast.success("ویرایش دسته بندی با موفقیت انجام شد");
+      }
+    });
   };
     //  Delete Function
     const DeleteCategoryHandler = (categoryID) => {
@@ -134,70 +160,110 @@ function Category() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const catDel = useDelete(`category/${categoryID}`);
-            setShowRealTimeDatas((prev) => !prev);
+            const ResponseResult = ApiRequest.delete(`category/${categoryID}`)
+            .then((response) => {
+              if(response.status === 200){
+                setShowRealTimeDatas((prev) => !prev);
+                toast.success("حذف دسته بندی با موفقیت انجام گردید");
+              }
+            })
           }
         });
       };
       //New Category
-      const AddNewCategoryHandler = () => {
-        let newCategoryInfos = JSON.stringify({
-            title: categoryTitle,
-            name: categoryName
-          })
-          if(categoryTitle && categoryName){
-              const addNew = usePost('category' , newCategoryInfos , true)
-              setCategoryTitle('')
-              setCategoryName('')
-              setShowRealTimeDatas((prev) => !prev)
-          }else if(categoryTitle.length <= 2 && categoryName.length <= 2){
-            toast.error('تعداد کاراکترها کمتر از حد مجاز است')
+      const AddNewCategoryHandler = (data) => {
+        let newCategoryInfos = {
+            title: data.CategoryTitle,
+            name: data.CategoryLink
           }
+          const ResponseResult = ApiRequest.post("category", newCategoryInfos)
+          .then((response) => {
+              if (response.status === 201) {
+                setShowRealTimeDatas((prev) => !prev);
+                toast.success("دسته بندی جدید با موفقیت انجام گردید");
+              }
+            }
+          );
+        
+         reset() 
       }
-      useEffect(() => {
-        let filterUpdateUser = categories.find((category) => category._id === updateCategoryID)
-        if (filterUpdateUser) {
-          setUpdateCategoryTitle(filterUpdateUser.title)
-          setUpdateCategoryName(filterUpdateUser.name)
-        }
-      }, [updateCategoryID]);
+     
   return (
     <>
     <fieldset className="border border-gray-200 rounded-lg p-3">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن دسته بندی جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <form onSubmit={handleSubmit(AddNewCategoryHandler)}>
+        <div className="grid grid-cols-2 gap-5">
+          <div>
         <div className="relative">
           <input
               type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
+              {...register("CategoryTitle", {
+                required: "وارد کردن نام دسته بندی اجباری می باشد",
+                minLength: {
+                  value: 3,
+                  message: "لطفا حداقل 3 کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 15,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+              })}
+              className={`${
+                errors.CategoryTitle && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder='نام دسته بندی*'
-              value={categoryTitle}
-              onChange={(event) => setCategoryTitle(event.target.value)}
               />
           <FolderCopyOutlined className="left-3 sm:left-4" />
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.CategoryTitle && errors.CategoryTitle.message}
+              </span>
+          </div>
+          <div>
           <div className="relative">
           <input
               type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
+              {...register("CategoryLink", {
+                required: "وارد کردن لینک دسته بندی اجباری می باشد",
+                minLength: {
+                  value: 3,
+                  message: "لطفا حداقل 3 کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 15,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9_]{3,15}$/g,
+                  message:
+                    "لینک دسته بندی معتبر نمی باشد کاراکترهای (a-zA-Z0-9_) مجاز می باشند",
+                },
+              })}
+              className={`${
+                errors.CategoryLink && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder='لینک دسته بندی*'
-              value={categoryName}
-              onChange={(event) => setCategoryName(event.target.value)}
               />
           <InsertLinkOutlined className="left-3 sm:left-4" />
+          </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.CategoryLink && errors.CategoryLink.message}
+              </span>
           </div>
          </div>
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewCategoryHandler}
+            disabled={!formState.isValid}
           >
             افزودن دسته بندی
           </Button>
         </div>
+        </form>
       </fieldset>
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
@@ -215,7 +281,7 @@ function Category() {
                 columns={columns}
                 initialState={{
                   pagination: {
-                    paginationModel: { page: 0, pageSize: 10 },
+                    paginationModel: { page: 0, pageSize: 5 },
                   },
                 }}
                 localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
@@ -229,37 +295,7 @@ function Category() {
       )}
          {/* Edit Modal */}
          <EditModal>
-        <div className="min-w-96">
-        <div className="relative mb-4">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12'
-              placeholder='نام دسته بندی*'
-              value={updateCategoryTitle}
-              onChange={(event) => setUpdateCategoryTitle(event.target.value)}
-              />
-          <FolderCopyOutlined className="left-3 sm:left-4" />
-          </div>
-          <div className="relative mb-4">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12'
-              placeholder='لینک دسته بندی*'
-              value={updateCategoryName}
-              onChange={(event) => setUpdateCategoryName(event.target.value)}
-              />
-          <InsertLinkOutlined className="left-3 sm:left-4" />
-          </div>
-        </div>
-        <div className="flex-center">
-          <Button
-            btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={UpdateCategoryHandler}
-          >
-            ویرایش دسته بندی
-          </Button>
-        </div>
+      <EditCategory updateCategoryID={updateCategoryID} UpdateCategoryHandler={UpdateCategoryHandler}/>
       </EditModal>
     </>
   );

@@ -14,14 +14,12 @@ import {
 } from "@mui/icons-material";
 import useTitle from "../../../Hooks/useTitle";
 import Swal from "sweetalert2";
-import useDelete from "../../../Hooks/useDelete";
 import Button from "../../../common/Form/Button";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import axios from "axios";
-import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import ApiRequest from "../../../Services/Axios/Configs/Config";
 
 function Courses() {
   const title = useTitle("دوره‌ها - پنل کاربری");
@@ -52,9 +50,8 @@ function Courses() {
         CourseName: "",
         CourseCategoryID: "",
         CourseShortName: "",
-        CourseCover: "",
         CourseSupport: "",
-        CourseStatus: "start",
+        CourseStatus: "",
         CourseDescription: "",
       },
     }
@@ -203,15 +200,20 @@ function Courses() {
       cancelButtonText: "انصراف",
     }).then((result) => {
       if (result.isConfirmed) {
-        const courseDel = useDelete(`courses/${courseID}`);
-        setShowRealTimeDatas((prev) => !prev);
+        const ResponseResult = ApiRequest.delete(`courses/${courseID}`)
+        .then((response) => {
+          if(response.status === 200){
+            toast.success("حذف دوره با موفقیت انجام گردید");
+            setShowRealTimeDatas((prev) => !prev);
+          }
+        })
       }
     });
   };
 
   //Add New Function
   const AddNewCourseHandler = (data) => {
-    console.log(data.CourseCover);
+    console.log(data);
     let newCourseFormData = new FormData();
     newCourseFormData.append("name", data.CourseName);
     newCourseFormData.append("description", data.CourseDescription);
@@ -247,14 +249,14 @@ function Courses() {
     reset();
   };
   useEffect(() => {
-    register("CourseDescription", {
-      required: "وارد کردن  توضیحات دوره اجباری می باشد",
-      minLength: {
-        value: 15,
-        message: "لطفا حداقل 15 کاراکتر وارد نمایید",
-      },
-    });
-  });
+    // register("CourseDescription", {
+    //   required: "وارد کردن  توضیحات دوره اجباری می باشد",
+    //   minLength: {
+    //     value: 15,
+    //     message: "لطفا حداقل 15 کاراکتر وارد نمایید",
+    //   },
+    // });
+  },[]);
   return (
     <>
       <fieldset className="border border-gray-200 rounded-lg p-3 mb-8">
@@ -300,8 +302,7 @@ function Courses() {
                     setValue("CourseCategoryID", event.target.value)
                   }
                   defaultValue=""
-                  className={`${
-                    errors.CourseCategoryID && "border border-rose-500"
+                  className={`${errors.CourseCategoryID && "border border-rose-500"
                   } bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                 >
                   <option value="" disabled>
@@ -448,7 +449,7 @@ function Courses() {
                       value="presell"
                       name="list-radio"
                       hidden
-                      className="peer "
+                      className="peer"
                     />
                     <label
                       htmlFor="Presell"

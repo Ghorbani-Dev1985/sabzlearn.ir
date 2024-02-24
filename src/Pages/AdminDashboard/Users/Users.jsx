@@ -72,7 +72,6 @@ function Users() {
     const ResponseResult = ApiRequest.post("auth/register", newUserInfos)
     .then(
       (response) => {
-        console.log(response.data);
         if (response.data) {
           toast.success("ثبت نام کاربر با موفقیت انجام گردید");
           setShowRealTimeDatas((prev) => !prev);
