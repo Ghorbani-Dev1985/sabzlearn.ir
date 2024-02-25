@@ -5,19 +5,45 @@ import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext
 import { useEditModal } from '../../../Contexts/EditModalContext'
 import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
 import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, RemoveRedEye } from '@mui/icons-material'
+import { FolderOpenOutlined, GppGood, InsertLinkOutlined } from '@mui/icons-material'
 import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
 import { DataGrid , faIR} from '@mui/x-data-grid'
 import { Alert } from '@mui/material'
-import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
 import useDelete from '../../../Hooks/useDelete'
 import Swal from 'sweetalert2'
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from '../../../common/Form/Button'
 import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
+import { useForm } from "react-hook-form"
+
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+  reset,
+  isDirty,
+  isValid,
+  watch,
+  control,
+  setValue,
+  formState,
+} = useForm(
+  {
+    mode: "all",
+  },
+  {
+    defaultValues: {
+      FullName: "",
+      UserName: "",
+      MobilNumber: "",
+      Email: "",
+      Password: "",
+      ConfirmPassword: "",
+    },
+  }
+)
+
 
 
 function Menus() {
@@ -168,34 +194,80 @@ function Menus() {
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن مقاله جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <form onSubmit={handleSubmit(AddNewMenuHandler)}>
+        <div className="grid grid-cols-2 gap-5">
+          {/* MenuTitle */}
+          <div>
           <div className="relative">
             <input
               type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
+              {...register("MenuTitle", {
+                required: "وارد کردن عنوان مقاله اجباری می باشد",
+                minLength: {
+                  value: 5,
+                  message: "لطفا حداقل ۵ کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 15,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+              })}
+              className={`${
+                errors.MenuTitle && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder=" عنوان *"
-              value={menuTitle}
-              onChange={(event) => setMenuTitle(event.target.value)}
             />
             <FolderOpenOutlined className="left-3 sm:left-4" />
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.MenuTitle && errors.MenuTitle.message}
+              </span>
+          </div>
+           <div>
           <div className="relative">
             <input
               type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
+              {...register("MenuHref", {
+                required: "وارد کردن لینک منو اجباری می باشد",
+                minLength: {
+                  value: 3,
+                  message: "لطفا حداقل 3 کاراکتر وارد نمایید",
+                },
+                maxLength: {
+                  value: 15,
+                  message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9_]{3,15}$/g,
+                  message:
+                    "لینک منو  معتبر نمی باشد کاراکترهای (a-zA-Z0-9_) مجاز می باشند",
+                },
+              })}
+              className={`${
+                errors.MenuHref && "border border-rose-500"
+              } outline-none pl-9 sm:pl-12`}
               placeholder=" لینک *"
-              value={menuHref}
-              onChange={(event) => setMenuHref(event.target.value)}
             />
             <InsertLinkOutlined className="left-3 sm:left-4" />
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.MenuHref && errors.MenuHref.message}
+              </span>
+           </div>
+           <div>
            <div className="relative">
             <select
-              value={menuParentID}
-              onChange={(event) => setMenuParentID(event.target.value)}
-              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               {...register("MenuParentID", {
+                required: " انتخاب منوی اصلی اجباری می باشد",
+              })}
+              onChange={(event) =>
+                setValue("MenuParentID", event.target.value)
+              }
+              defaultValue=""
+              className={`${errors.MenuParentID && "border border-rose-500"
+              } bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
             >
-              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب منوی اصلی</option>
+              <option value="" disabled>انتخاب منوی اصلی</option>
               {
                 Menus.map((menu) => {
                  return(  
@@ -206,17 +278,22 @@ function Menus() {
               })}
             </select>
           </div>
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.MenuParentID && errors.MenuParentID.message}
+              </span>
+           </div>
 
         </div>
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewMenuHandler}
+      
           >
             افزودن منو
           </Button>
         </div>
+        </form>
       </fieldset>
        {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />

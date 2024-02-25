@@ -289,9 +289,9 @@ function Comments() {
        }
         //Answer Function
         const SendAnswerHandler = () => {
-          let sendAnswerInfos = JSON.stringify({
+          let sendAnswerInfos = {
               body: commentAnswerText
-          })
+          }
           if(commentAnswerText){
               const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , "ارسال پاسخ با موفقیت انجام شد")
               setShowEditModal(false)
