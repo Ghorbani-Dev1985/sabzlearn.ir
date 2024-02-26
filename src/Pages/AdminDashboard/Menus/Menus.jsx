@@ -16,46 +16,45 @@ import axios from 'axios'
 import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
 import { useForm } from "react-hook-form"
+import ApiRequest from '../../../Services/Axios/Configs/Config'
 
-const {
-  register,
-  handleSubmit,
-  formState: { errors },
-  reset,
-  isDirty,
-  isValid,
-  watch,
-  control,
-  setValue,
-  formState,
-} = useForm(
-  {
-    mode: "all",
-  },
-  {
-    defaultValues: {
-      FullName: "",
-      UserName: "",
-      MobilNumber: "",
-      Email: "",
-      Password: "",
-      ConfirmPassword: "",
-    },
-  }
-)
+
 
 
 
 function Menus() {
   const title = useTitle("منو‌ها - پنل کاربری")
-  const { datas: Menus } = useFetch("menus/all", true)
+  const { datas: Menus } = useFetch("menus/all")
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
   const { showEditModal, setShowEditModal } = useEditModal()
   const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
   const [menuTitle, setMenuTitle] = useState("")
   const [menuHref, setMenuHref] = useState("")
-  const [menuParentID, setMenuParentID] = useState('-1')
+  const [menuParentID, setMenuParentID] = useState('')
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    isDirty,
+    isValid,
+    watch,
+    control,
+    setValue,
+    formState,
+  } = useForm(
+    {
+      mode: "all",
+    },
+    {
+      defaultValues: {
+        MenuTitle: "",
+        MenuHref: "",
+      },
+    }
+  )
 
   const columns = [
     {
@@ -137,39 +136,25 @@ function Menus() {
     },
   ];
      //Add Function
-     const AddNewMenuHandler = (event) => {
-      event.preventDefault()
+     const AddNewMenuHandler = (data) => {
+      console.log(data)
       let addNewMenuInfos = {
-        title : menuTitle,
-        href: menuHref,
-        parent: menuParentID === '' ? undefined : menuParentID ,
+        title : data.MenuTitle,
+        href: data.MenuHref,
+        parent: menuParentID === '' ? undefined : data.MenuParentID ,
       }
-
-       if(menuTitle && menuHref){
-         axios.post(`${BaseURL}menus` , addNewMenuInfos, {
-           headers : {
-             'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-           }
-         })
+   
+      const ResponseResult = ApiRequest.post("menus", addNewMenuInfos)
          .then(response => {
            console.log(response)
            if(response.status === 201){
-             toast.success("  افزودن منو با موفقیت انجام شد")
-             setMenuTitle('')
-             setMenuHref('')
-             setMenuParentID('-1')
+             toast.success("افزودن منو با موفقیت انجام شد")
              setShowRealTimeDatas((prev) => !prev)
            }else{
              toast.error("افزودن منو انجام نشد");
            }
          })
-         .catch(error => {
-             console.log(error)
-             toast.error('خطا در اتصال به سرور')
-            })
-          }else{
-            toast.error('لطفا موارد را وارد نمایید')
-          }
+      reset()
      }
      //Delete Function
      const DeleteMenuHandler = (menuID) =>{
@@ -190,9 +175,9 @@ function Menus() {
     }
   return (
     <>
-     <fieldset className="border border-gray-200 rounded-lg p-3">
+     <fieldset className="border border-gray-200 rounded-lg p-3 mb-8">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
-          افزودن مقاله جدید
+          افزودن منوی جدید
         </legend>
         <form onSubmit={handleSubmit(AddNewMenuHandler)}>
         <div className="grid grid-cols-2 gap-5">
@@ -254,18 +239,14 @@ function Menus() {
                 {errors.MenuHref && errors.MenuHref.message}
               </span>
            </div>
-           <div>
            <div className="relative">
             <select
-               {...register("MenuParentID", {
-                required: " انتخاب منوی اصلی اجباری می باشد",
-              })}
+               value={menuParentID}
               onChange={(event) =>
-                setValue("MenuParentID", event.target.value)
+                setMenuParentID(event.target.value)
               }
               defaultValue=""
-              className={`${errors.MenuParentID && "border border-rose-500"
-              } bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="" disabled>انتخاب منوی اصلی</option>
               {
@@ -278,17 +259,13 @@ function Menus() {
               })}
             </select>
           </div>
-          <span className="block text-rose-500 text-sm my-2">
-                {errors.MenuParentID && errors.MenuParentID.message}
-              </span>
-           </div>
-
+        
         </div>
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-      
+            disabled={!formState.isValid}
           >
             افزودن منو
           </Button>
@@ -296,7 +273,7 @@ function Menus() {
         </form>
       </fieldset>
        {isShowLoading ? (
-        <SkeletonLoading listsToRender={5} />
+        <SkeletonLoading listsToRender={25} />
       ) : (
         <>
           <div className="w-full dark:text-white">
@@ -320,7 +297,7 @@ function Menus() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ منو ای تاکنون ثبت نگردیده است</Alert>
+              <Alert severity="info">هیچ منویی  تاکنون ثبت نگردیده است</Alert>
             )}
             </div>
           </div>
