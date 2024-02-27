@@ -1,43 +1,42 @@
-import React, { useState } from 'react'
-import useFetch from '../../../Hooks/useFetch'
-import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
-import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext'
-import { useEditModal } from '../../../Contexts/EditModalContext'
-import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
-import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, FolderOpenOutlined, InsertLinkOutlined, RemoveRedEye } from '@mui/icons-material'
-import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
-import { DataGrid , faIR} from '@mui/x-data-grid'
-import { Alert } from '@mui/material'
-import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
-import useDelete from '../../../Hooks/useDelete'
-import Swal from 'sweetalert2'
+import React, { useEffect, useState } from "react";
+import useFetch from "../../../Hooks/useFetch";
+import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
+import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
+import { useEditModal } from "../../../Contexts/EditModalContext";
+import { useDetailsModal } from "../../../Contexts/DetailsModalContext";
+import useTitle from "../../../Hooks/useTitle";
+import {
+  CloudUploadOutlined,
+  FolderOpenOutlined,
+  InsertLinkOutlined,
+  RemoveRedEye,
+} from "@mui/icons-material";
+import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
+import { DataGrid, faIR } from "@mui/x-data-grid";
+import { Alert } from "@mui/material";
+import DetailsModal from "../../../Components/AdminDashboard/DetailsModal/DetailsModal";
+import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Button from '../../../common/Form/Button'
-import axios from 'axios'
-import { BaseURL } from '../../../Utils/Utils'
-import toast from 'react-hot-toast'
-import DOMPurify from 'dompurify'
-import { Link } from 'react-router-dom'
-import { useForm } from "react-hook-form"
-
-
+import Button from "../../../common/Form/Button";
+import axios from "axios";
+import { BaseURL } from "../../../Utils/Utils";
+import toast from "react-hot-toast";
+import DOMPurify from "dompurify";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import ApiRequest from "../../../Services/Axios/Configs/Config";
 
 function Blogs() {
-  const title = useTitle("مقاله‌ها - پنل کاربری")
-  const { datas: Blogs } = useFetch("articles", true)
-  const { datas: categories } = useFetch("category", true)
-  const { isShowLoading, setIsShowLoading } = useShowLoading()
-  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
-  const { showEditModal, setShowEditModal } = useEditModal()
-  const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
-  const [blogTitle, setBlogTitle] = useState("")
-  const [blogDescription, setBlogDescription] = useState("")
-  const [blogShortName, setBlogShortName] = useState("")
-  const [blogCategoryID, setBlogCategoryID] = useState("-1")
-  const [blogBody , setBlogBody] = useState('')
-  const [blogCover, setBlogCover] = useState({})
+  const title = useTitle("مقاله‌ها - پنل کاربری");
+  const { datas: Blogs } = useFetch("articles", true);
+  const { datas: categories } = useFetch("category", true);
+  const { isShowLoading, setIsShowLoading } = useShowLoading();
+  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas();
+  const { showEditModal, setShowEditModal } = useEditModal();
+  const { showDetailsModal, setShowDetailsModal } = useDetailsModal();
+  const [blogBody, setBlogBody] = useState("");
+  const [blogCoverFileName, setBlogCoverFileName] = useState("");
 
   const {
     register,
@@ -56,11 +55,15 @@ function Blogs() {
     },
     {
       defaultValues: {
-        MenuTitle: "",
-        MenuHref: "",
+        BlogTitle: "",
+        BlogLink: "",
+        BlogSummery: "",
+        BlogCategoryID: "",
+        BlogCover: "",
+        BlogBody: ""
       },
     }
-  )
+  );
 
   const columns = [
     {
@@ -93,10 +96,15 @@ function Blogs() {
       headerAlign: "center",
       align: "center",
       renderCell: (blog) => {
-        return (
-          blog.row.publish === 1 ? 
-          blog.row.title : 
-          <Link to={`draft/${blog.row.shortName}`} className='text-primary hover:text-emerald-600 transition-colors'>{blog.row.title}</Link>
+        return blog.row.publish === 1 ? (
+          blog.row.title
+        ) : (
+          <Link
+            to={`draft/${blog.row.shortName}`}
+            className="text-primary hover:text-emerald-600 transition-colors"
+          >
+            {blog.row.title}
+          </Link>
         );
       },
     },
@@ -107,9 +115,7 @@ function Blogs() {
       headerAlign: "center",
       align: "center",
       renderCell: (blog) => {
-        return (
-          blog.row.creator.name
-        );
+        return blog.row.creator.name;
       },
     },
     {
@@ -119,9 +125,7 @@ function Blogs() {
       headerAlign: "center",
       align: "center",
       renderCell: (blog) => {
-        return (
-          blog.row.creator.phone
-        );
+        return blog.row.creator.phone;
       },
     },
     {
@@ -132,24 +136,25 @@ function Blogs() {
       align: "center",
     },
     {
-        field: "bodyText",
-        headerName: "  متن کامل ",
-        width: 140,
-        headerAlign: "center",
-        align: "center",
-        renderCell: (blog) => {
-          return (
-            <p onClick={() => {
-                setShowDetailsModal(true)
-                setBlogBody(blog.row.body)
-            }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
-                <RemoveRedEye className="size-6 text-amber-500"/>
-               
-            </p>
-            
-          );
-        },
+      field: "bodyText",
+      headerName: "  متن کامل ",
+      width: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (blog) => {
+        return (
+          <p
+            onClick={() => {
+              setShowDetailsModal(true);
+              setBlogBody(blog.row.body);
+            }}
+            className="bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors"
+          >
+            <RemoveRedEye className="size-6 text-amber-500" />
+          </p>
+        );
       },
+    },
     {
       field: "answerStatus",
       headerName: "  وضعیت ",
@@ -157,8 +162,15 @@ function Blogs() {
       headerAlign: "center",
       align: "center",
       renderCell: (blog) => {
-        return (
-            blog.row.publish ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'> منتشر شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پیش نویس</span>
+        return blog.row.publish ? (
+          <span className="bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg">
+            {" "}
+            منتشر شده
+          </span>
+        ) : (
+          <span className="bg-rose-100 text-rose-500 p-2 rounded-lg">
+            پیش نویس
+          </span>
         );
       },
     },
@@ -195,239 +207,322 @@ function Blogs() {
       },
     },
   ];
-    //Draft Function
-      const AddNewBlogInDraftHandler = (event) => {
-      event.preventDefault()
-      let newBlogFormData = new FormData()
-      newBlogFormData.append('title' , blogTitle)
-      newBlogFormData.append('description' , blogDescription)
-      newBlogFormData.append('shortName' , blogShortName)
-      newBlogFormData.append('categoryID' , blogCategoryID)
-      newBlogFormData.append('body' , blogBody)
-      newBlogFormData.append('cover' , blogCover)
-      console.log(blogTitle, blogDescription, blogShortName , blogCategoryID , blogCover.name , blogTitle.length, blogShortName.length, blogBody.length )
-       if(blogTitle && blogDescription && blogShortName && blogCategoryID && blogCover.name && blogTitle.length >= 2 && blogShortName.length >= 2 && blogBody.length >= 10){
-        axios.post(`${BaseURL}articles/draft` , newBlogFormData, {
-          headers : {
-            'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+  //Draft Function
+  const AddNewBlogInDraftHandler = (data) => {
+    let newBlogFormData = new FormData()
+    newBlogFormData.append('title' , data.BlogTitle)
+    newBlogFormData.append('description' , data.BlogSummery)
+    newBlogFormData.append('shortName' , data.BlogLink)
+    newBlogFormData.append('categoryID' , data.BlogCategoryID)
+    newBlogFormData.append('cover' , data.BlogCover[0])
+    newBlogFormData.append('body' , data.BlogBody)
+
+    axios.post(`${BaseURL}articles/draft` , newBlogFormData, {
+      headers : {
+        Authorization : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    })
+    .then(response => {
+      if(response.status === 201){
+        toast.success("  پیش نویس مقاله با موفقیت انجام شد")
+        setBlogBody('')
+        setShowRealTimeDatas((prev) => !prev)
+      }else{
+        toast.error("پیش نویس مقاله انجام نشد")
+      }
+    })
+    reset()
+  };
+  //Add Function
+  const AddNewBlogHandler = (data) => {
+
+    let newBlogFormData = new FormData()
+    newBlogFormData.append('title' , data.BlogTitle)
+    newBlogFormData.append('description' , data.BlogSummery)
+    newBlogFormData.append('shortName' , data.BlogLink)
+    newBlogFormData.append('categoryID' , data.BlogCategoryID)
+    newBlogFormData.append('body' , data.BlogBody)
+    newBlogFormData.append('cover' , data.BlogCover[0])
+
+       axios.post(`${BaseURL}articles` , newBlogFormData, {
+         headers : {
+           'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+         }
+       })
+       .then(response => {
+         if(response.status === 201){
+           toast.success("  افزودن مقاله با موفقیت انجام شد")
+           setBlogBody('')
+           setShowRealTimeDatas((prev) => !prev)
+         }else{
+           toast.error("افزودن مقاله انجام نشد");
+         }
+       })
+       reset()
+      
+  };
+  //Delete Function
+  const DeleteBlogHandler = (blogID) => {
+    Swal.fire({
+      title: "برای حذف پیام مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const ResponseResult = ApiRequest.delete(`articles/${blogID}`)
+        .then((response) => {
+          if(response.status === 200){
+            toast.success("حذف مقاله با موفقیت انجام گردید");
+            setShowRealTimeDatas((prev) => !prev);
           }
         })
-        .then(response => {
-          console.log(response)
-          if(response.status === 201){
-            
-            toast.success("  پیش نویس مقاله با موفقیت انجام شد")
-            setBlogTitle('')
-            setBlogDescription('')
-            setBlogShortName('')
-            setBlogCategoryID('-1')
-            setBlogCover('')
-            setBlogBody('')
-            setShowRealTimeDatas((prev) => !prev)
-          }else{
-            toast.error("پیش نویس مقاله انجام نشد")
-          }
-        })
-        .catch(error => {
-            console.log(error)
-            toast.error('خطا در اتصال به سرور')
-           })
-          }else{
-            toast.error('لطفا فرم را با تعداد کاراکتر مجاز تکمیل نمایید')
-          }
-  
-     }
-     //Add Function
-     const AddNewBlogHandler = (event) => {
-      event.preventDefault()
-      let newBlogFormData = new FormData()
-      newBlogFormData.append('title' , blogTitle)
-      newBlogFormData.append('description' , blogDescription)
-      newBlogFormData.append('shortName' , blogShortName)
-      newBlogFormData.append('categoryID' , blogCategoryID)
-      newBlogFormData.append('body' , blogBody)
-      newBlogFormData.append('cover' , blogCover)
-       if(blogTitle && blogDescription && blogShortName && blogBody && blogCategoryID && blogCover.name && blogTitle.length  >= 2 && blogShortName.length >= 2 && blogBody.length >= 10){
-         axios.post(`${BaseURL}articles` , newBlogFormData, {
-           headers : {
-             'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-           }
-         })
-         .then(response => {
-           console.log(response)
-           if(response.status === 201){
-             
-             toast.success("  افزودن مقاله با موفقیت انجام شد")
-             setBlogTitle('')
-             setBlogDescription('')
-             setBlogShortName('')
-             setBlogCategoryID('-1')
-             setBlogCover('')
-             setBlogBody('')
-             setShowRealTimeDatas((prev) => !prev)
-           }else{
-             toast.error("افزودن مقاله انجام نشد");
-           }
-         })
-         .catch(error => {
-             console.log(error)
-             toast.error('خطا در اتصال به سرور')
-            })
-          }else{
-            toast.error('لطفا فرم را با تعداد کاراکتر مجاز تکمیل نمایید')
-          }
-     }
-     //Delete Function
-     const DeleteBlogHandler = (blogID) =>{
-      Swal.fire({
-          title: "برای حذف پیام مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const blogDel = useDelete(`articles/${blogID}`);
-            setShowRealTimeDatas((prev) => !prev)
-          }
-        });
-    }
+      }
+    });
+  };
+  // useEffect(() => {
+  //   register("BlogBody", {
+  //     required: "وارد کردن  بدنه مقاله اجباری می باشد",
+  //     minLength: {
+  //       value: 15,
+  //       message: "لطفا حداقل 15 کاراکتر وارد نمایید",
+  //     },
+  //   });
+  // },[])
   return (
     <>
-     <fieldset className="border border-gray-200 rounded-lg p-3">
+      <fieldset className="border border-gray-200 rounded-lg p-3">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن مقاله جدید
         </legend>
-        <form onSubmit={handleSubmit(AddNewBlogHandler)}>
-
-        
-        <div className="grid grid-cols-2 gap-5">
-          <div className="relative">
-            <input
-              type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
-              placeholder="عنوان  *"
-              value={blogTitle}
-              onChange={(event) => setBlogTitle(event.target.value)}
-            />
-            <FolderOpenOutlined className="left-3 sm:left-4" />
-          </div>
-          <div className="relative">
-            <input
-              type="text"
-              className="outline-none pl-9 sm:pl-12 bg-white"
-              placeholder=" لینک *"
-              value={blogShortName}
-              onChange={(event) => setBlogShortName(event.target.value)}
-            />
-            <InsertLinkOutlined className="left-3 sm:left-4" />
-          </div>
-          <textarea rows="8" placeholder='  چکیده *' value={blogDescription} onChange={(event) => setBlogDescription(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
-           <div className="relative">
-            <select
-              value={blogCategoryID}
-              onChange={(event) => setBlogCategoryID(event.target.value)}
-              className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب دسته بندی </option>
-              {categories.map(({ _id, title }) => {
-                return (
-                  <React.Fragment key={_id}>
-                    <option value={_id} className="px-3">
-                      {title}
-                    </option>
-                  </React.Fragment>
-                );
-              })}
-            </select>
-        <div className="flex-center w-full mx-auto my-3">
-          <div className="flex-center w-full relative">
-            <label
-              htmlFor="CoverUpload"
-              className="flex-center flex-col w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex-center flex-col pt-5 pb-6">
-                <CloudUploadOutlined className="text-gray-500 mb-2" />
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">انتخاب فایل</span> یا فایل را
-                  بکشید و اینجا رها کنید
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  WEBP, PNG, JPG , JPEG (سایز 768x432px )
-                </p>
-               <span className="text-mainSlate dark:text-white my-3">{blogCover.name}</span> 
+        <form>
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <div className="relative">
+                <input
+                  type="text"
+                  {...register("BlogTitle", {
+                    required: "وارد کردن عنوان مقاله اجباری می باشد",
+                    minLength: {
+                      value: 5,
+                      message: "لطفا حداقل ۵ کاراکتر وارد نمایید",
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                    },
+                  })}
+                  className={`${
+                    errors.BlogTitle && "border border-rose-500"
+                  } outline-none pl-9 sm:pl-12`}
+                  placeholder="عنوان  *"
+                />
+                <FolderOpenOutlined className="left-3 sm:left-4" />
               </div>
-              <input id="CoverUpload" type="file" required onChange={(event) => setBlogCover(event.target.files[0])} accept=".webp , .jpg , .png, .jpeg" className="h-full absolute z-50 opacity-0" />
-            </label>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.BlogTitle && errors.BlogTitle.message}
+              </span>
+            </div>
+            <div>
+              <div className="relative">
+                <input
+                  type="text"
+                  {...register("BlogLink", {
+                    required: "وارد کردن عنوان مقاله اجباری می باشد",
+                    minLength: {
+                      value: 5,
+                      message: "لطفا حداقل ۵ کاراکتر وارد نمایید",
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                    },
+                  })}
+                  className={`${
+                    errors.BlogLink && "border border-rose-500"
+                  } outline-none pl-9 sm:pl-12`}
+                  placeholder=" لینک *"
+                />
+                <InsertLinkOutlined className="left-3 sm:left-4" />
+              </div>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.BlogLink && errors.BlogLink.message}
+              </span>
+            </div>
+            <div>
+              <textarea
+                rows="11"
+                placeholder="  چکیده *"
+                {...register("BlogSummery", {
+                  required: "وارد کردن عنوان مقاله اجباری می باشد",
+                  minLength: {
+                    value: 5,
+                    message: "لطفا حداقل ۵ کاراکتر وارد نمایید",
+                  },
+                  maxLength: {
+                    value: 300,
+                    message: " لطفا حداکثر 300 کاراکتر وارد نمایید",
+                  },
+                })}
+                className={`${
+                  errors.BlogDescription && "border border-rose-500"
+                } mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors`}
+              ></textarea>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.BlogDescription && errors.BlogDescription.message}
+              </span>
+            </div>
+            <div className="relative">
+              <select
+                 {...register("BlogCategoryID", {
+                  required: " انتخاب دسته بندی مقاله اجباری می باشد",
+                })}
+                onChange={(event) => setValue("BlogCategoryID" , event.target.value)}
+                defaultValue=""
+                className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="" disabled>
+                  انتخاب دسته بندی{" "}
+                </option>
+                {categories.map(({ _id, title }) => {
+                  return (
+                    <React.Fragment key={_id}>
+                      <option value={_id} className="px-3">
+                        {title}
+                      </option>
+                    </React.Fragment>
+                  );
+                })}
+              </select>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.BlogCategoryID && errors.BlogCategoryID.message}
+              </span>
+              <div className="flex-center w-full mx-auto my-3">
+                <div className="w-full">
+                  <div className="flex-center w-full relative">
+                    <label
+                      htmlFor="CoverUpload"
+                      className="flex-center flex-col w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    >
+                      <div className="flex-center flex-col pt-5 pb-6">
+                        <CloudUploadOutlined className="text-gray-500 mb-2" />
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="font-semibold">انتخاب فایل</span> یا
+                          فایل را بکشید و اینجا رها کنید
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          WEBP, PNG, JPG , JPEG (سایز 768x432px )
+                        </p>
+                        <span className="text-mainSlate dark:text-white my-3">{blogCoverFileName}</span>
+                      </div>
+                      <input
+                        id="CoverUpload"
+                        type="file"
+                        required
+                        {...register("BlogCover", {
+                          required: "لطفا کاور دوره را انتخاب نمایید",
+                          validate: {
+                            fileSize: (file) =>
+                              file[0].size / (1024 * 1024) < 1 ||
+                              "حداکثر حجم فایل باید کمتر از یک مگابایت باشد",
+                          },
+                        })}
+                        onChange={(event) => 
+                          setBlogCoverFileName(event.target.files[0].name)
+                        }
+                        accept=".webp , .jpg , .png, .jpeg"
+                        className="h-full absolute z-50 opacity-0"
+                      />
+                    </label>
+                  </div>
+                  <span className="block text-rose-500 text-sm my-2">
+                    {errors.BlogCover && errors.BlogCover.message}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+          <CKEditor
+            editor={ClassicEditor}
+            data={blogBody}
+           
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setValue('BlogBody' , data)
+              setBlogBody(data);
+            }}
+            onBlur={(event, editor) => {
+              const data = editor.getData();
+              setValue('BlogBody' , data)
+              setBlogBody(data);
+            }}
+          />
+          <div className="flex justify-end items-center gap-5">
+            <Button
+              btnType="submit"
+              className="button-md h-12 sm:button-lg rounded-xl button-secondary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+              onClick={handleSubmit(AddNewBlogInDraftHandler)}
+              disabled={!formState.isValid}
+            >
+              پیش نویس مقاله
+            </Button>
+            <Button
+              btnType="submit"
+              className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+              onClick={handleSubmit(AddNewBlogHandler)}
+              disabled={!formState.isValid}
+            >
+              انتشار مقاله
+            </Button>
           </div>
-    
-        </div>
-        <CKEditor
-          editor={ClassicEditor}
-          data={blogBody}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            setBlogBody(data);
-          }}
-        />
-        <div className="flex justify-end items-center gap-5">
-        <Button
-            btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-secondary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewBlogInDraftHandler}
-          >
-            پیش نویس مقاله
-          </Button>
-          <Button
-            btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-          >
-            انتشار مقاله
-          </Button>
-        </div>
         </form>
       </fieldset>
-       {isShowLoading ? (
+      {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست مقاله‌ها</h2>
-            <div className='lg:max-w-[40rem] xl:max-w-full'>
-            {Blogs.length > 0 ? (
-              <DataGrid
-                rows={Blogs.map((blog, index) => {
-                  return { id: index + 1, ...blog };
-                })}
-                className="dark:text-white"
-                rowHeight={150}
-                getRowId={(blog) => blog._id}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 10 },
-                  },
-                }}
-                localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
-                pageSizeOptions={[5, 10, 25, 100, 200]}
-              />
-            ) : (
-              <Alert severity="info">هیچ مقاله ای تاکنون ثبت نگردیده است</Alert>
-            )}
+            <div className="lg:max-w-[40rem] xl:max-w-full">
+              {Blogs.length > 0 ? (
+                <DataGrid
+                  rows={Blogs.map((blog, index) => {
+                    return { id: index + 1, ...blog };
+                  })}
+                  className="dark:text-white"
+                  rowHeight={150}
+                  getRowId={(blog) => blog._id}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  localeText={
+                    faIR.components.MuiDataGrid.defaultProps.localeText
+                  }
+                  pageSizeOptions={[5, 10, 25, 100, 200]}
+                />
+              ) : (
+                <Alert severity="info">
+                  هیچ مقاله ای تاکنون ثبت نگردیده است
+                </Alert>
+              )}
             </div>
           </div>
         </>
       )}
-       {/* Show Detail */}
-       <DetailsModal>
-       <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blogBody) }} />
+      {/* Show Detail */}
+      <DetailsModal>
+        <div
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blogBody) }}
+        />
       </DetailsModal>
     </>
-  )
+  );
 }
 
-export default Blogs
+export default Blogs;

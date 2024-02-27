@@ -440,7 +440,6 @@ function Courses() {
                 <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                   <div className="flex items-center ps-3">
                     <input
-                      
                       onChange={(event) =>
                         setValue("CourseStatus", event.target.value)
                       }
