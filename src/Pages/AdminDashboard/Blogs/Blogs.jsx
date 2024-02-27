@@ -20,6 +20,9 @@ import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
 import DOMPurify from 'dompurify'
 import { Link } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+
+
 
 function Blogs() {
   const title = useTitle("مقاله‌ها - پنل کاربری")
@@ -35,6 +38,30 @@ function Blogs() {
   const [blogCategoryID, setBlogCategoryID] = useState("-1")
   const [blogBody , setBlogBody] = useState('')
   const [blogCover, setBlogCover] = useState({})
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    isDirty,
+    isValid,
+    watch,
+    control,
+    setValue,
+    formState,
+  } = useForm(
+    {
+      mode: "all",
+    },
+    {
+      defaultValues: {
+        MenuTitle: "",
+        MenuHref: "",
+      },
+    }
+  )
+
   const columns = [
     {
       field: "id",
@@ -273,7 +300,10 @@ function Blogs() {
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن مقاله جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
+        <form onSubmit={handleSubmit(AddNewBlogHandler)}>
+
+        
+        <div className="grid grid-cols-2 gap-5">
           <div className="relative">
             <input
               type="text"
@@ -355,11 +385,11 @@ function Blogs() {
           <Button
             btnType="submit"
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewBlogHandler}
           >
             انتشار مقاله
           </Button>
         </div>
+        </form>
       </fieldset>
        {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />

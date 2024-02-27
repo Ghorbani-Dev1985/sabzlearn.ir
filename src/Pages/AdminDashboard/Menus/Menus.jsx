@@ -12,8 +12,6 @@ import { Alert } from '@mui/material'
 import useDelete from '../../../Hooks/useDelete'
 import Swal from 'sweetalert2'
 import Button from '../../../common/Form/Button'
-import axios from 'axios'
-import { BaseURL } from '../../../Utils/Utils'
 import toast from 'react-hot-toast'
 import { useForm } from "react-hook-form"
 import ApiRequest from '../../../Services/Axios/Configs/Config'
