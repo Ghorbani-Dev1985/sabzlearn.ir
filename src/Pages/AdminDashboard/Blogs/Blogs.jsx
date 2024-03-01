@@ -294,7 +294,7 @@ function Blogs() {
   // },[])
   return (
     <>
-      <fieldset className="border border-gray-200 rounded-lg p-3">
+      <fieldset className="border border-gray-200 rounded-lg p-3 mb-8">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
           افزودن مقاله جدید
         </legend>

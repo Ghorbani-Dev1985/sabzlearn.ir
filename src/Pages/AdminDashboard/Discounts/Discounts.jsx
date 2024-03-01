@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useTitle from "../../../Hooks/useTitle";
 import useFetch from "../../../Hooks/useFetch";
 import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
 import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
 import { useEditModal } from "../../../Contexts/EditModalContext";
-import { Discount, Edit, FolderCopyOutlined, InsertLinkOutlined, LocalOffer } from "@mui/icons-material";
+import { FolderCopyOutlined, LocalOffer } from "@mui/icons-material";
 import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
 import { DataGrid , faIR} from "@mui/x-data-grid";
 import { Alert } from "@mui/material";
 import Swal from "sweetalert2";
-import useDelete from "../../../Hooks/useDelete";
 import Button from "../../../common/Form/Button";
-import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
-import useUpdate from "../../../Hooks/useUpdate";
-import usePost from "../../../Hooks/usePost";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import ApiRequest from "../../../Services/Axios/Configs/Config";
 
 
 function Discounts() {
@@ -23,12 +21,32 @@ function Discounts() {
   const { datas: Courses } = useFetch("courses", true)
   const { isShowLoading, setIsShowLoading } = useShowLoading()
   const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
-  const { showEditModal, setShowEditModal } = useEditModal()
-  const [updateCategoryID, setUpdateCategoryID] = useState("")
-  const [discountCode , setDiscountCode] = useState('')
-  const [discountPercent , setDiscountPercent] = useState('')
-  const [discountCourseID , setDiscountCourseID] = useState('-1')
-  const [discountMaxUse , setDiscountMaxUse] = useState('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    isDirty,
+    isValid,
+    watch,
+    control,
+    setValue,
+    formState,
+  } = useForm(
+    {
+      mode: "all",
+    },
+    {
+      defaultValues: {
+        DiscountCode: "",
+        DiscountPercent: "",
+        BlogSummery: "",
+        BlogCategoryID: "",
+        BlogCover: "",
+        BlogBody: ""
+      },
+    }
+  );
 
   const columns = [
     {
@@ -125,65 +143,102 @@ function Discounts() {
           cancelButtonText: "انصراف",
         }).then((result) => {
           if (result.isConfirmed) {
-            const offDel = useDelete(`offs/${discountID}`)
-            setShowRealTimeDatas((prev) => !prev);
+            const ResponseResult = ApiRequest.delete(`offs/${discountID}`)
+            .then((response) => {
+              if(response.status === 200){
+                toast.success("حذف کد تخفیف با موفقیت انجام گردید");
+                setShowRealTimeDatas((prev) => !prev);
+              }
+            })
           }
         });
       };
       //New Function
-      const AddNewDiscountHandler = () => {
-        let newDiscountInfos = JSON.stringify({
-          code: discountCode,
-          percent: discountPercent,
-          course: discountCourseID,
-          max: discountMaxUse,
-          })
-          if(discountCode && discountPercent && discountCourseID !== '-1' && discountMaxUse){
-              const addNew = usePost('offs' , newDiscountInfos , true)
-              setDiscountCode('')
-              setDiscountPercent('')
-              setDiscountCourseID('-1')
-              setDiscountMaxUse('')
-              setShowRealTimeDatas((prev) => !prev)
-          }else if(discountCode.length <= 2){
-            toast.error('لطفا فرم را تکمیل نمایید')
+      const AddNewDiscountHandler = (data) => {
+        let newDiscountInfos = {
+          code: data.DiscountCode,
+          percent: data.DiscountPercent,
+          course: data.DiscountCourseID,
+          max: data.DiscountMaxUse,
           }
+          const ResponseResult = ApiRequest.post("offs", newDiscountInfos)
+          .then((response) => {
+              if (response.status === 201) {
+                setShowRealTimeDatas((prev) => !prev);
+                toast.success(" کد تخفیف جدید با موفقیت انجام گردید");
+              }
+            }
+          )
+         reset() 
       }
 
   return (
     <>
-    <fieldset className="border border-gray-200 rounded-lg p-3">
+    <fieldset className="border border-gray-200 rounded-lg p-3 mb-8">
         <legend className="font-DanaBold text-zinc-700 dark:text-white text-xl my-6 mx-10 px-3">
-          افزودن دسته بندی جدید
+          افزودن کد تخفیف جدید
         </legend>
-        <div className="flex flex-wrap justify-between gap-5 child:w-48p">
-        <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder=' کد تخفیف *'
-              value={discountCode}
-              onChange={(event) => setDiscountCode(event.target.value)}
-              />
-          <FolderCopyOutlined className="left-3 sm:left-4" />
-          </div>
-          <div className="relative">
-          <input
-              type='text'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder='  درصد تخفیف*'
-              value={discountPercent}
-              onChange={(event) => setDiscountPercent(event.target.value)}
-              />
-          <LocalOffer className="left-3 sm:left-4" />
-          </div>
+        <form onSubmit={handleSubmit(AddNewDiscountHandler)}>
+        <div className="grid grid-cols-2 gap-5">
+        <div>
+              <div className="relative">
+                <input
+                  type="text"
+                  {...register("DiscountCode", {
+                    required: "وارد کردن کد تخفیف اجباری می باشد",
+                    minLength: {
+                      value: 2,
+                      message: "لطفا حداقل 2 کاراکتر وارد نمایید",
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: " لطفا حداکثر ۱۵ کاراکتر وارد نمایید",
+                    },
+                  })}
+                  className={`${
+                    errors.DiscountCode && "border border-rose-500"
+                  } outline-none pl-9 sm:pl-12`}
+                  placeholder="  کد تخفیف*"
+                />
+                <FolderCopyOutlined className="left-3 sm:left-4" />
+              </div>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.DiscountCode && errors.DiscountCode.message}
+              </span>
+            </div>
+            <div>
+              <div className="relative">
+                <input
+                  type="number"
+                  {...register("DiscountPercent", {
+                    required: "وارد کردن عنوان مقاله اجباری می باشد",
+                    maxLength: {
+                      value: 2,
+                      message: " لطفا حداکثر 2 کاراکتر وارد نمایید",
+                    },
+                  })}
+                  className={`${
+                    errors.DiscountPercent && "border border-rose-500"
+                  } outline-none pl-9 sm:pl-12`}
+                  placeholder="  درصد تخفیف*"
+                />
+                <LocalOffer className="left-3 sm:left-4" />
+              </div>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.DiscountPercent && errors.DiscountPercent.message}
+              </span>
+            </div>
+          <div>
           <div className="relative">
             <select
-              value={discountCourseID}
-              onChange={(event) => setDiscountCourseID(event.target.value)}
+            {...register("BlogCategoryID", {
+              required: " انتخاب دوره اجباری می باشد",
+            })}
+            onChange={(event) => setValue("DiscountCourseID" , event.target.value)}
+               defaultValue=""
               className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={'-1'} defaultValue={'-1'} disabled>انتخاب دوره</option>
+              <option value="" disabled>انتخاب دوره</option>
               {Courses.map(({ _id, name }) => {
                 return (
                   <React.Fragment key={_id}>
@@ -195,33 +250,51 @@ function Discounts() {
               })}
             </select>
           </div>
-          <div className="relative">
-          <input
-              type='number'
-              className= 'outline-none pl-9 sm:pl-12 bg-white'
-              placeholder='   تعداد استفاده*'
-              value={discountMaxUse}
-              onChange={(event) => setDiscountMaxUse(event.target.value)}
-              />
-          <Discount className="left-3 sm:left-4" />
+          <span className="block text-rose-500 text-sm my-2">
+                {errors.DiscountCourseID && errors.DiscountCourseID.message}
+              </span>
           </div>
+          <div>
+              <div className="relative">
+                <input
+                  type="number"
+                  {...register("DiscountMaxUse", {
+                    required: "وارد کردن تعداد استفاده اجباری می باشد",
+                    maxLength: {
+                      value: 2,
+                      message: " لطفا حداکثر 2 کاراکتر وارد نمایید",
+                    },
+                  })}
+                  className={`${
+                    errors.DiscountMaxUse && "border border-rose-500"
+                  } outline-none pl-9 sm:pl-12`}
+                  placeholder="  تعداد استفاده*"
+                />
+                <LocalOffer className="left-3 sm:left-4" />
+              </div>
+              <span className="block text-rose-500 text-sm my-2">
+                {errors.DiscountMaxUse && errors.DiscountMaxUse.message}
+              </span>
+            </div>
          </div>
         <div className="flex justify-end items-center">
           <Button
             btnType="submit"
-            className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
-            onClick={AddNewDiscountHandler}
+            className="button-md h-12 sm:button-lg select-none rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
+            disabled={!formState.isValid}
           >
             افزودن کد تخفیف 
           </Button>
         </div>
+        </form>
       </fieldset>
       {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
           <div className="w-full dark:text-white">
-            <h2 className="font-DanaBold my-8 text-2xl">لیست کاربر‌ها</h2>
+            <h2 className="font-DanaBold my-8 text-2xl">لیست کدهای تخفیف</h2>
+            <div className="lg:max-w-[40rem] xl:max-w-full">
             {Discounts.length > 0 ? (
               <DataGrid
                 rows={Discounts.map((category, index) => {
@@ -241,6 +314,7 @@ function Discounts() {
             ) : (
               <Alert severity="info">هیچ کد تخفیفی تاکنون ثبت نگردیده است</Alert>
             )}
+            </div>
           </div>
         </>
       )}
