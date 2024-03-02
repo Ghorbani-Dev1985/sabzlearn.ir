@@ -325,7 +325,6 @@ function Comments() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست نظرها</h2>
-            
             {Comments.length > 0 ? (
               <DataGrid
                 rows={Comments.map((menu, index) => {

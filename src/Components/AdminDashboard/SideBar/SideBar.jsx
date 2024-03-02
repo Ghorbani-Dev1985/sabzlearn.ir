@@ -4,91 +4,16 @@ import Logo from "../../../assets/Images/Logo/logo.webp";
 import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
 import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
 import { Link, NavLink } from 'react-router-dom';
-import { Article, Campaign, Comment, ConfirmationNumber, CreateNewFolder, Folder, FolderCopy, Group, Home , List, LogoutOutlined, Message, Percent} from '@mui/icons-material';
+import {LogoutOutlined} from '@mui/icons-material';
 import { useAuth } from '../../../Contexts/AuthContext';
+import { AdminDashboardNavItems } from '../../../Utils/Utils';
 
-
-
-const AdminDashboardNavItems = [
-  {
-    id: 1,
-    to: 'overview',
-    icon: <Home />,
-    text: 'نمای کلی'
-  },
-  {
-    id: 2,
-    to: 'users',
-    icon: <Group />,
-    text: ' کاربرها'
-  },
-  {
-    id: 3,
-    to: 'courses',
-    icon: <Folder />,
-    text: ' دوره‌ها'
-  },
-   {
-    id: 4,
-    to: 'sessions',
-    icon: <CreateNewFolder />,
-    text: ' جلسه دوره‌ها '
-  },
-  {
-    id: 5,
-    to: 'category',
-    icon: <FolderCopy />,
-    text: ' دسته بندی‌ها'
-  },
-  {
-    id: 6,
-    to: 'comments',
-    icon: <Comment />,
-    text: ' نظر‌ها'
-  },
-  {
-    id: 7,
-    to: 'menus',
-    icon: <List />,
-    text: ' منوها'
-  },
-  {
-    id: 8,
-    to: 'blogs',
-    icon: <Article />,
-    text: ' مقاله‌ها'
-  },
-  {
-    id: 9,
-    to: 'messages',
-    icon: <Message />,
-    text: ' پیام‌ها'
-  }, 
-  {
-    id: 10,
-    to: 'tickets',
-    icon: <ConfirmationNumber />,
-    text: ' تیکت ها '
-  },
-   {
-    id: 11,
-    to: 'discount',
-    icon: <Percent />,
-    text: ' کدهای تخفیف'
-  },
-  {
-    id: 12,
-    to: 'campaign',
-    icon: <Campaign />,
-    text: '  ایجاد کمپین'
-  },
-]
 
 function SideBar() {
   const {  colorTheme } = usePublicDarkMode()
   const {LogoutHandler} = useAuth()
   return (
-    <aside className='fixed top-0 bottom-0 col-span-3 xl:col-span-2 -right-64 z-20 lg:static bg-white dark:bg-gray-800 flex flex-col w-56 lg:mt-10 px-7 py-5 lg:px-0 lg:py-0 shrink-0 lg:min-h-[calc(100vh-68px)] transition-all lg:transition-none'>
+    <aside className='fixed top-0 bottom-0 lg:col-span-3 xl:col-span-2 -right-64 z-20 lg:static bg-white dark:bg-gray-800 flex flex-col w-56 lg:mt-10 px-7 py-5 lg:px-0 lg:py-0 shrink-0 lg:min-h-[calc(100vh-68px)] transition-all lg:transition-none'>
       {/* Logo */}
       <div className='pb-5 mb-7 border-b md:border-none border-b-gray-200 dark:border-b-mainSlate'>
       <Link to="/" className='flex-between'><img src={Logo} alt="ghorbani-dev.ir" className="w-28 h-26" />

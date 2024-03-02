@@ -1,25 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { CheckCircle, FolderOpenOutlined, HomeOutlined, Notifications, PermIdentityOutlined, SmsOutlined } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { CheckCircle, HomeOutlined, Notifications } from "@mui/icons-material";
 import DesktopDarkMode from "../../Header/DesktopDarkMode";
 import { Backdrop } from "@mui/material";
 import usePut from "../../../Hooks/usePut";
 import axios from "axios";
 import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
-import UserProfile from "../../../Components/UserProfile/UserProfile";
-import { Link } from "react-router-dom";
-import UserImg from '../../../assets/Images/CommentFormUser/none.png'
+import MobileSidebar from '../SideBar/MobileSidebar'
 
-
-const dashboardLinks = [
-  {
-  id: 1,
-  to: '',
-  icon: <HomeOutlined className='size-5'/>,
-  linkText: 'حساب کاربری'
-},
-
-]
 
 
 
@@ -59,11 +47,15 @@ function TopBar() {
 
   console.log(allNotifications);
   return (
-    <header className="flex-between bg-white dark:bg-gray md:bg-transparent dark:border-b md:border-none border-b-gray-700 mb-6 md:mb-14 p-5 md:p-0">
-      <h3 className="hidden md:block font-DanaBold text-2xl text-zinc-700 dark:text-white">
+    <header className="flex-between bg-white dark:bg-gray-main md:bg-transparent dark:border-b md:border-none border-b-gray-700 mb-6 md:mb-14 p-5 md:p-0">
+      <h3 className="hidden lg:block font-DanaBold text-2xl text-zinc-700 dark:text-white">
         <span className="text-primary font-DanaBold">{adminInfos.name} </span>
         عزیز؛ خوش اومدی 🙌
       </h3>
+       {/* Mobile nav icon */}
+       <div className="lg:hidden flex items-center justify-center text-slate-500 dark:text-gray-500">
+        <MobileSidebar />
+      </div>
       <div className="flex gap-x-3.5 md:gap-x-7">
         {/* Notification */}
         <div className="relative group" id="notifications">
@@ -121,7 +113,6 @@ function TopBar() {
         </div>
         {/* Dark Theme */}
         <DesktopDarkMode />
-       
       </div>
     </header>
   );
