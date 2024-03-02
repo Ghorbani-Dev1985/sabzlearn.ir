@@ -325,7 +325,7 @@ function Comments() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست نظرها</h2>
-            <div className='lg:max-w-[40rem] xl:max-w-full'>
+            
             {Comments.length > 0 ? (
               <DataGrid
                 rows={Comments.map((menu, index) => {
@@ -347,7 +347,6 @@ function Comments() {
             ) : (
               <Alert severity="info">هیچ نظری ای تاکنون ثبت نگردیده است</Alert>
             )}
-            </div>
           </div>
         </>
       )}

@@ -179,7 +179,6 @@ function UsersMessages() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست پیام ها</h2>
-            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {UsersMessages.length > 0 ? (
               <DataGrid
                 rows={UsersMessages.map((UsersMessage, index) => {
@@ -202,7 +201,6 @@ function UsersMessages() {
             ) : (
               <Alert severity="info">هیچ پیامی تاکنون ثبت نگردیده است</Alert>
             )}
-            </div>
           </div>
         </>
       )}

@@ -126,7 +126,6 @@ function Orders() {
         <>
           <div className="w-full dark:text-white">
             <h2 className="font-DanaBold my-8 text-2xl">لیست دوره های خریداری شده</h2>
-            <div className='lg:max-w-[40rem] xl:max-w-full'>
             {Courses.length > 0 ? (
               <DataGrid
                 rows={Courses.map((course, index) => {
@@ -147,7 +146,6 @@ function Orders() {
             ) : (
               <Alert severity="info">هیچ دوره ای تاکنون اضافه نگردیده است</Alert>
             )}
-            </div>
           </div>
         </>
       )}
