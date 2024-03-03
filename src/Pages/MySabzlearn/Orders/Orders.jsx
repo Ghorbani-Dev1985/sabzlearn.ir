@@ -144,7 +144,7 @@ function Orders() {
                 pageSizeOptions={[5, 10, 25, 100, 200]}
               />
             ) : (
-              <Alert severity="info">هیچ دوره ای تاکنون اضافه نگردیده است</Alert>
+              <Alert severity="info">هیچ دوره ای تاکنون خریداری نشده است</Alert>
             )}
           </div>
         </>
