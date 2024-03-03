@@ -1,42 +1,51 @@
-import React, { useState } from 'react'
-import useFetch from '../../../Hooks/useFetch'
-import { useShowLoading } from '../../../Contexts/ShowLoadingContext'
-import { useShowRealtimeDatas } from '../../../Contexts/ShowRealtimeDatasContext'
-import { useEditModal } from '../../../Contexts/EditModalContext'
-import { useDetailsModal } from '../../../Contexts/DetailsModalContext'
-import useTitle from '../../../Hooks/useTitle'
-import { CloudUploadOutlined, DoneAllOutlined, FolderOpenOutlined, GppGood, InsertLinkOutlined, MarkChatRead, RemoveCircleOutlineOutlined, RemoveDoneOutlined, RemoveRedEye } from '@mui/icons-material'
-import SkeletonLoading from '../../../Components/SkeletonLoading/SkeletonLoading'
-import { DataGrid , faIR} from '@mui/x-data-grid'
-import { Alert } from '@mui/material'
-import DetailsModal from '../../../Components/AdminDashboard/DetailsModal/DetailsModal'
-import useDelete from '../../../Hooks/useDelete'
-import Swal from 'sweetalert2'
+import React, { useState } from "react";
+import useFetch from "../../../Hooks/useFetch";
+import { useShowLoading } from "../../../Contexts/ShowLoadingContext";
+import { useShowRealtimeDatas } from "../../../Contexts/ShowRealtimeDatasContext";
+import { useEditModal } from "../../../Contexts/EditModalContext";
+import { useDetailsModal } from "../../../Contexts/DetailsModalContext";
+import useTitle from "../../../Hooks/useTitle";
+import {
+  CloudUploadOutlined,
+  DoneAllOutlined,
+  FolderOpenOutlined,
+  GppGood,
+  InsertLinkOutlined,
+  MarkChatRead,
+  RemoveCircleOutlineOutlined,
+  RemoveDoneOutlined,
+  RemoveRedEye,
+} from "@mui/icons-material";
+import SkeletonLoading from "../../../Components/SkeletonLoading/SkeletonLoading";
+import { DataGrid, faIR } from "@mui/x-data-grid";
+import { Alert } from "@mui/material";
+import DetailsModal from "../../../Components/AdminDashboard/DetailsModal/DetailsModal";
+import useDelete from "../../../Hooks/useDelete";
+import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Button from '../../../common/Form/Button'
-import axios from 'axios'
-import { BaseURL } from '../../../Utils/Utils'
-import toast from 'react-hot-toast'
-import EditModal from '../../../Components/AdminDashboard/EditModal/EditModal'
-import usePost from '../../../Hooks/usePost'
-import usePut from '../../../Hooks/usePut'
-
+import Button from "../../../common/Form/Button";
+import axios from "axios";
+import { BaseURL } from "../../../Utils/Utils";
+import toast from "react-hot-toast";
+import EditModal from "../../../Components/AdminDashboard/EditModal/EditModal";
+import usePost from "../../../Hooks/usePost";
+import usePut from "../../../Hooks/usePut";
 
 function Comments() {
-  const title = useTitle("نظرها - پنل کاربری")
-  const { datas: Comments } = useFetch("comments", true)
-  const { isShowLoading, setIsShowLoading } = useShowLoading()
-  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas()
-  const { showEditModal, setShowEditModal } = useEditModal()
-  const { showDetailsModal, setShowDetailsModal } = useDetailsModal()
-  const [menuTitle, setMenuTitle] = useState("")
-  const [menuHref, setMenuHref] = useState("")
-  const [menuParentID, setMenuParentID] = useState('')
-  const [commentBody , setCommentBody] = useState('')
-  const [commentID , setCommentID] = useState('')
-  const [commentAnswerText , setCommentAnswerText] = useState('')
-  
+  const title = useTitle("نظرها - پنل کاربری");
+  const { datas: Comments } = useFetch("comments", true);
+  const { isShowLoading, setIsShowLoading } = useShowLoading();
+  const { showRealtimeDatas, setShowRealTimeDatas } = useShowRealtimeDatas();
+  const { showEditModal, setShowEditModal } = useEditModal();
+  const { showDetailsModal, setShowDetailsModal } = useDetailsModal();
+  const [menuTitle, setMenuTitle] = useState("");
+  const [menuHref, setMenuHref] = useState("");
+  const [menuParentID, setMenuParentID] = useState("");
+  const [commentBody, setCommentBody] = useState("");
+  const [commentID, setCommentID] = useState("");
+  const [commentAnswerText, setCommentAnswerText] = useState("");
+
   const columns = [
     {
       field: "id",
@@ -59,9 +68,7 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          comment.row.creator.name
-          );
+        return comment.row.creator.name;
       },
     },
     {
@@ -71,9 +78,7 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          comment.row.creator.username
-          );
+        return comment.row.creator.username;
       },
     },
     {
@@ -83,9 +88,7 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          comment.row.creator.phone
-          );
+        return comment.row.creator.phone;
       },
     },
     {
@@ -96,14 +99,15 @@ function Comments() {
       align: "center",
       renderCell: (comment) => {
         return (
-          <p onClick={() => {
-              setShowDetailsModal(true)
-              setCommentBody(comment.row.body)
-          }} className='bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors'>
-              <RemoveRedEye className="size-6 text-amber-500"/>
-             
+          <p
+            onClick={() => {
+              setShowDetailsModal(true);
+              setCommentBody(comment.row.body);
+            }}
+            className="bg-amber-100 p-2 rounded-full cursor-pointer hover:bg-amber-200 transition-colors"
+          >
+            <RemoveRedEye className="size-6 text-amber-500" />
           </p>
-          
         );
       },
     },
@@ -114,8 +118,14 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          comment.row.answer ? <span className='bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg'>پاسخ داده شده</span> : <span className='bg-rose-100 text-rose-500 p-2 rounded-lg'>پاسخ داده نشده</span>
+        return comment.row.answer ? (
+          <span className="bg-emerald-100 text-primary font-DanaBold p-2 rounded-lg">
+            پاسخ داده شده
+          </span>
+        ) : (
+          <span className="bg-rose-100 text-rose-500 p-2 rounded-lg">
+            پاسخ داده نشده
+          </span>
         );
       },
     },
@@ -130,7 +140,7 @@ function Comments() {
           <div
             onClick={() => {
               setShowEditModal(true);
-              setCommentID(comment.id)
+              setCommentID(comment.id);
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
@@ -146,18 +156,17 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          
-            comment.row.answer ? <DoneAllOutlined className='size-7 text-gray-600'/> :  <div
+        return comment.row.answer ? (
+          <DoneAllOutlined className="size-7 text-gray-600" />
+        ) : (
+          <div
             onClick={() => {
-              AcceptCommentHandler(comment.id)
+              AcceptCommentHandler(comment.id);
             }}
             className="flex-center cursor-pointer text-sky-500 hover:text-sky-300 transition-colors"
           >
-           <DoneAllOutlined className='size-7'/>
+            <DoneAllOutlined className="size-7" />
           </div>
-          
-        
         );
       },
     },
@@ -168,17 +177,17 @@ function Comments() {
       headerAlign: "center",
       align: "center",
       renderCell: (comment) => {
-        return (
-          comment.row.answer ? 
+        return comment.row.answer ? (
           <div
             onClick={() => {
               RejectCommentHandler(comment.id);
             }}
             className="flex-center cursor-pointer text-amber-500 hover:text-amber-300 transition-colors"
           >
-           <RemoveDoneOutlined className='size-7'/>
+            <RemoveDoneOutlined className="size-7" />
           </div>
-          :  <RemoveDoneOutlined className='size-7 text-gray-600'/>
+        ) : (
+          <RemoveDoneOutlined className="size-7 text-gray-600" />
         );
       },
     },
@@ -190,14 +199,13 @@ function Comments() {
       align: "center",
       renderCell: (comment) => {
         return (
-          
           <div
             onClick={() => {
               BanUserHandler(comment.id);
             }}
             className="flex-center cursor-pointer text-red-500 hover:text-red-300 transition-colors"
           >
-           <RemoveCircleOutlineOutlined className='size-7'/>
+            <RemoveCircleOutlineOutlined className="size-7" />
           </div>
         );
       },
@@ -235,91 +243,95 @@ function Comments() {
       },
     },
   ];
-     //Accept Function
-       const AcceptCommentHandler = (commentID) => {
-        Swal.fire({
-          title: "برای تایید نظر مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const accept = usePut(`comments/accept/${commentID}`)
-            setShowRealTimeDatas((prev) => !prev)
-          }
-        });
-       }
-          //Accept Function
-       const RejectCommentHandler = (commentID) => {
-        Swal.fire({
-          title: "برای رد نظر مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const accept = usePut(`comments/reject/${commentID}`)
-            setShowRealTimeDatas((prev) => !prev)
-          }
-        });
-       }
-       //Ban User Function
+  //Accept Function
+  const AcceptCommentHandler = (commentID) => {
+    Swal.fire({
+      title: "برای تایید نظر مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const accept = usePut(`comments/accept/${commentID}`);
+        setShowRealTimeDatas((prev) => !prev);
+      }
+    });
+  };
+  //Accept Function
+  const RejectCommentHandler = (commentID) => {
+    Swal.fire({
+      title: "برای رد نظر مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const accept = usePut(`comments/reject/${commentID}`);
+        setShowRealTimeDatas((prev) => !prev);
+      }
+    });
+  };
+  //Ban User Function
 
-       const BanUserHandler = (userID) => {
-        Swal.fire({
-          title: "برای مسدود شدن کاربر مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const accept = usePut(`users/ban/${userID}`)
-            setShowRealTimeDatas((prev) => !prev)
-          }
-        });
-       }
-        //Answer Function
-        const SendAnswerHandler = () => {
-          let sendAnswerInfos = {
-              body: commentAnswerText
-          }
-          if(commentAnswerText){
-              const sendAnswer = usePost(`comments/answer/${commentID}` , sendAnswerInfos , "ارسال پاسخ با موفقیت انجام شد")
-              setShowEditModal(false)
-              setShowRealTimeDatas((prev) => !prev)
-          }else{
-              toast.error('لطفا متن پاسخ را وارد نمایید')
-          }
-        }
-     //Delete Function
-     const DeleteCommentHandler = (commentID) =>{
-      Swal.fire({
-          title: "برای حذف نظر مطمعن هستید؟",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#f43f5e",
-          cancelButtonColor: "#0ea5e9",
-          confirmButtonText: "تایید",
-          cancelButtonText: "انصراف",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const commentDel = useDelete(`comments/${commentID}`);
-            setShowRealTimeDatas((prev) => !prev)
-          }
-        });
+  const BanUserHandler = (userID) => {
+    Swal.fire({
+      title: "برای مسدود شدن کاربر مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const accept = usePut(`users/ban/${userID}`);
+        setShowRealTimeDatas((prev) => !prev);
+      }
+    });
+  };
+  //Answer Function
+  const SendAnswerHandler = () => {
+    let sendAnswerInfos = {
+      body: commentAnswerText,
+    };
+    if (commentAnswerText) {
+      const sendAnswer = usePost(
+        `comments/answer/${commentID}`,
+        sendAnswerInfos,
+        "ارسال پاسخ با موفقیت انجام شد"
+      );
+      setShowEditModal(false);
+      setShowRealTimeDatas((prev) => !prev);
+    } else {
+      toast.error("لطفا متن پاسخ را وارد نمایید");
     }
+  };
+  //Delete Function
+  const DeleteCommentHandler = (commentID) => {
+    Swal.fire({
+      title: "برای حذف نظر مطمعن هستید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f43f5e",
+      cancelButtonColor: "#0ea5e9",
+      confirmButtonText: "تایید",
+      cancelButtonText: "انصراف",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const commentDel = useDelete(`comments/${commentID}`);
+        setShowRealTimeDatas((prev) => !prev);
+      }
+    });
+  };
   return (
     <>
-       {isShowLoading ? (
+      {isShowLoading ? (
         <SkeletonLoading listsToRender={5} />
       ) : (
         <>
@@ -333,7 +345,13 @@ function Comments() {
                 className="dark:text-white"
                 rowHeight={150}
                 getRowId={(menu) => menu._id}
-                getRowClassName={(UsersMessages) => `${UsersMessages.row.answer ? 'bg-emerald-50 dark:bg-mainSlate/30' : 'bg-rose-50 dark:bg-mainSlate'}`}
+                getRowClassName={(UsersMessages) =>
+                  `${
+                    UsersMessages.row.answer
+                      ? "bg-emerald-50 dark:bg-mainSlate/30"
+                      : "bg-rose-50 dark:bg-mainSlate"
+                  }`
+                }
                 columns={columns}
                 initialState={{
                   pagination: {
@@ -349,15 +367,19 @@ function Comments() {
           </div>
         </>
       )}
-       {/* Show Detail */}
-       <DetailsModal>
-           {commentBody}
-      </DetailsModal>
-       {/* Send Answer */}
-       <EditModal headerText="ارسال پاسخ">
+      {/* Show Detail */}
+      <DetailsModal>{commentBody}</DetailsModal>
+      {/* Send Answer */}
+      <EditModal headerText="ارسال پاسخ">
         <div className="min-w-96">
-        <div className="relative mb-4">
-        <textarea rows="8" placeholder=' متن پاسخ *' value={commentAnswerText} onChange={(event) => setCommentAnswerText(event.target.value)} className='mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors'></textarea> 
+          <div className="relative mb-4">
+            <textarea
+              rows="8"
+              placeholder=" متن پاسخ *"
+              value={commentAnswerText}
+              onChange={(event) => setCommentAnswerText(event.target.value)}
+              className="mb-3 block w-full outline-none p-3 md:p-5 text-sm md:text-base text-slate-500 dark:text-gray-500 focus:text-zinc-700 dark:focus:text-white bg-gray-100 dark:bg-gray-700 rounded-2xl placeholder:font-danaLight transition-colors"
+            ></textarea>
           </div>
         </div>
         <div className="flex-center">
@@ -366,12 +388,12 @@ function Comments() {
             className="button-md h-12 sm:button-lg rounded-xl button-primary my-5 sm:mt-4 disabled:bg-slate-500 disabled:opacity-50 disabled:cursor-text"
             onClick={SendAnswerHandler}
           >
-          ارسال پاسخ
+            ارسال پاسخ
           </Button>
         </div>
       </EditModal>
     </>
-  )
+  );
 }
 
-export default Comments
+export default Comments;
