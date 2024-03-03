@@ -11,6 +11,8 @@ import {
   List,
   Message,
   Percent,
+  PermIdentity,
+  ShoppingBag,
 } from "@mui/icons-material";
 const BaseURL = 'http://localhost:5000/v1/';
 
@@ -89,6 +91,32 @@ const AdminDashboardNavItems = [
   },
 ];
 
+const AdminProfileNavItems = [
+  {
+    id: 1,
+    to: 'orders',
+    icon: <ShoppingBag />,
+    text: '  سفارش‌ها '
+  },
+  {
+    id: 2,
+    to: 'courses',
+    icon: <FolderCopy />,
+    text: '  دوره‌های من '
+  },
+  {
+    id: 3,
+    to: 'tickets',
+    icon: <ConfirmationNumber />,
+    text: ' تیکت ها '
+  },
+  {
+    id: 4,
+    to: 'editProfile',
+    icon: <PermIdentity />,
+    text: '  جزییات حساب '
+  },
+]
 
 function ChangeGregorianDateToPersian(date) {
     let gy, gm, gd
@@ -117,4 +145,4 @@ function ChangeGregorianDateToPersian(date) {
     return [jy + '/' + jm + '/' + jd];
   }
 
-  export {ChangeGregorianDateToPersian, BaseURL , AdminDashboardNavItems}
+  export {ChangeGregorianDateToPersian, BaseURL , AdminDashboardNavItems , AdminProfileNavItems}

@@ -1,31 +1,25 @@
 import { Box, Divider, Drawer } from "@mui/material";
 import React, { useState } from "react";
-import Logo from "../../../assets/Images/Logo/logo.webp";
-import LogoTypeLight from "../../../assets/Images/svgs/logoTypeLight.svg";
-import LogoTypeDark from "../../../assets/Images/svgs/logoTypeDark.svg";
-import MobileDarkMode from "../../Header/MobileDarkMode";
-import { usePublicDarkMode } from "../../../Contexts/DarkModeContext";
-import Button from "../../../common/Form/Button";
+import Logo from "../../assets/Images/Logo/logo.webp";
+import LogoTypeLight from "../../assets/Images/svgs/logoTypeLight.svg";
+import LogoTypeDark from "../../assets/Images/svgs/logoTypeDark.svg";
+import MobileDarkMode from "../Header/MobileDarkMode";
+import { usePublicDarkMode } from "../../Contexts/DarkModeContext";
+import Button from "../../common/Form/Button";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import {
-  LogoutOutlined,
-  CloseOutlined,
-  Search,
-} from "@mui/icons-material";
-import RtlProvider from "../../../common/RtlProvider/RtlProvider";
-import { useAuth } from "../../../Contexts/AuthContext";
-import { AdminDashboardNavItems } from "../../../Utils/Utils";
+import { LogoutOutlined, CloseOutlined, Search } from "@mui/icons-material";
+import RtlProvider from "../../common/RtlProvider/RtlProvider";
+import { useAuth } from "../../Contexts/AuthContext";
 
 
-
-function MobileNav() {
+function MobileNav({menuItems}) {
   const { colorTheme } = usePublicDarkMode();
   const { LogoutHandler } = useAuth();
   const [openMobileNav, setMobileNav] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const Navigate = useNavigate();
-  const SearchHandler = () => {
+  const SearchHandler = ({menuItems}) => {
     Navigate(`/search/${searchValue}`);
   };
   const handleChangeAccordion = (panel) => (event, isExpanded) => {
@@ -111,7 +105,7 @@ function MobileNav() {
             </form>
             {/* Menus Items */}
             <div className="space-y-4 text-zinc-700 dark:text-white mt-5">
-              {AdminDashboardNavItems.map(({ id, to, icon, text }) => {
+              {menuItems.map(({ id, to, icon, text }) => {
                 return (
                   <React.Fragment key={id}>
                     <NavLink

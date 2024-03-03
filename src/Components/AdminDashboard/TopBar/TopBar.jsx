@@ -6,43 +6,41 @@ import usePut from "../../../Hooks/usePut";
 import axios from "axios";
 import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
-import MobileSidebar from '../SideBar/MobileSidebar'
-
-
-
+import MobileSidebar from "../../SideBar/MobileSidebar";
+import { AdminDashboardNavItems } from "../../../Utils/Utils";
 
 function TopBar() {
   const [adminInfos, setAdminInfos] = useState({});
   const [showNotification, setShowNotification] = useState(false);
   const [allNotifications, setAllNotifications] = useState([]);
-  const [showUserProfileMenu , setShowUserProfileMenu] = useState(false)
+  const [showUserProfileMenu, setShowUserProfileMenu] = useState(false);
   const GetNonfiction = () => {
-    const localStorageDataToken = JSON.parse(localStorage.getItem("user")).token
-    if(localStorageDataToken !== ''){
-      return(
-        axios(`${BaseURL}auth/me`, {
-          headers: {
-            'Authorization' : `Bearer ${localStorageDataToken}`,
-          },
+    const localStorageDataToken = JSON.parse(
+      localStorage.getItem("user")
+    ).token;
+    if (localStorageDataToken !== "") {
+      return axios(`${BaseURL}auth/me`, {
+        headers: {
+          Authorization: `Bearer ${localStorageDataToken}`,
+        },
+      })
+        .then((response) => {
+          setAdminInfos(response.data);
+          setAllNotifications(response.data.notifications);
         })
-          .then((response) => {
-            setAdminInfos(response.data);
-            setAllNotifications(response.data.notifications);
-          })
-          .catch((error) => {
-            console.log(error);
-            toast.error("  خطا در اتصال به سرور ");
-          })
-      )
+        .catch((error) => {
+          console.log(error);
+          toast.error("  خطا در اتصال به سرور ");
+        });
     }
-    }
-    const SeeNotificationHandler = (_id) => {
-        const putReq = usePut(`notifications/see/${_id}`);
-        GetNonfiction()
-        setShowNotification(false)
-    };
-    useEffect(() => {
-      JSON.parse(localStorage.getItem("user")).token !== '' && GetNonfiction()
+  };
+  const SeeNotificationHandler = (_id) => {
+    const putReq = usePut(`notifications/see/${_id}`);
+    GetNonfiction();
+    setShowNotification(false);
+  };
+  useEffect(() => {
+    JSON.parse(localStorage.getItem("user")).token !== "" && GetNonfiction();
   }, []);
 
   console.log(allNotifications);
@@ -52,9 +50,9 @@ function TopBar() {
         <span className="text-primary font-DanaBold">{adminInfos.name} </span>
         عزیز؛ خوش اومدی 🙌
       </h3>
-       {/* Mobile nav icon */}
-       <div className="lg:hidden flex items-center justify-center text-slate-500 dark:text-gray-500">
-        <MobileSidebar />
+      {/* Mobile nav icon */}
+      <div className="lg:hidden flex items-center justify-center text-slate-500 dark:text-gray-500">
+        <MobileSidebar menuItems={AdminDashboardNavItems}/>
       </div>
       <div className="flex gap-x-3.5 md:gap-x-7">
         {/* Notification */}
@@ -89,13 +87,16 @@ function TopBar() {
                 </div>
                 <div className="max-h-96 overflow-y-auto space-y-3 -ml-2 pl-2 text-zinc-700 dark:text-white">
                   {allNotifications.length > 0 ? (
-                    allNotifications.map(({ _id , msg}) => {
+                    allNotifications.map(({ _id, msg }) => {
                       return (
                         <React.Fragment key={_id}>
                           <div className="flex-between bg-gray-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-mainSlate transition-colors p-3 rounded-xl">
                             <p className="text-wrap">{msg}</p>
-                            <div onClick={() => SeeNotificationHandler(_id)} className="text-primary cursor-pointer">
-                              <CheckCircle className="size-6"/>
+                            <div
+                              onClick={() => SeeNotificationHandler(_id)}
+                              className="text-primary cursor-pointer"
+                            >
+                              <CheckCircle className="size-6" />
                             </div>
                           </div>
                         </React.Fragment>
