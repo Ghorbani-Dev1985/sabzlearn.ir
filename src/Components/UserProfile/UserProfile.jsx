@@ -16,7 +16,7 @@ const UserProfile = ({children, showUserProfileMenu , setShowUserProfileMenu , l
       onClick={() => setShowUserProfileMenu((prev) => !prev)}
       >
     </Backdrop>
-    <div className={`${left ? `${left}` : 'left-25'} absolute z-50 top-full pt-4 transition-all`}>
+    <div className={`${left ? `${left}` : 'left-0 md:left-25'} absolute z-50 top-full pt-4 transition-all`}>
        <div className='w-[278px] bg-white dark:bg-gray-700 py-5 px-6 rounded-2xl'>
           {/* Header */}
             <div className='flex items-center border-b border-b-gray-200 dark:border-b-mainSlate pb-5 mb-2'>

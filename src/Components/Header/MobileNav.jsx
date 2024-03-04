@@ -132,7 +132,7 @@ function MobileNav({ menus }) {
                             : "text-slate-500 dark:text-slate-400"
                         }`}
                       >
-                        <Link to={`${href}/1`}>{title}</Link>
+                        <Link onClick={toggleDrawer} to={`${href}/1`}>{title}</Link>
                       </Typography>
                     </AccordionSummary>
                     {submenus.length > 0 && (
@@ -142,7 +142,7 @@ function MobileNav({ menus }) {
                             return (
                               <React.Fragment key={_id}>
                                 <li>
-                                  <Link to={href}>{title}</Link>
+                                  <Link onClick={toggleDrawer} to={href}>{title}</Link>
                                 </li>
                               </React.Fragment>
                             );
