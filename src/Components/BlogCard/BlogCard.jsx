@@ -3,7 +3,7 @@ import { ArrowCircleLeft,  CalendarToday} from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 import { ChangeGregorianDateToPersian } from "../../Utils/Utils";
-
+import DOMPurify from 'dompurify'
 
 function BlogCard({
   shortName,
@@ -30,9 +30,8 @@ function BlogCard({
           <h4 className="font-DanaMd h-12 max-h-12 line-clamp-2 text-base text-zinc-700 dark:text-white mb-2.5">
             <Link to={`/blog/${shortName}`}>{title}</Link>
           </h4>
-          <p className="font-Dana text-sm h-24 line-clamp-4 text-slate-500 dark:text-slate-400">
-            {body}
-          </p>
+          <p className="font-Dana text-sm h-24 line-clamp-4 text-slate-500 dark:text-slate-400" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body)}} />
+       
           {/* Footer */}
           <div className="mt-3 space-y-4">
             {/* Author & Date */}

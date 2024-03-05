@@ -30,7 +30,8 @@ function Category() {
   };
   useEffect(() => {
     setCategoryIsShowLoading(true);
-    const ResponseResult = ApiRequest(`courses/category/${categoryName}`).then(
+    const ResponseResult = ApiRequest(`courses/category/${categoryName}`)
+    .then(
       (categoryInfo) => {
         setCourseByCategory(categoryInfo.data);
         setFilteredCourses(categoryInfo.data);
