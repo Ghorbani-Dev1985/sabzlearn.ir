@@ -67,7 +67,7 @@ function Blogs() {
     const filterPublishedBlogs = blogs.filter(blog => blog.publish === 1)
     setFilteredPublishBlogs(filterPublishedBlogs)
   } , [])
-  console.log(showItems)
+
   return (
     <>
       {/* Title */}
@@ -77,17 +77,11 @@ function Blogs() {
         {/* Sidebar */}
         <aside className="sticky top-36 space-y-5">
           {/* Category */}
-        <BlogCategory />
+        <BlogCategory filteredPublishBlogs={filteredPublishBlogs}/>
         </aside>
         {/* Content */}
         <section className="col-span-1 lg:col-span-2 xl:col-span-3">
-          {/* Sort */}
-          <TopSort
-            BtnOne=" عادی"
-            BtnTwo="جدید ترین"
-            BtnThree=" قدیمی ترین"
-            BtnFour="پرنظر ها"
-          />
+        
           {/* Card */}
           <div className="grid grid-rows-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
             {showItems.map(

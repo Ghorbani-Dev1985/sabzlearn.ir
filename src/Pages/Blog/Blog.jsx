@@ -152,8 +152,6 @@ function Blog() {
               })}
             </div>
           </div>
-          {/* Category */}
-          <BlogCategory />
         </aside>
       </section>
     </>

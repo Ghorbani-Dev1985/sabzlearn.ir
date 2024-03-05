@@ -2,6 +2,7 @@ import { ArrowLeft } from '@mui/icons-material';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+
 const categoryItems = [
     {
       id: 1,
@@ -45,22 +46,24 @@ const categoryItems = [
     },
   ];
 
-function BlogCategory() {
+function BlogCategory({filteredPublishBlogs}) {
+  console.log(filteredPublishBlogs)
+
   return (
     <div className="hidden lg:block dark:border border-gray-700 shadow-light dark:shadow-none bg-white dark:bg-gray-800 rounded-2xl p-6">
     <span className="flex items-center gap-x-2.5 mb-5 -mr-6 text-zinc-700 dark:text-white font-DanaMd text-2xl">
       <span className="block w-7 h-2 bg-primary rounded-l-sm -mr-px"></span>
-      دسته بندی‌ ها
+     موضوعات دیگر
     </span>
     <ul className="flex flex-col gap-y-4 text-sm text-zinc-700 dark:text-white">
-      {categoryItems.map(({ id, to, title }) => {
+      {filteredPublishBlogs.slice(0 , 6).map(({ _id, shortName, title }) => {
         return (
-          <React.Fragment key={id}>
-            <li>
+          <React.Fragment key={_id}>
+            <li className='flex items-center'>
               <ArrowLeft className="size-8 text-primary" />
               <Link
-                to={to}
-                className="text-zinc-700 dark:text-white text-sm"
+                to={`/blog/${shortName}`}
+                className="text-zinc-700 line-clamp-1 dark:text-white text-sm"
               >
                 {title}
               </Link>
