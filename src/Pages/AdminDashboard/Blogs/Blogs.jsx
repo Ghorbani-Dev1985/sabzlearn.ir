@@ -19,7 +19,6 @@ import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../../common/Form/Button";
-import axios from "axios";
 import { BaseURL } from "../../../Utils/Utils";
 import toast from "react-hot-toast";
 import DOMPurify from "dompurify";

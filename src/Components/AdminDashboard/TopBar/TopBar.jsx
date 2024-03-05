@@ -40,10 +40,9 @@ function TopBar() {
     setShowNotification(false);
   };
   useEffect(() => {
-    JSON.parse(localStorage.getItem("user")).token !== "" && GetNonfiction();
+    if(JSON.parse(localStorage.getItem("user"))) JSON.parse(localStorage.getItem("user")).token !== "" && GetNonfiction();
   }, []);
 
-  console.log(allNotifications);
   return (
     <header className="flex-between bg-white dark:bg-gray-main md:bg-transparent dark:border-b md:border-none border-b-gray-700 mb-6 md:mb-14 p-5 md:p-0">
       <h3 className="hidden lg:block font-DanaBold text-2xl text-zinc-700 dark:text-white">

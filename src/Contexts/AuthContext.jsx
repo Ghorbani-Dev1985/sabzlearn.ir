@@ -46,11 +46,10 @@ export const AuthProvider = ({ children }) => {
           Navigate('/')
          }
       });
-      return () => {
-        abortController.abort()
-      }
-    }else{
-      Navigate('/')
+    }
+    
+    return () => {
+      abortController.abort()
     }
   }, [LoginHandler])
   

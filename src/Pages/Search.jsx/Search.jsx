@@ -5,16 +5,15 @@ import TopSort from '../../Components/TopSort/TopSort'
 import useTitle from '../../Hooks/useTitle'
 import TopPageTitle from '../../Components/TopPageTitle/TopPageTitle'
 import SearchFilter from '../../Components/SearchFilter/SearchFilter'
-import useFetch from '../../Hooks/useFetch'
 import { useParams } from 'react-router-dom'
-import { BaseURL } from '../../Utils/Utils'
-import axios from 'axios'
 import { Alert } from '@mui/material'
 import Pagination from '../../Components/Pagination/Pagination'
 import BlogCard from '../../Components/BlogCard/BlogCard'
+import ApiRequest from '../../Services/Axios/Configs/Config'
 
 
 function Search() {
+ const title = useTitle('نتیجه جستجو')
  const {value} = useParams()
  const [coursesResult , setCoursesResult] = useState([])
  const [blogsResult , setBlogsResult] = useState([])
@@ -30,7 +29,7 @@ function Search() {
     }
  }
 useEffect(() => {
-     axios(`${BaseURL}search/${value}`)
+    const ResponseResult = ApiRequest(`search/${value}`)
    .then(searchResult => {
      console.log(searchResult)
     setCoursesResult(searchResult.data.allResultCourses)

@@ -3,9 +3,7 @@ import React from 'react'
 import Button from '../../common/Form/Button'
 
 function SearchFilter({children , setStatus , searchValue  , SearchChangeHandler}) {
-  const SearchHandler = () => {
-    
-  }
+
    return (
     <aside className='lg:sticky lg:top-36 space-y-5'>
     {/* Search Box */}
@@ -13,7 +11,7 @@ function SearchFilter({children , setStatus , searchValue  , SearchChangeHandler
      <div className='h-17 shadow-light dark:shadow-none bg-white dark:bg-gray-800 dark:border border-gray-700 rounded-2xl'>
         <div className='h-full flex-between text-slate-500 dark:text-gray-500'>
          <input value={searchValue} onChange={SearchChangeHandler} type='text' className='w-full bg-transparent dark:bg-transparent outline-none text-sm font-dana pr-7 border-none' placeholder='در بین دوره ها جستجو کنید'/>
-         <Button btnType="submit"  className="mr-4 ml-6" disabled={false} onClick={SearchHandler}> <Search className='size-7'/></Button>
+         <Button btnType="submit"  className="mr-4 ml-6" disabled={false}> <Search className='size-7'/></Button>
         </div>
      </div>
      {children}

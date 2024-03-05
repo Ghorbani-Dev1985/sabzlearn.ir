@@ -6,6 +6,7 @@ import { AdminDashboardNavItems } from "../../Utils/Utils";
 
 
 function Index() {
+
   return (
     <main className="md:bg-white md:dark:bg-gray-800 grid grid-cols-12 gap-x-10 2xl:gap-x-14 lg:px-8 xl:px-14 2xl:px-25 lg:py-7">
       <SideBar  menuItems={AdminDashboardNavItems}/>
