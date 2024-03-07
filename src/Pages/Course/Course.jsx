@@ -236,7 +236,7 @@ function Course() {
         <div className="shrink-0 mb-3 sm:mb-6 lg:mb-0 w-full h-auto md:w-10/12 lg:w-[440px] lg:h-[270px] xl:w-[610px] xl:h-[343px] rounded-2xl sm:rounded-3xl overflow-hidden">
           {
             courseDetails.cover ? 
-            <img src={`http://localhost:5000/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" /> :
+            <img src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" /> :
             <Skeleton variant="text" width={'100%'} height={'100%'} />
           }
         </div>
@@ -407,7 +407,7 @@ function Course() {
                           <Box className="md:flex items-center gap-2.5 flex-wrap space-y-3.5 md:space-y-0 py-4 md:py-6 px-3.5 md:px-5 group">
                             {!free ? (
                               <Link
-                                to={`http://localhost:5000/courses/covers/${video}`}
+                                to={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${video}`}
                                 target="_blank"
                                 className="flex items-center gap-x-1.5 md:gap-x-2.5 shrink-0 w-[85%]"
                               >
@@ -513,7 +513,7 @@ function Course() {
             {
               creator.profile ?
               <img
-                src={`http://localhost:5000/courses/covers/${creator.profile}`}
+                src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${creator.profile}`}
                 className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
                 alt={creator.name}
               /> :

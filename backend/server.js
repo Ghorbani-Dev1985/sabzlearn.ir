@@ -8,7 +8,10 @@ const app = require('./app');
 const port = +process.env.PORT;
 
 (async () => {
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI , {
+    authSource: 'admin',
+    useNewUrlParser: true,
+  });
   console.log('mongodb connected.');
 })();
 

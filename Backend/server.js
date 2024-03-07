@@ -9,7 +9,10 @@ dotenv.config();
 (async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}` , {
+      authSource: 'admin',
+      useNewUrlParser: true,
+    });
   } catch (err) {
     //?error catch
     console.log(err);

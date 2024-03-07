@@ -14,7 +14,7 @@ import {
   PermIdentity,
   ShoppingBag,
 } from "@mui/icons-material";
-const BaseURL = 'http://localhost:5000/v1/';
+const BaseURL = 'https://sabzlearn.ghorbani-dev.ir/';
 
 const AdminDashboardNavItems = [
   {

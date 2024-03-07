@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
 // const Navigate = useNavigate()
 const ApiRequest = axios.create({
-  baseURL: "http://localhost:5000/v1/",
+  baseURL: "https://sabzlearn.ghorbani-dev.ir/",
 });
 
 ApiRequest.interceptors.request.use(
