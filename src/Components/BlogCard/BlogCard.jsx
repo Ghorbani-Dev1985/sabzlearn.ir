@@ -18,7 +18,7 @@ function BlogCard({
       {/* Article Img */}
       <div className="relative h-[217px] overflow-hidden before:content-[''] before:absolute before:-bottom-3 before:left-0 before:bg-beforeArticle before:w-full before:h-[180px] after:content-[''] after:absolute after:-bottom-3 after:left-0 after:bg-afterArticle after:w-full after:h-[180px]">
         <img
-          src={`../../../Backend/public/courses/covers/${cover}`}
+          src={`https://sabzlearnapi.liara.run/courses/covers/${cover}`}
           className="block w-full h-full object-cover"
           alt="ghorbani-dev.ir"
         />

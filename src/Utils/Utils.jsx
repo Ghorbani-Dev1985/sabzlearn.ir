@@ -14,7 +14,7 @@ import {
   PermIdentity,
   ShoppingBag,
 } from "@mui/icons-material";
-const BaseURL = 'https://sabzlearn.ghorbani-dev.ir/';
+const BaseURL = 'https://sabzlearnapi.liara.run/v1/';
 
 const AdminDashboardNavItems = [
   {

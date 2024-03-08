@@ -1,9 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
-// const Navigate = useNavigate()
 const ApiRequest = axios.create({
-  baseURL: "https://sabzlearn.ghorbani-dev.ir/",
+  baseURL: "https://sabzlearnapi.liara.run/v1/",
 });
 
 ApiRequest.interceptors.request.use(
@@ -22,19 +20,13 @@ ApiRequest.interceptors.request.use(
 
 ApiRequest.interceptors.response.use(
   (response) => {
-    if (
-      (response.status === 200 || response.status === 201) &&
-      response.data.length === 0
-    ) {
-      toast.success(" درخواست شما با موفقیت انجام شد");
-    }
     return response;
   },
   (error) => {
+    console.log(error)
     const status = error.response.status;
     if (status === 408) {
       toast.error("دسترسی غیر مجاز");
-     // Navigate("/login");
     } else if (status === 402) {
       toast.error("  کد تخفیف معتبر نمی باشد");
     } else if (error.response.status === 409) {

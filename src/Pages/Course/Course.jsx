@@ -236,7 +236,7 @@ function Course() {
         <div className="shrink-0 mb-3 sm:mb-6 lg:mb-0 w-full h-auto md:w-10/12 lg:w-[440px] lg:h-[270px] xl:w-[610px] xl:h-[343px] rounded-2xl sm:rounded-3xl overflow-hidden">
           {
             courseDetails.cover ? 
-            <img src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" /> :
+            <img src={`https://sabzlearnapi.liara.run/courses/covers/${courseDetails.cover}`} alt="gorbani-dev.ir" /> :
             <Skeleton variant="text" width={'100%'} height={'100%'} />
           }
         </div>
@@ -513,7 +513,7 @@ function Course() {
             {
               creator.profile ?
               <img
-                src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${creator.profile}`}
+                src={`https://sabzlearn.liara.run/courses/covers/${creator.profile}`}
                 className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
                 alt={creator.name}
               /> :

@@ -47,7 +47,7 @@ function Login() {
       .then((response) => {
         if (response.status === 200) {
           LoginHandler(userInfos, response.data.accessToken);
-          Navigate("/");
+          Navigate("/" , {replace: true});
           toast.success(" ورود با موفقیت انجام گردید");
         }
       })

@@ -75,7 +75,7 @@ function Courses() {
       renderCell: (user) => {
         return (
           <img
-            src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${user.row.cover}`}
+            src={`https://sabzlearnapi.liara.run/courses/covers/${user.row.cover}`}
             className="object-fill"
             alt="ghorbani-dev.ir"
           />

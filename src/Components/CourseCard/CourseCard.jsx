@@ -15,7 +15,7 @@ function CourseCard(
       <div className="relative h-42">
         <Link to={`/course/${shortName}`} className="w-full h-full block">
           <img
-            src={`../../../Backend/public/courses/covers/${cover}`}
+            src={`https://sabzlearnapi.liara.run/courses/covers/${cover}`}
             className="block w-full h-full max-h-[149px] object-cover rounded-2xl"
             alt="ghorbani-dev.ir"
           />

@@ -147,7 +147,7 @@ let routes = [
       </PrivateAdminDashboard>
     ),
     children: [
-      { path: "overview", element: <OverviewAdminDashboard /> },
+      { path:  "overview", element: <OverviewAdminDashboard /> },
       { path: "users", element: <UsersAdminDashboard /> },
       { path: "courses", element: <CoursesAdminDashboard /> },
       { path: "sessions", element: <SessionsAdminDashboard /> },

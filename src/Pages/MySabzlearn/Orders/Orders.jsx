@@ -35,7 +35,7 @@ function Orders() {
       renderCell: (course) => {
         return (
           <img
-            src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${course.row.course.cover}`}
+            src={`https://sabzlearnapi.liara.run/courses/covers/${course.row.course.cover}`}
             className="object-fill"
             alt="ghorbani-dev.ir"
           />

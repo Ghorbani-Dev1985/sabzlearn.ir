@@ -42,9 +42,9 @@ export const AuthProvider = ({ children }) => {
       .then((response) => {
          setIsLoggedIn(true)
          setUserInfos(response.data)
-         if(response.data.role !== 'ADMIN'){
-          Navigate('/')
-         }
+        //  if(response.data.role !== 'ADMIN'){
+        //   Navigate('/')
+        //  }
       });
     }
     

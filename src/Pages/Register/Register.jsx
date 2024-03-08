@@ -58,7 +58,7 @@ function Register() {
             if(response.data){
               LoginHandler(response.data.user , response.data.accessToken)
               toast.success("ثبت نام با موفقیت انجام گردید")
-              Navigate('/')
+              Navigate('/' , {replace: true})
             }
           })
           

@@ -78,7 +78,7 @@ function Courses() {
                       >
                         <img
                           className="block w-full h-full object-cover rounded-2xl"
-                          src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${course.course.cover}`}
+                          src={`https://sabzlearnapi.liara.run/courses/covers/${course.course.cover}`}
                           alt={course.course.name}
                         />
                       </Link>

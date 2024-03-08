@@ -99,7 +99,7 @@ function Users() {
           <img
             src={`${
               user.row.profile
-                ? `../../../../Backend/public/courses/covers${user.row.profile}`
+                ? `https://sabzlearnapi.liara.run/courses/covers${user.row.profile}`
                 : `${NoImg}`
             } `}
             className="size-12 rounded-full"

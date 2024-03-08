@@ -113,7 +113,7 @@ function Blog() {
               </div>
             </div>
             <div className="w-full flex-center">
-              <img src={`https://sabzlearn.ghorbani-dev.ir/courses/covers/${blogDetails.cover}`} alt={blogDetails.title} className="rounded-md mb-4"/>
+              <img src={`https://sabzlearnapi.liara.run/courses/covers/${blogDetails.cover}`} alt={blogDetails.title} className="rounded-md mb-4"/>
             </div>
             {/* Html Template */}
             <ShowHtmlTemplate
