@@ -5,20 +5,20 @@
   </a>
 </p>
 
-# Screen Shot
+# Screen SHOTS
 
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn01.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn02.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn03.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn04.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn05.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn06.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn07.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn08.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn09.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn10.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn11.png" width="100%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn12.png" width="100%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn01.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn02.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn03.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn04.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn05.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn06.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn07.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn08.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn09.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn10.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn11.png" width="50%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn12.png" width="50%" alt="ghorbani-dev.ir"/>
 
 ---
 
@@ -59,6 +59,7 @@ Fullstack app with NodeJS, MongoDB, ReactJS, TailwindCss, Mui
 [sabzlearn.ghorbani-dev.ir/adminDashboard/overview](https://sabzlearn.ghorbani-dev.ir/adminDashboard/overview)
 
 Username: ghorbanidev
+<br />
 Password: ghorbaniDev@1
 
 ---
