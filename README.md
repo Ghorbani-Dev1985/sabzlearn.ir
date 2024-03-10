@@ -6,19 +6,30 @@
 </p>
 
 # Screen SHOTS
-
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn01.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn02.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn03.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn04.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn05.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn06.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn07.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn08.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn09.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn10.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn11.png" width="50%" alt="ghorbani-dev.ir"/>
-<img  src="./src/assets/Images/ScreenShot/Sabzlearn12.png" width="50%" alt="ghorbani-dev.ir"/>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn01.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn02.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn03.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn04.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn05.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn06.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn07.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn08.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn09.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn10.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
+<div align="center">
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn11.png" width="49%" alt="ghorbani-dev.ir"/>
+<img  src="./src/assets/Images/ScreenShot/Sabzlearn12.png" width="49%" alt="ghorbani-dev.ir"/>
+</div>
 
 ---
 
@@ -34,6 +45,7 @@ Fullstack app with NodeJS, MongoDB, ReactJS, TailwindCss, Mui
 <li>Add and delete blog</li>
 <li>Add blog in draft</li>
 <li>User can register and login</li>
+<li>User can search in courses and blogs</li>
 <li>Full user profile</li>
 <li>User can register to app newsletter</li>
 <li>User can send ticket and show in Admin</li>

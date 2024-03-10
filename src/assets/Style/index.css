@@ -511,3 +511,6 @@ input + svg {
 .ck.ck-editor__editable_inline> * {
   direction: rtl;
 }
+:is(.dark .css-ehl2my , .dark .css-o648fm.Mui-disabled){
+  color: #fff;
+}

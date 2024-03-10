@@ -513,7 +513,7 @@ function Course() {
             {
               creator.profile ?
               <img
-                src={`https://sabzlearn.liara.run/courses/covers/${creator.profile}`}
+                src={`https://sabzlearnapi.liara.run/courses/covers/${creator.profile}`}
                 className="block mx-auto mb-2 w-[90px] h-[90px] rounded-full"
                 alt={creator.name}
               /> :
